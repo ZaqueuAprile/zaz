@@ -27,6 +27,10 @@ npm install
 npm run dev      # servidor de desenvolvimento
 npm run build    # build de produção em dist/
 npm run lint     # oxlint
+
+# Um projeto como um único .html (código, fontes e fotos embutidos),
+# para abrir direto no celular sem servidor. Sai em dist-arquivo/<projeto>/index.html
+PROJETO=bossa-cucina npm run build:arquivo
 ```
 
 ## Estrutura
