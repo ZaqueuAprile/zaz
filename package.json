@@ -1,0 +1,20 @@
+{
+  "name": "zaz",
+  "version": "1.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZaqueuAprile/zaz.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ZaqueuAprile/zaz/issues"
+  },
+  "homepage": "https://github.com/ZaqueuAprile/zaz#readme",
+  "dependencies": {
+    "motion": "^14.6.0"
+  },
+  "private": true
+}
