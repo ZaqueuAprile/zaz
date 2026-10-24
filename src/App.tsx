@@ -1,38 +1,48 @@
 import { motion } from 'motion/react'
-import { useState } from 'react'
+
+const PROJETOS = [
+  {
+    numero: '01',
+    nome: 'Bossa Cucina',
+    tipo: 'Restaurante · site conceitual',
+    href: './bossa-cucina/',
+  },
+]
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <main className="flex min-h-svh flex-col items-center justify-center gap-8 p-6 text-center">
-      <motion.h1
-        className="text-4xl font-bold tracking-tight sm:text-5xl"
-        initial={{ opacity: 0, y: 24 }}
+    <main className="mx-auto flex min-h-svh max-w-5xl flex-col px-6 py-16 md:px-12 md:py-24">
+      <motion.header
+        initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
       >
-        Zaz
-      </motion.h1>
+        <p className="text-xs font-medium tracking-[0.16em] text-neutral-500 uppercase">Portfólio</p>
+        <h1 className="mt-4 max-w-2xl text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
+          Sites e interfaces, um projeto de cada vez.
+        </h1>
+      </motion.header>
 
-      <motion.p
-        className="max-w-md text-neutral-600 dark:text-neutral-400"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3, duration: 0.6 }}
-      >
-        Vite + React + Tailwind + Motion. Edite <code className="font-mono">src/App.tsx</code> para começar.
-      </motion.p>
-
-      <motion.button
-        type="button"
-        className="rounded-full bg-neutral-900 px-6 py-3 font-medium text-white dark:bg-white dark:text-neutral-900"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => setCount((c) => c + 1)}
-      >
-        Cliques: {count}
-      </motion.button>
+      <ol className="mt-20 border-t border-neutral-300 dark:border-neutral-800">
+        {PROJETOS.map((p, i) => (
+          <motion.li
+            key={p.nome}
+            className="border-b border-neutral-300 dark:border-neutral-800"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 + i * 0.05, duration: 0.5 }}
+          >
+            <a
+              href={p.href}
+              className="group flex flex-wrap items-baseline gap-x-6 gap-y-1 py-6 transition-colors hover:text-neutral-500"
+            >
+              <span className="w-8 text-sm text-neutral-500 tabular-nums">{p.numero}</span>
+              <span className="text-2xl font-medium sm:text-3xl">{p.nome}</span>
+              <span className="text-sm text-neutral-500 sm:ml-auto">{p.tipo}</span>
+            </a>
+          </motion.li>
+        ))}
+      </ol>
     </main>
   )
 }

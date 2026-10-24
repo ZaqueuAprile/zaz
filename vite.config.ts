@@ -5,10 +5,21 @@ import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
 export default defineConfig({
+  // Caminhos relativos para o build funcionar em qualquer subpasta (ex.: GitHub Pages).
+  base: './',
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
       '@': path.resolve(import.meta.dirname, './src'),
+    },
+  },
+  build: {
+    // Cada projeto do portfólio é uma página própria.
+    rolldownOptions: {
+      input: {
+        portfolio: path.resolve(import.meta.dirname, 'index.html'),
+        'bossa-cucina': path.resolve(import.meta.dirname, 'bossa-cucina/index.html'),
+      },
     },
   },
 })

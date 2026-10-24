@@ -1,0 +1,95 @@
+/* Bossa Cucina — conceito
+   A parede do salão é branca de cal e uma linha preta, o rio, corre por ela.
+   O site é a mesma parede: fundo de cal, tipografia e uma única linha que se
+   desenha enquanto a página desce. Verde-oliva só aparece na seção do rio. */
+
+@import 'tailwindcss';
+@source not '../../../.claude';
+
+@theme {
+  --color-cal: #eceee4;
+  --color-cal-2: #e0e4d5;
+  --color-tinta: #1a1b16;
+  --color-tinta-2: #46493c;
+  --color-linha: #bfc4b1;
+  --color-oliva: #5b6618;
+  /* Mesmo verde do fundo da foto das polaroids, para a foto não parecer um recorte. */
+  --color-oliva-foto: #6e7223;
+  --color-cal-claro: #f6f7f0;
+  --color-erro: #9b2d1f;
+
+  --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Albert Sans Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mao: 'Covered By Your Grace', 'Bradley Hand', cursive;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    background: var(--color-cal);
+    color: var(--color-tinta);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: var(--color-tinta);
+    color: var(--color-cal);
+  }
+}
+
+@utility wrap {
+  width: 100%;
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-inline: max(1.75rem, env(safe-area-inset-left, 0px));
+
+  @media (width >= 48rem) {
+    padding-inline: 4rem;
+  }
+}
+
+/* Etiqueta de seção: "01 — A casa" */
+@utility rotulo {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+@utility sublinhado {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.35em;
+  transition: text-underline-offset 0.2s ease;
+
+  &:hover {
+    text-underline-offset: 0.2em;
+  }
+}
+
+.cardapio-dialogo::backdrop {
+  background: rgb(26 27 22 / 0.72);
+}
+
+details > summary::-webkit-details-marker {
+  display: none;
+}
