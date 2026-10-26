@@ -1,6 +1,6 @@
-// Para enviar o pedido de reserva por WhatsApp, coloque o número com
-// código do país e DDD, só dígitos. Exemplo: "5573999999999".
-export const WHATSAPP = ''
+// WhatsApp da casa que recebe os pedidos de reserva: código do país e DDD,
+// só dígitos. Deixe vazio para o formulário só confirmar na tela.
+export const WHATSAPP = '5575981102060'
 
 export const CARDAPIO_URL = 'https://heyzine.com/flip-book/c0c5c34d09.html'
 

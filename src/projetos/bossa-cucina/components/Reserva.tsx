@@ -101,16 +101,33 @@ export function Reserva() {
       day: 'numeric',
       month: 'long',
     })
-    const resumo = `${data}, às ${v.hora}, para ${v.pessoas} ${Number(v.pessoas) === 1 ? 'pessoa' : 'pessoas'}`
-    const mensagem =
-      `Olá, sou ${v.nome.trim()}. Gostaria de reservar uma mesa no Bossa Cucina: ${resumo}.` +
-      (v.obs.trim() ? ` Observações: ${v.obs.trim()}.` : '') +
-      ` Meu contato: ${v.contato.trim()}.`
+    const pessoas = `${v.pessoas} ${Number(v.pessoas) === 1 ? 'pessoa' : 'pessoas'}`
+    const resumo = `${data}, às ${v.hora}, para ${pessoas}`
+
+    if (!WHATSAPP) {
+      setStatus({ tipo: 'ok', texto: `Pedido recebido para ${resumo}. A casa confirma pelo telefone informado.` })
+      el.reset()
+      return
+    }
+
+    // O WhatsApp abre com a mensagem pronta; a pessoa só precisa tocar em enviar.
+    const mensagem = [
+      'Olá! Gostaria de reservar uma mesa no Bossa Cucina.',
+      '',
+      `*Nome:* ${v.nome.trim()}`,
+      `*Telefone:* ${v.contato.trim()}`,
+      `*Data:* ${data}`,
+      `*Horário:* ${v.hora}`,
+      `*Pessoas:* ${pessoas}`,
+      ...(v.obs.trim() ? [`*Observações:* ${v.obs.trim()}`] : []),
+    ].join('\n')
+    const link = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(mensagem)}`
+    window.open(link, '_blank', 'noopener')
 
     setStatus({
       tipo: 'ok',
-      texto: `Pedido recebido para ${resumo}. A casa confirma pelo telefone informado.`,
-      whatsapp: WHATSAPP ? `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(mensagem)}` : undefined,
+      texto: `Abrimos o WhatsApp com o seu pedido para ${resumo}. Toque em enviar para a casa receber.`,
+      whatsapp: link,
     })
     el.reset()
   }
@@ -175,7 +192,7 @@ export function Reserva() {
           type="submit"
           className="min-h-12 cursor-pointer bg-tinta px-8 py-3 font-medium text-cal transition-colors hover:bg-oliva active:translate-y-px"
         >
-          Enviar pedido de reserva
+          {WHATSAPP ? 'Enviar pedido pelo WhatsApp' : 'Enviar pedido de reserva'}
         </button>
         <p role="status" aria-live="polite" className={status?.tipo === 'erro' ? 'text-erro' : 'text-tinta'}>
           {status?.texto}
@@ -183,7 +200,7 @@ export function Reserva() {
             <>
               {' '}
               <a className="sublinhado font-medium" href={status.whatsapp} target="_blank" rel="noopener">
-                Enviar pelo WhatsApp
+                Se o WhatsApp não abriu, toque aqui.
               </a>
             </>
           )}

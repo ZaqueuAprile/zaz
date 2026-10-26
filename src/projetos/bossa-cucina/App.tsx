@@ -338,7 +338,7 @@ function Mesa() {
           Reserve sua mesa
         </h2>
         <p className="mb-5">
-          Informe a data, o horário e o número de pessoas. A casa confirma pelo telefone que você deixar.
+          Informe a data, o horário e o número de pessoas. O pedido segue pelo WhatsApp da casa, que confirma a reserva por lá.
         </p>
         <p className="text-tinta-2">Para grupos acima de 12 pessoas, fale direto com a casa.</p>
       </Revelar>
