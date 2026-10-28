@@ -10,6 +10,7 @@ import { useRef, useState, type ReactNode } from 'react'
 import { Emblema, Marca } from './components/Logo'
 import { Menu } from './components/Menu'
 import { Reserva } from './components/Reserva'
+import { Galeria } from './components/Galeria'
 import { Foto, LinkSeta, Revelar } from './components/Revelar'
 import { ENDERECO, INSTAGRAM, SECOES, WHATSAPP } from './dados'
 import barcoPorDoSol from './img/arredores-barco-por-do-sol.webp'
@@ -294,12 +295,12 @@ function Suites() {
 
       <div className="mt-20 grid grid-cols-2 gap-3 md:mt-28 md:gap-6">
         <div className="space-y-3 md:space-y-6">
-          <Foto src={suiteVistaRio} rotulo="Janela para o rio" alt="Cama arrumada com toalhas enroladas e, pela porta aberta, o deck de palha e o rio." />
-          <Foto src={suiteMantaTerracota} rotulo="Terracota" alt="Suíte com manta terracota, mandala de palha na parede e luminária de palha acesa." atraso={0.1} />
+          <Foto src={suiteVistaRio} alt="Cama arrumada com toalhas enroladas e, pela porta aberta, o deck de palha e o rio." />
+          <Foto src={suiteMantaTerracota} alt="Suíte com manta terracota, mandala de palha na parede e luminária de palha acesa." atraso={0.1} />
         </div>
         <div className="mt-20 space-y-3 md:mt-40 md:space-y-6">
-          <Foto src={suiteMantaAzul} rotulo="Azul-marinho" alt="Cama de casal com manta azul-marinho, peixe de madeira na parede e estante de madeira." />
-          <Foto src={suitePeixes} rotulo="Cardume" alt="Suíte clara com peixes de madeira na parede, cavalo-marinho vermelho e manta azul." atraso={0.1} />
+          <Foto src={suiteMantaAzul} alt="Cama de casal com manta azul-marinho, peixe de madeira na parede e estante de madeira." />
+          <Foto src={suitePeixes} alt="Suíte clara com peixes de madeira na parede, cavalo-marinho vermelho e manta azul." atraso={0.1} />
         </div>
       </div>
     </section>
@@ -321,7 +322,6 @@ function Cafe() {
         <Foto
           src={cafeBarco}
           proporcao="aspect-[4/3] md:aspect-[21/9]"
-          etiqueta="Café da manhã"
           alt="Hóspedes tomando café da manhã enquanto um barco de pesca azul e laranja passa no rio."
         />
         <div className="mt-3 grid grid-cols-2 gap-3 md:mt-6 md:gap-6">
@@ -379,7 +379,6 @@ function Pousada() {
             key={e.nome}
             src={e.src}
             alt={e.alt}
-            etiqueta={e.nome}
             atraso={i * 0.06}
             className="w-[78vw] shrink-0 snap-start sm:w-[44vw] lg:w-[28vw]"
           />
@@ -455,10 +454,10 @@ function SantoAndre() {
           </Revelar>
         </div>
         <div className="grid grid-cols-2 gap-3 md:col-span-7 md:gap-6">
-          <Foto src={praia} rotulo="A praia" alt="Praia de areia dourada com ondas baixas e coqueiros ao fundo, no fim da tarde." />
+          <Foto src={praia} alt="Praia de areia dourada com ondas baixas e coqueiros ao fundo, no fim da tarde." />
           <Foto
             src={cantinhoLeitura}
-            rotulo="Cantinho da leitura"
+           
             className="mt-16 md:mt-32"
             alt="Pequena biblioteca de madeira amarela com a placa Cantinho da Leitura, de frente para o mar ao entardecer."
             atraso={0.1}
@@ -548,25 +547,27 @@ function Rodape() {
 export default function App() {
   return (
     <MotionConfig reducedMotion="user">
-      <a
-        href="#conteudo"
-        className="fixed top-3 left-3 z-50 -translate-y-24 rounded-md bg-mar px-4 py-2 text-white focus:translate-y-0"
-      >
-        Ir para o conteúdo
-      </a>
-      <Topo />
-      <main id="conteudo">
-        <Abertura />
-        <Carta />
-        <Mundo />
-        <Suites />
-        <Cafe />
-        <Pousada />
-        <FimDeTarde />
-        <SantoAndre />
-        <Reservas />
-      </main>
-      <Rodape />
+      <Galeria>
+        <a
+          href="#conteudo"
+          className="fixed top-3 left-3 z-50 -translate-y-24 rounded-md bg-mar px-4 py-2 text-white focus:translate-y-0"
+        >
+          Ir para o conteúdo
+        </a>
+        <Topo />
+        <main id="conteudo">
+          <Abertura />
+          <Carta />
+          <Mundo />
+          <Suites />
+          <Cafe />
+          <Pousada />
+          <FimDeTarde />
+          <SantoAndre />
+          <Reservas />
+        </main>
+        <Rodape />
+      </Galeria>
     </MotionConfig>
   )
 }

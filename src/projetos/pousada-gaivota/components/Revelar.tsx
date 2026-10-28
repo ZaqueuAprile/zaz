@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from 'motion/react'
 import type { ReactNode } from 'react'
+import { useAmpliar } from './galeria-contexto'
 
 const curva = [0.22, 1, 0.36, 1] as const
 
@@ -18,25 +19,23 @@ export function Revelar({ children, className, atraso = 0 }: { children: ReactNo
   )
 }
 
-// Foto que se abre de baixo para cima, com um leve zoom saindo.
+// Foto que se abre de baixo para cima, com um leve zoom saindo. Tocada, abre a
+// visualização ampliada.
 export function Foto({
   src,
   alt,
   className,
   proporcao = 'aspect-[4/5]',
-  rotulo,
-  etiqueta,
   atraso = 0,
 }: {
   src: string
   alt: string
   className?: string
   proporcao?: string
-  rotulo?: string
-  etiqueta?: string
   atraso?: number
 }) {
   const reduzido = useReducedMotion()
+  const ampliar = useAmpliar()
   // Quem observa a entrada na tela é a moldura, que nunca é recortada: um
   // elemento todo recortado por clip-path não conta como visível para o
   // navegador, e a foto ficaria escondida ao pular direto para a seção.
@@ -47,8 +46,12 @@ export function Foto({
       whileInView="visivel"
       viewport={{ once: true, margin: '0px 0px -8% 0px' }}
     >
-      <motion.div
-        className="size-full overflow-hidden"
+      <motion.button
+        type="button"
+        data-galeria
+        onClick={(e) => ampliar(e.currentTarget)}
+        aria-label={`Ampliar foto: ${alt}`}
+        className="group block size-full cursor-zoom-in overflow-hidden"
         variants={{ oculta: { clipPath: 'inset(100% 0 0 0)' }, visivel: { clipPath: 'inset(0% 0 0 0)' } }}
         transition={{ duration: 1.3, ease: curva, delay: atraso }}
       >
@@ -57,21 +60,11 @@ export function Foto({
           alt={alt}
           loading="lazy"
           decoding="async"
-          className="size-full object-cover"
+          className="size-full object-cover transition-[filter] duration-500 group-hover:brightness-105"
           variants={{ oculta: { scale: 1.12 }, visivel: { scale: 1 } }}
           transition={{ duration: 1.8, ease: curva, delay: atraso }}
         />
-      </motion.div>
-      {etiqueta && (
-        <span className="absolute top-4 left-4 rounded-md bg-tinta/35 px-4 py-2 text-sm text-white backdrop-blur-md">
-          {etiqueta}
-        </span>
-      )}
-      {rotulo && (
-        <figcaption className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/55 to-transparent px-4 pt-14 pb-4 font-display text-xl leading-tight font-light text-white md:px-6 md:pb-5 md:text-3xl">
-          {rotulo}
-        </figcaption>
-      )}
+      </motion.button>
     </motion.figure>
   )
 }
