@@ -8,6 +8,17 @@ Cada projeto é uma página própria do mesmo build.
 | # | Projeto | Caminho | Código |
 |---|---------|---------|--------|
 | 01 | Bossa Cucina — restaurante, site conceitual | `/bossa-cucina/` | `src/projetos/bossa-cucina/` |
+| 02 | Gaivota — pousada em Santo André | `/pousada-gaivota/` | `src/projetos/pousada-gaivota/` |
+
+### Gaivota
+
+Site de uma pousada na beira do rio, a poucos metros da praia, em Santo André
+(Santa Cruz Cabrália, BA). Inspirado em hotelaria de luxo silenciosa: fundo de
+areia, serifa leve (Newsreader) com uma frase em itálico, fotos grandes e muito
+espaço. As cores saem da logo, redesenhada em vetor em `components/Logo.tsx`.
+O vídeo da abertura, vertical, ocupa a tela no celular e fica num arco, como o
+portão da pousada, no computador. Reservas pelo WhatsApp: preencha `WHATSAPP`
+em `src/projetos/pousada-gaivota/dados.ts`.
 
 ### Bossa Cucina
 

@@ -1,0 +1,88 @@
+/* Gaivota — conceito
+   A referência é hotelaria de luxo silenciosa: fundo de areia, serifa leve
+   com uma frase em itálico, fotos grandes e muito espaço. As cores saem da
+   logo e das próprias fotos: o azul das portas, o ocre da gaivota e o
+   terracota do sol e dos muros. */
+
+@import 'tailwindcss';
+@source not '../../../.claude';
+
+@theme {
+  --color-areia: #ebe7df;
+  --color-areia-2: #dfd9ce;
+  --color-tinta: #2e2a25;
+  --color-tinta-2: #5f5850;
+  --color-mar: #092b68;
+  --color-mar-fundo: #061d47;
+  --color-ocre: #c78845;
+  --color-terracota: #b2603b;
+  --color-erro: #9b2d1f;
+
+  --font-display: 'Newsreader Variable', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Hanken Grotesk Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mao: 'Nothing You Could Do', 'Bradley Hand', cursive;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    background: var(--color-areia);
+    color: var(--color-tinta);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 300;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: var(--color-mar);
+    color: #fff;
+  }
+}
+
+@utility wrap {
+  width: 100%;
+  max-width: 82rem;
+  margin-inline: auto;
+  padding-inline: max(1.5rem, env(safe-area-inset-left, 0px));
+
+  @media (width >= 48rem) {
+    padding-inline: 3.5rem;
+  }
+}
+
+/* Título grande da referência: serifa leve, com uma parte em itálico. */
+@utility titulo {
+  font-size: clamp(2.6rem, 6.4vw, 5.6rem);
+  line-height: 1.02;
+}
+
+/* Arco no topo, como o portão da pousada. */
+@utility arco {
+  border-radius: 999px 999px 0.5rem 0.5rem;
+}

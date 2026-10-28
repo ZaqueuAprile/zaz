@@ -19,6 +19,7 @@ export default defineConfig({
       input: {
         portfolio: path.resolve(import.meta.dirname, 'index.html'),
         'bossa-cucina': path.resolve(import.meta.dirname, 'bossa-cucina/index.html'),
+        'pousada-gaivota': path.resolve(import.meta.dirname, 'pousada-gaivota/index.html'),
       },
     },
   },

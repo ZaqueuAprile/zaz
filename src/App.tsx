@@ -7,6 +7,12 @@ const PROJETOS = [
     tipo: 'Restaurante · site conceitual',
     href: './bossa-cucina/',
   },
+  {
+    numero: '02',
+    nome: 'Gaivota',
+    tipo: 'Pousada · site de hospedagem',
+    href: './pousada-gaivota/',
+  },
 ]
 
 function App() {
