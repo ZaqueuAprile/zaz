@@ -1,0 +1,128 @@
+/* Brandão & Pessoa — conceito
+   A referência é um escritório de advocacia sóbrio: seções escuras alternando
+   com marfim, títulos grandes em caixa alta com a parte final em destaque,
+   rótulos pequenos com um traço antes e um botão de WhatsApp sempre à mão.
+   O escuro aqui é o azul-marinho da logo, e o destaque é um dourado claro
+   (no escuro) e bronze (no claro), para manter o contraste. */
+
+@import 'tailwindcss';
+@source not '../../../.claude';
+
+@theme {
+  --color-noite: #0b1324;
+  --color-noite-2: #111c32;
+  --color-noite-3: #1a2742;
+  --color-marfim: #f6f2ea;
+  --color-marfim-2: #ece5d8;
+  --color-tinta: #161c28;
+  --color-tinta-2: #4d5464;
+  --color-dourado: #d5bd8c;
+  --color-bronze: #7f6234;
+  --color-whats: #25d366;
+  --color-erro: #b3261e;
+
+  --font-sans: 'Montserrat Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    background: var(--color-noite);
+    color: var(--color-tinta);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: var(--color-dourado);
+    color: var(--color-noite);
+  }
+}
+
+@utility wrap {
+  width: 100%;
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-inline: max(1.25rem, env(safe-area-inset-left, 0px));
+
+  @media (width >= 48rem) {
+    padding-inline: 3rem;
+  }
+}
+
+/* Título de seção da referência: caixa alta, pesado e apertado. */
+@utility titulo {
+  font-size: clamp(2.1rem, 5.4vw, 4rem);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+/* Rótulo pequeno, espaçado, com um traço antes. */
+@utility rotulo {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+
+  &::before {
+    content: '';
+    width: 2.25rem;
+    height: 1px;
+    background: currentColor;
+  }
+}
+
+/* Botões: chapados, caixa alta e bem espaçados, como na referência. */
+@utility botao {
+  display: inline-flex;
+  min-height: 3.5rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  padding-inline: 2rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition:
+    background-color 0.3s,
+    color 0.3s,
+    border-color 0.3s;
+}
+
+/* Linha dourada que se afina, embaixo dos títulos. */
+@utility fio {
+  display: block;
+  width: 9rem;
+  height: 3px;
+  background: linear-gradient(90deg, currentColor, transparent);
+}

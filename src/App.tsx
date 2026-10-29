@@ -13,6 +13,12 @@ const PROJETOS = [
     tipo: 'Pousada · site de hospedagem',
     href: './pousada-gaivota/',
   },
+  {
+    numero: '03',
+    nome: 'Brandão & Pessoa',
+    tipo: 'Advocacia · site institucional',
+    href: './brandao-pessoa/',
+  },
 ]
 
 function App() {

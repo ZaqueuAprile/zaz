@@ -9,6 +9,23 @@ Cada projeto é uma página própria do mesmo build.
 |---|---------|---------|--------|
 | 01 | Bossa Cucina — restaurante, site conceitual | `/bossa-cucina/` | `src/projetos/bossa-cucina/` |
 | 02 | Gaivota — pousada em Santo André | `/pousada-gaivota/` | `src/projetos/pousada-gaivota/` |
+| 03 | Brandão & Pessoa — escritório de advocacia | `/brandao-pessoa/` | `src/projetos/brandao-pessoa/` |
+
+### Brandão & Pessoa
+
+Site institucional de um escritório de advocacia, na linha de sites jurídicos
+sóbrios: seções em azul-marinho alternando com marfim, títulos em caixa alta
+(Montserrat) com a parte final em dourado, rótulos com traço e WhatsApp sempre
+à mão. O marinho sai da logo, cujo monograma BP foi redesenhado em vetor em
+`components/Logo.tsx`. Seções: abertura, o escritório, sócios e equipe, sete
+áreas de atuação, como atendemos, compromisso, dúvidas e contato com
+formulário que monta a mensagem para o WhatsApp.
+
+Contatos, endereço, cidade e CNPJ ficam em
+`src/projetos/brandao-pessoa/dados.ts`; o que estiver vazio aparece como
+"a confirmar". As OABs e biografias dos advogados ficam no topo do `App.tsx`.
+Os textos seguem as regras de publicidade da OAB (sem promessa de resultado
+nem preços).
 
 ### Gaivota
 
