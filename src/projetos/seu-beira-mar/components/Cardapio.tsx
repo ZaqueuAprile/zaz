@@ -12,14 +12,17 @@ function Play({ className = '' }: { className?: string }) {
   )
 }
 
-// Miniatura do vídeo. Shorts têm uma miniatura vertical (oardefault); quando
-// ela não existe, usa a horizontal ampliada para cortar as faixas pretas.
+// Miniatura do vídeo. Shorts às vezes têm uma miniatura vertical (oardefault);
+// quando não têm, usa a horizontal ampliada para cortar as faixas pretas. O
+// YouTube não responde com erro para miniatura inexistente: devolve uma imagem
+// cinza de 120 px, então a troca também acontece quando ela chega.
 function Miniatura({ video, vertical }: { video: string; vertical?: boolean }) {
   const [horizontal, setHorizontal] = useState(!vertical)
   return (
     <img
       src={`https://i.ytimg.com/vi/${video}/${horizontal ? 'hqdefault' : 'oardefault'}.jpg`}
       onError={() => setHorizontal(true)}
+      onLoad={(e) => !horizontal && e.currentTarget.naturalWidth <= 120 && setHorizontal(true)}
       alt=""
       loading="lazy"
       className={`h-full w-full object-cover transition-transform duration-500 ${
