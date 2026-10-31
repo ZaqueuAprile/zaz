@@ -110,8 +110,8 @@ function Inicio() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ ...entrada, delay: 0.15 }}
         >
-          Frutos do mar com o pé na areia. Toque em um prato do cardápio para ver o vídeo dele antes de
-          pedir.
+          Do mar e da terra, com o pé na areia. Toque em um prato do cardápio para ver o vídeo dele
+          antes de pedir.
         </motion.p>
 
         <motion.div
@@ -146,11 +146,10 @@ function Menu() {
         <Revelar className="mb-10 max-w-2xl">
           <Rotulo>Cardápio</Rotulo>
           <h2 id="cardapio-titulo" className="mt-4 font-display text-5xl leading-tight md:text-6xl">
-            O que o mar trouxe <em>hoje</em>
+            Escolha com os <em>olhos</em>
           </h2>
           <p className="mt-5 text-tinta-2">
-            Toque no prato para ver o vídeo. Os marcados com "serve 2" vêm na medida para dividir; pergunte ao
-            garçom pelo peixe do dia.
+            Toque no prato para ver o vídeo dele. Pergunte ao garçom pelo peixe do dia.
           </p>
           <a
             href={`https://www.youtube.com/playlist?list=${PLAYLIST_ID}`}

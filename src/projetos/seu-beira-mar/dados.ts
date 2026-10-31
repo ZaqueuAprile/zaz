@@ -20,8 +20,9 @@ export const HORARIOS: Record<number, [string, string] | null> = {
 
 export type Prato = {
   nome: string
-  descricao: string
-  preco: number
+  descricao?: string
+  // Sem preço, o cartão mostra só o nome.
+  preco?: number
   serve?: number
   destaque?: boolean
   // Link do vídeo do prato no YouTube (watch, youtu.be ou shorts) ou só o ID.
@@ -38,60 +39,72 @@ export type Categoria = {
   pratos: Prato[]
 }
 
-// Cardápio de exemplo: troque nomes, descrições e preços pelos da casa e cole
-// em "video" o link do vídeo de cada prato.
+// Cardápio da casa, um vídeo por prato. Para mostrar preço e descrição no
+// cartão, acrescente preco: 148 e descricao: '...' ao prato.
 export const CARDAPIO: Categoria[] = [
+  {
+    id: 'entradas',
+    nome: 'Entradas',
+    pratos: [
+      { nome: 'Crudo de Peixe', video: 'https://youtube.com/shorts/OGXOVAkoxH0', vertical: true },
+      { nome: 'Ceviche', video: 'https://youtube.com/shorts/GXzRzZYt4XE', vertical: true },
+    ],
+  },
   {
     id: 'petiscos',
     nome: 'Petiscos',
-    nota: 'Para dividir enquanto o mar não cansa.',
     pratos: [
-      { nome: 'Casquinha de siri', descricao: 'Siri catado, leite de coco e farofa de dendê, servida na casca.', preco: 32, destaque: true, video: '' },
-      { nome: 'Bolinho de peixe', descricao: 'Oito unidades, com maionese de limão-cravo.', preco: 38, video: '' },
-      { nome: 'Camarão alho e óleo', descricao: 'Camarão médio salteado no alho dourado, com pão da casa.', preco: 64, serve: 2, video: '' },
-      { nome: 'Lula à dorê', descricao: 'Anéis empanados na hora, molho tártaro e limão.', preco: 56, serve: 2, video: '' },
-      { nome: 'Ostras frescas', descricao: 'Meia dúzia, com limão e vinagrete de pimenta-de-cheiro.', preco: 48, video: '' },
+      { nome: 'Mandioca', video: 'https://youtube.com/shorts/Cr0wAN3R8oI', vertical: true },
+      { nome: 'Tartar de Camarão', video: 'https://youtube.com/shorts/Q33wH5ypinY', vertical: true },
+      { nome: 'Pastel', video: 'https://youtube.com/shorts/iykZTCueBa4', vertical: true },
     ],
   },
   {
-    id: 'moquecas',
-    nome: 'Moquecas',
-    nota: 'Na panela de barro, com arroz, pirão e farofa.',
+    id: 'saladas',
+    nome: 'Saladas',
     pratos: [
-      { nome: 'Moqueca de peixe', descricao: 'Peixe do dia, dendê, leite de coco, pimentões e coentro.', preco: 148, serve: 2, destaque: true, video: '' },
-      { nome: 'Moqueca de camarão', descricao: 'Camarão VG, dendê, leite de coco e tomate maduro.', preco: 176, serve: 2, video: '' },
-      { nome: 'Moqueca mista', descricao: 'Peixe, camarão, lula e polvo na mesma panela.', preco: 198, serve: 2, video: '' },
-      { nome: 'Moqueca de banana-da-terra', descricao: 'Versão vegetariana, com castanha de caju tostada.', preco: 112, serve: 2, video: '' },
+      { nome: 'Caesar de Camarão', video: 'https://youtube.com/shorts/oHpIMH_hUT8', vertical: true },
+      { nome: 'Peras Grelhadas', video: 'https://youtube.com/shorts/Xtlw56wQiNA', vertical: true },
     ],
   },
   {
-    id: 'grelhados',
-    nome: 'Da grelha',
-    nota: 'Acompanha arroz de coco e salada da estação.',
+    id: 'do-mar',
+    nome: 'Do mar',
     pratos: [
-      { nome: 'Peixe do dia na brasa', descricao: 'Inteiro ou em posta, conforme o que o barco trouxer.', preco: 128, serve: 2, video: '' },
-      { nome: 'Polvo grelhado', descricao: 'Batatas ao murro, azeite e páprica defumada.', preco: 136, destaque: true, video: '' },
-      { nome: 'Camarão no espeto', descricao: 'Dez camarões grandes com manteiga de ervas.', preco: 98, video: '' },
-      { nome: 'Lagosta na manteiga', descricao: 'Meia lagosta grelhada, manteiga de garrafa e limão.', preco: 189, video: '' },
+      { nome: 'Lagosta Campeã', video: 'https://youtube.com/shorts/9Fm3-SRZTKs', vertical: true },
+      { nome: 'Dourado', video: 'https://youtube.com/shorts/1y2M-nQUY2A', vertical: true },
+      { nome: 'Olho de Boi', video: 'https://youtube.com/shorts/MRMpnHtUXpc', vertical: true },
+    ],
+  },
+  {
+    id: 'da-terra',
+    nome: 'Da terra',
+    pratos: [
+      { nome: 'Filé Mignon de Sol', video: 'https://youtube.com/shorts/nGMjoTl9G2g', vertical: true },
+      { nome: 'Chuck Eye', video: 'https://youtube.com/shorts/jrRdtWWLWmo', vertical: true },
+      { nome: 'Ossobuco', video: 'https://youtube.com/shorts/bnwix3qLLck', vertical: true },
+    ],
+  },
+  {
+    id: 'massas',
+    nome: 'Massas',
+    pratos: [
+      { nome: 'Raviolini de Mussarela', video: 'https://youtube.com/shorts/tHdbBh9Qi8w', vertical: true },
+      { nome: 'Ravioli Del Plin', video: 'https://youtube.com/shorts/zvVQ5of6K04', vertical: true },
+    ],
+  },
+  {
+    id: 'vegs',
+    nome: 'Vegs',
+    pratos: [
+      { nome: 'Risoto de Cogumelo', video: 'https://youtube.com/shorts/eeMSEpAGD-c', vertical: true },
     ],
   },
   {
     id: 'sobremesas',
     nome: 'Sobremesas',
     pratos: [
-      { nome: 'Cocada de forno', descricao: 'Morna, com sorvete de tapioca.', preco: 26, video: '' },
-      { nome: 'Pudim de leite', descricao: 'A receita da casa, sem furinhos.', preco: 22, video: '' },
-      { nome: 'Abacaxi na brasa', descricao: 'Com canela, rapadura e creme de coco.', preco: 24, video: '' },
-    ],
-  },
-  {
-    id: 'bebidas',
-    nome: 'Bebidas',
-    pratos: [
-      { nome: 'Caipirinha', descricao: 'Limão, caju ou maracujá. Cachaça, vodca ou saquê.', preco: 28, video: '' },
-      { nome: 'Água de coco', descricao: 'Gelada, servida no coco.', preco: 12, video: '' },
-      { nome: 'Suco da fruta', descricao: 'Cajá, mangaba, acerola ou graviola.', preco: 14, video: '' },
-      { nome: 'Cerveja long neck', descricao: 'Pergunte as opções do dia.', preco: 14, video: '' },
+      { nome: 'Brigadeiro de Colher', video: 'https://youtube.com/shorts/DeloFjEsado', vertical: true },
     ],
   },
 ]

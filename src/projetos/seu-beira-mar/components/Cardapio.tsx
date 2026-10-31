@@ -12,22 +12,33 @@ function Play({ className = '' }: { className?: string }) {
   )
 }
 
+// Miniatura do vídeo. Shorts têm uma miniatura vertical (oardefault); quando
+// ela não existe, usa a horizontal ampliada para cortar as faixas pretas.
+function Miniatura({ video, vertical }: { video: string; vertical?: boolean }) {
+  const [horizontal, setHorizontal] = useState(!vertical)
+  return (
+    <img
+      src={`https://i.ytimg.com/vi/${video}/${horizontal ? 'hqdefault' : 'oardefault'}.jpg`}
+      onError={() => setHorizontal(true)}
+      alt=""
+      loading="lazy"
+      className={`h-full w-full object-cover transition-transform duration-500 ${
+        horizontal && vertical ? 'scale-[1.34] group-hover:scale-[1.4]' : 'group-hover:scale-105'
+      }`}
+    />
+  )
+}
+
 // Cartão do prato. Com vídeo, a capa é a miniatura do YouTube e o cartão
 // inteiro abre o player; sem vídeo, a capa é o mar desenhado e o cartão só informa.
 function Cartao({ prato, onAbrir }: { prato: Prato; onAbrir: (p: Prato) => void }) {
   const video = idDoVideo(prato.video)
+  const preco = prato.preco === undefined ? null : real.format(prato.preco)
 
   const capa = (
-    <span className="relative block aspect-[4/3] overflow-hidden bg-mar">
+    <span className={`relative block overflow-hidden bg-mar ${prato.vertical ? 'aspect-[3/4]' : 'aspect-[4/3]'}`}>
       {video ? (
-        <img
-          src={`https://i.ytimg.com/vi/${video}/hqdefault.jpg`}
-          alt=""
-          loading="lazy"
-          width={480}
-          height={360}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
+        <Miniatura video={video} vertical={prato.vertical} />
       ) : (
         <span
           aria-hidden="true"
@@ -35,30 +46,29 @@ function Cartao({ prato, onAbrir }: { prato: Prato; onAbrir: (p: Prato) => void 
         />
       )}
       {prato.destaque && (
-        <span className="absolute top-3 left-3 rounded-full bg-espuma px-3 py-1 text-xs font-semibold text-mar">da casa</span>
+        <span className="absolute top-2.5 left-2.5 rounded-full bg-espuma px-3 py-1 text-xs font-semibold text-mar">da casa</span>
       )}
       {video && (
         <span
           aria-hidden="true"
-          className="absolute right-3 bottom-3 flex items-center gap-1.5 rounded-full bg-mar/85 py-1.5 pr-3.5 pl-3 text-sm font-semibold text-espuma backdrop-blur-sm transition-colors group-hover:bg-coral"
+          className="absolute right-2.5 bottom-2.5 grid size-10 place-items-center rounded-full bg-mar/80 text-espuma backdrop-blur-sm transition-colors group-hover:bg-coral"
         >
-          <Play className="size-3.5" />
-          Ver vídeo
+          <Play className="ml-0.5 size-4" />
         </span>
       )}
     </span>
   )
 
   const texto = (
-    <span className="flex flex-1 flex-col p-4 md:p-5">
-      <span className="flex items-baseline justify-between gap-3">
-        <span className="font-display text-xl leading-tight">{prato.nome}</span>
-        <span className="shrink-0 font-semibold text-coral tabular-nums">{real.format(prato.preco)}</span>
-      </span>
-      <span className="mt-1.5 text-[0.9375rem] leading-snug text-tinta-2">
-        {prato.descricao}
-        {prato.serve && <span className="whitespace-nowrap"> · Serve {prato.serve}</span>}
-      </span>
+    <span className="flex flex-1 flex-col p-3 md:p-4">
+      <span className="font-display text-lg leading-tight md:text-xl">{prato.nome}</span>
+      {prato.descricao && (
+        <span className="mt-1 text-[0.9375rem] leading-snug text-tinta-2">
+          {prato.descricao}
+          {prato.serve && <span className="whitespace-nowrap"> · Serve {prato.serve}</span>}
+        </span>
+      )}
+      {preco && <span className="mt-auto pt-2 font-semibold text-coral tabular-nums">{preco}</span>}
     </span>
   )
 
@@ -71,7 +81,7 @@ function Cartao({ prato, onAbrir }: { prato: Prato; onAbrir: (p: Prato) => void 
           type="button"
           onClick={() => onAbrir(prato)}
           aria-haspopup="dialog"
-          aria-label={`${prato.nome}, ${real.format(prato.preco)}. Ver vídeo`}
+          aria-label={`${prato.nome}${preco ? `, ${preco}` : ''}. Ver vídeo`}
           className={`group cursor-pointer transition-shadow duration-200 hover:shadow-[0_16px_40px_-20px_rgb(11_58_83/0.55)] hover:ring-mar active:scale-[0.99] ${caixa}`}
         >
           {capa}
@@ -156,7 +166,7 @@ export function Cardapio() {
 
       <div className="mt-6">
         {CARDAPIO.map((c) => (
-          <section key={c.id} id={c.id} aria-labelledby={`${c.id}-titulo`} className="py-10">
+          <section key={c.id} id={c.id} aria-labelledby={`${c.id}-titulo`} className="py-8 md:py-10">
             <Revelar className="flex flex-wrap items-baseline gap-x-6 gap-y-2">
               <h3 id={`${c.id}-titulo`} className="font-display text-4xl md:text-5xl">
                 {c.nome}
@@ -164,7 +174,7 @@ export function Cardapio() {
               {c.nota && <p className="text-tinta-2 italic">{c.nota}</p>}
             </Revelar>
             <Revelar atraso={0.05}>
-              <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+              <ul className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 lg:gap-6">
                 {c.pratos.map((p) => (
                   <Cartao key={p.nome} prato={p} onAbrir={abrir} />
                 ))}
