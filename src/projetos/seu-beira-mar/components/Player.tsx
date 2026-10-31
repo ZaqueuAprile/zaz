@@ -1,6 +1,7 @@
 import { useReducedMotion } from 'motion/react'
 import { useEffect, useRef, useState, type PointerEvent } from 'react'
 import { idDoVideo, type Prato } from '../dados'
+import logoBranca from '../img/logo-branca.webp'
 import { real } from './formato'
 import { Miniatura } from './Miniatura'
 
@@ -338,6 +339,8 @@ export function Player({ lista, inicial, onFechar }: { lista: ItemVideo[]; inici
             aria-live="polite"
             className="pointer-events-none absolute inset-x-0 bottom-0 z-20 bg-gradient-to-t from-black/75 via-black/40 to-transparent px-5 pt-16 pb-6"
           >
+            {/* Assinatura da casa: fica mesmo quando os controles somem. */}
+            <img src={logoBranca} alt="" width={1804} height={125} className="mb-3 block h-auto w-40 opacity-95" />
             <h2 className="font-display text-3xl leading-tight">{prato.nome}</h2>
             {(prato.descricao || preco) && (
               <p className="mt-1.5 text-espuma/85">
