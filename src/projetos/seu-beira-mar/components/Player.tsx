@@ -6,6 +6,7 @@ import { Miniatura } from './Miniatura'
 
 export type ItemVideo = { prato: Prato; categoria: string }
 
+const TERMINOU = 0
 const TOCANDO = 1
 const PAUSADO = 2
 
@@ -31,10 +32,15 @@ export function Player({ lista, inicial, onFechar }: { lista: ItemVideo[]; inici
   const quadro = useRef<HTMLIFrameElement>(null)
   const gesto = useRef<{ x: number; t: number } | null>(null)
   const estado = useRef(-1)
+  // Se o vídeo já tocou alguma vez (pausar depois não conta como bloqueio).
+  const comecou = useRef(false)
   const espera = useRef<number | undefined>(undefined)
   const [indice, setIndice] = useState(inicial)
   const [arrasto, setArrasto] = useState<number | null>(null)
   const [pausado, setPausado] = useState(false)
+  // Até o vídeo tocar de verdade, a foto do prato fica por cima e esconde o
+  // botão de play e o carregamento do YouTube.
+  const [iniciado, setIniciado] = useState(false)
   const [mudo, setMudo] = useState(false)
   const [dica, setDica] = useState(!dicaVista)
   // Controles somem enquanto o vídeo toca; cada toque, troca de prato ou
@@ -78,6 +84,9 @@ export function Player({ lista, inicial, onFechar }: { lista: ItemVideo[]; inici
     return () => window.clearTimeout(t)
   }, [dica])
 
+  const comandar = (func: string, args: unknown[] = []) =>
+    quadro.current?.contentWindow?.postMessage(JSON.stringify({ event: 'command', func, args }), '*')
+
   // Estado do player, que o YouTube manda por postMessage depois do "listening".
   useEffect(() => {
     const ouvir = (e: MessageEvent) => {
@@ -92,8 +101,18 @@ export function Player({ lista, inicial, onFechar }: { lista: ItemVideo[]; inici
       const novo = dados.event === 'onStateChange' ? info : typeof info === 'object' ? info?.playerState : undefined
       if (typeof novo === 'number') {
         estado.current = novo
-        if (novo === TOCANDO) setPausado(false)
+        if (novo === TOCANDO) {
+          comecou.current = true
+          setPausado(false)
+          setIniciado(true)
+        }
         if (novo === PAUSADO) setPausado(true)
+        // Repete o vídeo aqui, e não com loop=1 do YouTube: o loop transforma
+        // o vídeo numa playlist e o player mostra botões de anterior e próximo.
+        if (novo === TERMINOU) {
+          comandar('seekTo', [0, true])
+          comandar('playVideo')
+        }
       }
       if (typeof info === 'object' && typeof info?.muted === 'boolean') setMudo(info.muted)
     }
@@ -103,27 +122,26 @@ export function Player({ lista, inicial, onFechar }: { lista: ItemVideo[]; inici
 
   useEffect(() => () => window.clearTimeout(espera.current), [indice])
 
-  const comando = (func: string, args: unknown[] = []) =>
-    quadro.current?.contentWindow?.postMessage(JSON.stringify({ event: 'command', func, args }), '*')
-
   // Se o navegador não deixar o vídeo começar com som, começa sem som e
   // aparece o botão para ligar o som.
   const aoCarregar = () => {
     quadro.current?.contentWindow?.postMessage(JSON.stringify({ event: 'listening', id: indice, channel: 'widget' }), '*')
     window.clearTimeout(espera.current)
     espera.current = window.setTimeout(() => {
-      if (estado.current === TOCANDO) return
-      comando('mute')
-      comando('playVideo')
+      if (comecou.current) return
+      comandar('mute')
+      comandar('playVideo')
       setMudo(true)
-    }, 1800)
+    }, 1200)
   }
 
   const ir = (passo: number) => {
     const proximo = Math.min(lista.length - 1, Math.max(0, indice + passo))
     if (proximo === indice) return
     estado.current = -1
+    comecou.current = false
     setIndice(proximo)
+    setIniciado(false)
     setPausado(false)
     setMudo(false)
     setDica(false)
@@ -131,15 +149,16 @@ export function Player({ lista, inicial, onFechar }: { lista: ItemVideo[]; inici
   }
 
   const alternar = () => {
-    comando(pausado ? 'playVideo' : 'pauseVideo')
-    setPausado(!pausado)
+    const tocando = estado.current === TOCANDO
+    comandar(tocando ? 'pauseVideo' : 'playVideo')
+    setPausado(tocando)
     mostrar()
   }
 
   const ligarSom = () => {
-    comando('unMute')
-    comando('setVolume', [100])
-    comando('playVideo')
+    comandar('unMute')
+    comandar('setVolume', [100])
+    comandar('playVideo')
     setMudo(false)
   }
 
@@ -211,11 +230,19 @@ export function Player({ lista, inicial, onFechar }: { lista: ItemVideo[]; inici
                       onLoad={aoCarregar}
                       tabIndex={-1}
                       className="absolute inset-x-0 -top-[12%] h-[124%] w-full border-0"
-                      src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&controls=0&loop=1&playlist=${id}&rel=0&playsinline=1&iv_load_policy=3&disablekb=1&fs=0&enablejsapi=1&origin=${encodeURIComponent(location.origin)}`}
+                      src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&controls=0&rel=0&playsinline=1&iv_load_policy=3&disablekb=1&fs=0&enablejsapi=1&origin=${encodeURIComponent(location.origin)}`}
                       title={item.prato.nome}
                       allow="autoplay; encrypted-media; picture-in-picture"
                       referrerPolicy="strict-origin-when-cross-origin"
                     />
+                  )}
+                  {id && i === indice && (
+                    <div
+                      aria-hidden="true"
+                      className={`absolute inset-0 transition-opacity duration-300 ${iniciado ? 'opacity-0' : 'opacity-100'}`}
+                    >
+                      <Miniatura video={id} vertical={item.prato.vertical} />
+                    </div>
                   )}
                 </div>
               )
