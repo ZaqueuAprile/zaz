@@ -4,7 +4,7 @@ import { Cardapio } from './components/Cardapio'
 import { Onda } from './components/Onda'
 import { Revelar } from './components/Revelar'
 import logoBranca from './img/logo-branca.webp'
-import { ENDERECO, HORARIOS, PLAYLIST_ID, WHATSAPP } from './dados'
+import { ENDERECO, HORARIOS, WHATSAPP } from './dados'
 
 // Lido uma vez ao abrir a página: basta para o selo de aberto e o dia de hoje.
 const AGORA = new Date()
@@ -141,16 +141,8 @@ function Menu() {
             Escolha com os <em>olhos</em>
           </h2>
           <p className="mt-5 text-tinta-2">
-            Toque no prato para ver o vídeo dele. Pergunte ao garçom pelo peixe do dia.
+            Toque em um prato para ver o vídeo e deslize para o lado para ver os outros. Pergunte ao garçom pelo peixe do dia.
           </p>
-          <a
-            href={`https://www.youtube.com/playlist?list=${PLAYLIST_ID}`}
-            target="_blank"
-            rel="noopener"
-            className="mt-3 inline-block font-semibold text-mar-2 underline underline-offset-4 hover:no-underline"
-          >
-            Todos os vídeos no YouTube
-          </a>
         </Revelar>
         <Cardapio />
       </div>
