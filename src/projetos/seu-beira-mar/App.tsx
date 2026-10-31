@@ -3,6 +3,7 @@ import type { ReactNode } from 'react'
 import { Cardapio } from './components/Cardapio'
 import { Onda } from './components/Onda'
 import { Revelar } from './components/Revelar'
+import logoBranca from './img/logo-branca.webp'
 import { ENDERECO, HORARIOS, PLAYLIST_ID, WHATSAPP } from './dados'
 
 // Lido uma vez ao abrir a página: basta para o selo de aberto e o dia de hoje.
@@ -31,12 +32,9 @@ function Rotulo({ children, claro = false }: { children: ReactNode; claro?: bool
   return <p className={`rotulo ${claro ? 'text-mar-claro' : 'text-mar-2'}`}>{children}</p>
 }
 
-function Logo({ className = '' }: { className?: string }) {
-  return (
-    <span className={`font-display leading-none ${className}`}>
-      Seu <em className="text-mar-claro">Beira Mar</em>
-    </span>
-  )
+// Logo da marca, em branco sobre o azul. Proporção 1804×125.
+function Logo({ className = '', alt = 'Seu Beira Mar' }: { className?: string; alt?: string }) {
+  return <img src={logoBranca} alt={alt} width={1804} height={125} className={`block h-auto ${className}`} />
 }
 
 function Topo() {
@@ -44,8 +42,8 @@ function Topo() {
   return (
     <header className="fixed inset-x-0 top-0 z-40 bg-mar/95 text-espuma backdrop-blur-sm">
       <div className="wrap flex h-16 items-center justify-between gap-4">
-        <a href="#inicio" aria-label="Seu Beira Mar, início" className="text-xl md:text-2xl">
-          <Logo />
+        <a href="#inicio" className="py-3">
+          <Logo alt="Seu Beira Mar, início" className="w-48 md:w-60" />
         </a>
         <nav aria-label="Principal" className="flex items-center gap-1 text-sm font-semibold sm:gap-4">
           <a href="#cardapio" className="hidden px-2 py-3 hover:text-mar-claro sm:inline">
@@ -81,7 +79,7 @@ function Inicio() {
       {/* Reflexo do sol na água, só cor. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_80%_10%,rgb(243_178_107/0.28),transparent_45%),radial-gradient(ellipse_at_10%_90%,rgb(159_208_221/0.18),transparent_50%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_80%_10%,rgb(243_178_107/0.28),transparent_45%),radial-gradient(ellipse_at_10%_90%,rgb(120_140_255/0.22),transparent_50%)]"
       />
       <div className="wrap relative flex min-h-[88svh] flex-col justify-center pt-28 pb-16 md:min-h-[82svh]">
         <motion.p
@@ -94,14 +92,8 @@ function Inicio() {
           {aberto ? 'Aberto agora' : 'Fechado agora'}
         </motion.p>
 
-        <motion.h1
-          className="font-display text-[clamp(3.5rem,13vw,9.5rem)] leading-[0.92] tracking-[-0.02em]"
-          initial={{ opacity: 0, y: 32 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={entrada}
-        >
-          Seu <br />
-          <em className="text-mar-claro">Beira Mar</em>
+        <motion.h1 initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={entrada}>
+          <Logo className="w-full max-w-[56rem]" />
         </motion.h1>
 
         <motion.p
@@ -218,7 +210,7 @@ function Visite() {
 
       <footer className="border-t border-espuma/15">
         <div className="wrap flex flex-wrap items-center justify-between gap-4 py-8 text-sm text-espuma/70">
-          <Logo className="text-lg text-espuma" />
+          <Logo alt="" className="w-44" />
           <p>© {ANO} Seu Beira Mar</p>
         </div>
       </footer>
