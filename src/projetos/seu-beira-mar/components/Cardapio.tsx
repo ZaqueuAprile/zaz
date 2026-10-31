@@ -106,6 +106,12 @@ export function Cardapio() {
   const origem = useRef<HTMLElement | null>(null)
 
   const abrir = (prato: Prato) => {
+    // Aberto como arquivo (file://), a página não tem endereço e o YouTube
+    // recusa o player embutido (erro 153): o vídeo abre no próprio YouTube.
+    if (location.protocol === 'file:') {
+      window.open(`https://www.youtube.com/shorts/${idDoVideo(prato.video)}`, '_blank', 'noopener')
+      return
+    }
     origem.current = document.activeElement as HTMLElement | null
     setAberto(prato)
   }

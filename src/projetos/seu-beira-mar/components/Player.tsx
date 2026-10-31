@@ -31,10 +31,20 @@ export function Player({ prato, onFechar }: { prato: Prato; onFechar: () => void
     >
       {/* Fechar vem antes do vídeo e recebe o foco: com o foco dentro do
           player do YouTube, o Esc iria para ele e não fecharia a janela. */}
-      <div className="flex items-center gap-4 py-2 pr-2 pl-5 md:pl-6">
+      <div className="flex items-center gap-1 py-2 pr-2 pl-5 md:pl-6">
         <h2 id="player-titulo" className="mr-auto min-w-0 font-display text-xl leading-tight md:text-2xl">
           {prato.nome}
         </h2>
+        {video && (
+          <a
+            href={`https://www.youtube.com/shorts/${video}`}
+            target="_blank"
+            rel="noopener"
+            className="flex min-h-11 items-center px-2 text-sm font-semibold text-mar-2 underline underline-offset-4 hover:no-underline"
+          >
+            Abrir no YouTube
+          </a>
+        )}
         <button
           type="button"
           autoFocus
@@ -51,6 +61,7 @@ export function Player({ prato, onFechar }: { prato: Prato; onFechar: () => void
             src={`https://www.youtube-nocookie.com/embed/${video}?autoplay=1&rel=0&playsinline=1&modestbranding=1`}
             title={`Vídeo: ${prato.nome}`}
             allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+            referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
           />
         )}
