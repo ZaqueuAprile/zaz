@@ -12,6 +12,8 @@
   --color-mar: #06058d;
   --color-mar-2: #2d2cb0;
   --color-mar-claro: #c3c2f5;
+  /* Fundo do player em tela cheia: o azul da marca quase preto. */
+  --color-noite: #03023a;
   --color-areia: #f5ecdc;
   --color-areia-2: #ecdfc6;
   --color-espuma: #fbf7ef;

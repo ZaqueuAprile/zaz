@@ -2,9 +2,6 @@
 // Deixe vazio para esconder os botões de pedido.
 export const WHATSAPP = ''
 
-// Playlist com todos os vídeos, para o link "ver todos no YouTube".
-export const PLAYLIST_ID = 'PLMdrpAAr63Ow'
-
 export const ENDERECO = 'Orla da praia, s/n'
 
 // Funcionamento por dia da semana (0 = domingo). Segunda fechada.

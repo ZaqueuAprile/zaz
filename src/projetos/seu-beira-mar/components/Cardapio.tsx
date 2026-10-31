@@ -1,8 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 import { CARDAPIO, idDoVideo, type Prato } from '../dados'
 import { real } from './formato'
-import { Player } from './Player'
+import { Miniatura } from './Miniatura'
+import { Player, type ItemVideo } from './Player'
 import { Revelar } from './Revelar'
+
+// Pratos com vídeo, na ordem do cardápio: é a sequência que o player percorre
+// quando a pessoa desliza.
+const LISTA: ItemVideo[] = CARDAPIO.flatMap((c) =>
+  c.pratos.filter((p) => idDoVideo(p.video)).map((p) => ({ prato: p, categoria: c.nome })),
+)
 
 function Play({ className = '' }: { className?: string }) {
   return (
@@ -12,36 +19,17 @@ function Play({ className = '' }: { className?: string }) {
   )
 }
 
-// Miniatura do vídeo. Shorts às vezes têm uma miniatura vertical (oardefault);
-// quando não têm, usa a horizontal ampliada para cortar as faixas pretas. O
-// YouTube não responde com erro para miniatura inexistente: devolve uma imagem
-// cinza de 120 px, então a troca também acontece quando ela chega.
-function Miniatura({ video, vertical }: { video: string; vertical?: boolean }) {
-  const [horizontal, setHorizontal] = useState(!vertical)
-  return (
-    <img
-      src={`https://i.ytimg.com/vi/${video}/${horizontal ? 'hqdefault' : 'oardefault'}.jpg`}
-      onError={() => setHorizontal(true)}
-      onLoad={(e) => !horizontal && e.currentTarget.naturalWidth <= 120 && setHorizontal(true)}
-      alt=""
-      loading="lazy"
-      className={`h-full w-full object-cover transition-transform duration-500 ${
-        horizontal && vertical ? 'scale-[1.34] group-hover:scale-[1.4]' : 'group-hover:scale-105'
-      }`}
-    />
-  )
-}
-
 // Cartão do prato. Com vídeo, a capa é a miniatura do YouTube e o cartão
 // inteiro abre o player; sem vídeo, a capa é o mar desenhado e o cartão só informa.
-function Cartao({ prato, onAbrir }: { prato: Prato; onAbrir: (p: Prato) => void }) {
+function Cartao({ prato, onAbrir }: { prato: Prato; onAbrir: (indice: number) => void }) {
+  const indice = LISTA.findIndex((item) => item.prato === prato)
   const video = idDoVideo(prato.video)
   const preco = prato.preco === undefined ? null : real.format(prato.preco)
 
   const capa = (
     <span className={`relative block overflow-hidden bg-mar ${prato.vertical ? 'aspect-[3/4]' : 'aspect-[4/3]'}`}>
       {video ? (
-        <Miniatura video={video} vertical={prato.vertical} />
+        <Miniatura video={video} vertical={prato.vertical} className="transition-transform duration-500 group-hover:scale-105" />
       ) : (
         <span
           aria-hidden="true"
@@ -82,9 +70,10 @@ function Cartao({ prato, onAbrir }: { prato: Prato; onAbrir: (p: Prato) => void 
       {video ? (
         <button
           type="button"
-          onClick={() => onAbrir(prato)}
+          onClick={() => onAbrir(indice)}
+          data-video={indice}
           aria-haspopup="dialog"
-          aria-label={`${prato.nome}${preco ? `, ${preco}` : ''}. Ver vídeo`}
+          aria-label={`${prato.nome}${preco ? `, ${preco}` : ''}`}
           className={`group cursor-pointer transition-shadow duration-200 hover:shadow-[0_16px_40px_-20px_rgb(6_5_141/0.5)] hover:ring-mar active:scale-[0.99] ${caixa}`}
         >
           {capa}
@@ -104,24 +93,27 @@ function Cartao({ prato, onAbrir }: { prato: Prato; onAbrir: (p: Prato) => void 
 // de categorias que acompanha a rolagem e marca a seção em que a pessoa está.
 export function Cardapio() {
   const [ativa, setAtiva] = useState(CARDAPIO[0].id)
-  const [aberto, setAberto] = useState<Prato | null>(null)
+  const [aberto, setAberto] = useState<number | null>(null)
   const barra = useRef<HTMLDivElement>(null)
-  const origem = useRef<HTMLElement | null>(null)
 
-  const abrir = (prato: Prato) => {
+  const abrir = (indice: number) => {
+    const prato = LISTA[indice].prato
     // Aberto como arquivo (file://), a página não tem endereço e o YouTube
-    // recusa o player embutido (erro 153): o vídeo abre no próprio YouTube.
+    // recusa o player embutido (erro 153): o vídeo abre direto no app.
     if (location.protocol === 'file:') {
       window.open(`https://www.youtube.com/shorts/${idDoVideo(prato.video)}`, '_blank', 'noopener')
       return
     }
-    origem.current = document.activeElement as HTMLElement | null
-    setAberto(prato)
+    setAberto(indice)
   }
 
-  const fechar = () => {
+  // Ao fechar, a página vai até o último prato visto, que pode não ser o que
+  // abriu o player, e o foco fica nele.
+  const fechar = (indice: number) => {
     setAberto(null)
-    origem.current?.focus({ preventScroll: true })
+    const cartao = document.querySelector<HTMLElement>(`[data-video="${indice}"]`)
+    cartao?.scrollIntoView({ block: 'center' })
+    cartao?.focus({ preventScroll: true })
   }
 
   useEffect(() => {
@@ -193,7 +185,7 @@ export function Cardapio() {
         ))}
       </div>
 
-      {aberto && <Player key={aberto.nome} prato={aberto} onFechar={fechar} />}
+      {aberto !== null && <Player lista={LISTA} inicial={aberto} onFechar={fechar} />}
     </>
   )
 }
