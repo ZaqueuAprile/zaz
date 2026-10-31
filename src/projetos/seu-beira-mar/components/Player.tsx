@@ -37,7 +37,26 @@ export function Player({ lista, inicial, onFechar }: { lista: ItemVideo[]; inici
   const [pausado, setPausado] = useState(false)
   const [mudo, setMudo] = useState(false)
   const [dica, setDica] = useState(!dicaVista)
+  // Controles somem enquanto o vídeo toca; cada toque, troca de prato ou
+  // movimento do mouse soma um, o que reinicia a contagem para sumir.
+  const [visivel, setVisivel] = useState(true)
+  const [atividade, setAtividade] = useState(0)
   const semMovimento = useReducedMotion()
+
+  const mostrar = () => {
+    setVisivel(true)
+    setAtividade((n) => n + 1)
+  }
+
+  useEffect(() => {
+    if (pausado || !visivel) return
+    const t = window.setTimeout(() => setVisivel(false), 2500)
+    return () => window.clearTimeout(t)
+  }, [pausado, visivel, atividade])
+
+  // Some com a classe: transparente e sem receber toque, mas volta se um
+  // controle ganhar foco pelo teclado.
+  const sumir = `transition-opacity duration-300 ${visivel || pausado ? 'opacity-100' : 'pointer-events-none opacity-0 focus-visible:opacity-100'}`
 
   const { prato, categoria } = lista[indice]
   const preco = prato.preco === undefined ? null : real.format(prato.preco)
@@ -108,11 +127,13 @@ export function Player({ lista, inicial, onFechar }: { lista: ItemVideo[]; inici
     setPausado(false)
     setMudo(false)
     setDica(false)
+    mostrar()
   }
 
   const alternar = () => {
     comando(pausado ? 'playVideo' : 'pauseVideo')
     setPausado(!pausado)
+    mostrar()
   }
 
   const ligarSom = () => {
@@ -163,6 +184,7 @@ export function Player({ lista, inicial, onFechar }: { lista: ItemVideo[]; inici
       aria-label="Vídeos dos pratos"
       onClose={() => onFechar(indice)}
       onKeyDown={(e) => {
+        mostrar()
         if (e.key === 'ArrowRight') ir(1)
         if (e.key === 'ArrowLeft') ir(-1)
       }}
@@ -208,10 +230,12 @@ export function Player({ lista, inicial, onFechar }: { lista: ItemVideo[]; inici
             onPointerMove={aoMover}
             onPointerUp={aoSoltar}
             onPointerCancel={cancelar}
+            onMouseMove={() => !visivel && mostrar()}
           />
 
-          <div className="pointer-events-none absolute inset-x-0 top-0 z-20 flex items-center gap-2 bg-gradient-to-b from-black/60 to-transparent px-4 pt-3 pb-10">
-            <p className="mr-auto text-sm font-semibold tabular-nums">
+          <div className="pointer-events-none absolute inset-x-0 top-0 z-20 flex items-center gap-2 px-4 pt-3 pb-10">
+            <span aria-hidden="true" className={`absolute inset-0 -z-10 bg-gradient-to-b from-black/60 to-transparent ${sumir}`} />
+            <p className={`mr-auto text-sm font-semibold tabular-nums ${sumir}`}>
               {indice + 1} / {lista.length}
               <span className="font-normal text-espuma/75"> · {categoria}</span>
             </p>
@@ -231,7 +255,9 @@ export function Player({ lista, inicial, onFechar }: { lista: ItemVideo[]; inici
               type="button"
               autoFocus
               onClick={() => dialogo.current?.close()}
-              className="pointer-events-auto flex min-h-11 cursor-pointer items-center gap-1.5 rounded-full bg-black/35 px-4 text-sm font-semibold backdrop-blur-sm transition-colors hover:bg-black/55"
+              className={`flex min-h-11 cursor-pointer items-center gap-1.5 rounded-full bg-black/35 px-4 text-sm font-semibold backdrop-blur-sm hover:bg-black/55 ${
+                visivel || pausado ? 'pointer-events-auto' : ''
+              } ${sumir}`}
             >
               <svg aria-hidden="true" viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth="2.25">
                 <path d="M6 6l12 12M18 6 6 18" strokeLinecap="round" />
@@ -255,7 +281,7 @@ export function Player({ lista, inicial, onFechar }: { lista: ItemVideo[]; inici
               type="button"
               onClick={() => ir(-1)}
               aria-label="Prato anterior"
-              className="absolute top-1/2 left-2 z-20 grid size-11 -translate-y-1/2 cursor-pointer place-items-center rounded-full bg-black/30 backdrop-blur-sm transition-colors hover:bg-black/55"
+              className={`absolute top-1/2 left-2 z-20 grid size-11 -translate-y-1/2 cursor-pointer place-items-center rounded-full bg-black/30 backdrop-blur-sm hover:bg-black/55 ${sumir}`}
             >
               <Seta direcao="esquerda" />
             </button>
@@ -265,7 +291,7 @@ export function Player({ lista, inicial, onFechar }: { lista: ItemVideo[]; inici
               type="button"
               onClick={() => ir(1)}
               aria-label="Próximo prato"
-              className="absolute top-1/2 right-2 z-20 grid size-11 -translate-y-1/2 cursor-pointer place-items-center rounded-full bg-black/30 backdrop-blur-sm transition-colors hover:bg-black/55"
+              className={`absolute top-1/2 right-2 z-20 grid size-11 -translate-y-1/2 cursor-pointer place-items-center rounded-full bg-black/30 backdrop-blur-sm hover:bg-black/55 ${sumir}`}
             >
               <Seta direcao="direita" />
             </button>
