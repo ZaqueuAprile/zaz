@@ -45,7 +45,7 @@ function Cartao({ prato, onAbrir }: { prato: Prato; onAbrir: (p: Prato) => void 
       ) : (
         <span
           aria-hidden="true"
-          className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,#f3b26b_0,#d9714a_16%,transparent_42%),linear-gradient(to_bottom,#0b3a53,#14597a_70%,#1d6f8f)]"
+          className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,#f3b26b_0,#d9714a_16%,transparent_42%),linear-gradient(to_bottom,#06058d,#2d2cb0_70%,#4746c4)]"
         />
       )}
       {prato.destaque && (
@@ -85,7 +85,7 @@ function Cartao({ prato, onAbrir }: { prato: Prato; onAbrir: (p: Prato) => void 
           onClick={() => onAbrir(prato)}
           aria-haspopup="dialog"
           aria-label={`${prato.nome}${preco ? `, ${preco}` : ''}. Ver vídeo`}
-          className={`group cursor-pointer transition-shadow duration-200 hover:shadow-[0_16px_40px_-20px_rgb(11_58_83/0.55)] hover:ring-mar active:scale-[0.99] ${caixa}`}
+          className={`group cursor-pointer transition-shadow duration-200 hover:shadow-[0_16px_40px_-20px_rgb(6_5_141/0.5)] hover:ring-mar active:scale-[0.99] ${caixa}`}
         >
           {capa}
           {texto}
