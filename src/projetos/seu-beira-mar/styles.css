@@ -1,0 +1,113 @@
+/* Seu Beira Mar — conceito
+   Barraca de praia que virou restaurante. O site é a beira: o topo é mar
+   fundo, a página desce até a areia e as ondas marcam a passagem entre as
+   seções. Coral só nos preços e no que chama para a ação. */
+
+@import 'tailwindcss';
+@source not '../../../.claude';
+
+@theme {
+  --color-mar: #0b3a53;
+  --color-mar-2: #14597a;
+  --color-mar-claro: #9fd0dd;
+  --color-areia: #f5ecdc;
+  --color-areia-2: #ecdfc6;
+  --color-espuma: #fbf7ef;
+  --color-tinta: #13232c;
+  --color-tinta-2: #4a5961;
+  --color-linha: #d8c6a4;
+  --color-coral: #b8432a;
+  --color-coral-2: #9c3520;
+
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Karla Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 8.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    background: var(--color-areia);
+    color: var(--color-tinta);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: var(--color-mar);
+    color: var(--color-espuma);
+  }
+}
+
+@utility wrap {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: max(1.25rem, env(safe-area-inset-left, 0px));
+
+  @media (width >= 48rem) {
+    padding-inline: 3rem;
+  }
+}
+
+@utility rotulo {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* Linha pontilhada entre o nome do prato e o preço, como em cardápio impresso. */
+@utility pontilhado {
+  flex: 1;
+  min-width: 1.5rem;
+  border-bottom: 2px dotted var(--color-linha);
+  transform: translateY(-0.3em);
+}
+
+@utility sem-barra {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Ondas do hero: duas camadas que andam devagar em sentidos opostos. */
+@keyframes mare {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.onda {
+  animation: mare 18s linear infinite;
+}
+
+.onda-lenta {
+  animation-duration: 30s;
+  animation-direction: reverse;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .onda {
+    animation: none;
+  }
+}

@@ -9,6 +9,17 @@ Cada projeto é uma página própria do mesmo build.
 |---|---------|---------|--------|
 | 01 | Bossa Cucina — restaurante, site conceitual | `/bossa-cucina/` | `src/projetos/bossa-cucina/` |
 | 02 | Gaivota — pousada em Santo André | `/pousada-gaivota/` | `src/projetos/pousada-gaivota/` |
+| 03 | Seu Beira Mar — cardápio de restaurante | `/seu-beira-mar/` | `src/projetos/seu-beira-mar/` |
+
+### Seu Beira Mar
+
+Landing page de cardápio de um restaurante de frutos do mar na praia. A página
+desce do mar (azul fundo, no topo) até a areia, com ondas em SVG entre as
+seções; Playfair Display + Karla, coral só nos preços e nos botões. Os vídeos
+vêm de uma playlist do YouTube, carregada só quando a pessoa toca em assistir.
+O cardápio fica inteiro na página, com uma barra de categorias que acompanha a
+rolagem. Pratos, preços, horários, endereço, WhatsApp e ID da playlist ficam em
+`src/projetos/seu-beira-mar/dados.ts`.
 
 ### Gaivota
 

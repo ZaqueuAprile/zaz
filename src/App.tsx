@@ -13,6 +13,12 @@ const PROJETOS = [
     tipo: 'Pousada · site de hospedagem',
     href: './pousada-gaivota/',
   },
+  {
+    numero: '03',
+    nome: 'Seu Beira Mar',
+    tipo: 'Restaurante · cardápio',
+    href: './seu-beira-mar/',
+  },
 ]
 
 function App() {
