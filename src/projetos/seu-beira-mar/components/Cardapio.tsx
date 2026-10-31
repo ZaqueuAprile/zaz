@@ -1,35 +1,109 @@
 import { useEffect, useRef, useState } from 'react'
-import { CARDAPIO, type Prato } from '../dados'
+import { CARDAPIO, idDoVideo, type Prato } from '../dados'
+import { real } from './formato'
+import { Player } from './Player'
 import { Revelar } from './Revelar'
 
-const real = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 0 })
-
-function Item({ prato }: { prato: Prato }) {
+function Play({ className = '' }: { className?: string }) {
   return (
-    <li className="py-5">
-      <div className="flex items-baseline gap-3">
-        <h4 className="font-display text-xl leading-tight md:text-2xl">{prato.nome}</h4>
-        {prato.destaque && (
-          <span className="shrink-0 rounded-full bg-mar px-2.5 py-0.5 text-xs font-semibold tracking-wide text-espuma">
-            da casa
-          </span>
-        )}
-        <span aria-hidden="true" className="pontilhado" />
-        <span className="shrink-0 text-lg font-semibold text-coral tabular-nums">{real.format(prato.preco)}</span>
-      </div>
-      <p className="mt-1.5 max-w-[60ch] text-tinta-2">
+    <svg aria-hidden="true" viewBox="0 0 24 24" className={className} fill="currentColor">
+      <path d="M7 4.5v15a1 1 0 0 0 1.52.85l12-7.5a1 1 0 0 0 0-1.7l-12-7.5A1 1 0 0 0 7 4.5Z" />
+    </svg>
+  )
+}
+
+// Cartão do prato. Com vídeo, a capa é a miniatura do YouTube e o cartão
+// inteiro abre o player; sem vídeo, a capa é o mar desenhado e o cartão só informa.
+function Cartao({ prato, onAbrir }: { prato: Prato; onAbrir: (p: Prato) => void }) {
+  const video = idDoVideo(prato.video)
+
+  const capa = (
+    <span className="relative block aspect-[4/3] overflow-hidden bg-mar">
+      {video ? (
+        <img
+          src={`https://i.ytimg.com/vi/${video}/hqdefault.jpg`}
+          alt=""
+          loading="lazy"
+          width={480}
+          height={360}
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+      ) : (
+        <span
+          aria-hidden="true"
+          className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,#f3b26b_0,#d9714a_16%,transparent_42%),linear-gradient(to_bottom,#0b3a53,#14597a_70%,#1d6f8f)]"
+        />
+      )}
+      {prato.destaque && (
+        <span className="absolute top-3 left-3 rounded-full bg-espuma px-3 py-1 text-xs font-semibold text-mar">da casa</span>
+      )}
+      {video && (
+        <span
+          aria-hidden="true"
+          className="absolute right-3 bottom-3 flex items-center gap-1.5 rounded-full bg-mar/85 py-1.5 pr-3.5 pl-3 text-sm font-semibold text-espuma backdrop-blur-sm transition-colors group-hover:bg-coral"
+        >
+          <Play className="size-3.5" />
+          Ver vídeo
+        </span>
+      )}
+    </span>
+  )
+
+  const texto = (
+    <span className="flex flex-1 flex-col p-4 md:p-5">
+      <span className="flex items-baseline justify-between gap-3">
+        <span className="font-display text-xl leading-tight">{prato.nome}</span>
+        <span className="shrink-0 font-semibold text-coral tabular-nums">{real.format(prato.preco)}</span>
+      </span>
+      <span className="mt-1.5 text-[0.9375rem] leading-snug text-tinta-2">
         {prato.descricao}
         {prato.serve && <span className="whitespace-nowrap"> · Serve {prato.serve}</span>}
-      </p>
+      </span>
+    </span>
+  )
+
+  const caixa = 'flex h-full w-full flex-col overflow-hidden rounded-2xl bg-white/70 text-left ring-1 ring-linha'
+
+  return (
+    <li>
+      {video ? (
+        <button
+          type="button"
+          onClick={() => onAbrir(prato)}
+          aria-haspopup="dialog"
+          aria-label={`${prato.nome}, ${real.format(prato.preco)}. Ver vídeo`}
+          className={`group cursor-pointer transition-shadow duration-200 hover:shadow-[0_16px_40px_-20px_rgb(11_58_83/0.55)] hover:ring-mar active:scale-[0.99] ${caixa}`}
+        >
+          {capa}
+          {texto}
+        </button>
+      ) : (
+        <div className={caixa}>
+          {capa}
+          {texto}
+        </div>
+      )}
     </li>
   )
 }
 
-// Cardápio inteiro na página, com uma barra de categorias que acompanha a
-// rolagem e marca a seção em que a pessoa está.
+// Cardápio visual: um cartão por prato, cada um com o seu vídeo, e uma barra
+// de categorias que acompanha a rolagem e marca a seção em que a pessoa está.
 export function Cardapio() {
   const [ativa, setAtiva] = useState(CARDAPIO[0].id)
+  const [aberto, setAberto] = useState<Prato | null>(null)
   const barra = useRef<HTMLDivElement>(null)
+  const origem = useRef<HTMLElement | null>(null)
+
+  const abrir = (prato: Prato) => {
+    origem.current = document.activeElement as HTMLElement | null
+    setAberto(prato)
+  }
+
+  const fechar = () => {
+    setAberto(null)
+    origem.current?.focus({ preventScroll: true })
+  }
 
   useEffect(() => {
     const observador = new IntersectionObserver(
@@ -82,23 +156,25 @@ export function Cardapio() {
 
       <div className="mt-6">
         {CARDAPIO.map((c) => (
-          <section key={c.id} id={c.id} aria-labelledby={`${c.id}-titulo`} className="grid gap-x-12 py-10 md:grid-cols-12">
-            <Revelar className="md:col-span-4">
+          <section key={c.id} id={c.id} aria-labelledby={`${c.id}-titulo`} className="py-10">
+            <Revelar className="flex flex-wrap items-baseline gap-x-6 gap-y-2">
               <h3 id={`${c.id}-titulo`} className="font-display text-4xl md:text-5xl">
                 {c.nome}
               </h3>
-              {c.nota && <p className="mt-3 max-w-xs text-tinta-2 italic">{c.nota}</p>}
+              {c.nota && <p className="text-tinta-2 italic">{c.nota}</p>}
             </Revelar>
-            <Revelar className="md:col-span-8" atraso={0.05}>
-              <ul className="mt-4 divide-y divide-linha md:mt-0">
+            <Revelar atraso={0.05}>
+              <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
                 {c.pratos.map((p) => (
-                  <Item key={p.nome} prato={p} />
+                  <Cartao key={p.nome} prato={p} onAbrir={abrir} />
                 ))}
               </ul>
             </Revelar>
           </section>
         ))}
       </div>
+
+      {aberto && <Player key={aberto.nome} prato={aberto} onFechar={fechar} />}
     </>
   )
 }

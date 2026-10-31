@@ -13,13 +13,13 @@ Cada projeto é uma página própria do mesmo build.
 
 ### Seu Beira Mar
 
-Landing page de cardápio de um restaurante de frutos do mar na praia. A página
-desce do mar (azul fundo, no topo) até a areia, com ondas em SVG entre as
-seções; Playfair Display + Karla, coral só nos preços e nos botões. Os vídeos
-vêm de uma playlist do YouTube, carregada só quando a pessoa toca em assistir.
-O cardápio fica inteiro na página, com uma barra de categorias que acompanha a
-rolagem. Pratos, preços, horários, endereço, WhatsApp e ID da playlist ficam em
-`src/projetos/seu-beira-mar/dados.ts`.
+Cardápio visual de um restaurante de frutos do mar na praia, pensado para abrir
+pela etiqueta NFC da mesa. A página desce do mar (azul fundo, no topo) até a
+areia, com ondas em SVG entre as seções; Playfair Display + Karla, coral só nos
+preços e nos botões. Cada prato é um cartão com a miniatura do seu vídeo; tocar
+nele abre um player só daquele prato. Uma barra de categorias acompanha a
+rolagem. Pratos, preços, link do vídeo de cada prato (campo `video`), horários,
+endereço e WhatsApp ficam em `src/projetos/seu-beira-mar/dados.ts`.
 
 ### Gaivota
 

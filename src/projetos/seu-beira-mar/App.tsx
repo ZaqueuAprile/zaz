@@ -2,9 +2,8 @@ import { MotionConfig, motion } from 'motion/react'
 import type { ReactNode } from 'react'
 import { Cardapio } from './components/Cardapio'
 import { Onda } from './components/Onda'
-import { Playlist } from './components/Playlist'
 import { Revelar } from './components/Revelar'
-import { ENDERECO, HORARIOS, WHATSAPP } from './dados'
+import { ENDERECO, HORARIOS, PLAYLIST_ID, WHATSAPP } from './dados'
 
 // Lido uma vez ao abrir a página: basta para o selo de aberto e o dia de hoje.
 const AGORA = new Date()
@@ -51,9 +50,6 @@ function Topo() {
         <nav aria-label="Principal" className="flex items-center gap-1 text-sm font-semibold sm:gap-4">
           <a href="#cardapio" className="hidden px-2 py-3 hover:text-mar-claro sm:inline">
             Cardápio
-          </a>
-          <a href="#videos" className="hidden px-2 py-3 hover:text-mar-claro sm:inline">
-            Vídeos
           </a>
           <a href="#visite" className="hidden px-2 py-3 hover:text-mar-claro md:inline">
             Como chegar
@@ -114,8 +110,8 @@ function Inicio() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ ...entrada, delay: 0.15 }}
         >
-          Frutos do mar com o pé na areia. Peixe que chega de manhã, moqueca na panela de barro e caipirinha
-          gelada de frente para o mar.
+          Frutos do mar com o pé na areia. Toque em um prato do cardápio para ver o vídeo dele antes de
+          pedir.
         </motion.p>
 
         <motion.div
@@ -131,38 +127,14 @@ function Inicio() {
             Ver o cardápio
           </a>
           <a
-            href="#videos"
-            className="flex min-h-12 items-center gap-2 rounded-full border border-espuma/40 px-7 font-semibold transition-colors hover:bg-espuma hover:text-mar"
+            href="#visite"
+            className="flex min-h-12 items-center rounded-full border border-espuma/40 px-7 font-semibold transition-colors hover:bg-espuma hover:text-mar"
           >
-            <svg aria-hidden="true" viewBox="0 0 24 24" className="size-4" fill="currentColor">
-              <path d="M7 4.5v15a1 1 0 0 0 1.52.85l12-7.5a1 1 0 0 0 0-1.7l-12-7.5A1 1 0 0 0 7 4.5Z" />
-            </svg>
-            Assistir aos vídeos
+            Horários e endereço
           </a>
         </motion.div>
       </div>
-      <Onda cor="var(--color-areia)" animada />
-    </section>
-  )
-}
-
-function Videos() {
-  return (
-    <section id="videos" aria-labelledby="videos-titulo" className="wrap py-20 md:py-28">
-      <div className="grid items-center gap-10 md:grid-cols-12 md:gap-14">
-        <Revelar className="md:col-span-4">
-          <Rotulo>Na cozinha</Rotulo>
-          <h2 id="videos-titulo" className="mt-4 font-display text-4xl leading-tight md:text-5xl">
-            Veja antes de <em>provar</em>.
-          </h2>
-          <p className="mt-5 text-tinta-2">
-            Do barco à panela: o preparo dos pratos, a casa e o pôr do sol de quem senta na nossa areia.
-          </p>
-        </Revelar>
-        <Revelar className="md:col-span-8" atraso={0.1}>
-          <Playlist />
-        </Revelar>
-      </div>
+      <Onda cor="var(--color-espuma)" animada />
     </section>
   )
 }
@@ -170,7 +142,6 @@ function Videos() {
 function Menu() {
   return (
     <section id="cardapio" aria-labelledby="cardapio-titulo" className="bg-espuma">
-      <Onda cor="var(--color-espuma)" fundo="var(--color-areia)" />
       <div className="wrap pt-12 pb-20 md:pt-16">
         <Revelar className="mb-10 max-w-2xl">
           <Rotulo>Cardápio</Rotulo>
@@ -178,9 +149,17 @@ function Menu() {
             O que o mar trouxe <em>hoje</em>
           </h2>
           <p className="mt-5 text-tinta-2">
-            Preços por prato. Os marcados com "serve 2" vêm na medida para dividir. Pergunte ao garçom pelo peixe do
-            dia.
+            Toque no prato para ver o vídeo. Os marcados com "serve 2" vêm na medida para dividir; pergunte ao
+            garçom pelo peixe do dia.
           </p>
+          <a
+            href={`https://www.youtube.com/playlist?list=${PLAYLIST_ID}`}
+            target="_blank"
+            rel="noopener"
+            className="mt-3 inline-block font-semibold text-mar-2 underline underline-offset-4 hover:no-underline"
+          >
+            Todos os vídeos no YouTube
+          </a>
         </Revelar>
         <Cardapio />
       </div>
@@ -260,7 +239,6 @@ export default function App() {
       <Topo />
       <main>
         <Inicio />
-        <Videos />
         <Menu />
         <Visite />
       </main>

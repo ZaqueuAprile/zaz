@@ -111,3 +111,8 @@
     animation: none;
   }
 }
+
+.player-dialogo::backdrop {
+  background: rgb(11 58 83 / 0.82);
+  backdrop-filter: blur(4px);
+}
