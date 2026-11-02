@@ -14,15 +14,15 @@ Cada projeto é uma página própria do mesmo build.
 
 ### Apollo Lúmen
 
-Site da própria assessoria, em HTML, CSS e JavaScript puros num único arquivo
-(`apollo-lumen/index.html`). Papel creme com grão, noite em marrom quente e o
-dourado da logo; Fraunces nos títulos, Instrument Sans no texto e Caveat nas
-anotações à mão. A abertura junta uma polaroid e um celular com o cardápio do
-Seu Beira Mar. Os problemas são contados como "um sábado qualquer" (11h, 15h,
-20h, 23h, com o sol descendo), os trabalhos reais do portfólio aparecem em
-telas de celular, e o fundador assina uma carta. Fotos em `apollo-lumen/img/`
-(dos projetos Gaivota e Bossa Cucina). Planos, dúvidas e o link do WhatsApp
-ficam nas constantes do `<script>`.
+Site de vendas da própria assessoria, em HTML, CSS e JavaScript puros num único
+arquivo (`apollo-lumen/index.html`). Escrito em dor → custo → solução: abre com
+uma conversa de WhatsApp respondida às 23h48, lista seis vazamentos de venda,
+tem uma calculadora de quanto o cliente perde por mês (WhatsApp, comissão de
+aplicativo e ticket parado) e apresenta cada produto com a dor que resolve, o
+que entrega, o prazo e um botão de contratar. Cada produto tem a sua peça
+visual: conversa, tela real do cardápio, placa NFC, site, painel e alertas.
+Preto e dourado da logo com seções claras; Archivo nos títulos e Manrope no
+texto. Planos, objeções e o link do WhatsApp ficam nas constantes do `<script>`.
 
 ### Seu Beira Mar
 
