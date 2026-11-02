@@ -19,6 +19,12 @@ const PROJETOS = [
     tipo: 'Restaurante · cardápio',
     href: './seu-beira-mar/',
   },
+  {
+    numero: '04',
+    nome: 'Apollo Lúmen',
+    tipo: 'Assessoria digital e vendas · site',
+    href: './apollo-lumen/',
+  },
 ]
 
 function App() {

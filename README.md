@@ -10,6 +10,18 @@ Cada projeto é uma página própria do mesmo build.
 | 01 | Bossa Cucina — restaurante, site conceitual | `/bossa-cucina/` | `src/projetos/bossa-cucina/` |
 | 02 | Gaivota — pousada em Santo André | `/pousada-gaivota/` | `src/projetos/pousada-gaivota/` |
 | 03 | Seu Beira Mar — cardápio de restaurante | `/seu-beira-mar/` | `src/projetos/seu-beira-mar/` |
+| 04 | Apollo Lúmen — assessoria digital e vendas | `/apollo-lumen/` | `apollo-lumen/index.html` |
+
+### Apollo Lúmen
+
+Site da própria assessoria, em HTML, CSS e JavaScript puros num único arquivo
+(`apollo-lumen/index.html`). Preto e dourado tirados da logo (o sol nascendo no
+horizonte, extraído em PNG transparente: `logo.png`, `sol.png`, `favicon.png`).
+Cormorant Garamond nos títulos e Manrope no texto, cantos retos e linhas finas no
+lugar de cartões e degradês. A abertura mostra o sol subindo atrás da linha do
+horizonte. Serviços e dúvidas em acordeão, jornada do cliente em abas e um
+simulador de retorno. Serviços, planos, preços e o link do WhatsApp ficam nas
+constantes no início do `<script>`.
 
 ### Seu Beira Mar
 
