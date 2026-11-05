@@ -32,7 +32,7 @@ export function Menu() {
         type="button"
         onClick={() => setAberto(true)}
         aria-expanded={aberto}
-        className="sobrescrito -mr-3 min-h-11 cursor-pointer px-3 text-tinta md:hidden"
+        className="etiqueta -mr-3 min-h-11 cursor-pointer px-3 text-tinta md:hidden"
       >
         Menu
       </button>
@@ -50,7 +50,7 @@ export function Menu() {
             transition={{ duration: 0.35 }}
           >
             <div className="flex justify-end">
-              <button ref={fechar} type="button" onClick={() => setAberto(false)} className="sobrescrito -mr-3 min-h-11 cursor-pointer px-3">
+              <button ref={fechar} type="button" onClick={() => setAberto(false)} className="etiqueta -mr-3 min-h-11 cursor-pointer px-3">
                 Fechar
               </button>
             </div>
@@ -66,13 +66,13 @@ export function Menu() {
                   >
                     <a href={`#${s.id}`} onClick={() => setAberto(false)} className="flex items-baseline gap-5 py-5">
                       <span className="w-6 text-sm text-white/50 tabular-nums">0{i + 1}</span>
-                      <span className="font-display text-4xl">{s.nome}</span>
+                      <span className="text-4xl font-medium tracking-[-0.03em]">{s.nome}</span>
                     </a>
                   </motion.li>
                 ))}
               </ol>
             </nav>
-            <p className="sobrescrito text-white/50">Odontologia &amp; Estética</p>
+            <p className="etiqueta text-white/50">Odontologia &amp; Estética</p>
           </motion.div>
         )}
       </AnimatePresence>,

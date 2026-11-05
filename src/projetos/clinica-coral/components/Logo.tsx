@@ -2,7 +2,7 @@ import emblema from '../img/emblema.png'
 
 // O dente com o ramo de coral, recortado da logo da clínica. A imagem é só a
 // forma (branca sobre transparente) e entra como máscara: a cor vem do texto,
-// então o mesmo emblema serve no claro e no escuro.
+// então o mesmo emblema serve em qualquer fundo.
 export function Emblema({ className = '' }: { className?: string }) {
   return (
     <span
@@ -23,30 +23,23 @@ export function Emblema({ className = '' }: { className?: string }) {
   )
 }
 
-// Selo redondo dourado, como o avatar do Instagram.
-export function Selo({ className = 'size-12' }: { className?: string }) {
+// Selo redondo, como o avatar do Instagram. Dourado por padrão.
+export function Selo({ className = 'size-12', cor = 'bg-ouro text-white' }: { className?: string; cor?: string }) {
   return (
-    <span className={`inline-grid shrink-0 place-items-center rounded-full bg-ouro text-white ${className}`}>
-      <Emblema className="w-[52%]" />
+    <span className={`inline-grid shrink-0 place-items-center rounded-full ${cor} ${className}`}>
+      <Emblema className="w-[54%]" />
     </span>
   )
 }
 
-// "Clínica" em sem serifa fina, "CORAL" em Bodoni e o subtítulo espaçado.
-export function Marca({ claro = false, subtitulo = true }: { claro?: boolean; subtitulo?: boolean }) {
+// "Clínica" em grotesca leve e "CORAL" na serifa de alto contraste da logo.
+export function Marca({ claro = false }: { claro?: boolean }) {
   return (
-    <span className="inline-flex items-center gap-3">
-      <Selo className="size-10 sm:size-11" />
-      <span className="flex flex-col leading-none">
-        <span className="flex items-baseline gap-[0.18em] text-[1.35rem] sm:text-2xl">
-          <span className={`font-sans font-light tracking-[-0.02em] ${claro ? 'text-white' : 'text-tinta'}`}>Clínica</span>
-          <span className={`font-display tracking-[0.02em] ${claro ? 'text-[#d8c3a2]' : 'text-ouro'}`}>CORAL</span>
-        </span>
-        {subtitulo && (
-          <span className={`mt-1.5 font-display text-[0.5rem] tracking-[0.32em] ${claro ? 'text-white/70' : 'text-tinta-2'}`}>
-            ODONTOLOGIA &amp; ESTÉTICA
-          </span>
-        )}
+    <span className="inline-flex items-center gap-2.5">
+      <Selo className="size-9" />
+      <span className="flex items-baseline gap-[0.16em] text-[1.3rem] leading-none">
+        <span className={`font-light tracking-[-0.03em] ${claro ? 'text-white' : 'text-tinta'}`}>Clínica</span>
+        <span className={`font-acento tracking-[0.02em] not-italic ${claro ? 'text-ouro-claro' : 'text-ouro'}`}>CORAL</span>
       </span>
     </span>
   )

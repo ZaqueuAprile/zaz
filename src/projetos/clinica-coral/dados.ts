@@ -15,15 +15,39 @@ export const ENDERECO: string[] = []
 // Horários em linhas, por exemplo "Segunda a sexta · 9h às 19h".
 export const HORARIOS: string[] = []
 
-// Responsável técnica e inscrição no CRO, obrigatórias na publicidade
-// odontológica. Exemplo: CRO = "CRO-SP 000000".
-export const RESPONSAVEL = 'Dra. Julia S. Moreno'
-export const CRO = ''
+// As dentistas da clínica. Na publicidade odontológica, nome e CRO de quem
+// atende precisam aparecer: preencha `cro` (ex.: "CRO-SP 000000").
+// `foto`: importe a imagem no App e passe aqui; sem foto, o cartão mostra as
+// iniciais. `sobre`: uma ou duas frases sobre a dentista (vazio = some).
+export type Dentista = {
+  id: string
+  nome: string
+  cro: string
+  areas: string[]
+  sobre: string
+}
+
+export const DENTISTAS: Dentista[] = [
+  {
+    id: 'julia',
+    nome: 'Dra. Julia S. Moreno',
+    cro: '',
+    areas: [],
+    sobre: '',
+  },
+  {
+    id: 'ana-carolina',
+    nome: 'Dra. Ana Carolina',
+    cro: '',
+    areas: [],
+    sobre: '',
+  },
+]
 
 export const SECOES = [
   { id: 'tratamentos', nome: 'Tratamentos' },
   { id: 'casos', nome: 'Casos' },
-  { id: 'dentista', nome: 'A dentista' },
+  { id: 'equipe', nome: 'Equipe' },
   { id: 'agendar', nome: 'Agendar' },
 ] as const
 
@@ -31,30 +55,22 @@ export const TRATAMENTOS = [
   {
     id: 'facetas',
     nome: 'Lentes e facetas',
-    texto:
-      'Cor, forma e proporção redesenhadas para o seu rosto. O planejamento começa pelo sorriso inteiro, não por um dente.',
-    pontos: ['Planejamento do sorriso', 'Cor e formato sob medida'],
+    texto: 'Cor, forma e proporção redesenhadas para o seu rosto, a partir de um planejamento do sorriso inteiro.',
   },
   {
     id: 'alinhadores',
     nome: 'Alinhadores invisíveis',
-    texto:
-      'Placas transparentes e removíveis que alinham os dentes aos poucos, sem bráquetes e sem fios aparentes.',
-    pontos: ['Discretos e removíveis', 'Planejamento digital'],
+    texto: 'Placas transparentes e removíveis que alinham os dentes aos poucos, sem bráquetes.',
   },
   {
     id: 'proteses',
     nome: 'Próteses',
-    texto:
-      'Totais ou parciais removíveis, para devolver a mastigação, a fala e a vontade de sorrir sem pensar nisso.',
-    pontos: ['Próteses totais', 'Parciais removíveis'],
+    texto: 'Totais ou parciais removíveis, para devolver a mastigação, a fala e a vontade de sorrir.',
   },
   {
     id: 'restauracoes',
     nome: 'Restaurações estéticas',
-    texto:
-      'Cáries e fraturas tratadas com resina na cor do dente, preservando o máximo da estrutura natural.',
-    pontos: ['Resina na cor do dente', 'Mínimo desgaste'],
+    texto: 'Cáries e fraturas tratadas com resina na cor do dente, preservando o máximo da estrutura natural.',
   },
 ] as const
 

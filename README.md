@@ -14,17 +14,20 @@ Cada projeto é uma página própria do mesmo build.
 
 ### Clínica Coral
 
-Site da Clínica Coral (Odontologia & Estética, Dra. Julia S. Moreno). O clima é
-o da sala do post dos alinhadores: creme, luz quente, dourado da logo e Bodoni
-Moda em itálico nos títulos, com Hanken Grotesk no texto. As linhas finas que
-ligam rótulos às fotos nos posts viram a linguagem do site (`Filete`). Seções:
-abertura, "a tela, a artista e a obra", tratamentos, alinhadores, casos com
-comparador antes/depois arrastável (`components/AntesDepois.tsx`), a dentista e
-o agendamento pelo WhatsApp. O emblema foi extraído da logo e entra como máscara
-(`components/Logo.tsx`). Sem preços nem promoções, por causa das regras do CFO;
-as referências estão em `docs/clinica-coral-referencias.md`. WhatsApp,
-telefone, endereço, horários, Instagram e CRO ficam em
-`src/projetos/clinica-coral/dados.ts` e só aparecem quando preenchidos.
+Site da Clínica Coral (Odontologia & Estética), das dentistas Dra. Julia S.
+Moreno e Dra. Ana Carolina. Linguagem moderna: blocos arredondados em grade,
+Bricolage Grotesque nos títulos e no texto, e o itálico de alto contraste do
+"CORAL" (Bodoni Moda) só nas palavras de destaque. O coral, o vermelho quente
+que dá nome à clínica, é a cor de ação; o dourado da logo fica no selo. A
+abertura já traz o antes e depois arrastável (`components/AntesDepois.tsx`);
+depois vêm um letreiro com os tratamentos, cartões de tratamento que mostram o
+antes ao passar o dedo ou o mouse, os alinhadores, os casos, as etapas, a
+equipe e o agendamento pelo WhatsApp. O emblema foi extraído da logo e entra
+como máscara (`components/Logo.tsx`). Sem preços nem promoções, por causa das
+regras do CFO; as referências estão em `docs/clinica-coral-referencias.md`.
+Dentistas (nome, CRO, áreas, texto), WhatsApp, telefone, endereço, horários e
+Instagram ficam em `src/projetos/clinica-coral/dados.ts`; a foto de cada
+dentista entra em `FOTOS`, no `App.tsx` (sem foto, o cartão mostra as iniciais).
 
 ### Seu Beira Mar
 

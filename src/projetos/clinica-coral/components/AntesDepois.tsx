@@ -35,7 +35,7 @@ export function AntesDepois({
   return (
     <div
       ref={quadro}
-      className={`group relative cursor-ew-resize touch-pan-y overflow-hidden rounded-2xl bg-linho select-none ${className}`}
+      className={`group relative cursor-ew-resize touch-pan-y overflow-hidden bloco bg-linho select-none ${className}`}
       onPointerDown={inicio}
       onPointerMove={(e) => arrastando && mover(e.clientX)}
       onPointerUp={() => setArrastando(false)}
@@ -50,17 +50,17 @@ export function AntesDepois({
         draggable={false}
       />
 
-      <span className="sobrescrito pointer-events-none absolute top-3 left-3 rounded-full bg-noite/55 px-3 py-1.5 text-[0.65rem] text-white backdrop-blur-md">
+      <span className="etiqueta pointer-events-none absolute top-4 left-4 rounded-full bg-noite/60 px-3.5 py-1.5 text-[0.68rem] text-white backdrop-blur-md">
         Antes
       </span>
-      <span className="sobrescrito pointer-events-none absolute top-3 right-3 rounded-full bg-creme/85 px-3 py-1.5 text-[0.65rem] text-tinta backdrop-blur-md">
+      <span className="etiqueta pointer-events-none absolute top-4 right-4 rounded-full bg-coral px-3.5 py-1.5 text-[0.68rem] text-white">
         Depois
       </span>
 
       {/* Divisa e puxador. */}
       <div className="pointer-events-none absolute inset-y-0 w-px bg-white/90" style={{ left: `${pos}%` }}>
         <span
-          className={`absolute top-1/2 left-1/2 grid size-12 -translate-1/2 place-items-center rounded-full border border-white/80 bg-noite/35 text-white backdrop-blur-md transition-transform duration-200 ${
+          className={`absolute top-1/2 left-1/2 grid size-12 -translate-1/2 place-items-center rounded-full border border-white bg-coral/85 text-white backdrop-blur-md transition-transform duration-200 ${
             arrastando ? 'scale-110' : 'group-hover:scale-105'
           }`}
         >
@@ -85,7 +85,7 @@ export function AntesDepois({
         aria-valuetext={`${Math.round(pos)}% antes`}
         className="peer absolute inset-x-0 bottom-0 h-px w-full opacity-0 focus-visible:opacity-0"
       />
-      <span className="pointer-events-none absolute inset-0 rounded-2xl ring-2 ring-white/0 ring-inset peer-focus-visible:ring-white" />
+      <span className="pointer-events-none absolute inset-0 bloco ring-2 ring-white/0 ring-inset peer-focus-visible:ring-white" />
     </div>
   )
 }

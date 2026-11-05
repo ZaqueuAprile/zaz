@@ -5,14 +5,14 @@ const OPCOES = [...TRATAMENTOS.map((t) => ({ id: t.id as string, nome: t.nome })
 const PERIODOS = ['Manhã', 'Tarde', 'Tanto faz']
 
 const entrada =
-  'block w-full min-h-12 border-0 border-b border-white/35 bg-transparent px-0 py-2 text-lg text-white placeholder:text-white/40 transition-colors hover:border-white focus:border-white focus:outline-none focus-visible:outline-none aria-invalid:border-[#f0a493]'
+  'block w-full min-h-12 border-0 border-b border-white/35 bg-transparent px-0 py-2 text-lg text-white placeholder:text-white/50 transition-colors hover:border-white focus:border-white focus:outline-none focus-visible:outline-none aria-invalid:border-[#ffe1d6]'
 
 // Opção em pílula: um rádio de verdade, escondido, com o rótulo desenhado.
 function Pilula({ nome, valor, texto, marcado, aoMarcar }: { nome: string; valor: string; texto: string; marcado: boolean; aoMarcar: (v: string) => void }) {
   return (
     <label className="cursor-pointer">
       <input type="radio" name={nome} value={valor} checked={marcado} onChange={() => aoMarcar(valor)} className="peer sr-only" />
-      <span className="inline-flex min-h-11 items-center rounded-full border border-white/30 px-5 text-[0.95rem] text-white/85 transition-colors duration-300 peer-checked:border-[#d8c3a2] peer-checked:bg-[#d8c3a2] peer-checked:text-noite peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-white hover:border-white">
+      <span className="inline-flex min-h-11 items-center rounded-full border border-white/40 px-5 text-[0.95rem] text-white transition-colors duration-300 peer-checked:border-creme peer-checked:bg-creme peer-checked:text-coral-escuro peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-white hover:border-white">
         {texto}
       </span>
     </label>
@@ -58,7 +58,7 @@ export function Agendar({ interesse, setInteresse }: { interesse: IdTratamento |
   return (
     <form onSubmit={enviar} noValidate className="grid gap-10">
       <div>
-        <label htmlFor={`${id}-nome`} className="text-sm text-white/70">
+        <label htmlFor={`${id}-nome`} className="text-sm text-white/85">
           Nome
         </label>
         <input
@@ -76,14 +76,14 @@ export function Agendar({ interesse, setInteresse }: { interesse: IdTratamento |
           className={entrada}
         />
         {erroNome && (
-          <p id={`${id}-nome-erro`} className="mt-2 text-sm text-[#f0a493]">
+          <p id={`${id}-nome-erro`} className="mt-2 text-sm font-medium text-[#ffe1d6]">
             {erroNome}
           </p>
         )}
       </div>
 
       <fieldset>
-        <legend className="text-sm text-white/70">O que você procura?</legend>
+        <legend className="text-sm text-white/85">O que você procura?</legend>
         <div className="mt-4 flex flex-wrap gap-2.5">
           {OPCOES.map((o) => (
             <Pilula
@@ -99,7 +99,7 @@ export function Agendar({ interesse, setInteresse }: { interesse: IdTratamento |
       </fieldset>
 
       <fieldset>
-        <legend className="text-sm text-white/70">Melhor período</legend>
+        <legend className="text-sm text-white/85">Melhor período</legend>
         <div className="mt-4 flex flex-wrap gap-2.5">
           {PERIODOS.map((p) => (
             <Pilula key={p} nome="periodo" valor={p} texto={p} marcado={periodo === p} aoMarcar={setPeriodo} />
@@ -108,7 +108,7 @@ export function Agendar({ interesse, setInteresse }: { interesse: IdTratamento |
       </fieldset>
 
       <div>
-        <label htmlFor={`${id}-obs`} className="text-sm text-white/70">
+        <label htmlFor={`${id}-obs`} className="text-sm text-white/85">
           Quer contar algo antes? (opcional)
         </label>
         <textarea id={`${id}-obs`} rows={2} value={obs} onChange={(e) => setObs(e.target.value)} className={`${entrada} resize-y`} />
@@ -117,7 +117,7 @@ export function Agendar({ interesse, setInteresse }: { interesse: IdTratamento |
       <div className="flex flex-col items-start gap-5">
         <button
           type="submit"
-          className="min-h-14 cursor-pointer rounded-full bg-[#d8c3a2] px-9 text-sm tracking-[0.16em] text-noite uppercase transition-colors duration-300 hover:bg-white active:translate-y-px"
+          className="min-h-14 cursor-pointer rounded-full bg-tinta px-9 text-[0.95rem] font-medium text-white transition-colors duration-300 hover:bg-noite active:translate-y-px"
         >
           Enviar pelo WhatsApp
         </button>
@@ -132,7 +132,7 @@ export function Agendar({ interesse, setInteresse }: { interesse: IdTratamento |
             </>
           )}
           {status?.mensagem && (
-            <pre className="mt-4 rounded-xl bg-white/8 p-5 font-sans text-sm whitespace-pre-wrap text-white/85">{status.mensagem}</pre>
+            <pre className="mt-4 rounded-xl bg-black/15 p-5 font-sans text-sm whitespace-pre-wrap text-white">{status.mensagem}</pre>
           )}
         </div>
       </div>

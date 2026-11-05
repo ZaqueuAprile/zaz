@@ -1,34 +1,46 @@
 /* Clínica Coral — conceito
-   A sala do post dos alinhadores: luz quente, creme, plantas e vela. O
-   dourado sai da logo; a serifa de alto contraste (Bodoni Moda) repete o
-   "CORAL" e o itálico dos títulos dos posts. As linhas finas que ligam um
-   rótulo à foto, também dos posts, viram a linguagem do site inteiro. */
+   Moderno e quente. Grotesca contemporânea (Bricolage Grotesque) nos títulos
+   e no texto; o itálico de alto contraste do "CORAL" (Bodoni Moda) só nas
+   palavras de destaque. A cor de destaque é o coral, o vermelho quente que dá
+   nome à clínica; o dourado da logo fica para o selo e os detalhes. Blocos
+   arredondados em grade, fotos grandes e o antes e depois logo na abertura. */
 
 @import 'tailwindcss';
 @source not '../../../.claude';
 
 @theme {
-  --color-creme: #f7f2ea;
-  --color-areia: #ede4d6;
-  --color-linho: #ddd0bc;
+  --color-creme: #f6f1ea;
+  --color-areia: #ece4d8;
+  --color-linho: #ddd2c2;
   --color-ouro: #9e825d;
-  /* Dourado escurecido: o único tom de ouro que passa como texto pequeno. */
-  --color-ouro-escuro: #6e5a3f;
-  /* Fundo da faixa do post "A artista". */
+  --color-ouro-claro: #d8c3a2;
+  --color-coral: #b8462f;
+  --color-coral-vivo: #d9583c;
+  --color-coral-escuro: #8f3423;
+  --color-blush: #f4dcd2;
+  --color-tinta: #1d1916;
+  --color-tinta-2: #5f564d;
+  --color-noite: #171412;
+  /* Fundo da foto da Dra. Julia. */
   --color-faixa: #967e5b;
-  --color-tinta: #2b2620;
-  --color-tinta-2: #665d53;
-  --color-noite: #1f1d1a;
   --color-erro: #9b2d1f;
 
-  --font-display: 'Bodoni Moda Variable', Didot, 'Times New Roman', serif;
-  --font-sans: 'Hanken Grotesk Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-sans: 'Bricolage Grotesque Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Bricolage Grotesque Variable', system-ui, sans-serif;
+  --font-acento: 'Bodoni Moda Variable', Didot, 'Times New Roman', serif;
+
+  --animate-letreiro: letreiro 32s linear infinite;
+  @keyframes letreiro {
+    to {
+      transform: translateX(-50%);
+    }
+  }
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 5rem;
+    scroll-padding-top: 6rem;
     -webkit-text-size-adjust: 100%;
   }
 
@@ -43,7 +55,7 @@
     color: var(--color-tinta);
     font-family: var(--font-sans);
     font-size: 1.0625rem;
-    line-height: 1.7;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
 
@@ -51,13 +63,9 @@
   h2,
   h3 {
     font-family: var(--font-display);
-    font-weight: 400;
-    letter-spacing: -0.02em;
+    font-weight: 500;
+    letter-spacing: -0.035em;
     text-wrap: balance;
-  }
-
-  em {
-    font-style: italic;
   }
 
   :focus-visible {
@@ -66,35 +74,47 @@
   }
 
   ::selection {
-    background: var(--color-ouro);
+    background: var(--color-coral);
     color: #fff;
   }
 }
 
 @utility wrap {
   width: 100%;
-  max-width: 80rem;
+  max-width: 84rem;
   margin-inline: auto;
-  padding-inline: max(1.25rem, env(safe-area-inset-left, 0px));
+  padding-inline: max(1rem, env(safe-area-inset-left, 0px));
 
   @media (width >= 48rem) {
-    padding-inline: 3.5rem;
+    padding-inline: 2.5rem;
   }
 }
 
 @utility titulo {
-  font-size: clamp(2.5rem, 6vw, 5.25rem);
-  line-height: 1.04;
+  font-size: clamp(2.4rem, 5.6vw, 5rem);
+  line-height: 0.98;
 }
 
-/* Etiqueta em caixa alta, como "ODONTOLOGIA & ESTÉTICA" na logo. */
-@utility sobrescrito {
-  font-size: 0.75rem;
-  letter-spacing: 0.28em;
+/* Palavra em destaque: itálico do "CORAL", um pouco maior para compensar. */
+@utility acento {
+  font-family: var(--font-acento);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  font-size: 1.08em;
+}
+
+@utility etiqueta {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
-/* Topo arredondado, como a coroa de um dente. */
-@utility coroa {
-  border-radius: 999px 999px 1.25rem 1.25rem;
+@utility bloco {
+  border-radius: 1.75rem;
+
+  @media (width >= 48rem) {
+    border-radius: 2.25rem;
+  }
 }
