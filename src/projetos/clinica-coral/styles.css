@@ -1,0 +1,100 @@
+/* Clínica Coral — conceito
+   A sala do post dos alinhadores: luz quente, creme, plantas e vela. O
+   dourado sai da logo; a serifa de alto contraste (Bodoni Moda) repete o
+   "CORAL" e o itálico dos títulos dos posts. As linhas finas que ligam um
+   rótulo à foto, também dos posts, viram a linguagem do site inteiro. */
+
+@import 'tailwindcss';
+@source not '../../../.claude';
+
+@theme {
+  --color-creme: #f7f2ea;
+  --color-areia: #ede4d6;
+  --color-linho: #ddd0bc;
+  --color-ouro: #9e825d;
+  /* Dourado escurecido: o único tom de ouro que passa como texto pequeno. */
+  --color-ouro-escuro: #6e5a3f;
+  /* Fundo da faixa do post "A artista". */
+  --color-faixa: #967e5b;
+  --color-tinta: #2b2620;
+  --color-tinta-2: #665d53;
+  --color-noite: #1f1d1a;
+  --color-erro: #9b2d1f;
+
+  --font-display: 'Bodoni Moda Variable', Didot, 'Times New Roman', serif;
+  --font-sans: 'Hanken Grotesk Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    background: var(--color-creme);
+    color: var(--color-tinta);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  :focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: var(--color-ouro);
+    color: #fff;
+  }
+}
+
+@utility wrap {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: max(1.25rem, env(safe-area-inset-left, 0px));
+
+  @media (width >= 48rem) {
+    padding-inline: 3.5rem;
+  }
+}
+
+@utility titulo {
+  font-size: clamp(2.5rem, 6vw, 5.25rem);
+  line-height: 1.04;
+}
+
+/* Etiqueta em caixa alta, como "ODONTOLOGIA & ESTÉTICA" na logo. */
+@utility sobrescrito {
+  font-size: 0.75rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+/* Topo arredondado, como a coroa de um dente. */
+@utility coroa {
+  border-radius: 999px 999px 1.25rem 1.25rem;
+}

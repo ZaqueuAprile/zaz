@@ -21,6 +21,7 @@ export default defineConfig({
         'bossa-cucina': path.resolve(import.meta.dirname, 'bossa-cucina/index.html'),
         'pousada-gaivota': path.resolve(import.meta.dirname, 'pousada-gaivota/index.html'),
         'seu-beira-mar': path.resolve(import.meta.dirname, 'seu-beira-mar/index.html'),
+        'clinica-coral': path.resolve(import.meta.dirname, 'clinica-coral/index.html'),
       },
     },
   },

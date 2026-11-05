@@ -19,6 +19,12 @@ const PROJETOS = [
     tipo: 'Restaurante · cardápio',
     href: './seu-beira-mar/',
   },
+  {
+    numero: '04',
+    nome: 'Clínica Coral',
+    tipo: 'Odontologia · site da clínica',
+    href: './clinica-coral/',
+  },
 ]
 
 function App() {

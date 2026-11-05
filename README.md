@@ -10,6 +10,21 @@ Cada projeto é uma página própria do mesmo build.
 | 01 | Bossa Cucina — restaurante, site conceitual | `/bossa-cucina/` | `src/projetos/bossa-cucina/` |
 | 02 | Gaivota — pousada em Santo André | `/pousada-gaivota/` | `src/projetos/pousada-gaivota/` |
 | 03 | Seu Beira Mar — cardápio de restaurante | `/seu-beira-mar/` | `src/projetos/seu-beira-mar/` |
+| 04 | Clínica Coral — odontologia e estética | `/clinica-coral/` | `src/projetos/clinica-coral/` |
+
+### Clínica Coral
+
+Site da Clínica Coral (Odontologia & Estética, Dra. Julia S. Moreno). O clima é
+o da sala do post dos alinhadores: creme, luz quente, dourado da logo e Bodoni
+Moda em itálico nos títulos, com Hanken Grotesk no texto. As linhas finas que
+ligam rótulos às fotos nos posts viram a linguagem do site (`Filete`). Seções:
+abertura, "a tela, a artista e a obra", tratamentos, alinhadores, casos com
+comparador antes/depois arrastável (`components/AntesDepois.tsx`), a dentista e
+o agendamento pelo WhatsApp. O emblema foi extraído da logo e entra como máscara
+(`components/Logo.tsx`). Sem preços nem promoções, por causa das regras do CFO;
+as referências estão em `docs/clinica-coral-referencias.md`. WhatsApp,
+telefone, endereço, horários, Instagram e CRO ficam em
+`src/projetos/clinica-coral/dados.ts` e só aparecem quando preenchidos.
 
 ### Seu Beira Mar
 
