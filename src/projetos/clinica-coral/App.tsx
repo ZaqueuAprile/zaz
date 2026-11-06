@@ -19,6 +19,7 @@ import {
   type IdTratamento,
 } from './dados'
 import alinhador from './img/alinhador.webp'
+import draAnaCarolina from './img/dra-ana-carolina.webp'
 import draJulia from './img/dra-julia.webp'
 import facetasAntes from './img/facetas-antes.webp'
 import facetasDepois from './img/facetas-depois.webp'
@@ -38,6 +39,7 @@ type Escolher = (id: IdTratamento) => void
 // Fotos das dentistas, pelo `id` de DENTISTAS. Sem foto, o cartão mostra as iniciais.
 const FOTOS: Record<string, { src: string; fundo: string; posicao?: string }> = {
   julia: { src: draJulia, fundo: 'bg-faixa', posicao: '50% 10%' },
+  'ana-carolina': { src: draAnaCarolina, fundo: 'bg-linho', posicao: '52% 40%' },
 }
 
 const iniciais = (nome: string) =>
