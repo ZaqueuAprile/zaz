@@ -14,15 +14,29 @@ Cada projeto é uma página própria do mesmo build.
 
 ### Apollo Lúmen
 
-Site de vendas da própria assessoria, em HTML, CSS e JavaScript puros num único
-arquivo (`apollo-lumen/index.html`). Escrito em dor → custo → solução: abre com
-uma conversa de WhatsApp respondida às 23h48, lista seis vazamentos de venda,
-tem uma calculadora de quanto o cliente perde por mês (WhatsApp, comissão de
-aplicativo e ticket parado) e apresenta cada produto com a dor que resolve, o
-que entrega, o prazo e um botão de contratar. Cada produto tem a sua peça
-visual: conversa, tela real do cardápio, placa NFC, site, painel e alertas.
-Preto e dourado da logo com seções claras; Archivo nos títulos e Manrope no
-texto. Planos, objeções e o link do WhatsApp ficam nas constantes do `<script>`.
+Site da própria assessoria, pensado como mostruário para apresentar ao cliente.
+HTML, CSS e JavaScript puros num único arquivo (`apollo-lumen/index.html`), IBM
+Plex Sans, preto e dourado da logo só onde a marca aparece.
+
+A abertura lista os problemas do cliente e cada um abre a aba da solução. A
+seção de demonstrações tem uma aba por solução, todas interativas:
+
+- **Atendimento no WhatsApp**: conversa simulada com perguntas prontas.
+- **Cardápio digital**: categorias, pratos e a tela do prato com o espaço do vídeo.
+- **Avaliações no Google**: placa NFC e a tela de avaliação no celular do cliente.
+- **Site / landing page**: espaço do vídeo de demonstração e os sites do portfólio.
+- **Painel de gestão**: filtros de período e canal, indicadores com comparação,
+  gráfico com dica ao passar o mouse e tabela, alertas e tabela de pratos ordenável.
+  Dados fictícios gerados no próprio arquivo.
+- **Automação**: avisos de um dia chegando no celular do gestor.
+
+**Modo apresentação** esconde o resto do site, entra em tela cheia e troca de
+aba com as setas do teclado ou os botões. Cada aba tem endereço próprio
+(`#demo-painel`, `#demo-site`...), para mandar o link de uma demonstração.
+
+**Vídeo de demonstração**: preencha `VIDEOS.site` no início do `<script>` com um
+link do YouTube ou o caminho de um `.mp4` (por exemplo `./video/site.mp4`). Vazio,
+o espaço mostra "Vídeo de demonstração em breve".
 
 ### Seu Beira Mar
 
