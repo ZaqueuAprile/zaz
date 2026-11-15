@@ -10,12 +10,12 @@ Cada projeto é uma página própria do mesmo build.
 | 01 | Bossa Cucina — restaurante, site conceitual | `/bossa-cucina/` | `src/projetos/bossa-cucina/` |
 | 02 | Gaivota — pousada em Santo André | `/pousada-gaivota/` | `src/projetos/pousada-gaivota/` |
 | 03 | Seu Beira Mar — cardápio de restaurante | `/seu-beira-mar/` | `src/projetos/seu-beira-mar/` |
-| 04 | Apollo Lúmen — assessoria digital e vendas | `/apollo-lumen/` | `apollo-lumen/index.html` |
+| 04 | Aprile — tecnologia e gestão | `/aprile/` | `aprile/index.html` |
 
-### Apollo Lúmen
+### Aprile
 
 Site da própria assessoria, pensado como mostruário para apresentar ao cliente.
-HTML, CSS e JavaScript puros num único arquivo (`apollo-lumen/index.html`), IBM
+HTML, CSS e JavaScript puros num único arquivo (`aprile/index.html`), IBM
 Plex Sans, preto e dourado da logo só onde a marca aparece.
 
 A abertura lista os problemas do cliente e cada um abre a aba da solução. A
@@ -25,10 +25,10 @@ seção de demonstrações tem uma aba por solução, todas interativas:
 - **Cardápio digital**: categorias, pratos e a tela do prato com o espaço do vídeo.
 - **Avaliações no Google**: placa NFC e a tela de avaliação no celular do cliente.
 - **Site / landing page**: espaço do vídeo de demonstração e os sites do portfólio.
-- **Painel de gestão**: filtros de período e canal, indicadores com comparação,
-  gráfico com dica ao passar o mouse e tabela, alertas e tabela de pratos ordenável.
-  Dados fictícios gerados no próprio arquivo.
-- **Automação**: avisos de um dia chegando no celular do gestor.
+- **Dashboard e relatórios**: o dashboard semanal (filtros de período e canal,
+  indicadores com comparação, gráfico com dica e tabela, alertas e pratos
+  ordenáveis) e um exemplo do relatório mensal de gestão, que pode ser impresso
+  ou salvo em PDF. Dados fictícios gerados no próprio arquivo.
 
 **Modo apresentação** esconde o resto do site, entra em tela cheia e troca de
 aba com as setas do teclado ou os botões. Cada aba tem endereço próprio

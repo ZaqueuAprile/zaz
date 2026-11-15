@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Apollo Lúmen · Assessoria digital e vendas</title>
-<meta name="description" content="Atendimento automático no WhatsApp, cardápio digital, placas de avaliação, sites e painel de gestão para restaurantes, pousadas e negócios locais. Veja cada solução funcionando.">
-<meta property="og:title" content="Apollo Lúmen · Assessoria digital e vendas">
+<title>Aprile · Tecnologia e gestão</title>
+<meta name="description" content="Atendimento automático no WhatsApp, cardápio digital, placas de avaliação, sites, dashboards semanais e relatórios mensais de gestão para restaurantes, pousadas e negócios locais. Veja cada solução funcionando.">
+<meta property="og:title" content="Aprile · Tecnologia e gestão">
 <meta property="og:description" content="Veja cada solução funcionando antes de contratar.">
 <meta property="og:image" content="./logo.png">
 <meta name="theme-color" content="#12100c">
@@ -281,16 +281,32 @@ h2{font-size:clamp(28px,3.4vw,40px)}
 .st.good{background:rgba(12,163,12,.1);color:#0a6e0a}
 .dash-note{font-size:12.5px;color:var(--ink3);padding:0 18px 14px}
 
-/* automação */
-.feed{width:100%;max-width:520px}
-.feed-h{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
-.feed-h b{font-size:15px}
-.feed ul{list-style:none;display:grid;gap:8px;min-height:300px;align-content:start}
-.feed li{display:grid;grid-template-columns:52px 1fr;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:14px;animation:pop .3s ease}
-.feed li time{font-size:13px;color:var(--ink3);font-variant-numeric:tabular-nums}
-.feed li b{display:block;font-weight:600}
-.feed li small{color:var(--ink2)}
-.feed .empty{color:var(--ink3);font-size:14px;padding:30px 0;text-align:center;border:1px dashed var(--line);border-radius:8px}
+/* relatório mensal */
+.viewsw{margin-bottom:14px}
+.report{background:#fff;border:1px solid var(--line);border-radius:10px;padding:40px 44px;max-width:860px;margin:0 auto;font-size:15px}
+.report[hidden]{display:none}
+.rep-h{display:flex;justify-content:space-between;align-items:start;gap:20px;border-bottom:2px solid var(--ink);padding-bottom:16px}
+.rep-h b{display:block;font-size:22px;letter-spacing:-.01em}
+.rep-h span{color:var(--ink2)}
+.rep-brand{display:flex;align-items:center;gap:8px;font-weight:600}
+.rep-brand img{width:40px}
+.rep-sum{margin-top:18px;font-size:16px;line-height:1.65}
+.report h4{font-size:15px;font-weight:600;margin:28px 0 10px}
+.rep-ch{display:grid;gap:10px}
+.rep-ch .r{display:grid;grid-template-columns:130px 1fr 120px;gap:12px;align-items:center;font-size:14px}
+.rep-ch .r i{display:block;height:12px;border-radius:0 4px 4px 0}
+.rep-ch .r b{text-align:right;font-weight:500;font-variant-numeric:tabular-nums}
+.rep-2{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.report ol,.report ul{padding-left:20px;display:grid;gap:6px}
+.rep-do li{padding-left:4px}
+.rep-f{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:32px;padding-top:16px;border-top:1px solid var(--line);font-size:13px;color:var(--ink3)}
+@media print{
+  body *{visibility:hidden}
+  #report,#report *{visibility:visible}
+  #report{position:absolute;inset:0 auto auto 0;width:100%;border:0;padding:0;max-width:none}
+  #repPrint{display:none}
+}
+@media (max-width:640px){.report{padding:24px 18px}.rep-2{grid-template-columns:1fr;gap:0}.rep-ch .r{grid-template-columns:90px 1fr 92px;font-size:13px}}
 
 /* modo apresentação */
 .pres-bar{display:none}
@@ -388,7 +404,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
 <header class="top">
   <div class="wrap">
-    <a href="#inicio" class="brand" aria-label="Apollo Lúmen, início"><img src="./sol.png" alt="" width="44" height="26"><span><b>Apollo Lúmen</b><small>Assessoria digital e vendas</small></span></a>
+    <a href="#inicio" class="brand" aria-label="Aprile, início"><img src="./sol.png" alt="" width="44" height="26"><span><b>Aprile</b><small>Tecnologia e gestão</small></span></a>
     <nav class="menu" aria-label="Seções">
       <a href="#demonstracoes">Demonstrações</a>
       <a href="#planos">Planos</a>
@@ -404,7 +420,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   <div class="wrap">
     <div>
       <h1>Mais reservas, mais avaliações e controle dos números do seu negócio.</h1>
-      <p class="lead">Atendimento automático no WhatsApp, cardápio digital, placas de avaliação, site próprio e painel de gestão para restaurantes, pousadas e comércio local. Teste cada solução aqui mesmo, antes de contratar.</p>
+      <p class="lead">Atendimento automático no WhatsApp, cardápio digital, placas de avaliação, site próprio, dashboard semanal e relatório mensal de gestão para restaurantes, pousadas e comércio local. Teste cada solução aqui mesmo, antes de contratar.</p>
       <div class="ctas">
         <a class="btn btn-gold" href="#demonstracoes">Ver as demonstrações</a>
         <a class="btn btn-line-d wa" href="#" target="_blank" rel="noopener">Agendar diagnóstico gratuito</a>
@@ -514,15 +530,16 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       </div>
     </div>
 
-    <!-- 5. Painel -->
+    <!-- 5. Dashboard semanal e relatório mensal -->
     <div class="panel wide" id="p-painel" role="tabpanel">
       <div class="info row" data-info="painel"></div>
+      <div class="viewsw"><div class="seg" id="segView" role="group" aria-label="Visualização"><button type="button" data-v="dash" aria-pressed="true">Dashboard semanal</button><button type="button" data-v="rep">Relatório mensal</button></div></div>
       <div class="dash" id="dash">
         <div class="dash-bar">
-          <div class="t"><b>Restaurante Exemplo · Painel de gestão</b><small id="dRange"></small></div>
+          <div class="t"><b>Restaurante Exemplo · Dashboard</b><small id="dRange"></small></div>
           <div class="filters">
             <div class="seg" id="segPeriod" role="group" aria-label="Período">
-              <button type="button" data-p="7">7 dias</button><button type="button" data-p="30" aria-pressed="true">30 dias</button><button type="button" data-p="365">12 meses</button>
+              <button type="button" data-p="7" aria-pressed="true">Semana</button><button type="button" data-p="30">30 dias</button><button type="button" data-p="365">12 meses</button>
             </div>
             <select id="selChan" aria-label="Canal"><option value="all">Todos os canais</option><option value="0">Salão</option><option value="1">Delivery próprio</option><option value="2">Aplicativos</option></select>
           </div>
@@ -546,20 +563,25 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
             <div style="overflow-x:auto"><table class="tbl" id="dishTbl"></table></div>
           </div>
         </div>
-        <p class="dash-note">Dados fictícios para demonstração. No painel real, os números vêm do seu caixa, das notas e das planilhas que você já usa.</p>
+        <p class="dash-note">Dados fictícios para demonstração. No dashboard real, os números vêm do seu caixa, das notas e das planilhas que você já usa.</p>
       </div>
+      <article class="report" id="report" hidden>
+        <header class="rep-h"><div><b>Relatório mensal de gestão</b><span id="repMonth"></span></div><div class="rep-brand"><img src="./sol.png" alt="" width="320" height="191"><span>Aprile</span></div></header>
+        <p class="rep-sum" id="repSum"></p>
+        <h4>Indicadores do mês</h4>
+        <div style="overflow-x:auto"><table class="tbl" id="repTbl"></table></div>
+        <h4>Faturamento por canal</h4>
+        <div class="rep-ch" id="repCh"></div>
+        <div class="rep-2">
+          <div><h4>Pratos que mais deram margem</h4><ol id="repTop"></ol></div>
+          <div><h4>Pontos de atenção</h4><ul id="repWarn"></ul></div>
+        </div>
+        <h4>O que fazer no próximo mês</h4>
+        <ol class="rep-do" id="repDo"></ol>
+        <div class="rep-f"><span>Dados fictícios para demonstração.</span><button class="btn btn-line" type="button" id="repPrint" style="min-height:40px;font-size:14px">Imprimir ou salvar em PDF</button></div>
+      </article>
     </div>
 
-    <!-- 6. Automação -->
-    <div class="panel" id="p-automacao" role="tabpanel">
-      <div class="info" data-info="automacao"></div>
-      <div class="stage">
-        <div class="feed">
-          <div class="feed-h"><b>Avisos do dia no celular do gestor</b><button class="btn btn-dark" id="feedBtn" type="button" style="min-height:38px;font-size:14px">Simular um dia</button></div>
-          <ul id="feed"><li class="empty" style="display:block">Toque em “Simular um dia” para ver os avisos chegando.</li></ul>
-        </div>
-      </div>
-    </div>
   </div>
   <div class="pres-bar"><button class="btn btn-line-d" id="prevBtn" type="button">Anterior</button><span class="pos" id="presPos"></span><button class="btn btn-gold" id="nextBtn" type="button">Próxima</button><button class="btn btn-line-d" id="exitBtn" type="button">Sair</button></div>
 </section>
@@ -577,12 +599,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   <div class="wrap">
     <div>
       <h2>Quem faz</h2>
-      <p>A Apollo Lúmen foi criada por Zaqueu Aprile, que trabalhou em cozinha profissional, supervisão de operação, estoque e sistemas antes de desenvolver soluções digitais. As ferramentas são pensadas para a rotina de quem atende: horário de pico, equipe enxuta e pouco tempo para mexer em sistema.</p>
+      <p>A Aprile foi criada por Zaqueu Aprile, que trabalhou em cozinha profissional, supervisão de operação, estoque e sistemas antes de desenvolver soluções digitais. As ferramentas são pensadas para a rotina de quem atende: horário de pico, equipe enxuta e pouco tempo para mexer em sistema.</p>
       <div class="areas">
         <div><b>Gestão</b><span>Indicadores, CMV, DRE, perdas e estoque</span></div>
         <div><b>Padronização</b><span>POPs e fichas técnicas</span></div>
         <div><b>Operação</b><span>Delivery, à la carte e eventos</span></div>
-        <div><b>Sistemas</b><span>Automação, painéis e sites</span></div>
+        <div><b>Sistemas</b><span>Dashboards, relatórios e sites</span></div>
       </div>
     </div>
     <div>
@@ -603,7 +625,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 </section>
 </main>
 
-<footer><div class="wrap"><span>© <span id="yr"></span> Apollo Lúmen · Assessoria digital e vendas</span><a class="wa" href="#" target="_blank" rel="noopener">WhatsApp</a></div></footer>
+<footer><div class="wrap"><span>© <span id="yr"></span> Aprile · Tecnologia e gestão</span><a class="wa" href="#" target="_blank" rel="noopener">WhatsApp</a></div></footer>
 
 <script>
 /* ===== CONFIGURAÇÃO ===== */
@@ -624,11 +646,11 @@ const SOL=[
  {id:"atendimento",tab:"Atendimento no WhatsApp",pain:"Mensagens sem resposta",painD:"O cliente pergunta e fecha com quem responde primeiro.",
   name:"Atendimento automático no WhatsApp",solves:"mensagens sem resposta fora do horário ou no pico",
   d:"Responde na hora, a qualquer hora: horários, cardápio, reservas e pedidos. Passa para a equipe quando precisa de uma pessoa.",
-  it:["Configurado com as informações da casa","Reservas e pedidos encaminhados para a equipe","Relatório das perguntas mais feitas"],prazo:"10 a 20 dias",plans:"Experiência e Funil completo"},
+  it:["Configurado com as informações da casa","Reservas e pedidos encaminhados para a equipe","Relatório das perguntas mais feitas"],prazo:"10 a 20 dias",plans:"Experiência e Gestão completa"},
  {id:"cardapio",tab:"Cardápio digital",pain:"Ticket médio parado",painD:"Cardápio de papel não mostra o prato nem sugere acompanhamento.",
   name:"Cardápio digital com vídeo",solves:"ticket médio parado e cardápio desatualizado",
   d:"O cliente aproxima o celular da mesa e vê cada prato em vídeo, com descrição, alergênicos e sugestão de acompanhamento.",
-  it:["Etiqueta NFC e QR Code em cada mesa","Preços e itens alterados na hora","Relatório dos pratos mais vistos"],prazo:"7 a 15 dias",plans:"Experiência e Funil completo"},
+  it:["Etiqueta NFC e QR Code em cada mesa","Preços e itens alterados na hora","Relatório dos pratos mais vistos"],prazo:"7 a 15 dias",plans:"Experiência e Gestão completa"},
  {id:"avaliacoes",tab:"Avaliações no Google",pain:"Poucas avaliações no Google",painD:"Quem gostou não avalia porque dá trabalho procurar o perfil.",
   name:"Placas de avaliação NFC",solves:"poucas avaliações e pouca visibilidade no Google Maps",
   d:"Placa no caixa, balcão ou mesa. O cliente aproxima o celular e cai direto na tela de avaliação do seu perfil no Google.",
@@ -637,14 +659,10 @@ const SOL=[
   name:"Site próprio e landing page",solves:"dependência de aplicativos e de redes sociais",
   d:"Página rápida, feita para o celular, com um objetivo: reservar, pedir, agendar ou chamar no WhatsApp.",
   it:["Design próprio, com a identidade do negócio","Preparado para as buscas da região","Visitas e cliques medidos"],prazo:"5 a 12 dias",plans:"todos os planos"},
- {id:"painel",tab:"Painel de gestão",pain:"Decisões sem números",painD:"Sem CMV e margem por prato, não dá para saber o que dá lucro.",
-  name:"Painel de gestão",solves:"decisões sem números, CMV e perdas sem controle",
-  d:"Faturamento, ticket médio, CMV, margem por prato e alertas numa tela só, atualizada a partir dos dados que você já tem.",
-  it:["Filtros por período e por canal","Margem de cada prato","Alertas de CMV, estoque e metas"],prazo:"10 a 20 dias",plans:"Funil completo"},
- {id:"automacao",tab:"Automação",pain:"Retrabalho com planilhas",painD:"Horas digitando notas e conferindo estoque, e mesmo assim falta produto.",
-  name:"Automação da rotina",solves:"retrabalho, falta de estoque e contas esquecidas",
-  d:"Planilhas, notas fiscais, estoque e contas a pagar ligados num fluxo que avisa o gestor no celular.",
-  it:["Aviso de estoque mínimo","Lembrete de contas a vencer","Notas lançadas sem digitar"],prazo:"10 a 25 dias",plans:"Funil completo"}
+ {id:"painel",tab:"Dashboard e relatórios",pain:"Decisões sem números",painD:"Sem CMV e margem por prato, não dá para saber o que dá lucro.",
+  name:"Dashboard semanal e relatório mensal",solves:"decisões sem números, CMV e perdas sem controle",
+  d:"Toda semana, um dashboard com faturamento, ticket médio, CMV e margem por prato. Todo mês, um relatório de gestão com a análise dos números e o que ajustar.",
+  it:["Dashboard atualizado toda semana","Relatório mensal com CMV, margem e canais","Pontos de atenção e próximos passos"],prazo:"primeiro dashboard em 10 a 20 dias",plans:"Gestão completa"}
 ];
 
 /* problemas -> abas */
@@ -774,7 +792,7 @@ for(let i=729;i>=0;i--){const d=new Date(TODAY);d.setDate(d.getDate()-i);const w
 const DISH=[["Moqueca de peixe",138,.29],["Risoto de camarão",89,.36],["Picanha na brasa",112,.41],["Camarão na moranga",124,.44],["Bolinho de bacalhau",42,.27],["Ceviche de peixe branco",54,.24],["Cocada de forno",28,.18],["Caipirinha de caju",29,.16]];
 const MES=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
 const WD=["dom","seg","ter","qua","qui","sex","sáb"];
-let per=30,chan="all",sortK="margem",sortD=-1;
+let per=7,chan="all",sortK="margem",sortD=-1;
 function series(){
   let buckets=[];
   if(per===365){const end=DAYS.length;const map=new Map();
@@ -860,23 +878,43 @@ $("tblToggle").onclick=()=>{const t=$("chanTbl"),on=!t.classList.contains("on");
 addEventListener("resize",()=>{if(current==="painel")drawChart()});
 renderDash();
 
-/* ===== 6. AUTOMAÇÃO ===== */
-const FEED=[["07:02","Nota fiscal lançada","Fornecedor de hortifruti · R$ 1.284. Estoque atualizado."],["09:15","Estoque abaixo do mínimo","Camarão rosa: 3 kg (mínimo 8 kg). Pedido sugerido enviado ao fornecedor."],["11:40","Conta vence amanhã","Energia elétrica · R$ 2.340."],["15:30","Fechamento do almoço","142 pedidos · ticket médio R$ 88."],["23:10","Resumo do dia enviado","Faturamento, CMV e perdas no WhatsApp do gestor."]];
-let feedT=[];
-$("feedBtn").onclick=()=>{feedT.forEach(clearTimeout);const ul=$("feed");ul.innerHTML="";
-  FEED.forEach((f,i)=>feedT.push(setTimeout(()=>{const li=document.createElement("li");li.innerHTML="<time></time><div><b></b><small></small></div>";li.querySelector("time").textContent=f[0];li.querySelector("b").textContent=f[1];li.querySelector("small").textContent=f[2];ul.appendChild(li)},i*900)))};
+/* ===== RELATÓRIO MENSAL ===== */
+const MESES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
+function monthTotals(y,m){const t=[0,0,0];DAYS.forEach(x=>{if(x.d.getFullYear()===y&&x.d.getMonth()===m)x.v.forEach((v,i)=>t[i]+=v)});return t}
+function renderReport(){
+  const ref=new Date(TODAY.getFullYear(),TODAY.getMonth()-1,1),prv=new Date(ref.getFullYear(),ref.getMonth()-1,1);
+  const c=monthTotals(ref.getFullYear(),ref.getMonth()),p=monthTotals(prv.getFullYear(),prv.getMonth());
+  const S=a=>a[0]+a[1]+a[2],fat=S(c),fatP=S(p);
+  const ped=a=>a.reduce((s,v,i)=>s+v/CH[i].tk,0),cmv=a=>a.reduce((s,v,i)=>s+v*CH[i].cmv,0)/S(a)*100+.6;
+  const com=a=>a[2]*.2,mg=a=>S(a)*(1-cmv(a)/100)-com(a);
+  const pc=(a,b)=>{const x=(a-b)/b*100;return(x>=0?"+":"")+x.toFixed(1).replace(".",",")+"%"};
+  const pp=(a,b)=>{const x=a-b;return(x>=0?"+":"")+x.toFixed(1).replace(".",",")+" pts"};
+  const f1=v=>v.toFixed(1).replace(".",",")+"%";
+  $("repMonth").textContent=`Restaurante Exemplo · ${MESES[ref.getMonth()]} de ${ref.getFullYear()}`;
+  $("repSum").textContent=`O faturamento de ${MESES[ref.getMonth()]} foi de ${brl(fat)}, ${pc(fat,fatP)} em relação a ${MESES[prv.getMonth()]}. O CMV ficou em ${f1(cmv(c))} e os aplicativos responderam por ${f1(c[2]/fat*100)} das vendas, com ${brl(com(c))} pagos em comissão.`;
+  const rows=[["Faturamento",brl(fat),brl(fatP),pc(fat,fatP)],["Pedidos",nf(ped(c)),nf(ped(p)),pc(ped(c),ped(p))],["Ticket médio",brl(fat/ped(c)),brl(fatP/ped(p)),pc(fat/ped(c),fatP/ped(p))],["CMV",f1(cmv(c)),f1(cmv(p)),pp(cmv(c),cmv(p))],["Comissão de aplicativos",brl(com(c)),brl(com(p)),pc(com(c),com(p))],["Margem após CMV e comissões",brl(mg(c)),brl(mg(p)),pc(mg(c),mg(p))]];
+  $("repTbl").innerHTML=`<thead><tr><th>Indicador</th><th class="r">${MESES[ref.getMonth()]}</th><th class="r">${MESES[prv.getMonth()]}</th><th class="r">Variação</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${r[0]}</td><td class="r">${r[1]}</td><td class="r">${r[2]}</td><td class="r">${r[3]}</td></tr>`).join("")}</tbody>`;
+  const mx=Math.max(...c);
+  $("repCh").innerHTML=CH.map((h,i)=>`<div class="r"><span>${h.n}</span><i style="width:${c[i]/mx*100}%;background:${h.c}"></i><b>${brl(c[i])} · ${Math.round(c[i]/fat*100)}%</b></div>`).join("");
+  const d=DISH.map(x=>({n:x[0],cmv:x[2],m:x[1]*(1-x[2])})),top=d.slice().sort((a,b)=>b.m-a.m).slice(0,3),bad=d.filter(x=>x.cmv>.38);
+  $("repTop").innerHTML=top.map(x=>`<li>${x.n}: ${brl(x.m)} de margem por prato</li>`).join("");
+  $("repWarn").innerHTML=bad.map(x=>`<li>${x.n} com CMV de ${Math.round(x.cmv*100)}% (meta: 32%)</li>`).join("")+`<li>${brl(com(c))} pagos em comissão de aplicativos</li>`;
+  $("repDo").innerHTML=[`Revisar a ficha técnica e o preço de ${bad.map(x=>x.n.toLowerCase()).join(" e ")}.`,`Divulgar o delivery próprio para quem pede pelos aplicativos: cada 10% dos pedidos que migram poupam cerca de ${brl(com(c)*.1)} por mês.`,`Destacar ${top[0].n.toLowerCase()} no cardápio e no atendimento, por ser o prato de maior margem.`].map(t=>`<li>${t}</li>`).join("");
+}
+$("segView").onclick=e=>{const b=e.target.closest("button");if(!b)return;const rep=b.dataset.v==="rep";$("segView").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));$("dash").hidden=rep;$("report").hidden=!rep;if(rep)renderReport();else drawChart()};
+$("repPrint").onclick=()=>print();
 
 /* ===== PLANOS ===== */
 const PLANS=[
  {n:"Presença",lab:"",f:"Para ser encontrado e bem avaliado no Google.",s:1500,m:149,it:[["Site próprio","site"],["Google Meu Negócio otimizado"],["2 placas de avaliação","avaliacoes"],["Hospedagem e manutenção"],["Relatório trimestral"]]},
- {n:"Experiência",lab:"Indicado para restaurantes",f:"Para atender a qualquer hora e vender mais por mesa.",s:4500,m:590,hl:1,it:[["Tudo do Presença"],["Atendimento no WhatsApp","atendimento"],["Cardápio digital com vídeo","cardapio"],["Até 6 placas de avaliação","avaliacoes"],["Relatório mensal"]]},
- {n:"Funil completo",lab:"",f:"Para ter controle dos números e da rotina.",s:9000,m:1490,it:[["Tudo do Experiência"],["Painel de gestão","painel"],["Automação da rotina","automacao"],["Apresentação trimestral de resultados"],["Reunião mensal de acompanhamento"]]}
+ {n:"Experiência",lab:"Indicado para restaurantes",f:"Para atender a qualquer hora e vender mais por mesa.",s:4500,m:590,hl:1,it:[["Tudo do Presença"],["Atendimento no WhatsApp","atendimento"],["Cardápio digital com vídeo","cardapio"],["Até 6 placas de avaliação","avaliacoes"],["Relatório mensal de resultados"]]},
+ {n:"Gestão completa",lab:"",f:"Para decidir com números toda semana.",s:9000,m:1490,it:[["Tudo do Experiência"],["Dashboard semanal","painel"],["Relatório mensal de gestão","painel:rep"],["Reunião mensal de acompanhamento"],["Apresentação trimestral de resultados"]]}
 ];
 $("plans").innerHTML=PLANS.map(p=>`<div class="plan${p.hl?" hl":""}"><span class="lab">${p.lab}</span><h3>${p.n}</h3><p class="for">${p.f}</p>
   <div class="price"><small>Implantação a partir de</small><b class="num">${brl(p.s)}</b><small>+ ${brl(p.m)} por mês</small></div>
   <ul>${p.it.map(([t,d])=>`<li>${t}${d?`<button type="button" data-go="${d}">ver demonstração</button>`:""}</li>`).join("")}</ul>
   <a class="btn ${p.hl?"btn-dark":"btn-line"}" href="${WHATSAPP}" target="_blank" rel="noopener">Quero o plano ${p.n}</a></div>`).join("");
-$("plans").onclick=e=>{const b=e.target.closest("[data-go]");if(b)openTab(b.dataset.go,true)};
+$("plans").onclick=e=>{const b=e.target.closest("[data-go]");if(!b)return;const [t,v]=b.dataset.go.split(":");openTab(t,true);if(t==="painel")$("segView").querySelector(`[data-v="${v==="rep"?"rep":"dash"}"]`).click()};
 
 /* ===== DÚVIDAS ===== */
 const FAQ=[

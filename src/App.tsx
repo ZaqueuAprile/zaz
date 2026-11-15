@@ -21,9 +21,9 @@ const PROJETOS = [
   },
   {
     numero: '04',
-    nome: 'Apollo Lúmen',
-    tipo: 'Assessoria digital e vendas · site',
-    href: './apollo-lumen/',
+    nome: 'Aprile',
+    tipo: 'Tecnologia e gestão · site',
+    href: './aprile/',
   },
 ]
 
