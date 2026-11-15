@@ -14,29 +14,27 @@ Cada projeto é uma página própria do mesmo build.
 
 ### Aprile
 
-Site da própria assessoria, pensado como mostruário para apresentar ao cliente.
-HTML, CSS e JavaScript puros num único arquivo (`aprile/index.html`), IBM
-Plex Sans, preto e dourado da logo só onde a marca aparece.
+Site da própria empresa (tecnologia e gestão para pousadas e restaurantes da
+Costa do Descobrimento), num único arquivo: `aprile/index.html`. Lora nos
+títulos, Manrope no texto e as cores do Painel Aprile.
 
-A abertura lista os problemas do cliente e cada um abre a aba da solução. A
-seção de demonstrações tem uma aba por solução, todas interativas:
+A chave **Pousada / Restaurante** no topo troca a página inteira: título, foto,
+números do setor (com fonte), planos, adicionais, a conta de retorno e as
+demonstrações. Os planos e preços vêm do Painel Aprile:
 
-- **Atendimento no WhatsApp**: conversa simulada com perguntas prontas.
-- **Cardápio digital**: categorias, pratos e a tela do prato com o espaço do vídeo.
-- **Avaliações no Google**: placa NFC e a tela de avaliação no celular do cliente.
-- **Site / landing page**: espaço do vídeo de demonstração e os sites do portfólio.
-- **Dashboard e relatórios**: o dashboard semanal (filtros de período e canal,
-  indicadores com comparação, gráfico com dica e tabela, alertas e pratos
-  ordenáveis) e um exemplo do relatório mensal de gestão, que pode ser impresso
-  ou salvo em PDF. Dados fictícios gerados no próprio arquivo.
+- Pousadas: Reputação, Venda Direta e Venda Direta Completo.
+- Restaurantes: Reputação, Mesa Cheia e Mesa Cheia + Gestão (com dashboard
+  semanal de CMV e relatório mensal).
 
-**Modo apresentação** esconde o resto do site, entra em tela cheia e troca de
-aba com as setas do teclado ou os botões. Cada aba tem endereço próprio
-(`#demo-painel`, `#demo-site`...), para mandar o link de uma demonstração.
+Demonstrações interativas: atendimento no WhatsApp, site com reserva direta
+(espaço para vídeo), guia do quarto por NFC, cardápio em português, espanhol e
+inglês, placas de avaliação e o dashboard de CMV com o relatório mensal
+imprimível. Há um modo apresentação e endereços diretos como
+`#restaurante/gestao` ou `#pousada/guia`.
 
-**Vídeo de demonstração**: preencha `VIDEOS.site` no início do `<script>` com um
-link do YouTube ou o caminho de um `.mp4` (por exemplo `./video/site.mp4`). Vazio,
-o espaço mostra "Vídeo de demonstração em breve".
+Para pôr o vídeo do site, preencha `VIDEO_SITE` no início do `<script>` com um
+link do YouTube ou o caminho de um `.mp4`. Planos, adicionais e o link do
+WhatsApp ficam nas constantes do mesmo bloco.
 
 ### Seu Beira Mar
 
