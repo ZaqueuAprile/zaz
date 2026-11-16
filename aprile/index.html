@@ -616,9 +616,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <div class="panel" id="p-atendimento" role="tabpanel">
       <div class="info" data-info="atendimento"></div>
       <div class="stage">
-        <span class="hint">Toque nas perguntas. Na primeira, abra o link de reserva</span>
+        <span class="hint" id="chatHint"></span>
         <div class="phone"><div class="screen">
-          <div class="wa-h"><span class="av"></span><div><b>Pousada Exemplo</b><small class="wa-st">online</small></div></div>
+          <div class="wa-h"><span class="av"></span><div><b class="biz-name">Pousada Exemplo</b><small class="wa-st">online</small></div></div>
           <div class="chat" id="chat"></div>
           <div class="quick" id="quick"></div>
           <div class="eng" id="eng">
@@ -629,7 +629,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
             <div class="eng-ok" id="engOk"><div><b>Reserva confirmada</b>Pagamento por Pix recebido.<br>A data já foi fechada na Booking e no Airbnb.<br><br><button class="btn btn-line" type="button" id="engBack2" style="min-height:36px;font-size:13px">Voltar ao WhatsApp</button></div></div>
           </div>
         </div></div>
-        <div class="side-note"><b>Como funciona</b>O assistente tira dúvidas, oferece transfer e passeios e manda o link do motor de reservas já com as datas preenchidas. Quem confere a vaga, mostra o preço e registra a reserva é o motor, ligado à Booking e ao Airbnb. Fora do roteiro, chama a recepção.
+        <div class="side-note"><b>Como funciona</b><span id="chatNote"></span>
           <button class="btn btn-line" id="chatReset" type="button" style="margin-top:16px;min-height:38px;font-size:14px">Recomeçar conversa</button>
         </div>
       </div>
@@ -837,10 +837,10 @@ const PLANS={
    it:[["Tudo do Venda Direta"],["Atendimento no WhatsApp 24 horas","atendimento"],["Link de reserva direta, passeios e transfer pelo WhatsApp","atendimento"],["Ficha do hóspede e pesquisa pós-estadia"],["Guia do quarto por NFC","guia"],["Reunião mensal de resultado"]]}
  ],
  restaurante:[
-  {n:"Reputação",lab:"Para começar",for:"Nota melhor no Google e nenhuma avaliação sem resposta.",solves:"nota baixa e avaliações sem resposta",s:590,m:149,dias:7,
-   it:[["2 placas NFC de avaliação","avaliacoes"],["Perfil do Google otimizado"],["Resposta a todas as avaliações"],["Relatório mensal"]]},
+  {n:"Reputação",lab:"Para começar",for:"Nota melhor no Google, nenhuma avaliação e nenhuma mensagem sem resposta.",solves:"nota baixa, avaliações e WhatsApp sem resposta",s:590,m:149,dias:7,
+   it:[["Atendimento no WhatsApp 24 horas","atendimento"],["2 placas NFC de avaliação","avaliacoes"],["Perfil do Google otimizado"],["Resposta a todas as avaliações"],["Relatório mensal"]]},
   {n:"Mesa Cheia",lab:"",for:"Para o turista entender o cardápio e pedir mais por mesa.",solves:"turista que não entende o cardápio e pouco pedido por mesa",s:2500,m:390,dias:15,
-   it:[["Cardápio NFC com vídeo","cardapio"],["Em português, espanhol e inglês","cardapio"],["Gravação dos vídeos inclusa"],["Placas de avaliação e Google","avaliacoes"],["Resposta às avaliações"]]},
+   it:[["Tudo do Reputação"],["Cardápio NFC com vídeo","cardapio"],["Em português, espanhol e inglês","cardapio"],["Gravação dos vídeos inclusa"]]},
   {n:"Mesa Cheia + Gestão",lab:"Mais completo",for:"Para saber quanto cada prato dá de lucro, toda semana.",solves:"lucro que ninguém mede",s:5500,m:990,dias:30,
    it:[["Tudo do Mesa Cheia"],["Fichas técnicas dos pratos"],["Controle de estoque"],["Dashboard semanal de CMV","gestao"],["Relatório mensal de gestão","gestao:rep"],["Reunião mensal"]]}
  ]
@@ -877,7 +877,9 @@ document.querySelectorAll(".inputs input").forEach(i=>i.addEventListener("input"
 
 /* ===== DEMONSTRAÇÕES ===== */
 const SOL={
- atendimento:{tab:"Atendimento no WhatsApp",name:"Atendimento no WhatsApp",d:"Responde na hora, a qualquer hora, e leva o hóspede até a reserva direta: manda o link do motor de reservas com as datas já preenchidas. Passa para a recepção quando precisa de uma pessoa.",plan:"Venda Direta Completo"},
+ atendimento:{tab:"Atendimento no WhatsApp",name:"Atendimento no WhatsApp",
+  pousada:{d:"Responde na hora, a qualquer hora, e leva o hóspede até a reserva direta: manda o link do motor de reservas com as datas já preenchidas. Passa para a recepção quando precisa de uma pessoa.",plan:"Venda Direta Completo"},
+  restaurante:{d:"Responde na hora, a qualquer hora: horário, cardápio, reserva de mesa, entrega e restrições alimentares, em português, espanhol e inglês. Passa para a equipe quando precisa de uma pessoa.",plan:"todos os planos para restaurantes"}},
  site:{tab:"Site com reserva direta",name:"Site com reserva direta",d:"Site rápido, feito para o celular, com o motor de reservas da pousada e os links de reserva gratuitos do Google.",plan:"Venda Direta e Venda Direta Completo"},
  guia:{tab:"Guia do quarto",name:"Guia do quarto por NFC",d:"Tudo o que o hóspede pergunta na recepção, no celular dele, mais passeios e restaurantes que geram receita extra.",plan:"Venda Direta Completo"},
  cardapio:{tab:"Cardápio em 3 idiomas",name:"Cardápio com vídeo em 3 idiomas",d:"O cliente aproxima o celular da mesa, escolhe o idioma e vê cada prato em vídeo, com sugestão de acompanhamento.",plan:"Mesa Cheia e Mesa Cheia + Gestão"},
@@ -885,9 +887,9 @@ const SOL={
  fidelidade:{tab:"Cartão fidelidade",name:"Cartão fidelidade na carteira do celular",d:"Sem aplicativo e sem cartão de papel. O cliente adiciona o cartão à Carteira do iPhone ou do Android com um toque, ganha um carimbo a cada visita e recebe o aviso no celular quando o prêmio sai. Quem some há 30 dias recebe um convite para voltar.",plan:"adicional, em qualquer plano"},
  gestao:{tab:"Dashboard de CMV",name:"Dashboard semanal e relatório mensal",d:"Toda semana, faturamento, ticket médio, CMV e margem de cada prato. Todo mês, um relatório com a análise e o que ajustar.",plan:"Mesa Cheia + Gestão"}
 };
-const ORDER={pousada:["atendimento","site","guia","avaliacoes","fidelidade"],restaurante:["cardapio","avaliacoes","fidelidade","gestao"]};
-document.querySelectorAll("[data-info]").forEach(el=>{const s=SOL[el.dataset.info];
-  el.innerHTML=`<div><h3>${s.name}</h3><p>${s.d}</p></div><div><p class="from">Incluído em: <b>${s.plan}</b></p><a class="btn btn-dark" style="margin-top:16px" href="${WHATSAPP}" target="_blank" rel="noopener">Quero esta solução</a></div>`});
+const ORDER={pousada:["atendimento","site","guia","avaliacoes","fidelidade"],restaurante:["atendimento","cardapio","avaliacoes","fidelidade","gestao"]};
+function renderInfo(){document.querySelectorAll("[data-info]").forEach(el=>{const o=SOL[el.dataset.info],v=o[aud]||{},d=v.d||o.d,pl=v.plan||o.plan;
+  el.innerHTML=`<div><h3>${o.name}</h3><p>${d}</p></div><div><p class="from">Incluído em: <b>${pl}</b></p><a class="btn btn-dark" style="margin-top:16px" href="${WHATSAPP}" target="_blank" rel="noopener">Quero esta solução</a></div>`})}
 let aud="pousada",current="atendimento";
 function renderTabs(){$("tabs").innerHTML=ORDER[aud].map(id=>`<button class="tab" role="tab" id="t-${id}" aria-controls="p-${id}" data-t="${id}">${SOL[id].tab}</button>`).join("")}
 function openTab(id,scroll,hash=true){
@@ -908,7 +910,7 @@ function step(d){const o=ORDER[aud],i=o.indexOf(current);openTab(o[(i+d+o.length
 function setAud(a,hash=true){
   aud=a;document.body.dataset.aud=a;
   document.querySelectorAll("[data-set]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.set===a));
-  renderPlans(a);renderTabs();calc();if(typeof wRender==="function"){wHas=false;wN=0;wOffer="";wRender()}
+  renderPlans(a);renderTabs();renderInfo();calc();resetChat();if(typeof wRender==="function"){wHas=false;wN=0;wOffer="";wRender()}
   document.querySelectorAll(".biz-name").forEach(el=>el.textContent=a==="pousada"?"Pousada Exemplo":"Restaurante Exemplo");
   if(hash!==false)openTab(ORDER[a].includes(current)?current:ORDER[a][0],false,hash);
 }
@@ -922,22 +924,35 @@ document.addEventListener("fullscreenchange",()=>{if(!document.fullscreenElement
 if(location.protocol==="file:")document.querySelectorAll(".live").forEach(a=>a.remove());
 
 /* atendimento */
-const QA=[
- ["Tem quarto para casal de 12 a 15 de janeiro?","Que bom que pensou na gente! Separei as datas para você: toque no link para ver os quartos livres e o preço, e reservar direto com a pousada.",{t:"Reservar · 12 a 15 de janeiro",s:"3 noites · 2 adultos",u:"reservas.pousadaexemplo.com.br/?checkin=2027-01-12&checkout=2027-01-15&adults=2"}],
+const QAS={
+ pousada:{hello:"Olá! Aqui é o atendimento da Pousada Exemplo, em Arraial d'Ajuda. Como posso ajudar?",hint:"Toque nas perguntas. Na primeira, abra o link de reserva",
+  note:"O assistente tira dúvidas, oferece transfer e passeios e manda o link do motor de reservas já com as datas preenchidas. Quem confere a vaga, mostra o preço e registra a reserva é o motor, ligado à Booking e ao Airbnb. Fora do roteiro, chama a recepção.",
+  qa:[
+ ["Tem quarto para casal de 12 a 15 de janeiro?","Que bom que pensou na gente! Separei as datas para você: toque no link para ver os quartos livres e o preço, e reservar direto com a pousada.",{t:"Reservar · 12 a 15 de janeiro",s:"3 noites · 2 adultos",u:"reservas.pousadaexemplo.com.br/?checkin=2027-01-12&checkout=2027-01-15&adults=2",go:"engine"}],
  ["¿Hablan español?","¡Sí! Puedo atenderte en español. ¿Para qué fechas buscas alojamiento?"],
  ["Vocês fazem transfer do aeroporto?","Fazemos. Do aeroporto de Porto Seguro até a pousada: R$ 180 por carro, até 4 pessoas. Depois de reservar, é só me avisar o horário do voo."],
  ["Quais passeios vocês indicam?","Os mais pedidos são Recife de Fora, Caraíva e Trancoso. Posso reservar com o nosso parceiro e o valor entra na conta da estadia."],
  ["Aceita pet?","Aceitamos pets de pequeno porte nas suítes térreas, com taxa de R$ 60 por noite."],
- ["Quero falar com a recepção","Claro. Já chamei a recepção, ela responde em instantes."]
-];
+ ["Quero falar com a recepção","Claro. Já chamei a recepção, ela responde em instantes."]]},
+ restaurante:{hello:"Olá! Aqui é o atendimento do Restaurante Exemplo, em Arraial d'Ajuda. Como posso ajudar?",hint:"Toque nas perguntas para conversar",
+  note:"O assistente conhece o cardápio, os horários, as regras da casa e responde em português, espanhol e inglês. Pedidos de reserva vão para a equipe confirmar. Fora do roteiro, chama alguém da equipe.",
+  qa:[
+ ["Vocês abrem hoje?","Abrimos hoje das 12h às 16h e das 18h às 23h. Quer reservar uma mesa?"],
+ ["Tem mesa para 6 hoje às 20h?","Vou pedir para a equipe: em qual nome fica a reserva?"],
+ ["No nome da Carla","Pedido enviado: Carla, 6 pessoas, hoje às 20h. A equipe confirma por aqui em instantes."],
+ ["Do you have an English menu?","Yes! Here is our menu in English, with a short video of each dish.",{t:"Menu · Restaurante Exemplo",s:"Português · Español · English",u:"cardapio.restauranteexemplo.com.br/?lang=en",go:"cardapio"}],
+ ["Tem opção sem glúten?","Temos sim: moqueca de peixe, ceviche, risoto de camarão e picanha na brasa são sem glúten."],
+ ["Fazem entrega?","Fazemos entrega em Arraial d'Ajuda, das 18h às 22h30. Posso mandar o cardápio de delivery?"],
+ ["Quero falar com uma pessoa","Claro. Já chamei alguém da equipe, responde em instantes."]]}
+};
 const chat=$("chat"),quick=$("quick");
 const hhmm=()=>{const d=new Date();return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")};
 function addMsg(t,cls,lk){const m=document.createElement("div");m.className="m "+cls;m.append(t);
-  if(lk){const c=document.createElement("button");c.type="button";c.className="lk";c.innerHTML="<b></b><span></span><i></i>";c.querySelector("b").textContent=lk.t;c.querySelector("span").textContent=lk.s;c.querySelector("i").textContent=lk.u;c.onclick=openEngine;m.appendChild(c)}
+  if(lk){const c=document.createElement("button");c.type="button";c.className="lk";c.innerHTML="<b></b><span></span><i></i>";c.querySelector("b").textContent=lk.t;c.querySelector("span").textContent=lk.s;c.querySelector("i").textContent=lk.u;c.onclick=()=>{if(lk.go==="engine")openEngine();else{if(lk.go==="cardapio"){lang="en";$("langs").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x.dataset.l==="en"));renderMenu()}openTab(lk.go)}};m.appendChild(c)}
   const s=document.createElement("small");s.textContent=hhmm();m.appendChild(s);chat.appendChild(m);chat.scrollTop=chat.scrollHeight}
-function resetChat(){chat.innerHTML="";closeEngine();addMsg("Olá! Aqui é o atendimento da Pousada Exemplo, em Arraial d'Ajuda. Como posso ajudar?","out");quick.innerHTML="";
-  QA.forEach(([q],i)=>{const b=document.createElement("button");b.type="button";b.textContent=q;b.onclick=()=>ask(i,b);quick.appendChild(b)})}
-function ask(i,b){quick.querySelectorAll("button").forEach(x=>x.disabled=true);addMsg(QA[i][0],"in");
+function resetChat(){const c=QAS[aud];chat.innerHTML="";closeEngine();$("chatHint").textContent=c.hint;$("chatNote").textContent=c.note;addMsg(c.hello,"out");quick.innerHTML="";
+  c.qa.forEach(([q],i)=>{const b=document.createElement("button");b.type="button";b.textContent=q;b.onclick=()=>ask(i,b);quick.appendChild(b)})}
+function ask(i,b){const QA=QAS[aud].qa;quick.querySelectorAll("button").forEach(x=>x.disabled=true);addMsg(QA[i][0],"in");
   const t=document.createElement("div");t.className="typing";t.innerHTML="<i></i><i></i><i></i>";const st=document.querySelector(".wa-st");
   setTimeout(()=>{chat.appendChild(t);chat.scrollTop=chat.scrollHeight;st.textContent="digitando..."},350);
   setTimeout(()=>{t.remove();st.textContent="online";addMsg(QA[i][1],"out",QA[i][2]);quick.querySelectorAll("button").forEach(x=>x.disabled=false);b.remove()},1500)}
