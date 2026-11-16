@@ -28,7 +28,8 @@ demonstrações. Os planos e preços vêm do Painel Aprile:
 
 Demonstrações interativas: atendimento no WhatsApp, site com reserva direta
 (espaço para vídeo), guia do quarto por NFC, cardápio em português, espanhol e
-inglês, placas de avaliação e o dashboard de CMV com o relatório mensal
+inglês, placas de avaliação, cartão fidelidade na carteira do celular (carimbos,
+aviso de prêmio e convite para quem some há 30 dias) e o dashboard de CMV com o relatório mensal
 imprimível. Há um modo apresentação e endereços diretos como
 `#restaurante/gestao` ou `#pousada/guia`.
 

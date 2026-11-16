@@ -292,6 +292,39 @@ body[data-aud="restaurante"] [data-aud="pousada"]{display:none!important}
 .rv-done.on{display:grid}
 .rv-done b{display:block;font-size:17px;margin-bottom:6px}
 
+/* cartão fidelidade na carteira */
+.wallet{background:#f2f2f4;color:#111}
+.w-top{padding:36px 16px 8px;flex:none;display:flex;justify-content:space-between;align-items:baseline}
+.w-top b{font-size:22px;font-weight:700;letter-spacing:-.02em}
+.w-top span{font-size:12px;color:#777}
+.w-body{flex:1;overflow-y:auto;padding:6px 14px 14px;display:flex;flex-direction:column;gap:10px}
+.w-empty{border:1.5px dashed #c8c8cc;border-radius:14px;padding:22px 16px;text-align:center;font-size:13px;color:#666}
+.w-add{margin-top:12px;display:inline-flex;align-items:center;gap:8px;background:#000;color:#fff;border-radius:10px;padding:10px 16px;font-size:13.5px;font-weight:600}
+.w-add svg{width:18px;height:18px}
+.pass{border-radius:14px;background:#1a1814;color:#f5efe2;padding:14px 16px 16px;box-shadow:0 8px 20px -10px rgba(0,0,0,.5);animation:pop .35s ease}
+.pass-h{display:flex;justify-content:space-between;align-items:center}
+.pass-h div{display:flex;align-items:center;gap:8px;font-family:var(--serif);font-size:16px}
+.pass-h img{width:30px}
+.pass-h small{font-size:10.5px;color:#a79f90;text-transform:uppercase;letter-spacing:.06em;text-align:right;line-height:1.2}
+.pass-h small b{display:block;color:#f5efe2;font-size:15px;letter-spacing:0;text-transform:none}
+.stamps{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:16px 0 12px}
+.stamps i{aspect-ratio:1;border-radius:50%;border:1.5px solid #4a4232;display:grid;place-items:center;font-style:normal;font-size:14px;color:#1a1814}
+.stamps i.on{background:#d4af37;border-color:#d4af37}
+.stamps i.prize{border-style:dashed;border-color:#d4af37;color:#d4af37;font-size:15px;text-align:center;line-height:1;overflow:hidden}
+.stamps i.prize.on{color:#1a1814}
+.pass-f{display:flex;justify-content:space-between;align-items:end;gap:10px;font-size:11px;color:#a79f90}
+.pass-f b{display:block;color:#f5efe2;font-size:13px}
+.pass-qr{width:58px;height:58px;flex:none;background:#fff;border-radius:6px;padding:5px}
+.pass-qr i{display:block;width:100%;height:100%;background:conic-gradient(#000 25%,#fff 0 50%,#000 0 75%,#fff 0) 0 0/12px 12px}
+.pass-offer{margin-top:12px;padding-top:10px;border-top:1px solid #3a3222;font-size:12px;color:#f5efe2}
+.notif{position:absolute;left:10px;right:10px;top:34px;z-index:6;background:rgba(250,250,252,.97);color:#111;border-radius:14px;padding:10px 12px;font-size:12.5px;line-height:1.35;box-shadow:0 10px 30px -10px rgba(0,0,0,.45);display:flex;gap:10px;transform:translateY(-140%);transition:transform .35s ease}
+.notif.on{transform:none}
+.notif i{width:30px;height:30px;flex:none;border-radius:7px;background:#1a1814 url(./sol.png) center/78% no-repeat}
+.notif b{display:block;font-size:12.5px}
+.w-ctrl{display:flex;flex-direction:column;gap:10px;max-width:250px}
+.w-ctrl .btn{min-height:42px;font-size:14px}
+.w-ctrl p{font-size:14px;color:var(--muted)}
+
 /* vídeo */
 .video-box{position:relative;aspect-ratio:16/9;background:#1a1814;border-radius:8px;overflow:hidden;display:grid;place-items:center;width:100%}
 .video-box img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;opacity:.45}
@@ -673,6 +706,24 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       </div>
     </div>
 
+    <div class="panel" id="p-fidelidade" role="tabpanel">
+      <div class="info" data-info="fidelidade"></div>
+      <div class="stage">
+        <span class="hint">Adicione o cartão e simule as visitas</span>
+        <div class="phone"><div class="screen wallet">
+          <div class="notif" id="wNotif"><i></i><div><b class="w-biz"></b><span id="wNotifT"></span></div></div>
+          <div class="w-top"><b>Carteira</b><span>iPhone e Android</span></div>
+          <div class="w-body" id="wBody"></div>
+        </div></div>
+        <div class="w-ctrl">
+          <p id="wHelp"></p>
+          <button class="btn btn-dark" id="wVisit" type="button">Simular uma visita</button>
+          <button class="btn btn-line" id="wAway" type="button">Simular 30 dias sem voltar</button>
+          <button class="btn btn-line" id="wReset" type="button">Recomeçar</button>
+        </div>
+      </div>
+    </div>
+
     <div class="panel wide" id="p-gestao" role="tabpanel">
       <div class="info row" data-info="gestao"></div>
       <div class="viewsw"><div class="seg" id="segView" role="group" aria-label="Visualização"><button type="button" data-v="dash" aria-pressed="true">Dashboard semanal</button><button type="button" data-v="rep">Relatório mensal</button></div></div>
@@ -795,8 +846,8 @@ const PLANS={
  ]
 };
 const EXTRAS={
- pousada:[["Site em português, espanhol e inglês","turista estrangeiro que não entende o site",2000,90],["Checklist de limpeza e manutenção","quarto não liberado a tempo e manutenção esquecida",900,120],["Painel de ocupação e preço","preço decidido no achismo",1500,250],["Anúncio da Booking e do Airbnb revisado","anúncio fraco nos canais que já vendem",800,0],["Rede Aprile","hóspede que não conhece os restaurantes da região",0,0,"grátis"]],
- restaurante:[["Fila de espera e reserva de mesa","cliente que desiste da fila no pico",900,150],["Delivery próprio pelo WhatsApp","comissão do iFood no cliente da cidade",1500,190],["Fidelidade ou cashback","cliente local que some na baixa temporada",1200,190],["Estoque com alerta de compra","insumo que acaba no meio do serviço",1500,190],["Checklist de abertura e fechamento","temperatura e validade sem registro",700,90],["Engenharia de cardápio","prato que vende muito e lucra pouco",1500,0],["Site em português, espanhol e inglês","turista estrangeiro que não entende o site",2000,90],["Rede Aprile","restaurante sem turista",0,150]]
+ pousada:[["Site em português, espanhol e inglês","turista estrangeiro que não entende o site",2000,90],["Checklist de limpeza e manutenção","quarto não liberado a tempo e manutenção esquecida",900,120],["Painel de ocupação e preço","preço decidido no achismo",1500,250],["Anúncio da Booking e do Airbnb revisado","anúncio fraco nos canais que já vendem",800,0],["Cartão de hóspede na carteira do celular","hóspede que volta pela Booking em vez de reservar direto",1200,190],["Rede Aprile","hóspede que não conhece os restaurantes da região",0,0,"grátis"]],
+ restaurante:[["Fila de espera e reserva de mesa","cliente que desiste da fila no pico",900,150],["Delivery próprio pelo WhatsApp","comissão do iFood no cliente da cidade",1500,190],["Cartão fidelidade na carteira do celular","cliente local que some na baixa temporada",1200,190],["Estoque com alerta de compra","insumo que acaba no meio do serviço",1500,190],["Checklist de abertura e fechamento","temperatura e validade sem registro",700,90],["Engenharia de cardápio","prato que vende muito e lucra pouco",1500,0],["Site em português, espanhol e inglês","turista estrangeiro que não entende o site",2000,90],["Rede Aprile","restaurante sem turista",0,150]]
 };
 function renderPlans(aud){
   $("plans").innerHTML=PLANS[aud].map(p=>`<div class="plan"><span class="lab">${p.lab}</span><h3>${p.n}</h3><p class="for">${p.for}</p>
@@ -831,9 +882,10 @@ const SOL={
  guia:{tab:"Guia do quarto",name:"Guia do quarto por NFC",d:"Tudo o que o hóspede pergunta na recepção, no celular dele, mais passeios e restaurantes que geram receita extra.",plan:"Venda Direta Completo"},
  cardapio:{tab:"Cardápio em 3 idiomas",name:"Cardápio com vídeo em 3 idiomas",d:"O cliente aproxima o celular da mesa, escolhe o idioma e vê cada prato em vídeo, com sugestão de acompanhamento.",plan:"Mesa Cheia e Mesa Cheia + Gestão"},
  avaliacoes:{tab:"Placas de avaliação",name:"Placas de avaliação NFC",d:"O cliente aproxima o celular e cai na tela de avaliação do seu perfil no Google. A placa pede a opinião de todos, sem brinde e sem filtrar quem gostou, como o Google exige.",plan:"todos os planos"},
+ fidelidade:{tab:"Cartão fidelidade",name:"Cartão fidelidade na carteira do celular",d:"Sem aplicativo e sem cartão de papel. O cliente adiciona o cartão à Carteira do iPhone ou do Android com um toque, ganha um carimbo a cada visita e recebe o aviso no celular quando o prêmio sai. Quem some há 30 dias recebe um convite para voltar.",plan:"adicional, em qualquer plano"},
  gestao:{tab:"Dashboard de CMV",name:"Dashboard semanal e relatório mensal",d:"Toda semana, faturamento, ticket médio, CMV e margem de cada prato. Todo mês, um relatório com a análise e o que ajustar.",plan:"Mesa Cheia + Gestão"}
 };
-const ORDER={pousada:["atendimento","site","guia","avaliacoes"],restaurante:["cardapio","avaliacoes","gestao"]};
+const ORDER={pousada:["atendimento","site","guia","avaliacoes","fidelidade"],restaurante:["cardapio","avaliacoes","fidelidade","gestao"]};
 document.querySelectorAll("[data-info]").forEach(el=>{const s=SOL[el.dataset.info];
   el.innerHTML=`<div><h3>${s.name}</h3><p>${s.d}</p></div><div><p class="from">Incluído em: <b>${s.plan}</b></p><a class="btn btn-dark" style="margin-top:16px" href="${WHATSAPP}" target="_blank" rel="noopener">Quero esta solução</a></div>`});
 let aud="pousada",current="atendimento";
@@ -856,7 +908,7 @@ function step(d){const o=ORDER[aud],i=o.indexOf(current);openTab(o[(i+d+o.length
 function setAud(a,hash=true){
   aud=a;document.body.dataset.aud=a;
   document.querySelectorAll("[data-set]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.set===a));
-  renderPlans(a);renderTabs();calc();
+  renderPlans(a);renderTabs();calc();if(typeof wRender==="function"){wHas=false;wN=0;wOffer="";wRender()}
   document.querySelectorAll(".biz-name").forEach(el=>el.textContent=a==="pousada"?"Pousada Exemplo":"Restaurante Exemplo");
   if(hash!==false)openTab(ORDER[a].includes(current)?current:ORDER[a][0],false,hash);
 }
@@ -947,6 +999,27 @@ $("dishes").onclick=e=>{const b=e.target.closest(".dish");if(!b)return;const d=M
   $("dPrice").textContent=brl(d[0]);const det=$("detail");det.classList.remove("on");void det.offsetWidth;det.classList.add("on")};
 $("dClose").onclick=()=>$("detail").classList.remove("on");
 renderMenu();
+
+/* cartão fidelidade na carteira */
+const WCFG={
+ restaurante:{where:"O cliente recebe o link no WhatsApp, no cardápio ou na placa da mesa.",biz:"Restaurante Exemplo",need:10,unit:"visita",prize:"Sobremesa",help:"O garçom lê o código do cartão na hora de fechar a conta. Cada visita vale um carimbo; na décima, a sobremesa sai por conta da casa.",
+  stamp:n=>`Mais um carimbo! Faltam ${n} para a sua sobremesa.`,done:"Cartão completo: a sua sobremesa está liberada na próxima visita.",away:"Sentimos sua falta! Esta semana o café é por conta da casa. Mostre este cartão.",offer:"Esta semana: café por conta da casa"},
+ pousada:{where:"O hóspede recebe o link no WhatsApp ou no check-in.",biz:"Pousada Exemplo",need:3,unit:"estadia",prize:"Diária",help:"A cada estadia, a recepção marca o cartão. Na terceira, uma diária grátis. O cartão também guarda 10% de desconto para reservar direto, sem a Booking.",
+  stamp:n=>`Obrigado pela estadia! Faltam ${n} para a sua diária grátis.`,done:"Cartão completo: a sua próxima diária é por conta da casa.",away:"Saudade de Arraial? Reserve direto pelo site com 10% de desconto até o fim do mês.",offer:"10% de desconto na reserva direta"}
+};
+let wHas=false,wN=0,wOffer="",wT;
+function wRender(){const c=WCFG[aud];document.querySelectorAll(".w-biz").forEach(e=>e.textContent=c.biz);$("wHelp").textContent=c.help;
+  $("wVisit").textContent=`Simular uma ${c.unit}`;$("wVisit").disabled=$("wAway").disabled=!wHas;
+  if(!wHas){$("wBody").innerHTML=`<div class="w-empty">${c.where}<br><button class="w-add" type="button" id="wAdd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg>Adicionar à Carteira</button></div>`;$("wAdd").onclick=()=>{wHas=true;wRender();wNotify("Cartão adicionado à Carteira.")};return}
+  const dots=Array.from({length:c.need},(_,i)=>i===c.need-1?`<i class="prize${i<wN?" on":""}" title="${c.prize}">★</i>`:`<i class="${i<wN?"on":""}">${i<wN?"✓":""}</i>`).join("");
+  $("wBody").innerHTML=`<div class="pass"><div class="pass-h"><div><img src="./sol.png" alt="">${c.biz}</div><small>Carimbos<b>${wN}/${c.need}</b></small></div>
+   <div class="stamps" style="grid-template-columns:repeat(${Math.min(5,c.need)},minmax(0,1fr))">${dots}</div>
+   <div class="pass-f"><div>Cliente<b>Carla Souza</b></div><span class="pass-qr"><i></i></span></div>${wOffer?`<div class="pass-offer">${wOffer}</div>`:""}</div>`;
+}
+function wNotify(t){clearTimeout(wT);$("wNotifT").textContent=t;$("wNotif").classList.add("on");wT=setTimeout(()=>$("wNotif").classList.remove("on"),3200)}
+$("wVisit").onclick=()=>{const c=WCFG[aud];if(wN>=c.need){wN=0;wOffer=""}wN++;wRender();wNotify(wN>=c.need?c.done:c.stamp(c.need-wN))};
+$("wAway").onclick=()=>{const c=WCFG[aud];wOffer=c.offer;wRender();wNotify(c.away)};
+$("wReset").onclick=()=>{wHas=false;wN=0;wOffer="";$("wNotif").classList.remove("on");wRender()};
 
 /* avaliações */
 const LBL=["","Ruim","Razoável","Bom","Muito bom","Excelente"];
