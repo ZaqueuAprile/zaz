@@ -194,6 +194,31 @@ body[data-aud="restaurante"] [data-aud="pousada"]{display:none!important}
 .quick{flex:none;background:#f6f2ed;padding:9px 9px 12px;display:flex;flex-wrap:wrap;gap:6px;border-top:1px solid #ddd5ca}
 .quick button{background:#fff;border:1px solid #cfd8d3;color:#075e54;font-size:12.5px;font-weight:500;padding:6px 10px;border-radius:14px}
 .quick button:disabled{opacity:.4;cursor:default}
+.lk{display:block;width:100%;text-align:left;margin-top:6px;background:#f0f7f4;border-left:3px solid #075e54;border-radius:6px;padding:7px 9px;font-size:12.5px;line-height:1.35}
+.lk b{display:block;color:#075e54;font-size:13px}
+.lk span{color:#555}
+.lk i{display:block;font-style:normal;color:#0a7cff;font-size:11.5px;margin-top:3px;word-break:break-all}
+.eng{position:absolute;inset:0;background:#fff;color:#1a1814;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .3s ease;z-index:5}
+.eng.on{transform:none}
+.eng-bar{padding:34px 12px 10px;border-bottom:1px solid #e4dccb;display:flex;align-items:center;gap:10px;flex:none}
+.eng-bar button{font-size:20px;line-height:1;width:28px}
+.eng-bar small{display:block;font-size:11px;color:#6b6458}
+.eng-bar b{font-size:13.5px}
+.eng-q{display:flex;gap:6px;padding:10px 12px;font-size:12px;border-bottom:1px solid #eee;flex:none}
+.eng-q span{border:1px solid #e4dccb;border-radius:6px;padding:4px 8px}
+.eng-body{flex:1;overflow-y:auto;padding:4px 12px 12px}
+.room{border:1px solid #e4dccb;border-radius:8px;padding:10px 12px;margin-top:10px;text-align:left;width:100%}
+.room.sel{border-color:#1a1814;box-shadow:inset 0 0 0 1px #1a1814}
+.room b{display:block;font-size:13.5px}
+.room small{display:block;color:#6b6458;font-size:12px}
+.room .pr{display:flex;justify-content:space-between;align-items:baseline;margin-top:6px;font-size:12px;color:#6b6458}
+.room .pr strong{font-size:15px;color:#1a1814}
+.room.off{opacity:.45;cursor:default}
+.eng-pay{margin:0 12px 12px;background:#1a1814;color:#fff;border-radius:8px;padding:12px;font-size:14px;font-weight:600;flex:none}
+.eng-pay:disabled{opacity:.35}
+.eng-ok{flex:1;display:none;place-items:center;text-align:center;padding:24px;font-size:13.5px}
+.eng-ok.on{display:grid}
+.eng-ok b{display:block;font-size:17px;margin-bottom:6px}
 
 /* cardápio */
 .menu-app{background:#fff;color:#1a1a1a}
@@ -558,13 +583,20 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <div class="panel" id="p-atendimento" role="tabpanel">
       <div class="info" data-info="atendimento"></div>
       <div class="stage">
-        <span class="hint">Toque nas perguntas para conversar</span>
+        <span class="hint">Toque nas perguntas. Na primeira, abra o link de reserva</span>
         <div class="phone"><div class="screen">
           <div class="wa-h"><span class="av"></span><div><b>Pousada Exemplo</b><small class="wa-st">online</small></div></div>
           <div class="chat" id="chat"></div>
           <div class="quick" id="quick"></div>
+          <div class="eng" id="eng">
+            <div class="eng-bar"><button type="button" id="engBack" aria-label="Voltar ao WhatsApp">‹</button><div><small>reservas.pousadaexemplo.com.br</small><b>Pousada Exemplo · Reserva direta</b></div></div>
+            <div class="eng-q"><span>12 jan → 15 jan</span><span>3 noites</span><span>2 adultos</span></div>
+            <div class="eng-body" id="engBody"></div>
+            <button class="eng-pay" type="button" id="engPay" disabled>Escolha um quarto</button>
+            <div class="eng-ok" id="engOk"><div><b>Reserva confirmada</b>Pagamento por Pix recebido.<br>A data já foi fechada na Booking e no Airbnb.<br><br><button class="btn btn-line" type="button" id="engBack2" style="min-height:36px;font-size:13px">Voltar ao WhatsApp</button></div></div>
+          </div>
         </div></div>
-        <div class="side-note"><b>Como funciona</b>O assistente conhece quartos, tarifas, regras e passeios da pousada. Fora do roteiro, chama a recepção. Antes da chegada, oferece transfer e passeios e coleta a ficha do hóspede.
+        <div class="side-note"><b>Como funciona</b>O assistente tira dúvidas, oferece transfer e passeios e manda o link do motor de reservas já com as datas preenchidas. Quem confere a vaga, mostra o preço e registra a reserva é o motor, ligado à Booking e ao Airbnb. Fora do roteiro, chama a recepção.
           <button class="btn btn-line" id="chatReset" type="button" style="margin-top:16px;min-height:38px;font-size:14px">Recomeçar conversa</button>
         </div>
       </div>
@@ -751,7 +783,7 @@ const PLANS={
   {n:"Venda Direta",lab:"",for:"Para o hóspede reservar no seu site, sem comissão.",solves:"comissão de OTA paga pelo mesmo hóspede",s:3500,m:490,dias:20,
    it:[["Site com reserva direta","site"],["Motor de reservas configurado"],["Links gratuitos de reserva no Google"],["3 placas NFC de avaliação","avaliacoes"],["Relatório mensal"]]},
   {n:"Venda Direta Completo",lab:"Mais completo",for:"Reserva direta com atendimento a qualquer hora e receita extra por hóspede.",solves:"comissão de OTA, WhatsApp fora de hora e pouca venda extra",s:6000,m:990,dias:30,
-   it:[["Tudo do Venda Direta"],["Atendimento no WhatsApp 24 horas","atendimento"],["Passeios, transfer e jantar oferecidos antes da chegada","atendimento"],["Ficha do hóspede e pesquisa pós-estadia"],["Guia do quarto por NFC","guia"],["Reunião mensal de resultado"]]}
+   it:[["Tudo do Venda Direta"],["Atendimento no WhatsApp 24 horas","atendimento"],["Link de reserva direta, passeios e transfer pelo WhatsApp","atendimento"],["Ficha do hóspede e pesquisa pós-estadia"],["Guia do quarto por NFC","guia"],["Reunião mensal de resultado"]]}
  ],
  restaurante:[
   {n:"Reputação",lab:"Para começar",for:"Nota melhor no Google e nenhuma avaliação sem resposta.",solves:"nota baixa e avaliações sem resposta",s:590,m:149,dias:7,
@@ -794,7 +826,7 @@ document.querySelectorAll(".inputs input").forEach(i=>i.addEventListener("input"
 
 /* ===== DEMONSTRAÇÕES ===== */
 const SOL={
- atendimento:{tab:"Atendimento no WhatsApp",name:"Atendimento no WhatsApp",d:"Responde na hora, a qualquer hora, faz a cotação e passa para a recepção quando precisa de uma pessoa.",plan:"Venda Direta Completo"},
+ atendimento:{tab:"Atendimento no WhatsApp",name:"Atendimento no WhatsApp",d:"Responde na hora, a qualquer hora, e leva o hóspede até a reserva direta: manda o link do motor de reservas com as datas já preenchidas. Passa para a recepção quando precisa de uma pessoa.",plan:"Venda Direta Completo"},
  site:{tab:"Site com reserva direta",name:"Site com reserva direta",d:"Site rápido, feito para o celular, com o motor de reservas da pousada e os links de reserva gratuitos do Google.",plan:"Venda Direta e Venda Direta Completo"},
  guia:{tab:"Guia do quarto",name:"Guia do quarto por NFC",d:"Tudo o que o hóspede pergunta na recepção, no celular dele, mais passeios e restaurantes que geram receita extra.",plan:"Venda Direta Completo"},
  cardapio:{tab:"Cardápio em 3 idiomas",name:"Cardápio com vídeo em 3 idiomas",d:"O cliente aproxima o celular da mesa, escolhe o idioma e vê cada prato em vídeo, com sugestão de acompanhamento.",plan:"Mesa Cheia e Mesa Cheia + Gestão"},
@@ -839,22 +871,34 @@ if(location.protocol==="file:")document.querySelectorAll(".live").forEach(a=>a.r
 
 /* atendimento */
 const QA=[
- ["Tem quarto para casal de 12 a 15 de janeiro?","Temos sim: suíte com vista para o mar, café da manhã incluso. Para 3 noites fica R$ 1.560. Quer que eu reserve?"],
+ ["Tem quarto para casal de 12 a 15 de janeiro?","Que bom que pensou na gente! Separei as datas para você: toque no link para ver os quartos livres e o preço, e reservar direto com a pousada.",{t:"Reservar · 12 a 15 de janeiro",s:"3 noites · 2 adultos",u:"reservas.pousadaexemplo.com.br/?checkin=2027-01-12&checkout=2027-01-15&adults=2"}],
  ["¿Hablan español?","¡Sí! Puedo atenderte en español. ¿Para qué fechas buscas alojamiento?"],
- ["Vocês fazem transfer do aeroporto?","Fazemos. Do aeroporto de Porto Seguro até a pousada: R$ 180 por carro, até 4 pessoas. Posso incluir na reserva?"],
+ ["Vocês fazem transfer do aeroporto?","Fazemos. Do aeroporto de Porto Seguro até a pousada: R$ 180 por carro, até 4 pessoas. Depois de reservar, é só me avisar o horário do voo."],
  ["Quais passeios vocês indicam?","Os mais pedidos são Recife de Fora, Caraíva e Trancoso. Posso reservar com o nosso parceiro e o valor entra na conta da estadia."],
  ["Aceita pet?","Aceitamos pets de pequeno porte nas suítes térreas, com taxa de R$ 60 por noite."],
  ["Quero falar com a recepção","Claro. Já chamei a recepção, ela responde em instantes."]
 ];
 const chat=$("chat"),quick=$("quick");
 const hhmm=()=>{const d=new Date();return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")};
-function addMsg(t,cls){const m=document.createElement("div");m.className="m "+cls;m.textContent=t;const s=document.createElement("small");s.textContent=hhmm();m.appendChild(s);chat.appendChild(m);chat.scrollTop=chat.scrollHeight}
-function resetChat(){chat.innerHTML="";addMsg("Olá! Aqui é o atendimento da Pousada Exemplo, em Arraial d'Ajuda. Como posso ajudar?","out");quick.innerHTML="";
+function addMsg(t,cls,lk){const m=document.createElement("div");m.className="m "+cls;m.append(t);
+  if(lk){const c=document.createElement("button");c.type="button";c.className="lk";c.innerHTML="<b></b><span></span><i></i>";c.querySelector("b").textContent=lk.t;c.querySelector("span").textContent=lk.s;c.querySelector("i").textContent=lk.u;c.onclick=openEngine;m.appendChild(c)}
+  const s=document.createElement("small");s.textContent=hhmm();m.appendChild(s);chat.appendChild(m);chat.scrollTop=chat.scrollHeight}
+function resetChat(){chat.innerHTML="";closeEngine();addMsg("Olá! Aqui é o atendimento da Pousada Exemplo, em Arraial d'Ajuda. Como posso ajudar?","out");quick.innerHTML="";
   QA.forEach(([q],i)=>{const b=document.createElement("button");b.type="button";b.textContent=q;b.onclick=()=>ask(i,b);quick.appendChild(b)})}
 function ask(i,b){quick.querySelectorAll("button").forEach(x=>x.disabled=true);addMsg(QA[i][0],"in");
   const t=document.createElement("div");t.className="typing";t.innerHTML="<i></i><i></i><i></i>";const st=document.querySelector(".wa-st");
   setTimeout(()=>{chat.appendChild(t);chat.scrollTop=chat.scrollHeight;st.textContent="digitando..."},350);
-  setTimeout(()=>{t.remove();st.textContent="online";addMsg(QA[i][1],"out");quick.querySelectorAll("button").forEach(x=>x.disabled=false);b.remove()},1500)}
+  setTimeout(()=>{t.remove();st.textContent="online";addMsg(QA[i][1],"out",QA[i][2]);quick.querySelectorAll("button").forEach(x=>x.disabled=false);b.remove()},1500)}
+/* motor de reservas (exemplo) */
+const ROOMS=[["Suíte vista mar","Cama de casal, varanda, café da manhã",520],["Suíte jardim","Cama de casal, térreo, aceita pet",420],["Chalé família","Até 4 pessoas",0]];
+let room=-1;
+function renderEngine(){$("engBody").innerHTML=ROOMS.map(([n,d,p],i)=>`<button type="button" class="room${p?"":" off"}${i===room?" sel":""}" data-i="${i}" ${p?"":"disabled"}><b>${n}</b><small>${d}</small><span class="pr">${p?`<span>${brl(p)} por noite</span><strong>${brl(p*3)}</strong>`:"<span>Sem vaga nessas datas</span>"}</span></button>`).join("");
+  const pay=$("engPay");pay.disabled=room<0;pay.textContent=room<0?"Escolha um quarto":`Reservar e pagar com Pix · ${brl(ROOMS[room][2]*3)}`}
+function openEngine(){room=-1;renderEngine();$("engOk").classList.remove("on");$("engBody").style.display="";$("engPay").style.display="";$("eng").classList.add("on")}
+function closeEngine(){$("eng").classList.remove("on")}
+$("engBody").onclick=e=>{const b=e.target.closest(".room");if(!b||b.disabled)return;room=+b.dataset.i;renderEngine()};
+$("engPay").onclick=()=>{$("engBody").style.display="none";$("engPay").style.display="none";$("engOk").classList.add("on")};
+$("engBack").onclick=closeEngine;$("engBack2").onclick=closeEngine;
 $("chatReset").onclick=resetChat;resetChat();
 
 /* vídeo */
