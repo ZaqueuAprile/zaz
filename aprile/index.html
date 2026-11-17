@@ -999,14 +999,14 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 /* ===== CONFIGURAÇÃO ===== */
 const WHATSAPP="https://wa.me/message/ROZ6RZ22ZDSSG1";
 /* Número do WhatsApp com DDI e DDD, só dígitos (ex.: "5573999998888"). Com ele, o pedido do carrinho já chega escrito na conversa. Vazio = o texto é copiado e o link acima é aberto. */
-const WHATSAPP_NUMERO="";
+const WHATSAPP_NUMERO="5575981102060";
 /* Vídeo da demonstração do site: link do YouTube ou arquivo .mp4 (ex.: "./video/site.mp4"). Vazio = espaço reservado. */
 const VIDEO_SITE="";
 
 const $=id=>document.getElementById(id);
 const brl=v=>v.toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});
 const nf=v=>v.toLocaleString("pt-BR",{maximumFractionDigits:0});
-document.querySelectorAll(".wa").forEach(a=>a.href=WHATSAPP);
+document.querySelectorAll(".wa").forEach(a=>a.href=WHATSAPP_NUMERO?"https://wa.me/"+WHATSAPP_NUMERO:WHATSAPP);
 $("yr").textContent=new Date().getFullYear();
 
 /* ===== PLANOS (do Painel Aprile) ===== */
