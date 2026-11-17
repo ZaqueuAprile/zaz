@@ -326,7 +326,25 @@ body[data-aud="restaurante"] [data-aud="pousada"]{display:none!important}
 .w-ctrl p{font-size:14px;color:var(--muted)}
 
 /* demonstrações dos adicionais */
-.xbtn{display:block;margin-top:3px;font-size:13px;font-weight:600;color:var(--gold);text-decoration:underline;text-underline-offset:2px}
+.xbtn{display:inline-block;margin-top:12px;font-size:14px;font-weight:600;color:var(--gold);text-decoration:underline;text-underline-offset:2px}
+.xtbl tr.xrow{cursor:pointer}
+.xtbl tr.xrow:hover td{background:rgba(26,24,20,.025)}
+.xtbl tr.xrow.open td{border-bottom-color:transparent}
+.xname{font:inherit;font-weight:600;text-align:left;padding:0}
+.xtog{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;margin-left:auto;transition:background .15s,border-color .15s}
+.xtog svg{width:14px;height:14px;transition:transform .25s ease}
+.xrow:hover .xtog{border-color:var(--fg)}
+.xrow.open .xtog{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+.xrow.open .xtog svg{transform:rotate(180deg)}
+.xtbl td.tg{width:44px;padding-right:0;vertical-align:middle}
+.xtbl tr.xdet td{padding:0 0 18px;border-bottom:1px solid var(--line)}
+.xdet-in{display:grid;grid-template-columns:1.5fr 1fr;gap:28px;padding:14px 16px;background:var(--sand);border-radius:8px;font-size:15px;animation:pop .25s ease}
+.xdet-in p{color:var(--fg);line-height:1.6}
+.xdet-in ul{list-style:none;font-size:14px}
+.xdet-in li{padding:6px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px}
+.xdet-in li:last-child{border-bottom:0}
+.xdet-in li span:first-child{color:var(--muted)}
+@media (max-width:640px){.xdet-in{grid-template-columns:1fr;gap:10px;padding:12px}}
 dialog.xd{border:0;border-radius:12px;padding:0;width:min(940px,calc(100% - 20px));max-height:calc(100dvh - 20px);background:var(--bg);color:var(--fg);box-shadow:0 30px 80px -20px rgba(0,0,0,.5)}
 dialog.xd::backdrop{background:rgba(26,24,20,.6)}
 .xd-h{display:flex;justify-content:space-between;align-items:start;gap:16px;padding:22px 24px 14px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:2}
@@ -661,7 +679,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
     <div class="extras">
       <div><h3>Adicionais</h3><p class="muted">Para somar a qualquer plano, quando fizer sentido para a operação.</p></div>
-      <div style="overflow-x:auto"><table class="xtbl"><thead><tr><th>Serviço</th><th class="hide-s">Resolve</th><th class="r">Implantação</th><th class="r">Por mês</th></tr></thead><tbody id="extras"></tbody></table></div>
+      <div style="overflow-x:auto"><table class="xtbl"><thead><tr><th>Serviço</th><th class="hide-s">Resolve</th><th class="r">Implantação</th><th class="r">Por mês</th><th><span class="sr" style="position:absolute;left:-9999px">Detalhes</span></th></tr></thead><tbody id="extras"></tbody></table></div>
     </div>
   </div>
 </section>
@@ -963,9 +981,26 @@ function renderPlans(aud){
     <ul>${p.it.map(([t,d])=>`<li><span>${t}</span>${d?`<button type="button" data-go="${d}">ver</button>`:""}</li>`).join("")}</ul>
     <p class="meta">Pronto em até ${p.dias} dias</p>
     <a class="btn ${p.lab==="Mais completo"?"btn-dark":"btn-line"}" href="${WHATSAPP}" target="_blank" rel="noopener">Quero o ${p.n}</a></div>`).join("");
-  $("extras").innerHTML=EXTRAS[aud].map(([n,r,s,m,free])=>`<tr><td>${n}${XKEY[n]?`<button type="button" class="xbtn" data-x="${n}">ver demonstração</button>`:""}</td><td class="hide-s muted">${r}</td><td class="r num">${free||(s?brl(s):"sem custo")}</td><td class="r num">${free||(m?brl(m):"—")}</td></tr>`).join("");
+  const CHEV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
+  $("extras").innerHTML=EXTRAS[aud].map(([n,r,s,m,free],i)=>{const x=XINFO[n]||{},d=typeof x.d==="object"?x.d[aud]:x.d;
+    return `<tr class="xrow" data-row="${i}"><td><button type="button" class="xname" aria-expanded="false" aria-controls="xdet${i}">${n}</button></td><td class="hide-s muted">${r}</td><td class="r num">${free||(s?brl(s):"sem custo")}</td><td class="r num">${free||(m?brl(m):"—")}</td><td class="tg"><button type="button" class="xtog" tabindex="-1" aria-hidden="true">${CHEV}</button></td></tr>
+    <tr class="xdet" id="xdet${i}" hidden><td colspan="5"><div class="xdet-in"><div><p>${d||r}</p>${XKEY[n]?`<button type="button" class="xbtn" data-x="${n}">Ver demonstração</button>`:""}</div><ul><li><span>Resolve</span><span>${r}</span></li><li><span>Prazo</span><span>${x.dias?`até ${x.dias} dias`:"a combinar"}</span></li><li><span>Cobrança</span><span>${free?free:(m?"implantação + mensalidade":"pagamento único")}</span></li></ul></div></td></tr>`}).join("");
 }
-$("extras").onclick=e=>{const b=e.target.closest("[data-x]");if(b)openX(b.dataset.x)};
+$("extras").onclick=e=>{const b=e.target.closest("[data-x]");if(b){openX(b.dataset.x);return}
+  const row=e.target.closest(".xrow");if(!row)return;const det=row.nextElementSibling,open=det.hidden;
+  det.hidden=!open;row.classList.toggle("open",open);row.querySelector(".xname").setAttribute("aria-expanded",open)};
+const XINFO={
+ "Site em português, espanhol e inglês":{dias:15,d:{pousada:"Versão do site em português, espanhol e inglês, com texto revisado por uma pessoa, não traduzido automaticamente. O site abre no idioma do celular do visitante e o botão de reserva leva ao motor de reservas no mesmo idioma, quando o motor permite. Inclui domínio e hospedagem.",restaurante:"Versão do site em português, espanhol e inglês, com cardápio, horários, localização e reserva, tudo revisado por uma pessoa. O site abre no idioma do celular do visitante. Inclui domínio e hospedagem."}},
+ "Checklist de limpeza e manutenção":{dias:10,d:"Um QR Code em cada quarto. A camareira marca no celular o que fez e reporta problemas com foto. O dono acompanha, em tempo real, quais quartos estão prontos para o check-in e o que está pendente de manutenção."},
+ "Painel de ocupação e preço":{dias:20,d:"Mostra a ocupação da pousada nas próximas datas e a diária dos concorrentes escolhidos com você, sempre para o mesmo tipo de quarto, nas datas que mais vendem: Réveillon, Carnaval, feriados e férias. Atualizado toda semana, com uma sugestão de preço."},
+ "Anúncio da Booking e do Airbnb revisado":{dias:5,d:"Revisão completa do anúncio que a pousada já tem: título, ordem das fotos, descrição em português, espanhol e inglês, comodidades e políticas. É um serviço avulso, pago uma vez, sem mensalidade."},
+ "Cartão de hóspede na carteira do celular":{dias:15,d:"Um cartão na Carteira do iPhone e do Android, sem aplicativo. Guarda o desconto para o hóspede reservar direto no site da próxima vez, soma estadias para um benefício e avisa quando ele ganha o prêmio."},
+ "Rede Aprile":{dias:10,d:{pousada:"O guia do quarto indica restaurantes parceiros da Aprile, com cupom de desconto para o hóspede. Cada cupom é rastreado. Para a pousada não tem custo: o hóspede é bem indicado e lembra da pousada.",restaurante:"O restaurante passa a aparecer no guia do quarto das pousadas clientes da Aprile, com um cupom de desconto. Cada cupom é rastreado, então você vê quantas mesas a rede trouxe no mês."}},
+ "Fila de espera e reserva de mesa":{dias:10,d:"O cliente entra na fila pelo QR Code da porta, vê a posição dele no celular e recebe um aviso no WhatsApp quando a mesa fica pronta. Assim ele não desiste da fila no pico. Inclui reserva de mesa online, com confirmação."},
+ "Delivery próprio pelo WhatsApp":{dias:15,d:"Um cardápio de delivery em que o cliente monta o pedido e envia direto para o WhatsApp do restaurante, já organizado, com um painel de pedidos para a cozinha. Não tem comissão por pedido, e o pagamento vai direto para o restaurante."},
+ "Cartão fidelidade na carteira do celular":{dias:15,d:"Um cartão de carimbos na Carteira do iPhone e do Android, sem aplicativo. Cada visita vale um carimbo, o cliente recebe um aviso quando ganha o prêmio e quem some há 30 dias recebe um convite para voltar."},
+ "Checklist de abertura e fechamento":{dias:7,d:"Uma lista no celular para abrir e fechar a cozinha: temperatura da câmara fria e do freezer, validade dos molhos, gás e limpeza. Cada registro fica salvo com nome e horário, e o dono recebe um aviso quando algo sai do limite. O histórico ajuda na visita da vigilância sanitária."}
+};
 $("plans").onclick=e=>{const b=e.target.closest("[data-go]");if(!b)return;const [t,v]=b.dataset.go.split(":");openTab(t,true);if(t==="gestao"){$("segView").querySelector(`[data-v="${v==="rep"?"rep":"dash"}"]`).click();if(v!=="rep")dashView(v==="eng"?"eng":"vendas")}};
 
 /* ===== CONTA ===== */

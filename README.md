@@ -34,8 +34,9 @@ DRE, fluxo de caixa previsto e engenharia de cardápio) com o relatório semanal
 imprimível. Há um modo apresentação e endereços diretos como
 `#restaurante/gestao` ou `#pousada/guia`.
 
-Cada adicional da tabela tem um botão **ver demonstração**, que abre a
-demonstração numa janela: site em três idiomas, checklist de limpeza, painel de
+Cada adicional da tabela abre, pela seta à direita, uma explicação com prazo
+e forma de cobrança (textos em `XINFO`, no `<script>`) e o botão **ver
+demonstração**, que abre a demonstração numa janela: site em três idiomas, checklist de limpeza, painel de
 ocupação e preço, anúncio revisado, Rede Aprile, fila de espera, delivery
 próprio e checklist de abertura.
 
