@@ -427,12 +427,23 @@ dialog.xd::backdrop{background:rgba(26,24,20,.6)}
 .filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .dash select{border:1px solid var(--line);border-radius:6px;padding:7px 10px;font-size:13.5px;background:#fff}
 .dash-body{padding:18px;display:grid;gap:16px;background:var(--bg)}
+.dash-tabs{display:flex;gap:0;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none;background:#fff;padding:0 10px}
+.dash-tabs::-webkit-scrollbar{display:none}
+.dash-tabs button{padding:10px 12px 9px;font-size:13.5px;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.dash-tabs button[aria-selected="true"]{color:var(--fg);border-color:var(--fg);font-weight:600}
+.tbl.dre td,.tbl.dre th{padding:7px 10px}
+.tbl.dre tr.sub td{font-weight:600;background:var(--sand)}
+.tbl.dre tr.res td{font-weight:700;border-top:2px solid var(--fg)}
+.tbl.dre td.ind{padding-left:22px;color:var(--muted)}
+.neg{color:var(--bad)}
+#dvEng .xs{border:0;padding:0;background:transparent}
 .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .kpi{background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px 16px}
 .kpi small{display:block;color:var(--muted);font-size:13px}
 .kpi b{display:block;font-size:23px;font-weight:600;letter-spacing:-.02em;margin-top:2px}
 .kpi span{font-size:12.5px;color:var(--muted)}
 .kpi em{font-style:normal;font-weight:600}
+.kpi b span{font-size:inherit}
 .kpi em.up{color:var(--ok)}
 .kpi em.dn{color:var(--bad)}
 .grid2{display:grid;grid-template-columns:1.6fr 1fr;gap:16px}
@@ -611,7 +622,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <h1 data-aud="pousada">Menos comissão para a Booking. Mais hóspede reservando <em>direto</em> com você.</h1>
       <h1 data-aud="restaurante">Mais pedido por mesa, nota melhor no Google e o <em>CMV</em> sob controle.</h1>
       <p class="lead" data-aud="pousada">Site com reserva direta, atendimento no WhatsApp a qualquer hora, guia do quarto por aproximação e placas de avaliação. A Aprile implanta, opera e mostra o resultado todo mês.</p>
-      <p class="lead" data-aud="restaurante">Cardápio digital com vídeo em português, espanhol e inglês, placas de avaliação, resposta às avaliações e, no plano com gestão, dashboard semanal de CMV. A Aprile implanta, opera e mostra o resultado todo mês.</p>
+      <p class="lead" data-aud="restaurante">Cardápio digital com vídeo em português, espanhol e inglês, placas de avaliação, resposta às avaliações e, no plano com gestão, dashboard semanal com CMV, DRE e fluxo de caixa. A Aprile implanta, opera e mostra o resultado todo mês.</p>
       <div class="choose" role="group" aria-label="Escolha o seu negócio">
         <button type="button" data-set="pousada"><b>Tenho uma pousada</b><span>ou hotel independente</span></button>
         <button type="button" data-set="restaurante"><b>Tenho um restaurante</b><span>bar, café ou barraca de praia</span></button>
@@ -805,7 +816,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
     <div class="panel wide" id="p-gestao" role="tabpanel">
       <div class="info row" data-info="gestao"></div>
-      <div class="viewsw"><div class="seg" id="segView" role="group" aria-label="Visualização"><button type="button" data-v="dash" aria-pressed="true">Dashboard semanal</button><button type="button" data-v="rep">Relatório mensal</button></div></div>
+      <div class="viewsw"><div class="seg" id="segView" role="group" aria-label="Visualização"><button type="button" data-v="dash" aria-pressed="true">Dashboard semanal</button><button type="button" data-v="rep">Relatório semanal</button></div></div>
       <div class="dash" id="dash">
         <div class="dash-bar">
           <div class="t"><b>Restaurante Exemplo · Dashboard</b><small id="dRange"></small></div>
@@ -814,7 +825,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
             <select id="selChan" aria-label="Canal"><option value="all">Todos os canais</option><option value="0">Salão</option><option value="1">Delivery próprio</option><option value="2">iFood</option></select>
           </div>
         </div>
-        <div class="dash-body">
+        <div class="dash-tabs" id="segDash" role="tablist"><button type="button" data-d="vendas" aria-selected="true">Vendas e CMV</button><button type="button" data-d="dre">DRE</button><button type="button" data-d="caixa">Fluxo de caixa</button><button type="button" data-d="eng">Engenharia de cardápio</button></div>
+        <div class="dash-body" id="dvVendas">
           <div class="kpi-row" id="kpis"></div>
           <div class="grid2">
             <div class="card">
@@ -830,12 +842,22 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
             <div style="overflow-x:auto"><table class="tbl" id="dishTbl"></table></div>
           </div>
         </div>
-        <p class="dash-note">Dados fictícios. No dashboard real, os números vêm das fichas técnicas, do estoque e do caixa do restaurante.</p>
+        <div class="dash-body" id="dvDre" hidden>
+          <div class="kpi-row" id="dreK"></div>
+          <div class="card"><div class="card-h"><b>DRE gerencial</b><span style="font-size:12.5px;color:var(--muted)" id="dreP"></span></div><div style="overflow-x:auto"><table class="tbl dre" id="dreT"></table></div></div>
+        </div>
+        <div class="dash-body" id="dvCaixa" hidden>
+          <div class="kpi-row" id="cxK"></div>
+          <div class="card"><div class="card-h"><b>Saldo previsto, dia a dia</b><span style="font-size:12.5px;color:var(--muted)">próximos 35 dias</span></div><div class="chart-wrap" id="cxWrap"><svg id="cxChart" role="img" aria-label="Saldo de caixa previsto"></svg><div class="tip" id="cxTip"></div></div></div>
+          <div class="card"><div class="card-h"><b>Semana a semana</b></div><div style="overflow-x:auto"><table class="tbl" id="cxT"></table></div></div>
+        </div>
+        <div class="dash-body" id="dvEng" hidden></div>
+        <p class="dash-note">Dados fictícios. No dashboard real, os números vêm das fichas técnicas, do caixa e das contas a pagar do restaurante.</p>
       </div>
       <article class="report" id="report" hidden>
-        <header class="rep-h"><div><b>Relatório mensal de gestão</b><span id="repMonth"></span></div><div class="rep-brand"><img src="./sol.png" alt="" width="320" height="191"><span>Aprile</span></div></header>
+        <header class="rep-h"><div><b>Relatório semanal de gestão</b><span id="repMonth"></span></div><div class="rep-brand"><img src="./sol.png" alt="" width="320" height="191"><span>Aprile</span></div></header>
         <p class="rep-sum" id="repSum"></p>
-        <h4>Indicadores do mês</h4>
+        <h4>Indicadores da semana</h4>
         <div style="overflow-x:auto"><table class="tbl" id="repTbl"></table></div>
         <h4>Faturamento por canal</h4>
         <div class="rep-ch" id="repCh"></div>
@@ -843,7 +865,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
           <div><h4>Pratos que mais deram margem</h4><ol id="repTop"></ol></div>
           <div><h4>Pontos de atenção</h4><ul id="repWarn"></ul></div>
         </div>
-        <h4>O que fazer no próximo mês</h4>
+        <h4>O que fazer na próxima semana</h4>
         <ol id="repDo"></ol>
         <div class="rep-f"><span>Dados fictícios para demonstração.</span><button class="btn btn-line" type="button" id="repPrint" style="min-height:38px;font-size:14px">Imprimir ou salvar em PDF</button></div>
       </article>
@@ -926,13 +948,13 @@ const PLANS={
    it:[["Atendimento no WhatsApp 24 horas","atendimento"],["2 placas NFC de avaliação","avaliacoes"],["Perfil do Google otimizado"],["Resposta a todas as avaliações"],["Relatório mensal"]]},
   {n:"Mesa Cheia",lab:"",for:"Para o turista entender o cardápio e pedir mais por mesa.",solves:"turista que não entende o cardápio e pouco pedido por mesa",s:2500,m:390,dias:15,
    it:[["Tudo do Reputação"],["Cardápio NFC com vídeo","cardapio"],["Em português, espanhol e inglês","cardapio"],["Gravação dos vídeos inclusa"]]},
-  {n:"Mesa Cheia + Gestão",lab:"Mais completo",for:"Para saber quanto cada prato dá de lucro, toda semana.",solves:"lucro que ninguém mede",s:5500,m:990,dias:30,
-   it:[["Tudo do Mesa Cheia"],["Fichas técnicas dos pratos"],["Controle de estoque"],["Dashboard semanal de CMV","gestao"],["Relatório mensal de gestão","gestao:rep"],["Reunião mensal"]]}
+  {n:"Mesa Cheia + Gestão",lab:"Mais completo",for:"Para saber quanto cada prato dá de lucro e quanto sobra no caixa, toda semana.",solves:"lucro que ninguém mede e caixa no escuro",s:5500,m:990,dias:30,
+   it:[["Tudo do Mesa Cheia"],["Fichas técnicas dos pratos"],["Dashboard semanal: CMV, DRE e fluxo de caixa","gestao"],["Relatório semanal de gestão","gestao:rep"],["Engenharia de cardápio","gestao:eng"],["Reunião mensal"]]}
  ]
 };
 const EXTRAS={
  pousada:[["Site em português, espanhol e inglês","turista estrangeiro que não entende o site",2000,90],["Checklist de limpeza e manutenção","quarto não liberado a tempo e manutenção esquecida",900,120],["Painel de ocupação e preço","preço decidido no achismo",1500,250],["Anúncio da Booking e do Airbnb revisado","anúncio fraco nos canais que já vendem",800,0],["Cartão de hóspede na carteira do celular","hóspede que volta pela Booking em vez de reservar direto",1200,190],["Rede Aprile","hóspede que não conhece os restaurantes da região",0,0,"grátis"]],
- restaurante:[["Fila de espera e reserva de mesa","cliente que desiste da fila no pico",900,150],["Delivery próprio pelo WhatsApp","comissão do iFood no cliente da cidade",1500,190],["Cartão fidelidade na carteira do celular","cliente local que some na baixa temporada",1200,190],["Estoque com alerta de compra","insumo que acaba no meio do serviço",1500,190],["Checklist de abertura e fechamento","temperatura e validade sem registro",700,90],["Engenharia de cardápio","prato que vende muito e lucra pouco",1500,0],["Site em português, espanhol e inglês","turista estrangeiro que não entende o site",2000,90],["Rede Aprile","restaurante sem turista",0,150]]
+ restaurante:[["Fila de espera e reserva de mesa","cliente que desiste da fila no pico",900,150],["Delivery próprio pelo WhatsApp","comissão do iFood no cliente da cidade",1500,190],["Cartão fidelidade na carteira do celular","cliente local que some na baixa temporada",1200,190],["Checklist de abertura e fechamento","temperatura e validade sem registro",700,90],["Site em português, espanhol e inglês","turista estrangeiro que não entende o site",2000,90],["Rede Aprile","restaurante sem turista",0,150]]
 };
 function renderPlans(aud){
   $("plans").innerHTML=PLANS[aud].map(p=>`<div class="plan"><span class="lab">${p.lab}</span><h3>${p.n}</h3><p class="for">${p.for}</p>
@@ -944,7 +966,7 @@ function renderPlans(aud){
   $("extras").innerHTML=EXTRAS[aud].map(([n,r,s,m,free])=>`<tr><td>${n}${XKEY[n]?`<button type="button" class="xbtn" data-x="${n}">ver demonstração</button>`:""}</td><td class="hide-s muted">${r}</td><td class="r num">${free||(s?brl(s):"sem custo")}</td><td class="r num">${free||(m?brl(m):"—")}</td></tr>`).join("");
 }
 $("extras").onclick=e=>{const b=e.target.closest("[data-x]");if(b)openX(b.dataset.x)};
-$("plans").onclick=e=>{const b=e.target.closest("[data-go]");if(!b)return;const [t,v]=b.dataset.go.split(":");openTab(t,true);if(t==="gestao")$("segView").querySelector(`[data-v="${v==="rep"?"rep":"dash"}"]`).click()};
+$("plans").onclick=e=>{const b=e.target.closest("[data-go]");if(!b)return;const [t,v]=b.dataset.go.split(":");openTab(t,true);if(t==="gestao"){$("segView").querySelector(`[data-v="${v==="rep"?"rep":"dash"}"]`).click();if(v!=="rep")dashView(v==="eng"?"eng":"vendas")}};
 
 /* ===== CONTA ===== */
 function calc(){
@@ -971,7 +993,7 @@ const SOL={
  cardapio:{tab:"Cardápio em 3 idiomas",name:"Cardápio com vídeo em 3 idiomas",d:"O cliente aproxima o celular da mesa, escolhe o idioma e vê cada prato em vídeo, com sugestão de acompanhamento.",plan:"Mesa Cheia e Mesa Cheia + Gestão"},
  avaliacoes:{tab:"Placas de avaliação",name:"Placas de avaliação NFC",d:"O cliente aproxima o celular e cai na tela de avaliação do seu perfil no Google. A placa pede a opinião de todos, sem brinde e sem filtrar quem gostou, como o Google exige.",plan:"todos os planos"},
  fidelidade:{tab:"Cartão fidelidade",name:"Cartão fidelidade na carteira do celular",d:"Sem aplicativo e sem cartão de papel. O cliente adiciona o cartão à Carteira do iPhone ou do Android com um toque, ganha um carimbo a cada visita e recebe o aviso no celular quando o prêmio sai. Quem some há 30 dias recebe um convite para voltar.",plan:"adicional, em qualquer plano"},
- gestao:{tab:"Dashboard de CMV",name:"Dashboard semanal e relatório mensal",d:"Toda semana, faturamento, ticket médio, CMV e margem de cada prato. Todo mês, um relatório com a análise e o que ajustar.",plan:"Mesa Cheia + Gestão"}
+ gestao:{tab:"Dashboard e relatórios",name:"Dashboard e relatório semanais",d:"Toda semana: CMV e margem de cada prato, DRE e fluxo de caixa previsto, com a engenharia de cardápio dizendo o que destacar, revisar ou tirar. O relatório semanal resume tudo e diz o que ajustar.",plan:"Mesa Cheia + Gestão"}
 };
 const ORDER={pousada:["atendimento","site","guia","avaliacoes","fidelidade"],restaurante:["atendimento","cardapio","avaliacoes","fidelidade","gestao"]};
 function renderInfo(){document.querySelectorAll("[data-info]").forEach(el=>{const o=SOL[el.dataset.info],v=o[aud]||{},d=v.d||o.d,pl=v.plan||o.plan;
@@ -985,7 +1007,7 @@ function openTab(id,scroll,hash=true){
   document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("on",p.id==="p-"+id));
   if(hash)history.replaceState(null,"",`#${aud}/${id}`);
   $("presPos").textContent=`${ORDER[aud].indexOf(id)+1} de ${ORDER[aud].length} · ${SOL[id].tab}`;
-  if(id==="gestao")drawChart();
+  if(id==="gestao"){drawChart();if(dv==="caixa")drawCash()}
   if(scroll)$("demonstracoes").scrollIntoView({behavior:"smooth"});
 }
 $("tabs").onclick=e=>{const t=e.target.closest(".tab");if(t)openTab(t.dataset.t)};
@@ -1200,36 +1222,112 @@ function drawChart(){
   svg.onpointerleave=()=>tip.classList.remove("on");
   $("chanTbl").innerHTML=`<table class="tbl"><thead><tr><th>${per===365?"Mês":"Dia"}</th>${ids.map(c=>`<th class="r">${CH[c].n}</th>`).join("")}${ids.length>1?'<th class="r">Total</th>':""}</tr></thead><tbody>${data.map((b,j)=>`<tr><td>${b.label}</td>${ids.map(c=>`<td class="r">${brl(b.v[c])}</td>`).join("")}${ids.length>1?`<td class="r">${brl(tot[j])}</td>`:""}</tr>`).reverse().join("")}</tbody></table>`;
 }
-$("segPeriod").onclick=e=>{const b=e.target.closest("button");if(!b)return;per=+b.dataset.p;$("segPeriod").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));renderDash()};
+$("segPeriod").onclick=e=>{const b=e.target.closest("button");if(!b)return;per=+b.dataset.p;$("segPeriod").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));renderDash();if(dv==="dre")renderDre()};
 $("selChan").onchange=e=>{chan=e.target.value;renderDash()};
 $("tblToggle").onclick=()=>{const t=$("chanTbl"),on=!t.classList.contains("on");t.classList.toggle("on",on);$("tblToggle").textContent=on?"Ocultar tabela":"Ver tabela"};
-addEventListener("resize",()=>{if(current==="gestao")drawChart()});
+addEventListener("resize",()=>{if(current==="gestao"){drawChart();if(dv==="caixa")drawCash()}});
 
-/* relatório mensal */
-function monthTotals(y,m){const t=[0,0,0];DAYS.forEach(x=>{if(x.d.getFullYear()===y&&x.d.getMonth()===m)x.v.forEach((v,i)=>t[i]+=v)});return t}
+/* DRE gerencial */
+const FIX=[["Pessoal (salários e encargos)",42000],["Aluguel",9000],["Energia, água e gás",5200],["Sistemas e marketing",1900],["Outras despesas",2400]];
+function dre(cur,days){
+  const rec=cur[0]+cur[1]+cur[2],imp=rec*.06,tax=cur[2]*.262+(cur[0]+cur[1])*.025,liq=rec-imp-tax,cmvV=cur.reduce((s,v,i)=>s+v*CH[i].cmv,0)+rec*.006,bruto=liq-cmvV;
+  const fx=FIX.map(([n,v])=>[n,v*days/30]),fixT=fx.reduce((s,x)=>s+x[1],0);
+  return{rec,imp,tax,liq,cmvV,bruto,fx,fixT,res:bruto-fixT}}
+let dv="vendas";
+function renderDre(){
+  const n=DAYS.length,c=dre(totals(n-per,n),per),p=dre(totals(n-2*per,n-per),per);
+  const pc=v=>(v/c.rec*100).toFixed(1).replace(".",",")+"%";
+  const vr=(a,b)=>{if(!b)return"—";const x=(a-b)/Math.abs(b)*100;return `<span class="${x>=0?"":"neg"}">${x>=0?"+":""}${x.toFixed(1).replace(".",",")}%</span>`};
+  const m=v=>`<span class="${v<0?"neg":""}">${brl(v)}</span>`;
+  const R=[["Receita bruta",c.rec,p.rec,"sub"],["(−) Impostos (Simples, estimado)",-c.imp,-p.imp,"ind"],["(−) Taxas de cartão e do iFood",-c.tax,-p.tax,"ind"],["Receita líquida",c.liq,p.liq,"sub"],["(−) CMV",-c.cmvV,-p.cmvV,"ind"],["Lucro bruto",c.bruto,p.bruto,"sub"]]
+    .concat(c.fx.map((x,i)=>["(−) "+x[0],-x[1],-p.fx[i][1],"ind"])).concat([["Resultado operacional",c.res,p.res,"res"]]);
+  const lab=per===7?"semana":per===30?"30 dias":"12 meses",lp=per===7?"semana anterior":per===30?"30 dias anteriores":"12 meses anteriores";
+  $("dreP").textContent=`${DAYS[n-per].d.toLocaleDateString("pt-BR")} a ${DAYS[n-1].d.toLocaleDateString("pt-BR")}`;
+  $("dreT").innerHTML=`<thead><tr><th></th><th class="r">${lab}</th><th class="r">% da receita</th><th class="r hide-s">${lp}</th><th class="r">Variação</th></tr></thead><tbody>${R.map(([l,v,pv,cl])=>`<tr class="${cl==="ind"?"":cl}"><td class="${cl==="ind"?"ind":""}">${l}</td><td class="r">${m(v)}</td><td class="r">${pc(Math.abs(v))}</td><td class="r hide-s">${m(pv)}</td><td class="r">${vr(v,pv)}</td></tr>`).join("")}</tbody>`;
+  const k=(l,v,d)=>`<div class="kpi"><small>${l}</small><b class="num">${v}</b><span>${d}</span></div>`;
+  $("dreK").innerHTML=k("Receita bruta",brl(c.rec),vr(c.rec,p.rec)+" vs. "+lp)+k("Lucro bruto",brl(c.bruto),pc(c.bruto)+" da receita")+k("Despesas fixas",brl(c.fixT),pc(c.fixT)+" da receita")+k("Resultado operacional",m(c.res),pc(c.res)+" da receita");
+}
+
+/* fluxo de caixa previsto */
+function cash(){
+  const n=DAYS.length,last=DAYS.slice(-28),avgW=[0,0,0,0,0,0,0],cnt=[0,0,0,0,0,0,0];
+  last.forEach(x=>{const w=x.d.getDay();avgW[w]+=x.v[0]+x.v[1]+x.v[2];cnt[w]++});
+  let bal=18000;const out=[];
+  for(let i=1;i<=35;i++){const d=new Date(TODAY);d.setDate(d.getDate()+i);const w=d.getDay(),dm=d.getDate();
+    const sale=avgW[w]/cnt[w],inn=sale*.97;let outD=0;const why=[];
+    if(w===1){const f=sale*7*CH[0].cmv*1.02;outD+=f;why.push(["Fornecedores",f])}
+    if(dm===5){outD+=25200;why.push(["Folha de pagamento",25200])}
+    if(dm===20){outD+=16800;why.push(["Folha (vale) e encargos",16800]);outD+=9000;why.push(["Impostos (Simples)",9000])}
+    if(dm===10){outD+=9000;why.push(["Aluguel",9000])}
+    if(dm===15){outD+=5200;why.push(["Energia, água e gás",5200])}
+    if(dm===25){outD+=4300;why.push(["Sistemas, marketing e outras",4300])}
+    bal+=inn-outD;out.push({d,inn,out:outD,bal,why})}
+  return out}
+function renderCash(){
+  const C=cash(),min=C.reduce((a,b)=>b.bal<a.bal?b:a),end=C[C.length-1].bal,inT=C.reduce((s,x)=>s+x.inn,0),outT=C.reduce((s,x)=>s+x.out,0);
+  const k=(l,v,d)=>`<div class="kpi"><small>${l}</small><b class="num">${v}</b><span>${d}</span></div>`;
+  $("cxK").innerHTML=k("Saldo hoje",brl(18000),"conta do restaurante")+k("Entradas previstas",brl(inT),"próximos 35 dias")+k("Saídas previstas",brl(outT),"próximos 35 dias")+k("Menor saldo",`<span class="${min.bal<5000?"neg":""}">${brl(min.bal)}</span>`,`em ${min.d.toLocaleDateString("pt-BR",{day:"numeric",month:"short"})}${min.bal<5000?" · abaixo da reserva mínima":""}`);
+  const wk=[];C.forEach((x,i)=>{const j=Math.floor(i/7);(wk[j]=wk[j]||{a:x.d,inn:0,out:0}).inn+=x.inn;wk[j].out+=x.out;wk[j].b=x.d;wk[j].bal=x.bal});
+  $("cxT").innerHTML=`<thead><tr><th>Semana</th><th class="r">Entradas</th><th class="r">Saídas</th><th class="r">Saldo no fim</th></tr></thead><tbody>${wk.map(w=>`<tr><td>${w.a.toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit"})} a ${w.b.toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit"})}</td><td class="r">${brl(w.inn)}</td><td class="r">${brl(w.out)}</td><td class="r ${w.bal<5000?"neg":""}">${brl(w.bal)}</td></tr>`).join("")}</tbody>`;
+  drawCash();
+}
+function drawCash(){
+  const C=cash(),svg=$("cxChart"),wrap=$("cxWrap"),W=wrap.clientWidth,H=240,pl=56,pr=10,pt=12,pb=26;if(!W)return;
+  svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+  const lo=Math.min(0,...C.map(x=>x.bal)),hi=Math.max(...C.map(x=>x.bal))*1.1,step=niceStep((hi-lo)/4),bot=Math.floor(lo/step)*step,top=Math.ceil(hi/step)*step;
+  const X=i=>pl+(W-pl-pr)*i/(C.length-1),Y=v=>pt+(H-pt-pb)*(1-(v-bot)/(top-bot));
+  let g="";for(let v=bot;v<=top;v+=step)g+=`<line class="grid" x1="${pl}" x2="${W-pr}" y1="${Y(v)}" y2="${Y(v)}"/><text class="ax" x="${pl-8}" y="${Y(v)+4}" text-anchor="end">${nf(v/1000)} mil</text>`;
+  g+=`<line x1="${pl}" x2="${W-pr}" y1="${Y(5000)}" y2="${Y(5000)}" stroke="var(--bad)" stroke-dasharray="4 4" stroke-width="1"/><text class="ax" x="${W-pr}" y="${Y(5000)-5}" text-anchor="end" style="fill:var(--bad)">reserva mínima R$ 5 mil</text>`;
+  g+=`<path d="${C.map((x,i)=>(i?"L":"M")+X(i)+","+Y(x.bal)).join("")}" fill="none" stroke="var(--s1)" stroke-width="2"/>`;
+  const every=Math.ceil(C.length/Math.max(2,Math.floor((W-pl-pr)/46)));
+  C.forEach((x,i)=>{if(i%every===0)g+=`<text class="ax" x="${X(i)}" y="${H-8}" text-anchor="middle">${x.d.getDate()}/${x.d.getMonth()+1}</text>`});
+  g+=`<line id="cxX" x1="0" x2="0" y1="${pt}" y2="${H-pb}" stroke="#8c8476" stroke-width="1" style="display:none"/><circle id="cxD" r="5" fill="var(--s1)" stroke="#fff" stroke-width="2" style="display:none"/>`;
+  C.forEach((x,i)=>{const w=(W-pl-pr)/(C.length-1);g+=`<rect class="hit" data-i="${i}" x="${X(i)-w/2}" y="${pt}" width="${w}" height="${H-pt-pb}" tabindex="0"/>`});
+  svg.innerHTML=g;
+  const tip=$("cxTip"),sc=()=>wrap.clientWidth/W;
+  const show=i=>{const x=C[i];const ln=svg.querySelector("#cxX"),dt=svg.querySelector("#cxD");ln.setAttribute("x1",X(i));ln.setAttribute("x2",X(i));ln.style.display="";dt.setAttribute("cx",X(i));dt.setAttribute("cy",Y(x.bal));dt.style.display="";
+    tip.innerHTML="";const d=document.createElement("div");d.className="d";d.textContent=x.d.toLocaleDateString("pt-BR",{weekday:"long",day:"numeric",month:"long"});tip.appendChild(d);
+    const row=(a,b,cl)=>{const r=document.createElement("div");r.className="r"+(cl?" "+cl:"");const sp=document.createElement("span");sp.textContent=a;const bb=document.createElement("b");bb.textContent=b;r.append(sp,bb);tip.appendChild(r)};
+    row("Saldo previsto",brl(x.bal));row("Entradas",brl(x.inn));x.why.forEach(([n,v])=>row(n,"− "+brl(v)));
+    let l=X(i)*sc()+12;tip.classList.add("on");if(l+tip.offsetWidth>wrap.clientWidth)l=X(i)*sc()-tip.offsetWidth-12;tip.style.left=Math.max(0,l)+"px";tip.style.top="8px"};
+  const hide=()=>{tip.classList.remove("on");svg.querySelector("#cxX").style.display="none";svg.querySelector("#cxD").style.display="none"};
+  svg.querySelectorAll(".hit").forEach(el=>{el.addEventListener("pointerenter",()=>show(+el.dataset.i));el.addEventListener("focus",()=>show(+el.dataset.i));el.addEventListener("blur",hide)});
+  svg.onpointerleave=hide;
+}
+
+/* visões do dashboard */
+function dashView(v){dv=v;
+  $("segDash").querySelectorAll("button").forEach(b=>b.setAttribute("aria-selected",b.dataset.d===v));
+  ["vendas","dre","caixa","eng"].forEach(k=>$("dv"+k[0].toUpperCase()+k.slice(1)).hidden=k!==v);
+  $("selChan").style.display=v==="vendas"?"":"none";$("segPeriod").style.display=v==="vendas"||v==="dre"?"":"none";
+  $("dRange").style.display=v==="vendas"?"":"none";
+  if(v==="vendas")drawChart();if(v==="dre")renderDre();if(v==="caixa")renderCash();if(v==="eng")XD.engenharia($("dvEng"));
+}
+$("segDash").onclick=e=>{const b=e.target.closest("button");if(b)dashView(b.dataset.d)};
+
+/* relatório semanal */
 function renderReport(){
-  const ref=new Date(TODAY.getFullYear(),TODAY.getMonth()-1,1),prv=new Date(ref.getFullYear(),ref.getMonth()-1,1);
-  const c=monthTotals(ref.getFullYear(),ref.getMonth()),p=monthTotals(prv.getFullYear(),prv.getMonth());
+  const n=DAYS.length,c=totals(n-7,n),p=totals(n-14,n-7),dc=dre(c,7),dp=dre(p,7);
   const S=a=>a[0]+a[1]+a[2],fat=S(c),fatP=S(p),ped=a=>a.reduce((s,v,i)=>s+v/CH[i].tk,0),cmv=a=>a.reduce((s,v,i)=>s+v*CH[i].cmv,0)/S(a)*100+.6;
-  const com=a=>a[2]*.23,mg=a=>S(a)*(1-cmv(a)/100)-com(a);
-  const pc=(a,b)=>{const x=(a-b)/b*100;return(x>=0?"+":"")+x.toFixed(1).replace(".",",")+"%"},pp=(a,b)=>{const x=a-b;return(x>=0?"+":"")+x.toFixed(1).replace(".",",")+" pts"},f1=v=>v.toFixed(1).replace(".",",")+"%";
-  const mr=MESES[ref.getMonth()],mp=MESES[prv.getMonth()];
-  $("repMonth").textContent=`Restaurante Exemplo · ${mr} de ${ref.getFullYear()}`;
-  $("repSum").textContent=`O faturamento de ${mr} foi de ${brl(fat)}, ${pc(fat,fatP)} em relação a ${mp}. O CMV ficou em ${f1(cmv(c))}. O iFood respondeu por ${f1(c[2]/fat*100)} das vendas, com ${brl(com(c))} pagos em comissão.`;
-  const rows=[["Faturamento",brl(fat),brl(fatP),pc(fat,fatP)],["Pedidos",nf(ped(c)),nf(ped(p)),pc(ped(c),ped(p))],["Ticket médio",brl(fat/ped(c)),brl(fatP/ped(p)),pc(fat/ped(c),fatP/ped(p))],["CMV",f1(cmv(c)),f1(cmv(p)),pp(cmv(c),cmv(p))],["Comissão do iFood",brl(com(c)),brl(com(p)),pc(com(c),com(p))],["Margem após CMV e comissões",brl(mg(c)),brl(mg(p)),pc(mg(c),mg(p))]];
-  $("repTbl").innerHTML=`<thead><tr><th>Indicador</th><th class="r">${mr}</th><th class="r">${mp}</th><th class="r">Variação</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${r[0]}</td><td class="r">${r[1]}</td><td class="r">${r[2]}</td><td class="r">${r[3]}</td></tr>`).join("")}</tbody>`;
+  const pc=(a,b)=>{const x=(a-b)/Math.abs(b)*100;return(x>=0?"+":"")+x.toFixed(1).replace(".",",")+"%"},pp=(a,b)=>{let x=a-b;if(Math.abs(x)<.05)x=0;return(x>0?"+":"")+x.toFixed(1).replace(".",",")+" pts"},f1=v=>v.toFixed(1).replace(".",",")+"%";
+  const a1=DAYS[n-7].d.toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit"}),a2=DAYS[n-1].d.toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit"});
+  const C=cash(),min=C.reduce((x,y)=>y.bal<x.bal?y:x);
+  $("repMonth").textContent=`Restaurante Exemplo · semana de ${a1} a ${a2}`;
+  $("repSum").textContent=`A semana fechou com ${brl(fat)} de receita, ${pc(fat,fatP)} sobre a anterior. O CMV ficou em ${f1(cmv(c))} e o resultado operacional em ${brl(dc.res)} (${f1(dc.res/dc.rec*100)} da receita). O menor saldo previsto para as próximas cinco semanas é de ${brl(min.bal)}, em ${min.d.toLocaleDateString("pt-BR",{day:"numeric",month:"long"})}.`;
+  const rows=[["Receita",brl(fat),brl(fatP),pc(fat,fatP)],["Pedidos",nf(ped(c)),nf(ped(p)),pc(ped(c),ped(p))],["Ticket médio",brl(fat/ped(c)),brl(fatP/ped(p)),pc(fat/ped(c),fatP/ped(p))],["CMV",f1(cmv(c)),f1(cmv(p)),pp(cmv(c),cmv(p))],["Lucro bruto",brl(dc.bruto),brl(dp.bruto),pc(dc.bruto,dp.bruto)],["Resultado operacional",brl(dc.res),brl(dp.res),pc(dc.res,dp.res)]];
+  $("repTbl").innerHTML=`<thead><tr><th>Indicador</th><th class="r">Esta semana</th><th class="r">Anterior</th><th class="r">Variação</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${r[0]}</td><td class="r">${r[1]}</td><td class="r">${r[2]}</td><td class="r">${r[3]}</td></tr>`).join("")}</tbody>`;
   const mx=Math.max(...c);
   $("repCh").innerHTML=CH.map((h,i)=>`<div class="r"><span>${h.n}</span><i style="width:${c[i]/mx*100}%;background:${h.c}"></i><b>${brl(c[i])} · ${Math.round(c[i]/fat*100)}%</b></div>`).join("");
   const d=DISH.map(x=>({n:x[0],cmv:x[2],m:x[1]*(1-x[2])})),top=d.slice().sort((a,b)=>b.m-a.m).slice(0,3),bad=d.filter(x=>x.cmv>.38);
   $("repTop").innerHTML=top.map(x=>`<li>${x.n}: ${brl(x.m)} de margem por prato</li>`).join("");
-  $("repWarn").innerHTML=bad.map(x=>`<li>${x.n} com CMV de ${Math.round(x.cmv*100)}% (meta: 32%)</li>`).join("")+`<li>${brl(com(c))} pagos em comissão do iFood</li>`;
-  $("repDo").innerHTML=[`Revisar a ficha técnica e o preço de ${bad.map(x=>x.n.toLowerCase()).join(" e ")}.`,`Oferecer o delivery próprio a quem pede pelo iFood: cada 10% dos pedidos que migram poupam cerca de ${brl(com(c)*.1)} por mês.`,`Destacar ${top[0].n.toLowerCase()} no cardápio, por ser o prato de maior margem.`].map(t=>`<li>${t}</li>`).join("");
+  $("repWarn").innerHTML=bad.map(x=>`<li>${x.n} com CMV de ${Math.round(x.cmv*100)}% (meta: 32%)</li>`).join("")+`<li>${brl(c[2]*.262)} pagos ao iFood em comissão e taxa</li>`+(min.bal<5000?`<li>Saldo previsto abaixo da reserva mínima em ${min.d.toLocaleDateString("pt-BR",{day:"numeric",month:"short"})}</li>`:"");
+  $("repDo").innerHTML=[`Revisar a ficha técnica e o preço de ${bad.map(x=>x.n.toLowerCase()).join(" e ")}.`,`Destacar ${top[0].n.toLowerCase()} no cardápio e no atendimento, por ser o prato de maior margem.`,min.bal<5000?`Negociar o prazo do maior fornecedor ou antecipar recebíveis antes de ${min.d.toLocaleDateString("pt-BR",{day:"numeric",month:"short"})}.`:`Manter a reserva de caixa: o saldo previsto fica acima do mínimo nas próximas semanas.`].map(t=>`<li>${t}</li>`).join("");
 }
 $("segView").onclick=e=>{const b=e.target.closest("button");if(!b)return;const rep=b.dataset.v==="rep";$("segView").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));$("dash").hidden=rep;$("report").hidden=!rep;if(rep)renderReport();else drawChart()};
 $("repPrint").onclick=()=>print();
 
 /* ===== DEMONSTRAÇÕES DOS ADICIONAIS ===== */
-const XKEY={"Site em português, espanhol e inglês":"site3","Checklist de limpeza e manutenção":"limpeza","Painel de ocupação e preço":"ocupacao","Anúncio da Booking e do Airbnb revisado":"anuncio","Cartão de hóspede na carteira do celular":"cartao","Rede Aprile":"rede","Fila de espera e reserva de mesa":"fila","Delivery próprio pelo WhatsApp":"delivery","Cartão fidelidade na carteira do celular":"cartao","Estoque com alerta de compra":"estoque","Checklist de abertura e fechamento":"abertura","Engenharia de cardápio":"engenharia"};
+const XKEY={"Site em português, espanhol e inglês":"site3","Checklist de limpeza e manutenção":"limpeza","Painel de ocupação e preço":"ocupacao","Anúncio da Booking e do Airbnb revisado":"anuncio","Cartão de hóspede na carteira do celular":"cartao","Rede Aprile":"rede","Fila de espera e reserva de mesa":"fila","Delivery próprio pelo WhatsApp":"delivery","Cartão fidelidade na carteira do celular":"cartao","Checklist de abertura e fechamento":"abertura"};
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const nowT=()=>{const d=new Date();return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")};
 function openX(name){
@@ -1312,14 +1410,6 @@ XD.delivery=B=>{const M=[["Moqueca de peixe (2 pessoas)",138],["Risoto de camar�
   B.querySelector("#xdM").onclick=e=>{const b=e.target.closest("button");if(!b)return;const i=+b.dataset.i;q[i]=Math.max(0,q[i]+ +b.dataset.d);draw()};
   B.querySelector("#xdS2").onclick=()=>{const t=tot();if(!t)return;const it=M.map(([n],i)=>q[i]?`${q[i]}x ${n}`:"").filter(Boolean).join("\n");
     B.querySelector("#xdO").innerHTML=`<div class="wmsg">Pedido #${num++}\n${esc(it)}\nTotal: ${brl(t)}\nEntrega: Rua do Mucugê, 120\nPagamento: Pix</div><div class="notif2"><b>Painel de pedidos:</b> pedido novo às ${nowT()}, aguardando preparo.</div><p style="margin-top:12px;font-size:14px">Pelo iFood, a comissão de 23% mais 3,2% do pagamento custaria <b>${brl(t*.262)}</b> neste pedido.</p>`};draw()};
-
-/* estoque com alerta */
-XD.estoque=B=>{const S=[["Camarão rosa","kg",8,3],["Peixe do dia","kg",10,14],["Leite de coco","L",12,9],["Arroz arbóreo","kg",5,6],["Limão siciliano","kg",3,1.5],["Picanha","kg",12,13]];
-  B.innerHTML=`<div class="xs" style="display:block"><div style="overflow-x:auto"><table class="xt"><thead><tr><th>Insumo</th><th class="r">Mínimo</th><th class="r">Contagem</th><th class="r">Situação</th></tr></thead><tbody id="xeT"></tbody></table></div><div id="xeL" style="margin-top:14px"></div><p class="note2">A contagem é feita no celular, no fim do turno. O alerta de compra sai na hora para o gestor.</p></div>`;
-  B.querySelector("#xeT").innerHTML=S.map(([n,u,mi,c],i)=>`<tr><td>${n}</td><td class="r">${mi} ${u}</td><td class="r"><input type="number" step=".5" min="0" value="${c}" data-i="${i}" style="width:76px;border:1px solid var(--line);border-radius:6px;padding:4px 6px;text-align:right"> ${u}</td><td class="r" id="xeS${i}"></td></tr>`).join("");
-  const draw=()=>{const buy=[];S.forEach(([n,u,mi],i)=>{const c=+B.querySelector(`[data-i="${i}"]`).value||0,low=c<mi;B.querySelector("#xeS"+i).innerHTML=`<span class="pill ${low?"bad":"ok"}">${low?"abaixo do mínimo":"ok"}</span>`;if(low)buy.push(`${n}: comprar ${(mi*1.5-c).toLocaleString("pt-BR")} ${u}`)});
-    B.querySelector("#xeL").innerHTML=buy.length?`<div class="notif2"><b>Alerta de compra, ${nowT()}</b><br>${buy.join("<br>")}</div>`:`<div class="notif2"><b>Estoque em dia.</b> Nenhum item abaixo do mínimo.</div>`};
-  B.querySelector("#xeT").oninput=draw;draw()};
 
 /* checklist de abertura */
 XD.abertura=B=>{

@@ -23,20 +23,21 @@ números do setor (com fonte), planos, adicionais, a conta de retorno e as
 demonstrações. Os planos e preços vêm do Painel Aprile:
 
 - Pousadas: Reputação, Venda Direta e Venda Direta Completo.
-- Restaurantes: Reputação, Mesa Cheia e Mesa Cheia + Gestão (com dashboard
-  semanal de CMV e relatório mensal).
+- Restaurantes: Reputação, Mesa Cheia e Mesa Cheia + Gestão (dashboard e
+  relatório semanais com CMV, DRE e fluxo de caixa, mais engenharia de cardápio).
 
 Demonstrações interativas: atendimento no WhatsApp (pousada e restaurante), site com reserva direta
 (espaço para vídeo), guia do quarto por NFC, cardápio em português, espanhol e
 inglês, placas de avaliação, cartão fidelidade na carteira do celular (carimbos,
-aviso de prêmio e convite para quem some há 30 dias) e o dashboard de CMV com o relatório mensal
+aviso de prêmio e convite para quem some há 30 dias) e o dashboard de gestão (vendas e CMV,
+DRE, fluxo de caixa previsto e engenharia de cardápio) com o relatório semanal
 imprimível. Há um modo apresentação e endereços diretos como
 `#restaurante/gestao` ou `#pousada/guia`.
 
 Cada adicional da tabela tem um botão **ver demonstração**, que abre a
 demonstração numa janela: site em três idiomas, checklist de limpeza, painel de
 ocupação e preço, anúncio revisado, Rede Aprile, fila de espera, delivery
-próprio, estoque com alerta, checklist de abertura e engenharia de cardápio.
+próprio e checklist de abertura.
 
 Para pôr o vídeo do site, preencha `VIDEO_SITE` no início do `<script>` com um
 link do YouTube ou o caminho de um `.mp4`. Planos, adicionais e o link do
