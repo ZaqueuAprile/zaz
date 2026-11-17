@@ -325,6 +325,85 @@ body[data-aud="restaurante"] [data-aud="pousada"]{display:none!important}
 .w-ctrl .btn{min-height:42px;font-size:14px}
 .w-ctrl p{font-size:14px;color:var(--muted)}
 
+/* demonstrações dos adicionais */
+.xbtn{display:block;margin-top:3px;font-size:13px;font-weight:600;color:var(--gold);text-decoration:underline;text-underline-offset:2px}
+dialog.xd{border:0;border-radius:12px;padding:0;width:min(940px,calc(100% - 20px));max-height:calc(100dvh - 20px);background:var(--bg);color:var(--fg);box-shadow:0 30px 80px -20px rgba(0,0,0,.5)}
+dialog.xd::backdrop{background:rgba(26,24,20,.6)}
+.xd-h{display:flex;justify-content:space-between;align-items:start;gap:16px;padding:22px 24px 14px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:2}
+.xd-h h3{font-size:24px}
+.xd-h p{font-size:14.5px;color:var(--muted);margin-top:4px}
+.xd-h p b{color:var(--fg);font-weight:600}
+.xd-x{font-size:26px;line-height:1;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);flex:none}
+.xd-b{padding:20px 24px 24px}
+.xd-f{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:0 24px 22px;font-size:13px;color:var(--muted)}
+.xs{background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start;justify-content:center}
+.xcol{flex:1 1 300px;min-width:0}
+.xcol h4{font-size:14px;font-weight:600;margin-bottom:10px}
+.xmini{width:280px;flex:none;border-radius:32px;background:#0b0a08;padding:9px}
+.xmini .sc{border-radius:24px;overflow:hidden;height:470px;background:#fbf8f1;display:flex;flex-direction:column;position:relative;font-size:13px}
+.xmini .tb{padding:30px 14px 10px;background:#1a1814;color:#f5efe2;flex:none}
+.xmini .tb small{display:block;font-size:11px;color:#a79f90}
+.xmini .tb b{font-family:var(--serif);font-weight:400;font-size:17px}
+.xmini .bd{flex:1;overflow-y:auto;padding:10px 12px}
+.xl{list-style:none}
+.xl li{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.xl label{display:flex;gap:9px;align-items:center;cursor:pointer}
+.xl input[type=checkbox]{width:18px;height:18px;accent-color:#1a1814}
+.xl input[type=number]{width:72px;border:1px solid var(--line);border-radius:6px;padding:5px 7px;text-align:right;font-variant-numeric:tabular-nums}
+.xl .bad{color:var(--bad);font-weight:600}
+.pill{display:inline-block;font-size:11.5px;font-weight:600;padding:1px 8px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.pill.ok{color:var(--ok)}.pill.warn{color:var(--warn)}.pill.bad{color:var(--bad)}.pill.mut{color:var(--muted)}
+.rooms{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.rooms div{border:1px solid var(--line);border-radius:8px;padding:9px 10px;font-size:13px}
+.rooms b{display:block;font-size:14px}
+.xbtns{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.xbtns .btn{min-height:38px;padding:0 14px;font-size:13.5px}
+.seg2{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#fff;flex-wrap:wrap;max-width:100%}
+#x3l{flex-wrap:nowrap}
+.seg2 button{padding:6px 11px;font-size:13px;color:var(--muted);border-right:1px solid var(--line)}
+.seg2 button:last-child{border-right:0}
+.seg2 button[aria-pressed="true"]{background:var(--fg);color:#fff}
+.browser{border:1px solid var(--line);border-radius:10px;overflow:hidden;width:100%;max-width:620px}
+.browser .ub{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--sand);font-size:12px;color:var(--muted)}
+.browser .ub i{width:9px;height:9px;border-radius:50%;background:#d6cfbf}
+.browser .ub span{flex:1;background:#fff;border-radius:5px;padding:3px 9px}
+.bhero{position:relative;height:300px;color:#fff}
+.bhero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bhero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.05) 40%,rgba(0,0,0,.6))}
+.bhero nav{position:absolute;top:12px;left:14px;right:14px;z-index:1;display:flex;justify-content:space-between;align-items:center;font-size:12.5px}
+.bhero nav span{opacity:.9;margin-left:12px}
+.bhero .tx{position:absolute;left:18px;right:18px;bottom:18px;z-index:1}
+.bhero .tx b{display:block;font-family:var(--serif);font-weight:400;font-size:26px;line-height:1.15}
+.bhero .tx a{display:inline-block;margin-top:12px;background:#d4af37;color:#1a1408;border-radius:6px;padding:8px 14px;font-weight:600;font-size:13px;text-decoration:none}
+.xt{width:100%;border-collapse:collapse;font-size:13.5px}
+.xt th{text-align:left;font-weight:600;font-size:12.5px;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--fg)}
+.xt td{padding:8px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.xt .r{text-align:right}
+.xt tr.me td{font-weight:600;background:var(--sand)}
+.big2{font-family:var(--serif);font-size:30px;line-height:1.1}
+.note2{font-size:13px;color:var(--muted);margin-top:10px}
+.listing{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff;width:100%;max-width:400px}
+.listing img{width:100%;height:190px;object-fit:cover}
+.listing .in{padding:12px 14px}
+.listing .in b{display:block;font-size:15px}
+.listing .in p{font-size:13px;color:var(--muted);margin-top:6px}
+.tags2{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.tags2 span{font-size:11.5px;border:1px solid var(--line);border-radius:4px;padding:2px 7px}
+.wmsg{background:#d9fdd3;border-radius:8px;padding:9px 11px;font-size:13px;white-space:pre-line;box-shadow:0 1px 1px rgba(0,0,0,.1)}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:26px;height:26px;border-radius:50%;border:1px solid var(--line);font-size:15px;line-height:1}
+.notif2{background:#fff;border:1px solid var(--line);border-left:3px solid #075e54;border-radius:8px;padding:10px 12px;font-size:13px;margin-top:10px;animation:pop .3s ease}
+.mx svg{display:block;width:100%;height:auto;overflow:visible}
+.mx .ax{font-size:11px;fill:#8c8476}
+@media (max-width:640px){
+  .xd-h,.xd-b,.xd-f{padding-left:14px;padding-right:14px}
+  .xs{padding:12px}
+  .rooms{grid-template-columns:repeat(2,1fr)}
+  .bhero{height:240px}
+  .bhero nav span:nth-child(n+2){display:none}
+  .xmini{width:min(280px,100%)}
+}
+
 /* vídeo */
 .video-box{position:relative;aspect-ratio:16/9;background:#1a1814;border-radius:8px;overflow:hidden;display:grid;place-items:center;width:100%}
 .video-box img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;opacity:.45}
@@ -812,6 +891,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 </section>
 </main>
 
+<dialog class="xd" id="xd" aria-labelledby="xdT">
+  <div class="xd-h"><div><h3 id="xdT"></h3><p id="xdS"></p></div><button class="xd-x" type="button" id="xdClose" aria-label="Fechar">×</button></div>
+  <div class="xd-b" id="xdB"></div>
+  <div class="xd-f"><span>Dados de exemplo, só para demonstração.</span><a class="btn btn-dark" id="xdWa" href="#" target="_blank" rel="noopener" style="min-height:40px;font-size:14px">Quero este adicional</a></div>
+</dialog>
+
 <footer><div class="wrap"><span>© <span id="yr"></span> Aprile · Tecnologia e gestão · Costa do Descobrimento, Bahia</span><a class="wa" href="#" target="_blank" rel="noopener">WhatsApp</a></div></footer>
 
 <script>
@@ -856,8 +941,9 @@ function renderPlans(aud){
     <ul>${p.it.map(([t,d])=>`<li><span>${t}</span>${d?`<button type="button" data-go="${d}">ver</button>`:""}</li>`).join("")}</ul>
     <p class="meta">Pronto em até ${p.dias} dias</p>
     <a class="btn ${p.lab==="Mais completo"?"btn-dark":"btn-line"}" href="${WHATSAPP}" target="_blank" rel="noopener">Quero o ${p.n}</a></div>`).join("");
-  $("extras").innerHTML=EXTRAS[aud].map(([n,r,s,m,free])=>`<tr><td>${n}</td><td class="hide-s muted">${r}</td><td class="r num">${free||(s?brl(s):"sem custo")}</td><td class="r num">${free||(m?brl(m):"—")}</td></tr>`).join("");
+  $("extras").innerHTML=EXTRAS[aud].map(([n,r,s,m,free])=>`<tr><td>${n}${XKEY[n]?`<button type="button" class="xbtn" data-x="${n}">ver demonstração</button>`:""}</td><td class="hide-s muted">${r}</td><td class="r num">${free||(s?brl(s):"sem custo")}</td><td class="r num">${free||(m?brl(m):"—")}</td></tr>`).join("");
 }
+$("extras").onclick=e=>{const b=e.target.closest("[data-x]");if(b)openX(b.dataset.x)};
 $("plans").onclick=e=>{const b=e.target.closest("[data-go]");if(!b)return;const [t,v]=b.dataset.go.split(":");openTab(t,true);if(t==="gestao")$("segView").querySelector(`[data-v="${v==="rep"?"rep":"dash"}"]`).click()};
 
 /* ===== CONTA ===== */
@@ -1141,6 +1227,132 @@ function renderReport(){
 }
 $("segView").onclick=e=>{const b=e.target.closest("button");if(!b)return;const rep=b.dataset.v==="rep";$("segView").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));$("dash").hidden=rep;$("report").hidden=!rep;if(rep)renderReport();else drawChart()};
 $("repPrint").onclick=()=>print();
+
+/* ===== DEMONSTRAÇÕES DOS ADICIONAIS ===== */
+const XKEY={"Site em português, espanhol e inglês":"site3","Checklist de limpeza e manutenção":"limpeza","Painel de ocupação e preço":"ocupacao","Anúncio da Booking e do Airbnb revisado":"anuncio","Cartão de hóspede na carteira do celular":"cartao","Rede Aprile":"rede","Fila de espera e reserva de mesa":"fila","Delivery próprio pelo WhatsApp":"delivery","Cartão fidelidade na carteira do celular":"cartao","Estoque com alerta de compra":"estoque","Checklist de abertura e fechamento":"abertura","Engenharia de cardápio":"engenharia"};
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const nowT=()=>{const d=new Date();return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")};
+function openX(name){
+  const k=XKEY[name];if(!k)return;
+  if(k==="cartao"){openTab("fidelidade",true);return}
+  const row=EXTRAS[aud].find(r=>r[0]===name),[n,r,st,m,free]=row;
+  $("xdT").textContent=n;
+  $("xdS").innerHTML=`Resolve: <b>${esc(r)}</b> · ${free?free:(st?brl(st)+" de implantação":"sem implantação")}${free?"":m?" + "+brl(m)+" por mês":""}`;
+  $("xdWa").href=WHATSAPP;
+  const B=$("xdB");B.innerHTML="";XD[k](B);
+  const d=$("xd");if(d.showModal)d.showModal();else d.setAttribute("open","");
+}
+$("xdClose").onclick=()=>$("xd").close();
+$("xd").addEventListener("click",e=>{if(e.target.id==="xd")$("xd").close()});
+const XD={};
+
+/* site em 3 idiomas */
+XD.site3=B=>{const P=aud==="pousada";
+  const T={pt:{nav:P?["Quartos","Passeios","Contato"]:["Cardápio","Reservas","Contato"],h:P?"Pousada a poucos passos do mar, em Arraial d'Ajuda":"Cozinha baiana de frente para o mar, em Arraial d'Ajuda",b:P?"Ver datas e reservar":"Ver cardápio e reservar"},
+   es:{nav:P?["Habitaciones","Paseos","Contacto"]:["Menú","Reservas","Contacto"],h:P?"Posada a pocos pasos del mar, en Arraial d'Ajuda":"Cocina bahiana frente al mar, en Arraial d'Ajuda",b:P?"Ver fechas y reservar":"Ver menú y reservar"},
+   en:{nav:P?["Rooms","Tours","Contact"]:["Menu","Bookings","Contact"],h:P?"A guesthouse steps from the sea in Arraial d'Ajuda":"Bahian cooking by the sea in Arraial d'Ajuda",b:P?"Check dates and book":"See the menu and book"}};
+  const img=P?"./img/pousada-deck.jpg":"./img/restaurante-salao.jpg",dom=P?"pousadaexemplo.com.br":"restauranteexemplo.com.br";
+  B.innerHTML=`<div class="xs"><div class="browser"><div class="ub"><i></i><i></i><i></i><span id="x3u"></span></div><div class="bhero"><img src="${img}" alt=""><nav><b style="font-family:var(--serif);font-size:15px">${P?"Pousada":"Restaurante"} Exemplo</b><span id="x3n"></span></nav><div class="tx"><b id="x3h"></b><a href="#" onclick="return false" id="x3b"></a></div></div></div>
+   <div class="xcol" style="flex:0 1 290px"><h4>Idioma do site</h4><div class="seg2" id="x3l"><button type="button" data-l="pt" aria-pressed="true">Português</button><button type="button" data-l="es">Español</button><button type="button" data-l="en">English</button></div><p class="note2">O site abre no idioma do celular do visitante. O texto é revisado por gente, não traduzido automaticamente.</p></div></div>`;
+  const set=l=>{const t=T[l];B.querySelector("#x3u").textContent=dom+(l==="pt"?"":"/"+l);B.querySelector("#x3n").innerHTML=t.nav.map(x=>`<span>${x}</span>`).join("");B.querySelector("#x3h").textContent=t.h;B.querySelector("#x3b").textContent=t.b};
+  B.querySelector("#x3l").onclick=e=>{const b=e.target.closest("button");if(!b)return;B.querySelectorAll("#x3l button").forEach(x=>x.setAttribute("aria-pressed",x===b));set(b.dataset.l)};set("pt")};
+
+/* checklist de limpeza e manutenção */
+XD.limpeza=B=>{const R=[["1","Ocupado","mut"],["2","Pronto","ok"],["3","Ocupado","mut"],["4","Limpando","warn"],["5","Pronto","ok"],["6","Saída hoje","bad"],["7","Ocupado","mut"],["8","Pronto","ok"]];
+  const IT=["Roupa de cama trocada","Banheiro e toalhas","Amenities repostos","Frigobar conferido","Ar-condicionado testado","Foto final do quarto"];
+  B.innerHTML=`<div class="xs"><div class="xmini"><div class="sc"><div class="tb"><small>Camareira · Joana</small><b>Quarto 4</b></div><div class="bd"><ul class="xl" id="xlI">${IT.map((t,i)=>`<li><label><input type="checkbox" data-i="${i}">${t}</label></li>`).join("")}</ul><div class="xbtns"><button class="btn btn-line" type="button" id="xlP">Reportar problema</button></div></div></div></div>
+   <div class="xcol"><h4>Painel do dono</h4><div class="rooms" id="xlR"></div><h4 style="margin-top:16px">Manutenção</h4><ul class="xl" id="xlM"><li><span>Quarto 7: lâmpada da varanda</span><span class="pill ok">resolvido</span></li></ul><p class="note2">Cada quarto tem um QR Code. A equipe marca no celular e o dono acompanha tudo daqui, sem ligar para ninguém.</p></div></div>`;
+  const draw=()=>{B.querySelector("#xlR").innerHTML=R.map(([q,st,c])=>`<div><b>Quarto ${q}</b><span class="pill ${c}">${st}</span></div>`).join("")};draw();
+  B.querySelector("#xlI").onchange=()=>{const all=[...B.querySelectorAll("#xlI input")].every(x=>x.checked);R[3]=all?["4","Pronto "+nowT(),"ok"]:["4","Limpando","warn"];draw()};
+  B.querySelector("#xlP").onclick=e=>{e.target.disabled=true;B.querySelector("#xlM").insertAdjacentHTML("afterbegin",`<li><span>Quarto 4: chuveiro com pouca pressão · Joana, ${nowT()}</span><span class="pill bad">aberto</span></li>`)}};
+
+/* painel de ocupação e preço */
+XD.ocupacao=B=>{const D=[
+  ["Réveillon","28/12 a 02/01",92,[980,1150,890,1300],850],
+  ["Carnaval","13 a 18/02",71,[720,800,650,880],690],
+  ["Semana Santa","02 a 05/04",48,[480,520,450,560],520],
+  ["Fim de semana comum","maio",35,[320,360,290,380],400]];
+  B.innerHTML=`<div class="xs" style="display:block"><div class="seg2" id="xoS">${D.map((d,i)=>`<button type="button" data-i="${i}" aria-pressed="${i===0}">${d[0]}</button>`).join("")}</div><div id="xoB" style="margin-top:16px"></div><p class="note2">Ocupação vem do motor de reservas da pousada. As tarifas dos concorrentes são coletadas nas datas-chave, sempre para o mesmo tipo de quarto.</p></div>`;
+  const draw=i=>{const [n,per,oc,cp,me]=D[i],avg=cp.reduce((a,b)=>a+b,0)/cp.length,sug=Math.round(avg*(oc>80?1.05:oc>60?1:.95)/10)*10;
+    const rows=[["Pousada Mar Azul",cp[0]],["Pousada do Rio",cp[1]],["Vila Coqueiros",cp[2]],["Recanto Arraial",cp[3]]];
+    B.querySelector("#xoB").innerHTML=`<div style="display:flex;gap:28px;flex-wrap:wrap"><div><small class="muted">Sua ocupação · ${per}</small><div class="big2">${oc}%</div></div><div><small class="muted">Sua diária hoje</small><div class="big2">${brl(me)}</div></div><div><small class="muted">Média dos concorrentes</small><div class="big2">${brl(avg)}</div></div></div>
+     <table class="xt" style="margin-top:14px"><thead><tr><th>Suíte de casal</th><th class="r">Diária</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${r[0]}</td><td class="r">${brl(r[1])}</td></tr>`).join("")}<tr class="me"><td>Pousada Exemplo</td><td class="r">${brl(me)}</td></tr></tbody></table>
+     <p style="margin-top:12px;font-size:14.5px"><b>Sugestão:</b> ${sug>me?`subir para ${brl(sug)}. Ocupação alta e você está abaixo da média da região.`:sug<me?`segurar em até ${brl(sug)} ou criar um pacote. Ocupação baixa e você está acima da média.`:"manter o preço."}</p>`};
+  B.querySelector("#xoS").onclick=e=>{const b=e.target.closest("button");if(!b)return;B.querySelectorAll("#xoS button").forEach(x=>x.setAttribute("aria-pressed",x===b));draw(+b.dataset.i)};draw(0)};
+
+/* anúncio revisado */
+XD.anuncio=B=>{const V={antes:{t:"Pousada em Arraial",img:"./img/pousada-suite.jpg",p:"Quartos com ar e café da manhã. Perto da praia.",tags:["Português","Wi-Fi","Café da manhã","Estacionamento"],ck:[["Título descreve o diferencial",0],["Primeira foto mostra o melhor ângulo",0],["Descrição em português, espanhol e inglês",0],["Comodidades completas",0],["Política de cancelamento clara",0]]},
+  depois:{t:"Pousada com deck de frente para o rio, a 400 m da praia · Arraial d'Ajuda",img:"./img/pousada-deck.jpg",p:"Café da manhã servido no deck, suítes com varanda e transfer do aeroporto de Porto Seguro. Aceitamos pets pequenos.",tags:["Português","Español","English","Wi-Fi","Café no deck","Transfer","Pet friendly","Varanda","Ar-condicionado","Estacionamento"],ck:[["Título descreve o diferencial",1],["Primeira foto mostra o melhor ângulo",1],["Descrição em português, espanhol e inglês",1],["Comodidades completas",1],["Política de cancelamento clara",1]]}};
+  B.innerHTML=`<div class="xs"><div class="listing" id="xaL"></div><div class="xcol" style="flex:0 1 280px"><div class="seg2" id="xaS"><button type="button" data-v="antes" aria-pressed="true">Antes</button><button type="button" data-v="depois">Depois</button></div><ul class="xl" id="xaC" style="margin-top:12px"></ul><p class="note2">Serviço avulso: revisamos o anúncio que já existe na Booking e no Airbnb, nos três idiomas.</p></div></div>`;
+  const draw=v=>{const d=V[v];B.querySelector("#xaL").innerHTML=`<img src="${d.img}" alt=""><div class="in"><b>${d.t}</b><p>${d.p}</p><div class="tags2">${d.tags.map(t=>`<span>${t}</span>`).join("")}</div></div>`;
+    B.querySelector("#xaC").innerHTML=d.ck.map(([t,ok])=>`<li><span>${t}</span><span class="pill ${ok?"ok":"bad"}">${ok?"ok":"falta"}</span></li>`).join("")};
+  B.querySelector("#xaS").onclick=e=>{const b=e.target.closest("button");if(!b)return;B.querySelectorAll("#xaS button").forEach(x=>x.setAttribute("aria-pressed",x===b));draw(b.dataset.v)};draw("antes")};
+
+/* rede aprile */
+XD.rede=B=>{let n=2,code=0;
+  B.innerHTML=`<div class="xs"><div class="xmini"><div class="sc"><div class="tb"><small>Guia do quarto · Pousada Exemplo</small><b>Onde jantar</b></div><div class="bd">
+   <div style="border:1px solid var(--line);border-radius:8px;padding:12px;background:#fff"><b style="font-size:14px">Restaurante Exemplo</b><p class="muted" style="font-size:12.5px;margin-top:4px">Cozinha baiana, a 300 m da pousada. Aberto até 23h.</p><p style="margin-top:8px;font-size:13px"><b>10% de desconto</b> mostrando este cupom</p><div id="xrC" style="margin-top:8px;font-family:monospace;font-size:15px;letter-spacing:.06em">APR-7391</div><button class="btn btn-dark" type="button" id="xrU" style="min-height:36px;font-size:13px;margin-top:10px;width:100%">Mostrar no restaurante</button></div></div></div></div>
+   <div class="xcol"><h4>Painel do restaurante</h4><p class="muted" style="font-size:13.5px">Mesas indicadas pela Rede Aprile este mês</p><div class="big2" id="xrN">2</div><ul class="xl" id="xrL"><li><span>APR-7104 · Pousada do Rio · 4 pessoas</span><span>R$ 412</span></li><li><span>APR-6988 · Pousada Exemplo · 2 pessoas</span><span>R$ 186</span></li></ul><p class="note2">${aud==="pousada"?"Para a pousada, a Rede Aprile é grátis: o hóspede ganha boas indicações e a pousada ganha mais um motivo para ser lembrada.":"O restaurante paga a mensalidade e recebe turistas das pousadas parceiras. Cada cupom é rastreado, então dá para ver quanto a rede trouxe."}</p></div></div>`;
+  B.querySelector("#xrU").onclick=()=>{n++;const c="APR-"+(7391+code++);B.querySelector("#xrN").textContent=n;B.querySelector("#xrL").insertAdjacentHTML("afterbegin",`<li><span>${c} · Pousada Exemplo · 2 pessoas</span><span class="pill ok">${nowT()}</span></li>`);B.querySelector("#xrC").textContent="APR-"+(7391+code)}};
+
+/* fila de espera */
+XD.fila=B=>{const Q=["Marcos (4)","Fernanda (2)","Carla (2)"];let mine=false;
+  B.innerHTML=`<div class="xs"><div class="xmini"><div class="sc"><div class="tb"><small>Restaurante Exemplo</small><b>Fila de espera</b></div><div class="bd" id="xfP"></div></div></div><div class="xcol"><h4>Tela da recepção</h4><ul class="xl" id="xfL"></ul><div class="xbtns"><button class="btn btn-dark" type="button" id="xfC">Chamar o próximo</button></div><div id="xfN"></div><p class="note2">O cliente entra na fila pelo QR Code da porta e pode dar uma volta na praia. O aviso chega no WhatsApp quando a mesa fica pronta.</p></div></div>`;
+  const draw=()=>{const pos=Q.indexOf("Carla (2)");
+    B.querySelector("#xfL").innerHTML=Q.length?Q.map((x,i)=>`<li><span>${i+1}. ${x}${x==="Carla (2)"?" · você":""}</span><span class="pill ${i===0?"warn":"mut"}">${i===0?"próximo":"aguardando"}</span></li>`).join(""):`<li><span class="muted">Fila vazia</span></li>`;
+    B.querySelector("#xfP").innerHTML=pos>=0?`<p style="margin-top:10px">Olá, Carla. Você está na fila.</p><div class="big2" style="margin:10px 0 2px">${pos+1}º lugar</div><p class="muted">Espera estimada: ${(pos+1)*8} minutos</p><p style="margin-top:14px;font-size:12.5px" class="muted">Pode passear. Avisamos no WhatsApp quando a sua mesa estiver pronta.</p>`:`<p style="margin-top:10px">Sua mesa está pronta.</p><div class="big2" style="margin:10px 0">Mesa 7</div><p class="muted">Você tem 10 minutos para chegar.</p>`};
+  B.querySelector("#xfC").onclick=()=>{const x=Q.shift();if(x==="Carla (2)")B.querySelector("#xfN").innerHTML=`<div class="notif2"><b>WhatsApp para Carla:</b> Sua mesa no Restaurante Exemplo está pronta! Você tem 10 minutos para chegar.</div>`;if(!Q.length)B.querySelector("#xfC").disabled=true;draw()};draw()};
+
+/* delivery próprio */
+XD.delivery=B=>{const M=[["Moqueca de peixe (2 pessoas)",138],["Risoto de camarão",89],["Bolinho de bacalhau",42],["Suco de cajá 500 ml",14]];const q=[1,0,1,0];let num=1043;
+  B.innerHTML=`<div class="xs"><div class="xmini"><div class="sc"><div class="tb"><small>Delivery · Restaurante Exemplo</small><b>Monte o seu pedido</b></div><div class="bd"><ul class="xl" id="xdM"></ul><p style="margin-top:12px;display:flex;justify-content:space-between"><span>Total</span><b id="xdT2"></b></p><button class="btn btn-dark" type="button" id="xdS2" style="width:100%;margin-top:10px;min-height:40px;font-size:13.5px">Enviar pedido pelo WhatsApp</button></div></div></div>
+   <div class="xcol"><h4>O que chega para o restaurante</h4><div id="xdO" class="muted" style="font-size:13.5px">Monte o pedido e toque em enviar.</div></div></div>`;
+  const tot=()=>M.reduce((s,[_,p],i)=>s+p*q[i],0);
+  const draw=()=>{B.querySelector("#xdM").innerHTML=M.map(([n,p],i)=>`<li><span>${n}<br><small class="muted">${brl(p)}</small></span><span class="qty"><button type="button" data-i="${i}" data-d="-1">−</button><b>${q[i]}</b><button type="button" data-i="${i}" data-d="1">+</button></span></li>`).join("");B.querySelector("#xdT2").textContent=brl(tot())};
+  B.querySelector("#xdM").onclick=e=>{const b=e.target.closest("button");if(!b)return;const i=+b.dataset.i;q[i]=Math.max(0,q[i]+ +b.dataset.d);draw()};
+  B.querySelector("#xdS2").onclick=()=>{const t=tot();if(!t)return;const it=M.map(([n],i)=>q[i]?`${q[i]}x ${n}`:"").filter(Boolean).join("\n");
+    B.querySelector("#xdO").innerHTML=`<div class="wmsg">Pedido #${num++}\n${esc(it)}\nTotal: ${brl(t)}\nEntrega: Rua do Mucugê, 120\nPagamento: Pix</div><div class="notif2"><b>Painel de pedidos:</b> pedido novo às ${nowT()}, aguardando preparo.</div><p style="margin-top:12px;font-size:14px">Pelo iFood, a comissão de 23% mais 3,2% do pagamento custaria <b>${brl(t*.262)}</b> neste pedido.</p>`};draw()};
+
+/* estoque com alerta */
+XD.estoque=B=>{const S=[["Camarão rosa","kg",8,3],["Peixe do dia","kg",10,14],["Leite de coco","L",12,9],["Arroz arbóreo","kg",5,6],["Limão siciliano","kg",3,1.5],["Picanha","kg",12,13]];
+  B.innerHTML=`<div class="xs" style="display:block"><div style="overflow-x:auto"><table class="xt"><thead><tr><th>Insumo</th><th class="r">Mínimo</th><th class="r">Contagem</th><th class="r">Situação</th></tr></thead><tbody id="xeT"></tbody></table></div><div id="xeL" style="margin-top:14px"></div><p class="note2">A contagem é feita no celular, no fim do turno. O alerta de compra sai na hora para o gestor.</p></div>`;
+  B.querySelector("#xeT").innerHTML=S.map(([n,u,mi,c],i)=>`<tr><td>${n}</td><td class="r">${mi} ${u}</td><td class="r"><input type="number" step=".5" min="0" value="${c}" data-i="${i}" style="width:76px;border:1px solid var(--line);border-radius:6px;padding:4px 6px;text-align:right"> ${u}</td><td class="r" id="xeS${i}"></td></tr>`).join("");
+  const draw=()=>{const buy=[];S.forEach(([n,u,mi],i)=>{const c=+B.querySelector(`[data-i="${i}"]`).value||0,low=c<mi;B.querySelector("#xeS"+i).innerHTML=`<span class="pill ${low?"bad":"ok"}">${low?"abaixo do mínimo":"ok"}</span>`;if(low)buy.push(`${n}: comprar ${(mi*1.5-c).toLocaleString("pt-BR")} ${u}`)});
+    B.querySelector("#xeL").innerHTML=buy.length?`<div class="notif2"><b>Alerta de compra, ${nowT()}</b><br>${buy.join("<br>")}</div>`:`<div class="notif2"><b>Estoque em dia.</b> Nenhum item abaixo do mínimo.</div>`};
+  B.querySelector("#xeT").oninput=draw;draw()};
+
+/* checklist de abertura */
+XD.abertura=B=>{
+  B.innerHTML=`<div class="xs"><div class="xmini"><div class="sc"><div class="tb"><small>Abertura · Ana</small><b>Checklist da cozinha</b></div><div class="bd"><ul class="xl">
+   <li><span>Câmara fria (até 5 °C)</span><span><input type="number" id="xa1" value="7"> °C</span></li>
+   <li><span>Freezer (até −18 °C)</span><span><input type="number" id="xa2" value="-19"> °C</span></li>
+   <li><label><input type="checkbox" class="xac">Validade dos molhos</label></li>
+   <li><label><input type="checkbox" class="xac">Gás e exaustor</label></li>
+   <li><label><input type="checkbox" class="xac">Bancadas higienizadas</label></li></ul>
+   <button class="btn btn-dark" type="button" id="xaD" style="width:100%;margin-top:12px;min-height:40px;font-size:13.5px">Concluir abertura</button></div></div></div>
+   <div class="xcol"><h4>Histórico para a fiscalização</h4><ul class="xl" id="xaH"><li><span>Fechamento de ontem · Rui · 23:40</span><span class="pill ok">ok</span></li><li><span>Abertura de ontem · Ana · 10:12</span><span class="pill ok">ok</span></li></ul><p class="note2">Cada registro fica salvo com nome, horário e temperaturas. Na visita da vigilância sanitária, é só mostrar o histórico.</p></div></div>`;
+  B.querySelector("#xaD").onclick=()=>{const t1=+B.querySelector("#xa1").value,t2=+B.querySelector("#xa2").value,pend=[...B.querySelectorAll(".xac")].filter(x=>!x.checked).length;
+    const prob=[t1>5?`câmara fria a ${t1} °C`:"",t2>-18?`freezer a ${t2} °C`:"",pend?`${pend} item(ns) sem marcar`:""].filter(Boolean);
+    B.querySelector("#xaH").insertAdjacentHTML("afterbegin",`<li><span>Abertura de hoje · Ana · ${nowT()}${prob.length?`<br><small class="bad">${prob.join(", ")}</small>`:""}</span><span class="pill ${prob.length?"bad":"ok"}">${prob.length?"atenção":"ok"}</span></li>`)}};
+
+/* engenharia de cardápio */
+XD.engenharia=B=>{const share=[.2,.17,.15,.1,.14,.1,.08,.06];
+  const QV=[190,170,80,70,260,70,60,240],DY=[-9,-9,18,-9,-9,-9,18,-9];const D=DISH.map((d,i)=>({n:d[0],q:QV[i],dy:DY[i],m:d[1]*(1-d[2]),cmv:d[2]}));
+  const mq=D.reduce((s,x)=>s+x.q,0)/D.length,mm=D.reduce((s,x)=>s+x.m,0)/D.length;
+  const cat=x=>x.q>=mq?(x.m>=mm?["Estrela","manter em destaque"]:["Burro de carga","vende muito e lucra pouco: rever ficha técnica ou preço"]):(x.m>=mm?["Quebra-cabeça","lucra bem e vende pouco: destacar no cardápio e no atendimento"]:["Cão","vende pouco e lucra pouco: tirar ou reformular"]);
+  const W=620,H=340,pl=56,pr=16,pt=14,pb=40,mxQ=Math.max(...D.map(x=>x.q))*1.12,mxM=Math.max(...D.map(x=>x.m))*1.15;
+  const X=v=>pl+(W-pl-pr)*v/mxQ,Y=v=>pt+(H-pt-pb)*(1-v/mxM);
+  let g=`<line x1="${X(mq)}" x2="${X(mq)}" y1="${pt}" y2="${H-pb}" stroke="#d6cfbf" stroke-dasharray="4 4"/><line x1="${pl}" x2="${W-pr}" y1="${Y(mm)}" y2="${Y(mm)}" stroke="#d6cfbf" stroke-dasharray="4 4"/>`;
+  g+=`<text class="ax" x="${W-pr}" y="${pt+12}" text-anchor="end">Estrelas</text><text class="ax" x="${pl+6}" y="${pt+12}">Quebra-cabeças</text><text class="ax" x="${W-pr}" y="${H-pb-8}" text-anchor="end">Burros de carga</text><text class="ax" x="${pl+6}" y="${H-pb-8}">Cães</text>`;
+  g+=`<line x1="${pl}" x2="${W-pr}" y1="${H-pb}" y2="${H-pb}" stroke="#8c8476"/><line x1="${pl}" x2="${pl}" y1="${pt}" y2="${H-pb}" stroke="#8c8476"/><text class="ax" x="${(W+pl)/2}" y="${H-8}" text-anchor="middle">Pratos vendidos no mês</text><text class="ax" x="14" y="${(H-pb)/2}" text-anchor="middle" transform="rotate(-90 14 ${(H-pb)/2})">Margem por prato (R$)</text>`;
+  D.forEach((x,i)=>{g+=`<g class="pt" data-i="${i}" tabindex="0"><circle cx="${X(x.q)}" cy="${Y(x.m)}" r="14" fill="transparent"/><circle cx="${X(x.q)}" cy="${Y(x.m)}" r="6" fill="#1a1814" stroke="#fff" stroke-width="2"/><text x="${X(x.q)>W*.7?X(x.q)-10:X(x.q)+10}" y="${Y(x.m)+x.dy}" text-anchor="${X(x.q)>W*.7?"end":"start"}" font-size="11.5" fill="#1a1814">${esc(x.n)}</text></g>`});
+  B.innerHTML=`<div class="xs" style="display:block"><div class="mx" style="position:relative"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Matriz de engenharia de cardápio">${g}</svg><div class="tip" id="xmT"></div></div>
+   <table class="xt" style="margin-top:12px"><thead><tr><th>Prato</th><th class="r">Vendidos</th><th class="r">Margem</th><th>Classificação</th></tr></thead><tbody>${D.map(x=>{const c=cat(x);return `<tr><td>${esc(x.n)}</td><td class="r">${nf(x.q)}</td><td class="r">${brl(x.m)}</td><td><b>${c[0]}</b><br><small class="muted">${c[1]}</small></td></tr>`}).join("")}</tbody></table>
+   <p class="note2">As linhas tracejadas são as médias do cardápio. A análise usa as fichas técnicas e as vendas do caixa.</p></div>`;
+  const tip=B.querySelector("#xmT"),svg=B.querySelector("svg");
+  svg.querySelectorAll(".pt").forEach(el=>{const show=()=>{const x=D[+el.dataset.i],c=cat(x),sc=svg.clientWidth/W;tip.innerHTML=`<div class="d"></div><div class="r"><span>Vendidos</span><b>${nf(x.q)}</b></div><div class="r"><span>Margem</span><b>${brl(x.m)}</b></div><div class="r"><span>CMV</span><b>${Math.round(x.cmv*100)}%</b></div><div class="r tot"><span>${c[0]}</span></div>`;tip.querySelector(".d").textContent=x.n;
+      let l=X(x.q)*sc+14;if(l+170>svg.clientWidth)l=X(x.q)*sc-180;tip.style.left=Math.max(0,l)+"px";tip.style.top=Math.max(0,Y(x.m)*sc-20)+"px";tip.classList.add("on")};
+    el.addEventListener("pointerenter",show);el.addEventListener("focus",show);el.addEventListener("pointerleave",()=>tip.classList.remove("on"));el.addEventListener("blur",()=>tip.classList.remove("on"))})};
 
 /* perguntas */
 const FAQ=[

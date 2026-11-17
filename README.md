@@ -33,6 +33,11 @@ aviso de prêmio e convite para quem some há 30 dias) e o dashboard de CMV com 
 imprimível. Há um modo apresentação e endereços diretos como
 `#restaurante/gestao` ou `#pousada/guia`.
 
+Cada adicional da tabela tem um botão **ver demonstração**, que abre a
+demonstração numa janela: site em três idiomas, checklist de limpeza, painel de
+ocupação e preço, anúncio revisado, Rede Aprile, fila de espera, delivery
+próprio, estoque com alerta, checklist de abertura e engenharia de cardápio.
+
 Para pôr o vídeo do site, preencha `VIDEO_SITE` no início do `<script>` com um
 link do YouTube ou o caminho de um `.mp4`. Planos, adicionais e o link do
 WhatsApp ficam nas constantes do mesmo bloco.
