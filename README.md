@@ -40,6 +40,14 @@ demonstração**, que abre a demonstração numa janela: site em três idiomas, 
 ocupação e preço, anúncio revisado, Rede Aprile, fila de espera, delivery
 próprio e checklist de abertura.
 
+Os itens de cada plano também abrem uma explicação pela seta (textos em
+`PINFO`). Um **carrinho flutuante** junta plano e adicionais: os botões "Quero o
+plano", "Quero esta solução", "Quero este adicional" e "Adicionar ao carrinho"
+colocam o item no carrinho (um plano por tipo de negócio), que mostra o total de
+implantação e de mensalidade e envia o pedido pelo WhatsApp. Para o texto do
+pedido já chegar escrito na conversa, preencha `WHATSAPP_NUMERO` (DDI + DDD +
+número, só dígitos); sem ele, o texto é copiado e o link de `WHATSAPP` é aberto.
+
 Para pôr o vídeo do site, preencha `VIDEO_SITE` no início do `<script>` com um
 link do YouTube ou o caminho de um `.mp4`. Planos, adicionais e o link do
 WhatsApp ficam nas constantes do mesmo bloco.

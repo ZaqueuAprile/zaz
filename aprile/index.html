@@ -123,8 +123,52 @@ body[data-aud="restaurante"] [data-aud="pousada"]{display:none!important}
 .plan .price span{color:var(--muted);font-size:15px}
 .plan .setup{font-size:14px;color:var(--muted);margin-top:-12px;margin-bottom:18px}
 .plan ul{list-style:none;flex:1;margin-bottom:22px;border-top:1px solid var(--line)}
-.plan li{padding:8px 0;border-bottom:1px solid var(--line);font-size:15px;display:flex;justify-content:space-between;gap:10px}
-.plan li button{flex:none;font-size:13px;color:var(--gold);font-weight:600;text-decoration:underline;text-underline-offset:2px}
+.plan li{border-bottom:1px solid var(--line);font-size:15px}
+.pi-h{width:100%;display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:left;padding:8px 0}
+.pi-h i{flex:none;width:24px;height:24px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:background .15s,border-color .15s}
+.pi-h i svg{width:12px;height:12px;transition:transform .25s ease}
+.pi-h:hover i{border-color:var(--fg)}
+.pi-h[aria-expanded="true"] i{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+.pi-h[aria-expanded="true"] i svg{transform:rotate(180deg)}
+.pi-b{padding:2px 0 12px;font-size:14px;color:var(--muted);line-height:1.55;animation:pop .25s ease}
+.pi-b button{display:inline-block;margin-top:6px;font-size:13.5px;color:var(--gold);font-weight:600;text-decoration:underline;text-underline-offset:2px}
+.xadd{display:inline-flex;align-items:center;gap:8px;margin:12px 14px 0 0;min-height:38px;padding:0 14px;border-radius:8px;background:var(--fg);color:var(--bg);font-size:14px;font-weight:600}
+.xadd.in{background:transparent;color:var(--ok);border:1px solid var(--ok)}
+.xadd svg{width:16px;height:16px}
+/* carrinho */
+.cartfab{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom));z-index:55;width:60px;height:60px;border-radius:50%;background:var(--fg);color:var(--bg);display:grid;place-items:center;box-shadow:0 12px 30px -8px rgba(0,0,0,.45);transition:transform .2s}
+.cartfab:hover{transform:translateY(-2px)}
+.cartfab svg{width:26px;height:26px}
+.cartfab b{position:absolute;top:-2px;right:-2px;min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:var(--gold-light);color:#1a1408;font-size:12.5px;display:grid;place-items:center;border:2px solid var(--bg)}
+.cartfab b:empty{display:none}
+.cartfab.bump{animation:bump .4s ease}
+@keyframes bump{40%{transform:scale(1.15)}}
+body.presenting .cartfab{display:none}
+dialog.cart{margin:0 0 0 auto;height:100dvh;max-height:100dvh;width:min(440px,100%);border:0;padding:0;background:var(--bg);color:var(--fg);box-shadow:-20px 0 60px -20px rgba(0,0,0,.4)}
+dialog.cart[open]{display:flex;flex-direction:column;animation:slide .25s ease}
+@keyframes slide{from{transform:translateX(40px);opacity:0}}
+dialog.cart::backdrop{background:rgba(26,24,20,.5)}
+.cart-h{display:flex;justify-content:space-between;align-items:center;padding:20px 22px 14px;border-bottom:1px solid var(--line)}
+.cart-h h3{font-size:24px}
+.cart-b{flex:1;overflow-y:auto;padding:8px 22px 16px}
+.cart-g{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);margin:16px 0 4px}
+.ci{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.ci b{font-weight:600;font-size:15px}
+.ci small{display:block;color:var(--muted);font-size:13px}
+.ci .pr{text-align:right;font-size:13.5px;font-variant-numeric:tabular-nums}
+.ci button{grid-column:1;justify-self:start;font-size:13px;color:var(--muted);text-decoration:underline}
+.cart-empty{color:var(--muted);padding:24px 0;font-size:15px}
+.cart-sum{border-top:2px solid var(--fg);margin-top:8px;padding-top:12px;display:grid;grid-template-columns:1fr auto;gap:6px;font-size:15px}
+.cart-sum b{text-align:right;font-variant-numeric:tabular-nums}
+.cart-f{padding:16px 22px calc(18px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:#fff;display:grid;gap:10px}
+.cart-f label{font-size:13px;color:var(--muted)}
+.cart-f input{display:block;width:100%;margin-top:3px;border:1px solid var(--line);border-radius:6px;padding:9px 10px}
+.cart-f .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cart-f .btn{width:100%}
+.cart-f p{font-size:12.5px;color:var(--muted)}
+.cart-ok{font-size:13.5px;color:var(--ok);font-weight:600}
+.toast{position:fixed;left:50%;bottom:92px;transform:translate(-50%,20px);opacity:0;z-index:70;background:var(--fg);color:var(--bg);border-radius:8px;padding:10px 16px;font-size:14px;transition:.25s;pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
 .plan .meta{font-size:13.5px;color:var(--muted);margin-bottom:14px}
 .plan .btn{width:100%}
 
@@ -934,7 +978,19 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <dialog class="xd" id="xd" aria-labelledby="xdT">
   <div class="xd-h"><div><h3 id="xdT"></h3><p id="xdS"></p></div><button class="xd-x" type="button" id="xdClose" aria-label="Fechar">×</button></div>
   <div class="xd-b" id="xdB"></div>
-  <div class="xd-f"><span>Dados de exemplo, só para demonstração.</span><a class="btn btn-dark" id="xdWa" href="#" target="_blank" rel="noopener" style="min-height:40px;font-size:14px">Quero este adicional</a></div>
+  <div class="xd-f"><span>Dados de exemplo, só para demonstração.</span><button class="btn btn-dark" id="xdWa" type="button" style="min-height:40px;font-size:14px">Quero este adicional</button></div>
+</dialog>
+
+<button class="cartfab" id="cartFab" type="button" aria-label="Abrir carrinho"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2.5 3.5h2.6l2.4 11.2a1.6 1.6 0 0 0 1.6 1.3h8.4a1.6 1.6 0 0 0 1.6-1.2l1.6-6.8H6.3"/></svg><b id="cartN"></b></button>
+<div class="toast" id="toast" role="status"></div>
+<dialog class="cart" id="cart" aria-labelledby="cartT">
+  <div class="cart-h"><h3 id="cartT">Seu pedido</h3><button class="xd-x" type="button" id="cartClose" aria-label="Fechar">×</button></div>
+  <div class="cart-b" id="cartB"></div>
+  <div class="cart-f">
+    <div class="two"><label>Seu nome<input id="cName" autocomplete="name"></label><label>Nome do negócio<input id="cBiz" autocomplete="organization"></label></div>
+    <button class="btn btn-gold" type="button" id="cartSend"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4c-1-1.6-1.5-3.4-1.5-5.2C2.2 6.6 6.6 2.2 12 2.2c2.6 0 5.1 1 6.9 2.9 1.8 1.8 2.9 4.3 2.9 6.9 0 5.4-4.4 9.8-9.8 9.8zM20.5 3.5C18.2 1.2 15.2 0 12 0 5.4 0 .1 5.3.1 11.9c0 2.1.5 4.1 1.6 5.9L0 24l6.3-1.7c1.7.9 3.7 1.4 5.7 1.4 6.6 0 11.9-5.3 11.9-11.9 0-3.2-1.2-6.2-3.4-8.3z"/></svg>Enviar pedido pelo WhatsApp</button>
+    <p id="cartMsg">Nada é cobrado agora. A Aprile confirma valores e prazos com você pelo WhatsApp.</p>
+  </div>
 </dialog>
 
 <footer><div class="wrap"><span>© <span id="yr"></span> Aprile · Tecnologia e gestão · Costa do Descobrimento, Bahia</span><a class="wa" href="#" target="_blank" rel="noopener">WhatsApp</a></div></footer>
@@ -942,6 +998,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <script>
 /* ===== CONFIGURAÇÃO ===== */
 const WHATSAPP="https://wa.me/message/ROZ6RZ22ZDSSG1";
+/* Número do WhatsApp com DDI e DDD, só dígitos (ex.: "5573999998888"). Com ele, o pedido do carrinho já chega escrito na conversa. Vazio = o texto é copiado e o link acima é aberto. */
+const WHATSAPP_NUMERO="";
 /* Vídeo da demonstração do site: link do YouTube ou arquivo .mp4 (ex.: "./video/site.mp4"). Vazio = espaço reservado. */
 const VIDEO_SITE="";
 
@@ -974,21 +1032,51 @@ const EXTRAS={
  pousada:[["Site em português, espanhol e inglês","turista estrangeiro que não entende o site",2000,90],["Checklist de limpeza e manutenção","quarto não liberado a tempo e manutenção esquecida",900,120],["Painel de ocupação e preço","preço decidido no achismo",1500,250],["Anúncio da Booking e do Airbnb revisado","anúncio fraco nos canais que já vendem",800,0],["Cartão de hóspede na carteira do celular","hóspede que volta pela Booking em vez de reservar direto",1200,190],["Rede Aprile","hóspede que não conhece os restaurantes da região",0,0,"grátis"]],
  restaurante:[["Fila de espera e reserva de mesa","cliente que desiste da fila no pico",900,150],["Delivery próprio pelo WhatsApp","comissão do iFood no cliente da cidade",1500,190],["Cartão fidelidade na carteira do celular","cliente local que some na baixa temporada",1200,190],["Checklist de abertura e fechamento","temperatura e validade sem registro",700,90],["Site em português, espanhol e inglês","turista estrangeiro que não entende o site",2000,90],["Rede Aprile","restaurante sem turista",0,150]]
 };
+const CHEV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
 function renderPlans(aud){
   $("plans").innerHTML=PLANS[aud].map(p=>`<div class="plan"><span class="lab">${p.lab}</span><h3>${p.n}</h3><p class="for">${p.for}</p>
     <p class="solves">Resolve: <b>${p.solves}</b></p>
     <div class="price"><b class="num">${brl(p.m)}</b><span>por mês</span></div><p class="setup">+ ${brl(p.s)} de implantação</p>
-    <ul>${p.it.map(([t,d])=>`<li><span>${t}</span>${d?`<button type="button" data-go="${d}">ver</button>`:""}</li>`).join("")}</ul>
+    <ul>${p.it.map(([t,d],j)=>`<li><button type="button" class="pi-h" aria-expanded="false"><span>${t}</span><i>${CHEV}</i></button><div class="pi-b" hidden>${itemInfo(t,p)}${d?`<br><button type="button" data-go="${d}">Ver demonstração</button>`:""}</div></li>`).join("")}</ul>
     <p class="meta">Pronto em até ${p.dias} dias</p>
-    <a class="btn ${p.lab==="Mais completo"?"btn-dark":"btn-line"}" href="${WHATSAPP}" target="_blank" rel="noopener">Quero o ${p.n}</a></div>`).join("");
-  const CHEV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
+    <button type="button" class="btn ${p.lab==="Mais completo"?"btn-dark":"btn-line"}" data-buy="plano:${p.n}">Quero o ${p.n}</button></div>`).join("");
   $("extras").innerHTML=EXTRAS[aud].map(([n,r,s,m,free],i)=>{const x=XINFO[n]||{},d=typeof x.d==="object"?x.d[aud]:x.d;
     return `<tr class="xrow" data-row="${i}"><td><button type="button" class="xname" aria-expanded="false" aria-controls="xdet${i}">${n}</button></td><td class="hide-s muted">${r}</td><td class="r num">${free||(s?brl(s):"sem custo")}</td><td class="r num">${free||(m?brl(m):"—")}</td><td class="tg"><button type="button" class="xtog" tabindex="-1" aria-hidden="true">${CHEV}</button></td></tr>
-    <tr class="xdet" id="xdet${i}" hidden><td colspan="5"><div class="xdet-in"><div><p>${d||r}</p>${XKEY[n]?`<button type="button" class="xbtn" data-x="${n}">Ver demonstração</button>`:""}</div><ul><li><span>Resolve</span><span>${r}</span></li><li><span>Prazo</span><span>${x.dias?`até ${x.dias} dias`:"a combinar"}</span></li><li><span>Cobrança</span><span>${free?free:(m?"implantação + mensalidade":"pagamento único")}</span></li></ul></div></td></tr>`}).join("");
+    <tr class="xdet" id="xdet${i}" hidden><td colspan="5"><div class="xdet-in"><div><p>${d||r}</p><button type="button" class="xadd" data-buy="adicional:${n}"></button>${XKEY[n]?`<button type="button" class="xbtn" data-x="${n}">Ver demonstração</button>`:""}</div><ul><li><span>Resolve</span><span>${r}</span></li><li><span>Prazo</span><span>${x.dias?`até ${x.dias} dias`:"a combinar"}</span></li><li><span>Cobrança</span><span>${free?free:(m?"implantação + mensalidade":"pagamento único")}</span></li></ul></div></td></tr>`}).join("");
 }
-$("extras").onclick=e=>{const b=e.target.closest("[data-x]");if(b){openX(b.dataset.x);return}
+$("extras").onclick=e=>{if(e.target.closest("[data-buy]"))return;const b=e.target.closest("[data-x]");if(b){openX(b.dataset.x);return}
   const row=e.target.closest(".xrow");if(!row)return;const det=row.nextElementSibling,open=det.hidden;
   det.hidden=!open;row.classList.toggle("open",open);row.querySelector(".xname").setAttribute("aria-expanded",open)};
+const PINFO={
+ "placas":"Placas com a sua marca para o caixa, o balcão ou a mesa. O cliente aproxima o celular ou lê o QR Code e cai direto na tela de avaliação do Google. A placa pede a opinião de todos, sem brinde, como o Google exige.",
+ "Perfil do Google otimizado":"Revisamos o Perfil da Empresa no Google: categorias, horários, fotos, descrição e links do site e do WhatsApp. É o que aparece no Google Maps quando alguém procura onde ficar ou comer na região.",
+ "Resposta a todas as avaliações":"A Aprile responde todas as avaliações do Google, boas e ruins, no tom combinado com você. A resposta é escrita pela Aprile e aprovada por você antes de publicar.",
+ "Resposta às avaliações":"A Aprile responde todas as avaliações do Google, boas e ruins, no tom combinado com você. A resposta é escrita pela Aprile e aprovada por você antes de publicar.",
+ "Relatório mensal":"Todo mês, um resumo simples: nota e número de avaliações, visitas e cliques no perfil e no site, e o que melhorar no mês seguinte.",
+ "Site com reserva direta":"Site rápido, feito para o celular, com fotos, quartos, localização e o botão de reserva ligado ao motor de reservas. O hóspede reserva sem passar pela Booking.",
+ "Motor de reservas configurado":"Escolhemos com você o motor de reservas, cadastramos quartos, tarifas e regras e ligamos ao channel manager, para não vender a mesma data duas vezes na Booking e no Airbnb. A assinatura do motor fica no nome da pousada.",
+ "Links gratuitos de reserva no Google":"Quando alguém pesquisa a pousada no Google, aparece o preço do site oficial ao lado do preço da Booking. O Google não cobra por esses links; eles funcionam com um motor de reservas parceiro do Google.",
+ "atendimento-pousada":"Um assistente no WhatsApp da pousada que responde na hora, a qualquer hora, em português, espanhol e inglês, e passa para a recepção quando a conversa pede uma pessoa.",
+ "atendimento-restaurante":"Um assistente no WhatsApp do restaurante que responde na hora, a qualquer hora: horário, cardápio, entrega, restrições alimentares e pedidos de reserva, em português, espanhol e inglês. Passa para a equipe quando precisa de uma pessoa.",
+ "Link de reserva direta, passeios e transfer pelo WhatsApp":"O assistente manda o link do motor de reservas com as datas já preenchidas e, antes da chegada, oferece transfer, passeios e jantar, que viram receita extra para a pousada.",
+ "Ficha do hóspede e pesquisa pós-estadia":"Antes do check-in, o hóspede preenche a ficha pelo WhatsApp. Depois do check-out, todos recebem uma pesquisa curta e o convite para avaliar no Google, e a pousada fica sabendo na hora se algo deu errado.",
+ "Guia do quarto por NFC":"Uma etiqueta no quarto que abre, no celular do hóspede, Wi-Fi, horários, regras, passeios e restaurantes. Diminui as perguntas na recepção e vende passeios e late check-out.",
+ "Reunião mensal de resultado":"Uma conversa por mês, presencial ou por vídeo, para olhar os números juntos e decidir os próximos passos.",
+ "Reunião mensal":"Uma conversa por mês, presencial ou por vídeo, para olhar os números juntos e decidir os próximos passos.",
+ "Cardápio NFC com vídeo":"Cardápio digital que abre ao aproximar o celular da etiqueta da mesa ou ler o QR Code. Cada prato tem vídeo curto, descrição, alergênicos e sugestão de acompanhamento, e o preço muda na hora.",
+ "Em português, espanhol e inglês":"O cardápio tem três idiomas, com tradução revisada por uma pessoa. O turista escolhe o idioma com um toque.",
+ "Gravação dos vídeos inclusa":"Gravamos os vídeos dos pratos no restaurante e editamos no formato do cardápio. Você não precisa contratar ninguém.",
+ "Fichas técnicas dos pratos":"Montamos a ficha de cada prato: ingredientes, quantidades e custo. É a base do CMV e da margem de cada prato.",
+ "Dashboard semanal: CMV, DRE e fluxo de caixa":"Toda semana, um painel no celular com vendas, CMV, margem de cada prato, DRE e o saldo de caixa previsto para as próximas semanas.",
+ "Relatório semanal de gestão":"O resumo da semana em linguagem simples: o que mudou, os pontos de atenção e o que fazer na semana seguinte. Pode ser impresso ou salvo em PDF.",
+ "Engenharia de cardápio":"Cruza quanto cada prato vende com quanto ele dá de margem e diz o que destacar, revisar ou tirar do cardápio."
+};
+function itemInfo(t,p){
+  if(/^Tudo do /.test(t))return `Inclui todos os itens do plano ${t.replace("Tudo do ","")}.`;
+  if(/placas/.test(t))return PINFO.placas;
+  if(/^Atendimento no WhatsApp/.test(t))return PINFO["atendimento-"+aud];
+  return PINFO[t]||"";
+}
 const XINFO={
  "Site em português, espanhol e inglês":{dias:15,d:{pousada:"Versão do site em português, espanhol e inglês, com texto revisado por uma pessoa, não traduzido automaticamente. O site abre no idioma do celular do visitante e o botão de reserva leva ao motor de reservas no mesmo idioma, quando o motor permite. Inclui domínio e hospedagem.",restaurante:"Versão do site em português, espanhol e inglês, com cardápio, horários, localização e reserva, tudo revisado por uma pessoa. O site abre no idioma do celular do visitante. Inclui domínio e hospedagem."}},
  "Checklist de limpeza e manutenção":{dias:10,d:"Um QR Code em cada quarto. A camareira marca no celular o que fez e reporta problemas com foto. O dono acompanha, em tempo real, quais quartos estão prontos para o check-in e o que está pendente de manutenção."},
@@ -1001,7 +1089,8 @@ const XINFO={
  "Cartão fidelidade na carteira do celular":{dias:15,d:"Um cartão de carimbos na Carteira do iPhone e do Android, sem aplicativo. Cada visita vale um carimbo, o cliente recebe um aviso quando ganha o prêmio e quem some há 30 dias recebe um convite para voltar."},
  "Checklist de abertura e fechamento":{dias:7,d:"Uma lista no celular para abrir e fechar a cozinha: temperatura da câmara fria e do freezer, validade dos molhos, gás e limpeza. Cada registro fica salvo com nome e horário, e o dono recebe um aviso quando algo sai do limite. O histórico ajuda na visita da vigilância sanitária."}
 };
-$("plans").onclick=e=>{const b=e.target.closest("[data-go]");if(!b)return;const [t,v]=b.dataset.go.split(":");openTab(t,true);if(t==="gestao"){$("segView").querySelector(`[data-v="${v==="rep"?"rep":"dash"}"]`).click();if(v!=="rep")dashView(v==="eng"?"eng":"vendas")}};
+$("plans").onclick=e=>{const h=e.target.closest(".pi-h");if(h){const o=h.getAttribute("aria-expanded")!=="true";h.setAttribute("aria-expanded",o);h.nextElementSibling.hidden=!o;return}
+  const b=e.target.closest("[data-go]");if(!b)return;const [t,v]=b.dataset.go.split(":");openTab(t,true);if(t==="gestao"){$("segView").querySelector(`[data-v="${v==="rep"?"rep":"dash"}"]`).click();if(v!=="rep")dashView(v==="eng"?"eng":"vendas")}};
 
 /* ===== CONTA ===== */
 function calc(){
@@ -1031,8 +1120,10 @@ const SOL={
  gestao:{tab:"Dashboard e relatórios",name:"Dashboard e relatório semanais",d:"Toda semana: CMV e margem de cada prato, DRE e fluxo de caixa previsto, com a engenharia de cardápio dizendo o que destacar, revisar ou tirar. O relatório semanal resume tudo e diz o que ajustar.",plan:"Mesa Cheia + Gestão"}
 };
 const ORDER={pousada:["atendimento","site","guia","avaliacoes","fidelidade"],restaurante:["atendimento","cardapio","avaliacoes","fidelidade","gestao"]};
+const SOLBUY={pousada:{atendimento:"plano:Venda Direta Completo",site:"plano:Venda Direta",guia:"plano:Venda Direta Completo",avaliacoes:"plano:Reputação",fidelidade:"adicional:Cartão de hóspede na carteira do celular"},
+ restaurante:{atendimento:"plano:Reputação",cardapio:"plano:Mesa Cheia",avaliacoes:"plano:Reputação",fidelidade:"adicional:Cartão fidelidade na carteira do celular",gestao:"plano:Mesa Cheia + Gestão"}};
 function renderInfo(){document.querySelectorAll("[data-info]").forEach(el=>{const o=SOL[el.dataset.info],v=o[aud]||{},d=v.d||o.d,pl=v.plan||o.plan;
-  el.innerHTML=`<div><h3>${o.name}</h3><p>${d}</p></div><div><p class="from">Incluído em: <b>${pl}</b></p><a class="btn btn-dark" style="margin-top:16px" href="${WHATSAPP}" target="_blank" rel="noopener">Quero esta solução</a></div>`})}
+  el.innerHTML=`<div><h3>${o.name}</h3><p>${d}</p></div><div><p class="from">Incluído em: <b>${pl}</b></p><button type="button" class="btn btn-dark" style="margin-top:16px" data-buy="${SOLBUY[aud][el.dataset.info]||""}">Quero esta solução</button></div>`})}
 let aud="pousada",current="atendimento";
 function renderTabs(){$("tabs").innerHTML=ORDER[aud].map(id=>`<button class="tab" role="tab" id="t-${id}" aria-controls="p-${id}" data-t="${id}">${SOL[id].tab}</button>`).join("")}
 function openTab(id,scroll,hash=true){
@@ -1053,7 +1144,7 @@ function step(d){const o=ORDER[aud],i=o.indexOf(current);openTab(o[(i+d+o.length
 function setAud(a,hash=true){
   aud=a;document.body.dataset.aud=a;
   document.querySelectorAll("[data-set]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.set===a));
-  renderPlans(a);renderTabs();renderInfo();calc();resetChat();if(typeof wRender==="function"){wHas=false;wN=0;wOffer="";wRender()}
+  renderPlans(a);renderTabs();renderInfo();if(typeof updateCart==="function")updateCart();calc();resetChat();if(typeof wRender==="function"){wHas=false;wN=0;wOffer="";wRender()}
   document.querySelectorAll(".biz-name").forEach(el=>el.textContent=a==="pousada"?"Pousada Exemplo":"Restaurante Exemplo");
   if(hash!==false)openTab(ORDER[a].includes(current)?current:ORDER[a][0],false,hash);
 }
@@ -1371,7 +1462,7 @@ function openX(name){
   const row=EXTRAS[aud].find(r=>r[0]===name),[n,r,st,m,free]=row;
   $("xdT").textContent=n;
   $("xdS").innerHTML=`Resolve: <b>${esc(r)}</b> · ${free?free:(st?brl(st)+" de implantação":"sem implantação")}${free?"":m?" + "+brl(m)+" por mês":""}`;
-  $("xdWa").href=WHATSAPP;
+  $("xdWa").dataset.buy="adicional:"+n;
   const B=$("xdB");B.innerHTML="";XD[k](B);
   const d=$("xd");if(d.showModal)d.showModal();else d.setAttribute("open","");
 }
@@ -1479,6 +1570,61 @@ XD.engenharia=B=>{const share=[.2,.17,.15,.1,.14,.1,.08,.06];
       let l=X(x.q)*sc+14;if(l+170>svg.clientWidth)l=X(x.q)*sc-180;tip.style.left=Math.max(0,l)+"px";tip.style.top=Math.max(0,Y(x.m)*sc-20)+"px";tip.classList.add("on")};
     el.addEventListener("pointerenter",show);el.addEventListener("focus",show);el.addEventListener("pointerleave",()=>tip.classList.remove("on"));el.addEventListener("blur",()=>tip.classList.remove("on"))})};
 
+/* ===== CARRINHO ===== */
+const AUDN={pousada:"Pousada",restaurante:"Restaurante"};
+let CART=[];try{CART=JSON.parse(localStorage.getItem("aprile-carrinho")||"[]")}catch(e){CART=[]}
+const saveCart=()=>{try{localStorage.setItem("aprile-carrinho",JSON.stringify(CART))}catch(e){}};
+function findItem(kind,name){
+  if(kind==="plano"){const p=PLANS[aud].find(x=>x.n===name);return p&&{kind,aud,name:p.n,s:p.s,m:p.m}}
+  const r=EXTRAS[aud].find(x=>x[0]===name);return r&&{kind,aud,name:r[0],s:r[2],m:r[3],free:r[4]||""}}
+const inCart=(kind,name)=>CART.some(c=>c.kind===kind&&c.name===name&&c.aud===aud);
+function toast(t){const el=$("toast");el.textContent=t;el.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove("on"),2200)}
+function addToCart(key,open){
+  const i=key.indexOf(":"),kind=key.slice(0,i),name=key.slice(i+1),it=findItem(kind,name);if(!it)return;
+  let msg=`${it.name} no carrinho`;
+  if(kind==="plano"){const old=CART.find(c=>c.kind==="plano"&&c.aud===aud);if(old&&old.name!==it.name)msg=`Plano trocado para ${it.name}`;CART=CART.filter(c=>!(c.kind==="plano"&&c.aud===aud))}
+  else if(inCart(kind,name)){if(open)openCart();else{CART=CART.filter(c=>!(c.kind===kind&&c.name===name&&c.aud===aud));saveCart();updateCart();toast(`${name} removido do carrinho`)}return}
+  CART.push(it);saveCart();updateCart();toast(msg);
+  const f=$("cartFab");f.classList.remove("bump");void f.offsetWidth;f.classList.add("bump");
+  if(open)openCart();
+}
+function removeFromCart(i){CART.splice(i,1);saveCart();updateCart();renderCart()}
+function updateCart(){$("cartN").textContent=CART.length||"";
+  document.querySelectorAll(".xadd").forEach(b=>{const k=b.dataset.buy,on=inCart("adicional",k.slice(k.indexOf(":")+1));b.classList.toggle("in",on);b.innerHTML=on?"✓ No carrinho":'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Adicionar ao carrinho'})}
+const price=c=>c.free?c.free:`${c.s?brl(c.s)+" de implantação":"sem implantação"}${c.m?" + "+brl(c.m)+"/mês":""}`;
+function renderCart(){
+  const B=$("cartB");
+  if(!CART.length){B.innerHTML=`<p class="cart-empty">Seu carrinho está vazio. Escolha um plano ou adicione serviços extras na tabela de adicionais.</p>`;$("cartSend").disabled=false;$("cartSend").lastChild.textContent="Falar no WhatsApp";return}
+  $("cartSend").lastChild.textContent="Enviar pedido pelo WhatsApp";
+  const auds=[...new Set(CART.map(c=>c.aud))];
+  B.innerHTML=auds.map(a=>`<p class="cart-g">${AUDN[a]}</p>`+CART.map((c,i)=>c.aud!==a?"":`<div class="ci"><div><b>${esc(c.name)}</b><small>${c.kind==="plano"?"Plano":"Adicional"}</small></div><div class="pr">${c.free?c.free:`${c.s?brl(c.s):"—"}<br><small>${c.m?brl(c.m)+"/mês":"sem mensalidade"}</small>`}</div><button type="button" data-rm="${i}">Remover</button></div>`).join("")).join("")
+    +`<div class="cart-sum"><span>Implantação</span><b>${brl(CART.reduce((t,c)=>t+(c.free?0:c.s),0))}</b><span>Mensalidade</span><b>${brl(CART.reduce((t,c)=>t+(c.free?0:c.m),0))}/mês</b></div>`;
+}
+function openCart(){renderCart();$("cartMsg").textContent="Nada é cobrado agora. A Aprile confirma valores e prazos com você pelo WhatsApp.";$("cartMsg").className="";const d=$("cart");if($("xd").open)$("xd").close();if(d.showModal)d.showModal();else d.setAttribute("open","")}
+function cartText(){
+  if(!CART.length)return "Olá! Vim pelo site da Aprile e quero saber mais.";
+  const auds=[...new Set(CART.map(c=>c.aud))],nm=$("cName").value.trim(),bz=$("cBiz").value.trim();
+  let t="Olá! Quero contratar pela Aprile:\n";
+  auds.forEach(a=>{t+=`\n*${AUDN[a]}*\n`;CART.filter(c=>c.aud===a).forEach(c=>{t+=`• ${c.kind==="plano"?"Plano":"Adicional"} ${c.name}: ${price(c)}\n`})});
+  t+=`\nTotal: ${brl(CART.reduce((s,c)=>s+(c.free?0:c.s),0))} de implantação + ${brl(CART.reduce((s,c)=>s+(c.free?0:c.m),0))} por mês`;
+  if(nm||bz)t+=`\n\n${nm?"Nome: "+nm:""}${nm&&bz?"\n":""}${bz?"Negócio: "+bz:""}`;
+  return t}
+function waLink(){return WHATSAPP_NUMERO?`https://wa.me/${WHATSAPP_NUMERO.replace(/\D/g,"")}?text=${encodeURIComponent(cartText())}`:WHATSAPP}
+function sendCart(){
+  const txt=cartText();
+  if(!WHATSAPP_NUMERO&&CART.length){try{navigator.clipboard.writeText(txt).catch(()=>{})}catch(e){}$("cartMsg").textContent="O texto do pedido foi copiado. É só colar na conversa do WhatsApp que abriu.";$("cartMsg").className="cart-ok"}
+  window.open(waLink(),"_blank","noopener");
+}
+$("cartFab").onclick=openCart;$("cartClose").onclick=()=>$("cart").close();
+$("cart").addEventListener("click",e=>{if(e.target.id==="cart")$("cart").close()});
+$("cartB").onclick=e=>{const b=e.target.closest("[data-rm]");if(b)removeFromCart(+b.dataset.rm)};
+$("cartSend").onclick=sendCart;
+["cName","cBiz"].forEach(id=>{try{$(id).value=localStorage.getItem("aprile-"+id)||""}catch(e){}$(id).oninput=()=>{try{localStorage.setItem("aprile-"+id,$(id).value)}catch(e){}}});
+/* botões de compra: planos, soluções e adicionais vão para o carrinho */
+document.addEventListener("click",e=>{const b=e.target.closest("[data-buy]");if(!b||!b.dataset.buy)return;e.preventDefault();e.stopPropagation();addToCart(b.dataset.buy,!b.classList.contains("xadd"))},true);
+/* botões de WhatsApp levam o pedido junto, quando há itens no carrinho e o número está configurado */
+document.querySelectorAll("a.wa").forEach(a=>a.addEventListener("click",()=>{a.href=waLink()}));
+
 /* perguntas */
 const FAQ=[
  ["Vocês garantem primeiro lugar no Google?","Não. Ninguém pode garantir posição no Google. O que fazemos é cuidar do que pesa: perfil completo, avaliações frequentes e todas respondidas."],
@@ -1493,7 +1639,7 @@ $("faq").onclick=e=>{const b=e.target.closest("button");if(!b)return;const li=b.
 /* início: #restaurante/cardapio abre direto o público e a demonstração */
 renderDash();
 const h=location.hash.match(/^#(pousada|restaurante)(?:\/(\w+))?/);
-setAud(h?h[1]:"pousada",false);
+setAud(h?h[1]:"pousada",false);updateCart();
 openTab(h&&h[2]?h[2]:ORDER[aud][0],false,!!h);
 if(h&&h[2])setTimeout(()=>$("demonstracoes").scrollIntoView(),50);
 </script>
