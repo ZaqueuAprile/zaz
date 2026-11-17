@@ -41,7 +41,9 @@ ocupação e preço, anúncio revisado, Rede Aprile, fila de espera, delivery
 próprio e checklist de abertura.
 
 Os itens de cada plano também abrem uma explicação pela seta (textos em
-`PINFO`). Um **carrinho flutuante** junta plano e adicionais: os botões "Quero o
+`PINFO`), e todos os itens que não são "Tudo do…" têm demonstração: perfil do
+Google, respostas às avaliações, relatório mensal, motor de reservas, links do
+Google, ficha do hóspede, reunião mensal, gravação dos vídeos e fichas técnicas. Um **carrinho flutuante** junta plano e adicionais: os botões "Quero o
 plano", "Quero esta solução", "Quero este adicional" e "Adicionar ao carrinho"
 colocam o item no carrinho (um plano por tipo de negócio), que mostra o total de
 implantação e de mensalidade e envia o pedido pelo WhatsApp. Para o texto do

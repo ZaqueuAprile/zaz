@@ -1013,19 +1013,19 @@ $("yr").textContent=new Date().getFullYear();
 const PLANS={
  pousada:[
   {n:"Reputação",lab:"Para começar",for:"Nota melhor no Google e nenhuma avaliação sem resposta.",solves:"nota baixa e avaliações sem resposta",s:590,m:149,dias:7,
-   it:[["2 placas NFC de avaliação","avaliacoes"],["Perfil do Google otimizado"],["Resposta a todas as avaliações"],["Relatório mensal"]]},
+   it:[["2 placas NFC de avaliação","avaliacoes"],["Perfil do Google otimizado","x:google"],["Resposta a todas as avaliações","x:respostas"],["Relatório mensal","x:relmensal"]]},
   {n:"Venda Direta",lab:"",for:"Para o hóspede reservar no seu site, sem comissão.",solves:"comissão de OTA paga pelo mesmo hóspede",s:3500,m:490,dias:20,
-   it:[["Site com reserva direta","site"],["Motor de reservas configurado"],["Links gratuitos de reserva no Google"],["3 placas NFC de avaliação","avaliacoes"],["Relatório mensal"]]},
+   it:[["Site com reserva direta","site"],["Motor de reservas configurado","x:motor"],["Links gratuitos de reserva no Google","x:glinks"],["3 placas NFC de avaliação","avaliacoes"],["Relatório mensal","x:relmensal"]]},
   {n:"Venda Direta Completo",lab:"Mais completo",for:"Reserva direta com atendimento a qualquer hora e receita extra por hóspede.",solves:"comissão de OTA, WhatsApp fora de hora e pouca venda extra",s:6000,m:990,dias:30,
-   it:[["Tudo do Venda Direta"],["Atendimento no WhatsApp 24 horas","atendimento"],["Link de reserva direta, passeios e transfer pelo WhatsApp","atendimento"],["Ficha do hóspede e pesquisa pós-estadia"],["Guia do quarto por NFC","guia"],["Reunião mensal de resultado"]]}
+   it:[["Tudo do Venda Direta"],["Atendimento no WhatsApp 24 horas","atendimento"],["Link de reserva direta, passeios e transfer pelo WhatsApp","atendimento"],["Ficha do hóspede e pesquisa pós-estadia","x:ficha"],["Guia do quarto por NFC","guia"],["Reunião mensal de resultado","x:reuniao"]]}
  ],
  restaurante:[
   {n:"Reputação",lab:"Para começar",for:"Nota melhor no Google, nenhuma avaliação e nenhuma mensagem sem resposta.",solves:"nota baixa, avaliações e WhatsApp sem resposta",s:590,m:149,dias:7,
-   it:[["Atendimento no WhatsApp 24 horas","atendimento"],["2 placas NFC de avaliação","avaliacoes"],["Perfil do Google otimizado"],["Resposta a todas as avaliações"],["Relatório mensal"]]},
+   it:[["Atendimento no WhatsApp 24 horas","atendimento"],["2 placas NFC de avaliação","avaliacoes"],["Perfil do Google otimizado","x:google"],["Resposta a todas as avaliações","x:respostas"],["Relatório mensal","x:relmensal"]]},
   {n:"Mesa Cheia",lab:"",for:"Para o turista entender o cardápio e pedir mais por mesa.",solves:"turista que não entende o cardápio e pouco pedido por mesa",s:2500,m:390,dias:15,
-   it:[["Tudo do Reputação"],["Cardápio NFC com vídeo","cardapio"],["Em português, espanhol e inglês","cardapio"],["Gravação dos vídeos inclusa"]]},
+   it:[["Tudo do Reputação"],["Cardápio NFC com vídeo","cardapio"],["Em português, espanhol e inglês","cardapio"],["Gravação dos vídeos inclusa","x:gravacao"]]},
   {n:"Mesa Cheia + Gestão",lab:"Mais completo",for:"Para saber quanto cada prato dá de lucro e quanto sobra no caixa, toda semana.",solves:"lucro que ninguém mede e caixa no escuro",s:5500,m:990,dias:30,
-   it:[["Tudo do Mesa Cheia"],["Fichas técnicas dos pratos"],["Dashboard semanal: CMV, DRE e fluxo de caixa","gestao"],["Relatório semanal de gestão","gestao:rep"],["Engenharia de cardápio","gestao:eng"],["Reunião mensal"]]}
+   it:[["Tudo do Mesa Cheia"],["Fichas técnicas dos pratos","x:fichas"],["Dashboard semanal: CMV, DRE e fluxo de caixa","gestao"],["Relatório semanal de gestão","gestao:rep"],["Engenharia de cardápio","gestao:eng"],["Reunião mensal","x:reuniao"]]}
  ]
 };
 const EXTRAS={
@@ -1090,7 +1090,8 @@ const XINFO={
  "Checklist de abertura e fechamento":{dias:7,d:"Uma lista no celular para abrir e fechar a cozinha: temperatura da câmara fria e do freezer, validade dos molhos, gás e limpeza. Cada registro fica salvo com nome e horário, e o dono recebe um aviso quando algo sai do limite. O histórico ajuda na visita da vigilância sanitária."}
 };
 $("plans").onclick=e=>{const h=e.target.closest(".pi-h");if(h){const o=h.getAttribute("aria-expanded")!=="true";h.setAttribute("aria-expanded",o);h.nextElementSibling.hidden=!o;return}
-  const b=e.target.closest("[data-go]");if(!b)return;const [t,v]=b.dataset.go.split(":");openTab(t,true);if(t==="gestao"){$("segView").querySelector(`[data-v="${v==="rep"?"rep":"dash"}"]`).click();if(v!=="rep")dashView(v==="eng"?"eng":"vendas")}};
+  const b=e.target.closest("[data-go]");if(!b)return;const [t,v]=b.dataset.go.split(":");
+  if(t==="x"){const pl=b.closest(".plan").querySelector("h3").textContent,it=b.closest("li").querySelector(".pi-h span").textContent;openDemo(v,it,`Incluído no plano <b>${esc(pl)}</b>`,"plano:"+pl,`Quero o plano ${pl}`);return}openTab(t,true);if(t==="gestao"){$("segView").querySelector(`[data-v="${v==="rep"?"rep":"dash"}"]`).click();if(v!=="rep")dashView(v==="eng"?"eng":"vendas")}};
 
 /* ===== CONTA ===== */
 function calc(){
@@ -1460,11 +1461,12 @@ function openX(name){
   const k=XKEY[name];if(!k)return;
   if(k==="cartao"){openTab("fidelidade",true);return}
   const row=EXTRAS[aud].find(r=>r[0]===name),[n,r,st,m,free]=row;
-  $("xdT").textContent=n;
-  $("xdS").innerHTML=`Resolve: <b>${esc(r)}</b> · ${free?free:(st?brl(st)+" de implantação":"sem implantação")}${free?"":m?" + "+brl(m)+" por mês":""}`;
-  $("xdWa").dataset.buy="adicional:"+n;
+  openDemo(k,n,`Resolve: <b>${esc(r)}</b> · ${free?free:(st?brl(st)+" de implantação":"sem implantação")}${free?"":m?" + "+brl(m)+" por mês":""}`,"adicional:"+n,"Quero este adicional");
+}
+function openDemo(k,title,sub,buy,label){
+  $("xdT").textContent=title;$("xdS").innerHTML=sub;$("xdWa").dataset.buy=buy;$("xdWa").textContent=label;
   const B=$("xdB");B.innerHTML="";XD[k](B);
-  const d=$("xd");if(d.showModal)d.showModal();else d.setAttribute("open","");
+  const d=$("xd");if(!d.open){if(d.showModal)d.showModal();else d.setAttribute("open","")}
 }
 $("xdClose").onclick=()=>$("xd").close();
 $("xd").addEventListener("click",e=>{if(e.target.id==="xd")$("xd").close()});
@@ -1536,6 +1538,103 @@ XD.delivery=B=>{const M=[["Moqueca de peixe (2 pessoas)",138],["Risoto de camar�
   B.querySelector("#xdM").onclick=e=>{const b=e.target.closest("button");if(!b)return;const i=+b.dataset.i;q[i]=Math.max(0,q[i]+ +b.dataset.d);draw()};
   B.querySelector("#xdS2").onclick=()=>{const t=tot();if(!t)return;const it=M.map(([n],i)=>q[i]?`${q[i]}x ${n}`:"").filter(Boolean).join("\n");
     B.querySelector("#xdO").innerHTML=`<div class="wmsg">Pedido #${num++}\n${esc(it)}\nTotal: ${brl(t)}\nEntrega: Rua do Mucugê, 120\nPagamento: Pix</div><div class="notif2"><b>Painel de pedidos:</b> pedido novo às ${nowT()}, aguardando preparo.</div><p style="margin-top:12px;font-size:14px">Pelo iFood, a comissão de 23% mais 3,2% do pagamento custaria <b>${brl(t*.262)}</b> neste pedido.</p>`};draw()};
+
+/* perfil do google */
+XD.google=B=>{const P=aud==="pousada",nm=P?"Pousada Exemplo":"Restaurante Exemplo",cat=P?"Pousada":"Restaurante de frutos do mar",img=P?"./img/pousada-deck.jpg":"./img/restaurante-bar.jpg";
+  const V={antes:{nota:"4,1",n:23,hor:"Horário não informado",foto:1,btn:["Ligar","Rotas"],desc:"",ck:[0,0,0,0,0]},depois:{nota:"4,6",n:148,hor:P?"Recepção 24 horas":"Aberto · fecha às 23h",foto:24,btn:P?["Ligar","Rotas","Site","Reservar","WhatsApp"]:["Ligar","Rotas","Cardápio","Reservar","WhatsApp"],desc:P?"Pousada a 400 m da praia, café da manhã no deck, aceita pets.":"Moqueca, frutos do mar e cardápio em 3 idiomas.",ck:[1,1,1,1,1]}};
+  const CK=["Categoria e horário corretos","Fotos novas e organizadas","Descrição com o diferencial","Botões de site, reserva e WhatsApp","Avaliações respondidas"];
+  B.innerHTML=`<div class="xs"><div class="listing" id="xgL" style="max-width:380px"></div><div class="xcol" style="flex:0 1 280px"><div class="seg2" id="xgS"><button type="button" data-v="antes" aria-pressed="true">Antes</button><button type="button" data-v="depois">Depois</button></div><ul class="xl" id="xgC" style="margin-top:12px"></ul><p class="note2">É esse cartão que aparece no Google e no Google Maps quando alguém procura ${P?"onde ficar":"onde comer"} em Arraial d'Ajuda.</p></div></div>`;
+  const draw=v=>{const d=V[v];B.querySelector("#xgL").innerHTML=`<img src="${img}" alt="" style="${v==="antes"?"filter:grayscale(.6) brightness(.8)":""}"><div class="in"><b style="font-size:17px">${nm}</b><p style="margin-top:2px"><span style="color:#e7a500">★</span> ${d.nota} · ${d.n} avaliações · ${cat}</p><p>${d.hor} · ${d.foto} foto${d.foto>1?"s":""}</p>${d.desc?`<p style="color:var(--fg)">${d.desc}</p>`:""}<div class="tags2" style="margin-top:10px">${d.btn.map(t=>`<span style="border-color:#1a73e8;color:#1a73e8">${t}</span>`).join("")}</div></div>`;
+    B.querySelector("#xgC").innerHTML=CK.map((t,i)=>`<li><span>${t}</span><span class="pill ${d.ck[i]?"ok":"bad"}">${d.ck[i]?"ok":"falta"}</span></li>`).join("")};
+  B.querySelector("#xgS").onclick=e=>{const b=e.target.closest("button");if(!b)return;B.querySelectorAll("#xgS button").forEach(x=>x.setAttribute("aria-pressed",x===b));draw(b.dataset.v)};draw("antes")};
+
+/* resposta às avaliações */
+XD.respostas=B=>{const P=aud==="pousada";
+  const R=P?[[5,"Marina","Lugar lindo, café da manhã maravilhoso no deck. Voltaremos!","Marina, que alegria ler isso! O café no deck é o nosso orgulho. Esperamos vocês de volta, o quarto com vista para o rio estará pronto."],
+    [3,"Diego","Quarto confortável, mas o chuveiro estava fraco.","Diego, obrigado por avisar. Já trocamos o chuveiro desse quarto. Na próxima estadia, fale com a gente direto pelo WhatsApp que resolvemos na hora."],
+    [1,"Laura","Demoraram para responder no WhatsApp e a reserva quase deu errado.","Laura, você tem razão e pedimos desculpas. Hoje o nosso WhatsApp responde a qualquer hora. Se quiser, fale com a gerência pelo número da pousada para conversarmos."]]
+   :[[5,"Paulo","Moqueca perfeita e atendimento atencioso. Recomendo!","Paulo, muito obrigado! A moqueca sai do mesmo jeito há anos e ficamos felizes que tenha gostado. Volte sempre."],
+    [3,"Ana","Comida boa, mas esperamos 40 minutos por uma mesa.","Ana, obrigado pelo retorno. Agora você pode entrar na fila pelo celular e é avisada pelo WhatsApp quando a mesa fica pronta."],
+    [1,"Lucas","Pedi sem glúten e veio com farofa.","Lucas, pedimos desculpas, isso não pode acontecer. Já reforçamos com a cozinha. Fale com a gente pelo WhatsApp para conversarmos sobre a sua próxima visita."]];
+  B.innerHTML=`<div class="xs" style="display:block"><ul class="xl" id="xrv"></ul><p class="note2">A Aprile escreve a resposta no tom da casa e você aprova antes de publicar. Todas as avaliações são respondidas, boas e ruins.</p></div>`;
+  const st=R.map(()=>0);
+  const draw=()=>{B.querySelector("#xrv").innerHTML=R.map(([n,a,t,r],i)=>`<li style="display:block;padding:14px 0"><div style="display:flex;justify-content:space-between;gap:10px"><b>${a}</b><span style="color:#e7a500">${"★".repeat(n)}<span style="color:#d6cfbf">${"★".repeat(5-n)}</span></span></div><p style="margin-top:4px">${t}</p>
+    ${st[i]===0?`<button class="btn btn-line" type="button" data-i="${i}" style="min-height:34px;font-size:13px;margin-top:8px">Ver resposta sugerida</button>`:`<div style="margin-top:8px;border-left:3px solid var(--line);padding:6px 10px;background:var(--sand);font-size:13.5px"><b style="font-size:12.5px">Resposta do proprietário${st[i]===2?" · publicada":" · aguardando sua aprovação"}</b><br>${r}</div>${st[i]===1?`<button class="btn btn-dark" type="button" data-i="${i}" style="min-height:34px;font-size:13px;margin-top:8px">Aprovar e publicar</button>`:""}`}</li>`).join("")};
+  B.querySelector("#xrv").onclick=e=>{const b=e.target.closest("button");if(!b)return;st[+b.dataset.i]++;draw()};draw()};
+
+/* relatório mensal de resultados */
+XD.relmensal=B=>{const P=aud==="pousada",mes=MESES[(TODAY.getMonth()+11)%12];
+  const K=[["Nota no Google","4,3","4,5"],["Avaliações novas","9","27"],["Avaliações respondidas","40%","100%"],["Visitas ao perfil","1.840","2.410"],[P?"Cliques no site e na reserva":"Cliques no cardápio e no site","96","188"],["Cliques no WhatsApp","61","104"],["Pedidos de rota","210","265"]];
+  B.innerHTML=`<div class="xs" style="display:block"><div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:2px solid var(--fg);padding-bottom:10px"><b style="font-family:var(--serif);font-weight:400;font-size:22px">Relatório de ${mes}</b><span class="muted">${P?"Pousada":"Restaurante"} Exemplo</span></div>
+   <div style="overflow-x:auto"><table class="xt" style="margin-top:10px"><thead><tr><th>Indicador</th><th class="r">Mês anterior</th><th class="r">${mes}</th></tr></thead><tbody>${K.map(k=>`<tr><td>${k[0]}</td><td class="r">${k[1]}</td><td class="r"><b>${k[2]}</b></td></tr>`).join("")}</tbody></table></div>
+   <h4 style="margin-top:16px;font-size:14px">O que fazer no próximo mês</h4><ol style="padding-left:20px;font-size:14px;margin-top:6px;display:grid;gap:4px"><li>Trocar a foto principal do perfil por ${P?"uma do deck ao pôr do sol":"uma da moqueca"}, a que mais gerou cliques.</li><li>Colocar a placa de avaliação também ${P?"na recepção":"no caixa"}: 70% das avaliações vieram da placa da ${P?"varanda":"mesa"}.</li><li>Responder em até 24 horas as avaliações de 3 estrelas ou menos.</li></ol>
+   <p class="note2">Números de exemplo. No relatório real, eles vêm do Perfil da Empresa no Google e dos cliques medidos no site.</p></div>`};
+
+/* motor de reservas */
+XD.motor=B=>{const D=[["12 a 15 jan",3],["20 a 22 fev",2],["2 a 5 abr",3]];let di=0,room=-1,done=false;
+  const RM=[["Suíte vista rio","Cama de casal, varanda, café da manhã",[520,640,480]],["Suíte jardim","Térreo, aceita pet",[420,520,390]],["Chalé família","Até 4 pessoas",[0,780,620]]];
+  B.innerHTML=`<div class="xs"><div class="xmini"><div class="sc"><div class="tb"><small>reservas.pousadaexemplo.com.br</small><b>Reserva direta</b></div><div class="bd" id="xmB"></div></div></div>
+   <div class="xcol"><h4>Calendário nos canais (channel manager)</h4><div style="overflow-x:auto"><table class="xt" id="xmC"></table></div><p class="note2">Quando a reserva entra pelo site, o motor fecha a mesma data na Booking e no Airbnb na hora. A assinatura do motor fica no nome da pousada.</p></div></div>`;
+  const draw=()=>{const [dl,nt]=D[di];
+    B.querySelector("#xmB").innerHTML=done?`<div style="text-align:center;padding-top:60px"><b style="font-size:17px">Reserva confirmada</b><p class="muted" style="margin-top:6px">${RM[room][0]} · ${dl}<br>Pix recebido: ${brl(RM[room][2][di]*nt)}</p><button class="btn btn-line" type="button" id="xmN" style="min-height:36px;font-size:13px;margin-top:16px">Nova reserva</button></div>`:
+     `<div class="seg2" id="xmD" style="margin-bottom:8px">${D.map((d,i)=>`<button type="button" data-i="${i}" aria-pressed="${i===di}">${d[0]}</button>`).join("")}</div><p class="muted" style="font-size:12px">${nt} noites · 2 adultos</p>${RM.map(([n,t,pr],i)=>`<button type="button" class="room${pr[di]?"":" off"}${i===room?" sel":""}" data-r="${i}" ${pr[di]?"":"disabled"}><b>${n}</b><small>${t}</small><span class="pr">${pr[di]?`<span>${brl(pr[di])} por noite</span><strong>${brl(pr[di]*nt)}</strong>`:"<span>Sem vaga nessas datas</span>"}</span></button>`).join("")}<button class="eng-pay" type="button" id="xmP" ${room<0?"disabled":""} style="width:100%;margin:12px 0 0">${room<0?"Escolha um quarto":"Reservar e pagar com Pix"}</button>`;
+    const st=(ch)=>done?`<span class="pill bad">fechado</span>`:`<span class="pill ok">disponível</span>`;
+    B.querySelector("#xmC").innerHTML=`<thead><tr><th>Canal</th><th>${room>=0?RM[room][0]:"Suíte"} · ${dl}</th></tr></thead><tbody><tr><td>Site da pousada</td><td>${done?`<span class="pill warn">reservado agora</span>`:`<span class="pill ok">disponível</span>`}</td></tr><tr><td>Booking.com</td><td>${st()}</td></tr><tr><td>Airbnb</td><td>${st()}</td></tr></tbody>`;
+    const md=B.querySelector("#xmD");if(md)md.onclick=e=>{const b=e.target.closest("button");if(!b)return;di=+b.dataset.i;room=-1;draw()};
+    B.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{room=+b.dataset.r;draw()});
+    const pp=B.querySelector("#xmP");if(pp)pp.onclick=()=>{done=true;draw()};
+    const nn=B.querySelector("#xmN");if(nn)nn.onclick=()=>{done=false;room=-1;draw()}};draw()};
+
+/* links gratuitos do google */
+XD.glinks=B=>{const O=[["Site oficial","Pousada Exemplo",1404,"grátis para a pousada"],["Booking.com","",1560,"comissão de 15% a 18%"],["Expedia","",1590,"comissão"]];
+  B.innerHTML=`<div class="xs"><div class="listing" style="max-width:400px"><img src="./img/pousada-deck.jpg" alt=""><div class="in"><b style="font-size:17px">Pousada Exemplo</b><p style="margin-top:2px"><span style="color:#e7a500">★</span> 4,6 · 148 avaliações · 12 a 15 jan · 2 hóspedes</p><ul class="xl" id="xgO" style="margin-top:8px"></ul></div></div>
+   <div class="xcol" style="flex:0 1 280px"><h4>O que acontece</h4><div id="xgR" class="muted" style="font-size:14px">Toque em uma das opções de preço, como faria o hóspede no Google.</div><p class="note2">O Google mostra o preço do site oficial ao lado das agências e não cobra nada por isso. Para aparecer, a pousada precisa de um motor de reservas parceiro do Google.</p></div></div>`;
+  B.querySelector("#xgO").innerHTML=O.map(([c,sub,v,f],i)=>`<li><button type="button" data-i="${i}" style="display:flex;justify-content:space-between;width:100%;text-align:left;gap:10px"><span><b style="${i===0?"color:#1a73e8":""}">${c}</b>${i===0?`<small class="muted" style="display:block;font-size:11.5px">Site oficial · reserva direta</small>`:""}</span><b>${brl(v)}</b></button></li>`).join("");
+  B.querySelector("#xgO").onclick=e=>{const b=e.target.closest("button");if(!b)return;const [c,,v]=O[+b.dataset.i];
+    B.querySelector("#xgR").innerHTML=+b.dataset.i===0?`<div class="notif2"><b>Reserva direta pelo site.</b> O hóspede paga ${brl(v)} (10% de desconto da reserva direta) e a pousada não paga comissão. Em comparação com a Booking a 15%, ficam cerca de ${brl(1560*.15)} a mais no caixa.</div>`:`<div class="notif2" style="border-left-color:var(--bad)"><b>Reserva pela ${c}.</b> O hóspede paga ${brl(v)} e a pousada paga cerca de ${brl(v*.15)} de comissão nessa estadia.</div>`}};
+
+/* ficha do hóspede e pesquisa pós-estadia */
+XD.ficha=B=>{let step=0,stars=0;
+  B.innerHTML=`<div class="xs"><div class="xmini"><div class="sc" style="background:#efe7de"><div class="wa-h"><span class="av"></span><div><b>Pousada Exemplo</b><small>online</small></div></div><div class="chat" id="xfC" style="padding-bottom:16px"></div></div></div><div class="xcol"><h4>O que a pousada recebe</h4><div id="xfR"></div><div class="xbtns"><button class="btn btn-dark" type="button" id="xfN">Próximo passo</button></div><p class="note2">A pesquisa vai para todos os hóspedes, e todos recebem o convite para avaliar no Google, como a política do Google exige.</p></div></div>`;
+  const msg=(t,c)=>`<div class="m ${c}" style="max-width:88%">${t}<small>${nowT()}</small></div>`;
+  const draw=()=>{const C=B.querySelector("#xfC"),R=B.querySelector("#xfR");let h="";
+    h+=msg("Olá, Carla! Sua chegada é amanhã. Para agilizar o check-in, preencha a ficha: <u>pousadaexemplo.com.br/ficha</u>","out");
+    if(step>=1)h+=msg("Pronto, preenchi! Chegamos por volta das 15h.","in")+msg("Ficha recebida. Até amanhã!","out");
+    if(step>=2)h+=msg("Carla, obrigado pela estadia! De 1 a 5, como foi? Responda com um número.","out");
+    if(step>=3)h+=msg(String(stars),"in")+msg(`Obrigado! Se puder, conte como foi no Google também: <u>g.page/pousadaexemplo/review</u>${stars<4?"<br>E a gerência já recebeu o seu retorno para falar com você.":""}`,"out");
+    C.innerHTML=h;C.scrollTop=C.scrollHeight;
+    R.innerHTML=[step>=1?`<div class="notif2"><b>Ficha do quarto 4</b><br>Carla Souza · CPF ***.***.***-21 · chegada às 15h · 2 adultos · placa RTA-2B19</div>`:"",step>=3?`<div class="notif2" style="${stars<4?"border-left-color:var(--bad)":""}"><b>Pesquisa pós-estadia</b><br>Nota ${stars} de 5${stars<4?" · a gerência foi avisada para entrar em contato":""}</div>`:"",step===2?`<div style="margin-top:10px;font-size:14px">Escolha a nota que a hóspede responde: ${[5,4,3,2].map(n=>`<button type="button" class="btn btn-line" data-s="${n}" style="min-height:32px;padding:0 10px;font-size:13px;margin-left:4px">${n}</button>`).join("")}</div>`:""].join("")||`<p class="muted" style="font-size:14px">A mensagem com o link da ficha sai sozinha na véspera da chegada.</p>`;
+    B.querySelector("#xfN").disabled=step===2;B.querySelector("#xfN").textContent=step>=3?"Recomeçar":"Próximo passo";
+    R.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{stars=+b.dataset.s;step=3;draw()})};
+  B.querySelector("#xfN").onclick=()=>{step=step>=3?0:step+1;draw()};draw()};
+
+/* reunião mensal */
+XD.reuniao=B=>{const P=aud==="pousada",G=!P&&PLANS.restaurante[2];
+  const pauta=P?["Reservas diretas x Booking no mês","Comissão economizada","Nota e avaliações no Google","Passeios e transfers vendidos pelo WhatsApp","O que fazer no próximo mês"]:["Faturamento, CMV e resultado do mês","Fluxo de caixa das próximas semanas","Pratos para destacar, revisar ou tirar","Nota e avaliações no Google","O que fazer no próximo mês"];
+  const slots=["Terça, 10h","Terça, 15h","Quarta, 10h","Quinta, 15h"];let pick=-1;
+  B.innerHTML=`<div class="xs"><div class="xcol"><h4>Pauta da reunião</h4><ol style="padding-left:20px;display:grid;gap:6px;font-size:14.5px">${pauta.map(t=>`<li>${t}</li>`).join("")}</ol><p class="note2">Uma conversa por mês, presencial ou por vídeo, com os números na tela. As decisões ficam anotadas e são conferidas na reunião seguinte.</p></div>
+   <div class="xcol" style="flex:0 1 260px"><h4>Agende a próxima</h4><div class="xbtns" id="xuS" style="margin-top:0">${slots.map((t,i)=>`<button type="button" class="btn btn-line" data-i="${i}">${t}</button>`).join("")}</div><div id="xuR"></div></div></div>`;
+  B.querySelector("#xuS").onclick=e=>{const b=e.target.closest("button");if(!b)return;pick=+b.dataset.i;B.querySelectorAll("#xuS button").forEach(x=>x.className="btn "+(x===b?"btn-dark":"btn-line"));B.querySelector("#xuR").innerHTML=`<div class="notif2"><b>Reunião marcada:</b> ${slots[pick]}. O convite e a pauta chegam pelo WhatsApp.</div>`}};
+
+/* gravação dos vídeos */
+XD.gravacao=B=>{const S=[["Roteiro","Escolhemos com você os pratos e o que cada vídeo mostra: o preparo, a finalização ou o prato chegando à mesa."],["Gravação","Gravamos no restaurante, num horário calmo, com luz e celular profissional."],["Edição","Vídeos verticais de 8 a 15 segundos, sem som obrigatório, no padrão do cardápio."],["No cardápio","O vídeo entra no prato certo, nos três idiomas, e já aparece para o cliente na mesa."]];let i=0;
+  B.innerHTML=`<div class="xs"><div class="xmini"><div class="sc" style="background:#1a1814"><div id="xvV" style="flex:1;display:grid;place-items:center;color:#fff;text-align:center;font-size:13px;background:linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.05) 40%,rgba(0,0,0,.45)),#b4532a;position:relative"></div></div></div>
+   <div class="xcol"><h4>Como fazemos</h4><ol class="xl" id="xvL" style="list-style:none"></ol><div class="xbtns"><button class="btn btn-dark" type="button" id="xvN">Próxima etapa</button><button class="btn btn-line" type="button" id="xvC">Ver no cardápio</button></div></div></div>`;
+  const draw=()=>{B.querySelector("#xvL").innerHTML=S.map(([t,d],k)=>`<li style="display:block;opacity:${k<=i?1:.45}"><b>${k+1}. ${t}</b> ${k<i?'<span class="pill ok">feito</span>':k===i?'<span class="pill warn">agora</span>':""}<br><small class="muted">${d}</small></li>`).join("");
+    B.querySelector("#xvV").innerHTML=i<3?`<div><b style="font-size:16px">Moqueca de peixe</b><br><span style="opacity:.8">${["roteiro: finalização no prato","gravando · 00:12","editado · 12 s · vertical"][i]}</span></div>`:`<div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:16px;text-align:left"><b style="font-size:17px">Moqueca de peixe</b><span style="opacity:.85">Peixe do dia, leite de coco e dendê. Serve 2.</span><span style="margin-top:6px;font-weight:600">${brl(138)}</span></div>`;
+    B.querySelector("#xvN").disabled=i>=3};
+  B.querySelector("#xvN").onclick=()=>{i=Math.min(3,i+1);draw()};
+  B.querySelector("#xvC").onclick=()=>{$("xd").close();openTab("cardapio",true)};draw()};
+
+/* fichas técnicas */
+XD.fichas=B=>{const I=[["Peixe (badejo)","kg",.45,52],["Leite de coco","L",.4,14],["Azeite de dendê","L",.05,32],["Pimentões e cebola","kg",.3,9],["Tomate","kg",.25,8],["Coentro e temperos","porção",1,1.5],["Arroz branco","kg",.25,6],["Farofa de dendê","porção",1,2.2]];let preco=138;
+  B.innerHTML=`<div class="xs" style="display:block"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline"><b style="font-family:var(--serif);font-weight:400;font-size:22px">Moqueca de peixe · serve 2</b><label style="font-size:14px">Preço de venda R$ <input type="number" id="xfP" value="138" style="width:80px;border:1px solid var(--line);border-radius:6px;padding:5px 7px;text-align:right"></label></div>
+   <div style="overflow-x:auto"><table class="xt" style="margin-top:10px"><thead><tr><th>Ingrediente</th><th class="r">Quantidade</th><th class="r">Custo unitário</th><th class="r">Custo</th></tr></thead><tbody id="xfT"></tbody></table></div><div id="xfS" style="margin-top:14px;display:flex;gap:28px;flex-wrap:wrap"></div><p class="note2">Mude a quantidade ou o custo de um ingrediente e veja o CMV do prato mudar. É com as fichas que o dashboard calcula o CMV e a margem de cada prato.</p></div>`;
+  B.querySelector("#xfT").innerHTML=I.map(([n,u,q,c],i)=>`<tr><td>${n}</td><td class="r"><input type="number" step=".05" min="0" value="${q}" data-q="${i}" style="width:68px;border:1px solid var(--line);border-radius:6px;padding:4px 6px;text-align:right"> ${u}</td><td class="r"><input type="number" step=".5" min="0" value="${c}" data-c="${i}" style="width:72px;border:1px solid var(--line);border-radius:6px;padding:4px 6px;text-align:right"></td><td class="r" id="xfc${i}"></td></tr>`).join("");
+  const draw=()=>{let t=0;I.forEach((x,i)=>{const q=+B.querySelector(`[data-q="${i}"]`).value||0,c=+B.querySelector(`[data-c="${i}"]`).value||0,v=q*c;t+=v;B.querySelector("#xfc"+i).textContent=v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})});
+    preco=+B.querySelector("#xfP").value||0;const cmv=preco?t/preco*100:0;
+    B.querySelector("#xfS").innerHTML=`<div><small class="muted">Custo do prato</small><div class="big2">${t.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}</div></div><div><small class="muted">CMV</small><div class="big2" style="${cmv>32?"color:var(--bad)":""}">${cmv.toFixed(1).replace(".",",")}%</div><small class="muted">meta: 32%</small></div><div><small class="muted">Margem por prato</small><div class="big2">${brl(preco-t)}</div></div>`};
+  B.querySelector("#xfT").oninput=draw;B.querySelector("#xfP").oninput=draw;draw()};
 
 /* checklist de abertura */
 XD.abertura=B=>{
@@ -1610,9 +1709,15 @@ function cartText(){
   if(nm||bz)t+=`\n\n${nm?"Nome: "+nm:""}${nm&&bz?"\n":""}${bz?"Negócio: "+bz:""}`;
   return t}
 function waLink(){return WHATSAPP_NUMERO?`https://wa.me/${WHATSAPP_NUMERO.replace(/\D/g,"")}?text=${encodeURIComponent(cartText())}`:WHATSAPP}
+function copyText(t){
+  let ok=false;const ta=document.createElement("textarea");ta.value=t;ta.setAttribute("readonly","");ta.style.cssText="position:fixed;top:0;left:0;opacity:0";document.body.appendChild(ta);ta.select();ta.setSelectionRange(0,t.length);
+  try{ok=document.execCommand("copy")}catch(e){}ta.remove();
+  try{if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).catch(()=>{});ok=true}}catch(e){}
+  return ok}
 function sendCart(){
   const txt=cartText();
-  if(!WHATSAPP_NUMERO&&CART.length){try{navigator.clipboard.writeText(txt).catch(()=>{})}catch(e){}$("cartMsg").textContent="O texto do pedido foi copiado. É só colar na conversa do WhatsApp que abriu.";$("cartMsg").className="cart-ok"}
+  if(!WHATSAPP_NUMERO&&CART.length){const ok=copyText(txt);
+    $("cartMsg").innerHTML=(ok?"<b>Pedido copiado.</b> Na conversa do WhatsApp que abriu, toque e segure no campo de mensagem e escolha <b>Colar</b>.":"Copie o pedido abaixo e cole na conversa do WhatsApp.")+`<textarea readonly style="display:block;width:100%;height:110px;margin-top:8px;border:1px solid var(--line);border-radius:6px;padding:8px;font:inherit;font-size:12.5px">${esc(txt)}</textarea>`;$("cartMsg").className="cart-ok"}
   window.open(waLink(),"_blank","noopener");
 }
 $("cartFab").onclick=openCart;$("cartClose").onclick=()=>$("cart").close();
