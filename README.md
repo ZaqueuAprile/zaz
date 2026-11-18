@@ -66,6 +66,13 @@ checklist de limpeza próprio (ou usar o padrão da pousada), com itens de marca
 ou de foto obrigatória e a opção de aplicar o mesmo checklist a outros quartos.
 A fila abre numa tela própria para a recepção em
 `/aprile/hub/#restaurante/fila-tela` e fica sincronizada entre as abas.
+Cartão fidelidade: em Clientes, "Ler cartão" abre a câmera e lê o QR Code do
+cartão (BarcodeDetector ou jsQR, que fica em `aprile/hub/vendor/` e só carrega
+quando precisa). Também dá para buscar pelo código de 6 dígitos, pelo nome ou
+pelo WhatsApp. A ficha do cliente adiciona ponto (por visita ou pelo valor da
+conta, com limite de 1 por dia que só a gerência libera), resgata o prêmio e
+mostra o histórico, que pode ser desfeito. O cartão como o cliente vê na
+carteira fica em `/aprile/hub/#restaurante/cartao`. A câmera só abre em https.
 Avaliações, conversas do WhatsApp e reservas ficam fora, nos sistemas de origem.
 
 Para pôr o vídeo do site, preencha `VIDEO_SITE` no início do `<script>` com um

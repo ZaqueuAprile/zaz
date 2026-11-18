@@ -19,6 +19,7 @@ export default defineConfig({
       closeBundle() {
         const dest = path.resolve(import.meta.dirname, 'dist/aprile')
         fs.cpSync(path.resolve(import.meta.dirname, 'aprile/img'), path.join(dest, 'img'), { recursive: true })
+        fs.cpSync(path.resolve(import.meta.dirname, 'aprile/hub/vendor'), path.join(dest, 'hub/vendor'), { recursive: true })
         for (const f of ['sol.png', 'logo.png', 'favicon.png']) fs.copyFileSync(path.resolve(import.meta.dirname, 'aprile', f), path.join(dest, f))
       },
     },
