@@ -72,7 +72,10 @@ quando precisa). Também dá para buscar pelo código de 6 dígitos, pelo nome o
 pelo WhatsApp. A ficha do cliente adiciona ponto (por visita ou pelo valor da
 conta, com limite de 1 por dia que só a gerência libera), resgata o prêmio e
 mostra o histórico, que pode ser desfeito. O cartão como o cliente vê na
-carteira fica em `/aprile/hub/#restaurante/cartao`. A câmera só abre em https.
+carteira fica em `/aprile/hub/#restaurante/cartao`, nos modelos da Apple Wallet
+(storeCard: selos na faixa `strip`, regra e termos no verso) e do Google Wallet
+(loyalty: selos no `heroImage`, regra nos detalhes), com a opção de mostrar o
+nome de cada campo e a prévia do aviso de ponto. A câmera só abre em https.
 Avaliações, conversas do WhatsApp e reservas ficam fora, nos sistemas de origem.
 
 Para pôr o vídeo do site, preencha `VIDEO_SITE` no início do `<script>` com um
