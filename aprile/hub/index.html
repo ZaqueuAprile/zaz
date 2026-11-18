@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hub Aprile · Protótipo</title>
+<meta name="description" content="Protótipo do Hub Aprile: cardápio, guia, gestão, operação e clientes do seu negócio num só lugar.">
+<meta name="theme-color" content="#1a1814">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbf8f1;--panel:#fff;--sand:#f3eee3;--fg:#1a1814;--muted:#6b6458;--line:#e4dccb;
+  --gold:#a8800f;--gold-light:#d4af37;--dark:#1a1814;--on-dark:#f5efe2;--on-dark-muted:#a79f90;--line-dark:#3a3222;
+  --ok:#2f7d4f;--warn:#b7791f;--bad:#b4412f;--s1:#2a78d6;
+  --serif:"Lora",Georgia,serif;--sans:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer}
+a{color:inherit}
+img{display:block;max-width:100%}
+:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+h1,h2,h3{font-family:var(--serif);font-weight:400;letter-spacing:-.01em;line-height:1.15}
+
+/* faixa do protótipo */
+.demo{background:var(--dark);color:var(--on-dark-muted);font-size:13px;display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;padding:7px 14px}
+.demo b{color:var(--on-dark);font-weight:600}
+.demo .sw{display:inline-flex;border:1px solid var(--line-dark);border-radius:6px;overflow:hidden}
+.demo .sw button{padding:3px 10px;color:var(--on-dark-muted);font-size:12.5px}
+.demo .sw button[aria-pressed="true"]{background:var(--on-dark);color:var(--fg)}
+.demo a{color:var(--gold-light)}
+
+/* estrutura */
+.app{display:grid;grid-template-columns:232px 1fr;min-height:calc(100dvh - 36px)}
+.side{background:#fff;border-right:1px solid var(--line);padding:18px 12px;display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:calc(100dvh - 36px)}
+.brand{display:flex;align-items:center;gap:10px;padding:4px 10px 16px}
+.brand img{width:38px}
+.brand b{display:block;font-family:var(--serif);font-weight:500;font-size:17px;line-height:1.1}
+.brand small{font-size:12px;color:var(--muted)}
+.nav{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:8px;color:var(--muted);font-weight:500;text-align:left;width:100%}
+.nav svg{width:19px;height:19px;flex:none}
+.nav:hover{background:var(--sand);color:var(--fg)}
+.nav[aria-current="page"]{background:var(--fg);color:#fff}
+.nav .badge{margin-left:auto;background:var(--bad);color:#fff;border-radius:999px;font-size:11px;font-weight:700;min-width:20px;height:20px;display:grid;place-items:center;padding:0 6px}
+.nav[aria-current="page"] .badge{background:#fff;color:var(--bad)}
+.side .me{margin-top:auto;display:flex;align-items:center;gap:10px;padding:10px;border-top:1px solid var(--line)}
+.av{width:34px;height:34px;border-radius:50%;background:var(--sand);display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
+.me b{display:block;font-size:14px}
+.me small{font-size:12px;color:var(--muted)}
+main{padding:26px 32px 40px;min-width:0}
+.head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.head h1{font-size:30px}
+.head p{color:var(--muted);margin-top:2px}
+.tabs{display:flex;border-bottom:1px solid var(--line);margin-bottom:18px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{padding:9px 14px;color:var(--muted);font-weight:500;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tabs button[aria-selected="true"]{color:var(--fg);border-color:var(--fg);font-weight:600}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 16px;border-radius:8px;font-weight:600;font-size:14px;border:1px solid transparent;white-space:nowrap}
+.btn-dark{background:var(--fg);color:#fff}
+.btn-dark:disabled{opacity:.35;cursor:default}
+.btn-line{border-color:var(--line);background:#fff}
+.btn-line:hover{border-color:var(--fg)}
+.btn-sm{min-height:32px;padding:0 11px;font-size:13px}
+.grid{display:grid;gap:14px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.kpi small{display:block;color:var(--muted);font-size:13px}
+.kpi b{display:block;font-size:24px;font-weight:600;letter-spacing:-.02em;margin:2px 0}
+.kpi span{font-size:12.5px;color:var(--muted)}
+.kpi em{font-style:normal;font-weight:600}
+.up{color:var(--ok)}.dn{color:var(--bad)}
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 18px;min-width:0}
+.card-h{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.card-h h3{font-family:var(--sans);font-size:15px;font-weight:600}
+.two{display:grid;grid-template-columns:1.4fr 1fr;gap:14px}
+.list{list-style:none}
+.list li{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+.list li:last-child{border-bottom:0}
+.list .grow{flex:1;min-width:0}
+.list b{font-weight:600}
+.list small{display:block;color:var(--muted);font-size:13px}
+.pill{display:inline-block;font-size:11.5px;font-weight:600;padding:1px 8px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.pill.ok{color:var(--ok)}.pill.warn{color:var(--warn)}.pill.bad{color:var(--bad)}.pill.mut{color:var(--muted)}.pill.info{color:var(--s1)}
+.go{font-size:13px;font-weight:600;color:var(--gold);white-space:nowrap}
+table.t{width:100%;border-collapse:collapse;font-size:14px}
+.t th{text-align:left;font-size:12.5px;font-weight:600;color:var(--muted);padding:7px 10px;border-bottom:1px solid var(--fg);white-space:nowrap}
+.t td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+.t .r{text-align:right;font-variant-numeric:tabular-nums}
+.t tr.sub td{font-weight:600;background:var(--sand)}
+.t tr.res td{font-weight:700;border-top:2px solid var(--fg)}
+.t td.ind{padding-left:24px;color:var(--muted)}
+.scroll{overflow-x:auto}
+input.in,select.in,textarea.in{border:1px solid var(--line);border-radius:6px;padding:7px 9px;background:#fff;width:100%}
+input.in.num{text-align:right}
+.tgl{position:relative;width:38px;height:22px;border-radius:999px;background:#d6cfbf;flex:none;transition:background .15s}
+.tgl::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .15s}
+.tgl[aria-checked="true"]{background:var(--ok)}
+.tgl[aria-checked="true"]::after{transform:translateX(16px)}
+.lang{display:inline-flex;gap:3px}
+.lang span{font-size:10.5px;font-weight:700;border-radius:4px;padding:1px 5px;background:#e8f3ec;color:var(--ok)}
+.lang span.no{background:#fbe9e6;color:var(--bad)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#fff}
+.seg button{padding:6px 11px;font-size:13px;color:var(--muted);border-right:1px solid var(--line)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--fg);color:#fff}
+
+/* prévia no celular */
+.ed{display:grid;grid-template-columns:1fr 300px;gap:18px;align-items:start}
+.phone{width:290px;border-radius:36px;background:#0b0a08;padding:9px;position:sticky;top:16px}
+.screen{border-radius:28px;overflow:hidden;height:560px;background:#fff;display:flex;flex-direction:column}
+.p-top{padding:30px 14px 10px;background:#1a1814;color:#fff;display:flex;justify-content:space-between;align-items:end;flex:none}
+.p-top b{font-size:15px;display:block}
+.p-top small{font-size:11px;color:#bdb5a6}
+.p-body{flex:1;overflow-y:auto;padding:4px 12px 14px;font-size:13px}
+.p-cat{font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--gold);margin:12px 0 2px}
+.p-dish{display:grid;grid-template-columns:48px 1fr;gap:9px;padding:8px 0;border-bottom:1px solid #f0ece5}
+.p-dish i{width:48px;height:48px;border-radius:7px;display:block}
+.p-dish b{font-size:13px;display:block}
+.p-dish small{color:#777;font-size:11.5px;display:block;line-height:1.3}
+.p-dish .pr{font-weight:600;font-size:12.5px}
+.p-dish.off{opacity:.45}
+.p-langs{display:flex;border:1px solid #4a4232;border-radius:6px;overflow:hidden}
+.p-langs button{font-size:11px;padding:3px 6px;color:#bdb5a6}
+.p-langs button[aria-pressed="true"]{background:#f5efe2;color:#1a1814;font-weight:700}
+.g-it{padding:11px 0;border-bottom:1px solid #eee}
+.g-it b{display:block;font-size:13.5px}
+.g-it span{font-size:12.5px;color:#555}
+
+/* quadro de pedidos */
+.kanban{display:grid;grid-template-columns:repeat(4,minmax(210px,1fr));gap:12px;overflow-x:auto;padding-bottom:6px}
+.col{background:var(--sand);border-radius:10px;padding:10px;min-height:260px}
+.col h4{font-size:13px;font-weight:700;margin:2px 4px 8px;display:flex;justify-content:space-between}
+.order{background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 11px;margin-bottom:8px;font-size:13.5px;animation:pop .25s ease}
+.order b{display:block}
+.order small{color:var(--muted);display:block}
+.order .btn{margin-top:8px;width:100%}
+@keyframes pop{from{opacity:0;transform:translateY(4px)}}
+
+/* quartos */
+.rooms{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.room{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;text-align:left;min-height:96px;display:flex;flex-direction:column;gap:6px}
+.room b{font-size:16px;font-family:var(--serif);font-weight:500}
+.room small{color:var(--muted);font-size:12.5px}
+.room.sel{border-color:var(--fg);box-shadow:inset 0 0 0 1px var(--fg)}
+
+/* gráficos */
+.chart{position:relative}
+.chart svg{display:block;width:100%;height:220px;overflow:visible}
+.chart .ax{font-size:11px;fill:#8c8476}
+.chart .grid{stroke:#ece5d6}
+.chart .hit{fill:transparent}
+.chart .hit:hover{fill:rgba(26,24,20,.05)}
+.tip{position:absolute;pointer-events:none;background:#fff;border:1px solid var(--line);border-radius:6px;box-shadow:0 6px 20px rgba(26,24,20,.12);padding:7px 10px;font-size:12.5px;opacity:0;transition:opacity .1s;z-index:3;white-space:nowrap}
+.tip.on{opacity:1}
+.tip .d{color:var(--muted)}
+
+/* diálogo e aviso */
+dialog{border:0;border-radius:12px;padding:0;width:min(560px,calc(100% - 20px));max-height:calc(100dvh - 20px);background:var(--bg);color:var(--fg);box-shadow:0 30px 80px -20px rgba(0,0,0,.5)}
+dialog::backdrop{background:rgba(26,24,20,.55)}
+.dl-h{display:flex;justify-content:space-between;align-items:center;padding:18px 20px 12px;border-bottom:1px solid var(--line)}
+.dl-h h3{font-size:21px}
+.dl-b{padding:16px 20px}
+.dl-f{display:flex;justify-content:flex-end;gap:8px;padding:0 20px 18px}
+.x{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);font-size:22px;line-height:1}
+.fld{display:grid;gap:4px;margin-bottom:12px;font-size:13px;color:var(--muted)}
+.fld3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;z-index:80;background:var(--fg);color:#fff;border-radius:8px;padding:10px 16px;font-size:14px;transition:.25s;pointer-events:none;max-width:calc(100% - 32px)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.msg{background:#d9fdd3;border-radius:8px;padding:10px 12px;font-size:14px;white-space:pre-line}
+
+.bottom{display:none}
+@media (max-width:1000px){
+  .kpis{grid-template-columns:1fr 1fr}
+  .two,.ed{grid-template-columns:1fr}
+  .phone{position:static;margin:0 auto}
+  .rooms{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:760px){
+  .app{grid-template-columns:1fr}
+  .side{display:none}
+  main{padding:18px 16px 96px}
+  .head h1{font-size:25px}
+  .bottom{display:grid;grid-template-columns:repeat(var(--n),1fr);position:fixed;left:0;right:0;bottom:0;z-index:50;background:#fff;border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+  .bottom button{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;color:var(--muted);padding:4px 0;position:relative}
+  .bottom svg{width:22px;height:22px}
+  .bottom button[aria-current="page"]{color:var(--fg);font-weight:700}
+  .bottom .badge{position:absolute;top:0;left:calc(50% + 6px);background:var(--bad);color:#fff;border-radius:999px;font-size:10px;min-width:16px;height:16px;display:grid;place-items:center;padding:0 4px}
+  .kpi b{font-size:20px}
+  .t .hide-s{display:none}
+  .fld3{grid-template-columns:1fr}
+  .phone{width:min(290px,100%)}
+  .toast{bottom:88px}
+}
+</style>
+</head>
+<body>
+<div class="demo"><span><b>Protótipo do Hub Aprile</b> · dados de exemplo</span><span>Ver como <span class="sw" id="audSw"><button type="button" data-a="restaurante">Restaurante</button><button type="button" data-a="pousada">Pousada</button></span></span><a href="../">Voltar ao site</a></div>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><img src="../sol.png" alt="" width="38" height="23"><span><b id="bizName"></b><small>Hub Aprile</small></span></div>
+    <nav id="nav" aria-label="Módulos"></nav>
+    <div class="me"><span class="av">CS</span><span><b>Carla Souza</b><small>Dona</small></span></div>
+  </aside>
+  <main id="main"></main>
+</div>
+<nav class="bottom" id="bottom" aria-label="Módulos"></nav>
+<dialog id="dlg"><div class="dl-h"><h3 id="dlgT"></h3><button class="x" type="button" id="dlgX" aria-label="Fechar">×</button></div><div class="dl-b" id="dlgB"></div><div class="dl-f" id="dlgF"></div></dialog>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const brl=v=>v.toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});
+const brl2=v=>v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+const nf=v=>v.toLocaleString("pt-BR",{maximumFractionDigits:0});
+const pct=v=>v.toFixed(1).replace(".",",")+"%";
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const now=()=>{const d=new Date();return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")};
+const TODAY=new Date();TODAY.setHours(0,0,0,0);
+const dm=d=>d.toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit"});
+function toast(t){const e=$("toast");e.textContent=t;e.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("on"),2400)}
+function dialog(title,body,foot){$("dlgT").textContent=title;$("dlgB").innerHTML=body;$("dlgF").innerHTML=foot||"";const d=$("dlg");if(!d.open)d.showModal();return $("dlgB")}
+$("dlgX").onclick=()=>$("dlg").close();$("dlg").addEventListener("click",e=>{if(e.target.id==="dlg")$("dlg").close()});
+
+/* ícones */
+const I={
+ inicio:'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/>',
+ conteudo:'<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>',
+ gestao:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+ operacao:'<path d="M9 11l2 2 4-4"/><rect x="4" y="3" width="16" height="18" rx="2"/>',
+ quartos:'<path d="M3 18V8M21 18v-5a3 3 0 0 0-3-3H8v8M3 14h18M6 10a2 2 0 1 0 0-.01"/>',
+ clientes:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a5 5 0 0 1 3.5 6"/>',
+ conta:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>'
+};
+const ic=k=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${I[k]}</svg>`;
+
+/* ===== DADOS DE EXEMPLO ===== */
+const BIZ={restaurante:"Restaurante Exemplo",pousada:"Pousada Exemplo"};
+const NAVS={
+ restaurante:[["inicio","Início"],["conteudo","Cardápio"],["gestao","Gestão"],["operacao","Operação"],["clientes","Clientes"],["conta","Conta"]],
+ pousada:[["inicio","Início"],["conteudo","Guia e site"],["operacao","Quartos","quartos"],["clientes","Hóspedes"],["conta","Conta"]]
+};
+let aud="restaurante",view="inicio",sub={};
+const S={
+ dishes:[
+  {c:"Entradas",n:{pt:"Bolinho de bacalhau",es:"Buñuelos de bacalao",en:"Salt cod fritters"},d:{pt:"8 unidades com aioli da casa.",es:"8 unidades con alioli.",en:"8 pieces with house aioli."},p:42,on:true,v:true,col:"#8a5a2b"},
+  {c:"Entradas",n:{pt:"Ceviche de peixe branco",es:"Ceviche de pescado blanco",en:""},d:{pt:"Limão, cebola roxa e coentro.",es:"Lima, cebolla morada y cilantro.",en:""},p:54,on:true,v:true,col:"#2f6f6a"},
+  {c:"Pratos",n:{pt:"Moqueca de peixe",es:"Moqueca de pescado",en:"Fish moqueca"},d:{pt:"Peixe do dia, leite de coco e dendê. Serve 2.",es:"Pescado del día, leche de coco y dendê. Para 2.",en:"Catch of the day, coconut milk and palm oil. Serves 2."},p:138,on:true,v:true,col:"#b4532a"},
+  {c:"Pratos",n:{pt:"Camarão na moranga",es:"Camarones en calabaza",en:"Shrimp in pumpkin"},d:{pt:"Camarão cremoso servido na moranga.",es:"Camarones cremosos en calabaza.",en:"Creamy shrimp served in a pumpkin."},p:124,on:false,v:false,col:"#c4782a"},
+  {c:"Pratos",n:{pt:"Picanha na brasa",es:"Picaña a la brasa",en:""},d:{pt:"300 g, farofa, vinagrete e mandioca.",es:"300 g, farofa, vinagreta y mandioca.",en:""},p:112,on:true,v:true,col:"#6b2f22"},
+  {c:"Sobremesas",n:{pt:"Cocada de forno",es:"Cocada al horno",en:"Baked coconut sweet"},d:{pt:"Com sorvete de tapioca.",es:"Con helado de tapioca.",en:"With tapioca ice cream."},p:28,on:true,v:true,col:"#c49a52"},
+  {c:"Bebidas",n:{pt:"Caipirinha de caju",es:"Caipiriña de cajú",en:"Cashew caipirinha"},d:{pt:"Cachaça mineira e caju fresco.",es:"Cachaza y cajú fresco.",en:"Cachaça and fresh cashew."},p:29,on:true,v:true,col:"#d0782a"}
+ ],
+ guide:[
+  {t:{pt:"Wi-Fi",es:"Wi-Fi",en:"Wi-Fi"},x:{pt:"Rede PousadaExemplo · senha arraial2026",es:"Red PousadaExemplo · clave arraial2026",en:"Network PousadaExemplo · password arraial2026"},on:true},
+  {t:{pt:"Café da manhã",es:"Desayuno",en:"Breakfast"},x:{pt:"Das 7h às 10h30, no deck.",es:"De 7 a 10:30, en el deck.",en:"7 to 10:30 am, on the deck."},on:true},
+  {t:{pt:"Passeio a Caraíva",es:"Paseo a Caraíva",en:"Caraíva tour"},x:{pt:"Dia inteiro, R$ 190 por pessoa.",es:"",en:"Full day, R$ 190 per person."},on:true},
+  {t:{pt:"Recife de Fora",es:"Recife de Fora",en:"Recife de Fora"},x:{pt:"Mergulho na maré baixa, R$ 120 por pessoa.",es:"Buceo con marea baja, R$ 120 por persona.",en:"Snorkeling at low tide, R$ 120 per person."},on:true},
+  {t:{pt:"Late check-out",es:"Late check-out",en:"Late check-out"},x:{pt:"Até 15h por R$ 120, conforme disponibilidade.",es:"Hasta las 15 h por R$ 120, según disponibilidad.",en:"Until 3 pm for R$ 120, subject to availability."},on:true}
+ ],
+ fichas:{"Moqueca de peixe":[["Peixe (badejo)","kg",.45,52],["Leite de coco","L",.4,14],["Azeite de dendê","L",.05,32],["Pimentões e cebola","kg",.3,9],["Tomate","kg",.25,8],["Coentro e temperos","porção",1,1.5],["Arroz branco","kg",.25,6],["Farofa de dendê","porção",1,2.2]],
+  "Camarão na moranga":[["Camarão rosa","kg",.37,95],["Moranga","un",1,9],["Requeijão cremoso","kg",.15,38],["Leite de coco","L",.2,14],["Temperos","porção",1,2]],
+  "Picanha na brasa":[["Picanha","kg",.33,115],["Mandioca","kg",.3,6],["Farofa","porção",1,2.5],["Vinagrete","porção",1,3]],
+  "Bolinho de bacalhau":[["Bacalhau dessalgado","kg",.12,78],["Batata","kg",.2,6],["Aioli","porção",1,1.8],["Óleo","L",.05,10]],
+  "Ceviche de peixe branco":[["Peixe branco","kg",.15,52],["Limão","kg",.1,7],["Cebola roxa e coentro","porção",1,1.5],["Milho e batata-doce","porção",1,2]],
+  "Cocada de forno":[["Coco ralado","kg",.06,32],["Leite condensado","un",.25,7],["Sorvete de tapioca","porção",1,2.5]],
+  "Caipirinha de caju":[["Cachaça","L",.06,45],["Caju","un",1,1.2],["Açúcar e gelo","porção",1,.6]]},
+ queue:[{n:"Marcos",p:4,t:"(73) 9 9812-3311",at:"19:42",st:"esperando"},{n:"Fernanda",p:2,t:"(73) 9 9655-0921",at:"19:51",st:"esperando"},{n:"Ricardo",p:6,t:"(11) 9 8123-4400",at:"19:58",st:"esperando"}],
+ orders:[{id:1041,c:"Juliana",it:"1 Moqueca de peixe, 1 Suco de cajá",v:152,col:0},{id:1042,c:"Pedro",it:"2 Picanha na brasa",v:224,col:1},{id:1039,c:"Beatriz",it:"1 Risoto de camarão, 1 Cocada",v:117,col:2},{id:1037,c:"Tiago",it:"1 Bolinho de bacalhau",v:42,col:3}],
+ checks:[{k:"Abertura",who:"Ana",at:"10:32",st:"atenção",obs:"Câmara fria a 7 °C (limite 5 °C)",it:[["Câmara fria","7 °C",0],["Freezer","−19 °C",1],["Validade dos molhos","ok",1],["Gás e exaustor","ok",1],["Bancadas higienizadas","ok",1]]},
+  {k:"Fechamento",who:"",at:"23:30",st:"pendente",obs:"Previsto para o fim do serviço",it:[]},
+  {k:"Fechamento de ontem",who:"Rui",at:"23:41",st:"ok",obs:"Tudo dentro do limite",it:[["Câmara fria","4 °C",1],["Freezer","−20 °C",1],["Lixo e limpeza","ok",1],["Gás fechado","ok",1]]}],
+ clients:[["Mariana Lopes","(73) 9 9101-2233",14,3,6,"12/11"],["Rafael Costa","(73) 9 9188-4410",9,41,2,"03/05"],["Juliana Prado","(31) 9 9412-1010",6,38,9,"22/11"],["Pedro Almeida","(73) 9 9822-7766",21,6,10,"15/02"],["Lúcia Fernandes","(73) 9 9333-5578",4,62,4,"28/11"],["Tiago Nunes","(11) 9 8765-1200",3,33,3,"07/09"],["Carlos Menezes","(73) 9 9900-4321",11,12,1,"19/11"],["Bianca Rocha","(21) 9 9876-1122",2,54,2,"30/06"]],
+ card:{need:10,prize:"Sobremesa"},
+ rooms:[["1","Ocupado","mut","Saída amanhã · Família Reis"],["2","Ocupado","mut","Pediu late check-out"],["3","Pronto","ok","Check-in hoje 14h · Sr. Diniz"],["4","Manutenção","bad","Chuveiro com pouca pressão"],["5","Pronto","ok","Livre"],["6","Saída hoje","warn","Check-out até 12h"],["7","Limpando","warn","Joana · começou 10:05"],["8","Pronto","ok","Check-in hoje 16h · Laura e Pedro"]],
+ maint:[{q:"4",t:"Chuveiro com pouca pressão",who:"Joana",at:"09:12",done:false},{q:"7",t:"Lâmpada da varanda",who:"Joana",at:"ontem",done:true}],
+ stays:[["Marina Alves","Quarto 3","15/11",5,""],["Diego Santos","Quarto 4","14/11",3,"pendente"],["Ana e Bruno","Quarto 8","14/11",5,""],["Família Reis","Quarto 1","12/11",4,"contatado"],["Laura Ribeiro","Quarto 6","10/11",5,""]],
+ users:[["Carla Souza","Dona","Tudo, inclusive financeiro e conta"],["Rui Martins","Gerente","Tudo, menos financeiro e conta"],["Ana Lima","Cozinha","Só checklists"],["Joana Silva","Camareira","Só quartos e manutenção"]],
+ pub:"ontem às 18:20",dirty:false
+};
+
+/* ===== NAVEGAÇÃO ===== */
+function badges(){return aud==="restaurante"?{inicio:4,operacao:1}:{inicio:3,operacao:1,clientes:1}}
+function renderNav(){
+  const b=badges(),N=NAVS[aud];
+  $("nav").innerHTML=N.map(([k,l,icon])=>`<button type="button" class="nav" data-v="${k}" ${k===view?'aria-current="page"':""}>${ic(icon||k)}${l}${b[k]?`<span class="badge">${b[k]}</span>`:""}</button>`).join("");
+  $("bottom").style.setProperty("--n",N.length);
+  $("bottom").innerHTML=N.map(([k,l,icon])=>`<button type="button" data-v="${k}" ${k===view?'aria-current="page"':""}>${ic(icon||k)}${l}${b[k]?`<span class="badge">${b[k]}</span>`:""}</button>`).join("");
+  $("bizName").textContent=BIZ[aud];
+  document.querySelectorAll("#audSw button").forEach(x=>x.setAttribute("aria-pressed",x.dataset.a===aud));
+}
+function go(v,s){view=v;if(s)sub[v]=s;renderNav();V[v]();history.replaceState(null,"",`#${aud}/${v}`);window.scrollTo(0,0)}
+document.addEventListener("click",e=>{const n=e.target.closest("[data-v]");if(n&&(n.closest("#nav")||n.closest("#bottom")))go(n.dataset.v);const g=e.target.closest("[data-go]");if(g){const [v,s]=g.dataset.go.split(":");go(v,s)}});
+$("audSw").onclick=e=>{const b=e.target.closest("button");if(!b)return;aud=b.dataset.a;sub={};go("inicio")};
+const M=()=>$("main");
+const head=(t,p,right)=>`<div class="head"><div><h1>${t}</h1>${p?`<p>${p}</p>`:""}</div>${right||""}</div>`;
+const tabs=(v,list)=>{const cur=sub[v]||list[0][0];return `<div class="tabs" role="tablist">${list.map(([k,l])=>`<button type="button" role="tab" data-tab="${k}" aria-selected="${k===cur}">${l}</button>`).join("")}</div>`};
+function bindTabs(v){M().querySelector(".tabs").onclick=e=>{const b=e.target.closest("[data-tab]");if(b){sub[v]=b.dataset.tab;V[v]()}}}
+const kpi=(l,v,d)=>`<div class="kpi"><small>${l}</small><b class="num">${v}</b><span>${d}</span></div>`;
+
+/* ===== TELAS ===== */
+const V={};
+
+/* Início */
+V.inicio=()=>{
+  const h=new Date().getHours(),sau=h<12?"Bom dia":h<18?"Boa tarde":"Boa noite";
+  const dt=TODAY.toLocaleDateString("pt-BR",{weekday:"long",day:"numeric",month:"long"});
+  if(aud==="restaurante"){
+    const fila=S.queue.filter(q=>q.st!=="sentado").length,prep=S.orders.filter(o=>o.col===1).length;
+    M().innerHTML=head(`${sau}, Carla`,`${dt[0].toUpperCase()+dt.slice(1)} · ${BIZ[aud]}`)+
+    `<div class="kpis">${kpi("Vendas de ontem",brl(6840),'<em class="up">+4,2%</em> vs. terça passada')+kpi("CMV da semana","31,7%",'meta: 32%')+kpi("Menor saldo previsto",brl(7704),"em 20/11, acima da reserva")+kpi("Pedidos no delivery hoje","12",`${prep} em preparo agora`)}</div>
+    <div class="two" style="margin-top:14px"><div class="card"><div class="card-h"><h3>Precisa da sua atenção</h3><span class="muted" style="font-size:13px">4 itens</span></div><ul class="list">
+      <li><span class="pill bad">crítico</span><span class="grow"><b>Câmara fria a 7 °C na abertura</b><small>Checklist da Ana às 10:32 · limite é 5 °C</small></span><button class="go" data-go="operacao:checklists">Ver</button></li>
+      <li><span class="pill warn">atenção</span><span class="grow"><b>Camarão na moranga com CMV de 44%</b><small>A meta da casa é 32%</small></span><button class="go" data-go="gestao:fichas">Ver ficha</button></li>
+      <li><span class="pill warn">atenção</span><span class="grow"><b>2 pratos sem tradução para o inglês</b><small>Ceviche e picanha aparecem só em português e espanhol</small></span><button class="go" data-go="conteudo">Traduzir</button></li>
+      <li><span class="pill info">oportunidade</span><span class="grow"><b>18 clientes não voltam há mais de 30 dias</b><small>Mande um convite com o cartão fidelidade</small></span><button class="go" data-go="clientes">Ver</button></li></ul></div>
+    <div class="card"><div class="card-h"><h3>Agora no restaurante</h3></div><ul class="list">
+      <li><span class="grow"><b>${fila} grupos na fila de espera</b><small>Espera estimada de ${fila*8} minutos</small></span><button class="go" data-go="operacao:fila">Abrir</button></li>
+      <li><span class="grow"><b>${S.orders.filter(o=>o.col<3).length} pedidos de delivery abertos</b><small>${prep} em preparo · ${S.orders.filter(o=>o.col===0).length} novo</small></span><button class="go" data-go="operacao:delivery">Abrir</button></li>
+      <li><span class="grow"><b>Fechamento da cozinha</b><small>Checklist previsto para as 23:30</small></span><span class="pill mut">pendente</span></li>
+      <li><span class="grow"><b>Relatório da semana</b><small>Sai na segunda às 8h, no WhatsApp e aqui</small></span><button class="go" data-go="gestao:relatorios">Anteriores</button></li></ul></div></div>`;
+  }else{
+    const pr=S.rooms.filter(r=>r[1]==="Pronto").length;
+    M().innerHTML=head(`${sau}, Carla`,`${dt[0].toUpperCase()+dt.slice(1)} · ${BIZ[aud]}`)+
+    `<div class="kpis">${kpi("Ocupação hoje","75%","6 de 8 quartos")+kpi("Check-ins hoje","2","quartos 3 e 8")+kpi("Quartos prontos",`${pr} de 8`,"1 em limpeza, 1 em manutenção")+kpi("Nota da pesquisa","4,6","média dos últimos 30 dias")}</div>
+    <div class="two" style="margin-top:14px"><div class="card"><div class="card-h"><h3>Precisa da sua atenção</h3><span class="muted" style="font-size:13px">3 itens</span></div><ul class="list">
+      <li><span class="pill bad">crítico</span><span class="grow"><b>Quarto 4: chuveiro com pouca pressão</b><small>Reportado pela Joana às 09:12 · quarto bloqueado</small></span><button class="go" data-go="operacao">Ver</button></li>
+      <li><span class="pill warn">atenção</span><span class="grow"><b>Diego Santos deu nota 3 na pesquisa</b><small>Quarto 4 · a gerência precisa entrar em contato</small></span><button class="go" data-go="clientes">Ver</button></li>
+      <li><span class="pill warn">atenção</span><span class="grow"><b>Passeio a Caraíva sem texto em espanhol</b><small>Hóspedes argentinos veem o guia incompleto</small></span><button class="go" data-go="conteudo">Completar</button></li></ul></div>
+    <div class="card"><div class="card-h"><h3>Hoje na pousada</h3></div><ul class="list">
+      <li><span class="grow"><b>Check-in 14h · Sr. Diniz</b><small>Quarto 3 · reserva direta pelo site</small></span><span class="pill ok">quarto pronto</span></li>
+      <li><span class="grow"><b>Check-in 16h · Laura e Pedro</b><small>Quarto 8 · Booking</small></span><span class="pill ok">quarto pronto</span></li>
+      <li><span class="grow"><b>Check-out até 12h</b><small>Quarto 6</small></span><span class="pill warn">limpeza depois</span></li>
+      <li><span class="grow"><b>Late check-out pedido</b><small>Quarto 2, pelo guia do quarto · R$ 120</small></span><button class="go" data-go="operacao">Ver</button></li></ul></div></div>`;
+  }
+};
+
+/* Conteúdo */
+let plang="pt";
+V.conteudo=()=>{
+  const R=aud==="restaurante";
+  const pubBar=`<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><span class="muted" style="font-size:13px" id="pubInfo">${S.dirty?"Alterações não publicadas":"Publicado "+S.pub}</span><button class="btn btn-dark" id="pubBtn" ${S.dirty?"":"disabled"}>Publicar</button></div>`;
+  M().innerHTML=head(R?"Cardápio":"Guia do quarto e site",R?"O que você muda aqui vai para o cardápio das mesas e para o site.":"O que você muda aqui vai para o guia de cada quarto e para o site.",pubBar)+
+   `<div class="ed"><div class="card" id="edList"></div><div><div class="phone"><div class="screen"><div class="p-top"><div><b>${BIZ[aud]}</b><small>${R?"Mesa 12":"Quarto 4"}</small></div><div class="p-langs" id="pLang">${["pt","es","en"].map(l=>`<button type="button" data-l="${l}" aria-pressed="${l===plang}">${l.toUpperCase()}</button>`).join("")}</div></div><div class="p-body" id="pBody"></div></div></div><p class="muted" style="font-size:12.5px;text-align:center;margin-top:8px">Prévia do que o cliente vê no celular</p></div></div>`;
+  const L=["pt","es","en"],lb=o=>`<span class="lang">${L.map(l=>`<span class="${o[l]?"":"no"}">${l.toUpperCase()}</span>`).join("")}</span>`;
+  const draw=(onlyPrev)=>{
+    if(R){
+      const cats=[...new Set(S.dishes.map(d=>d.c))];
+      if(!onlyPrev)$("edList").innerHTML=`<div class="card-h"><h3>${S.dishes.length} pratos</h3><button class="btn btn-line btn-sm" id="addD">+ Novo prato</button></div>`+cats.map(c=>`<p style="font-size:12.5px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.06em;margin:14px 0 2px">${c}</p><ul class="list">${S.dishes.map((d,i)=>d.c!==c?"":`<li><span class="grow"><b>${esc(d.n.pt)}</b><small>${lb(d.n)} ${d.v?"· vídeo ok":'· <span style="color:var(--bad)">sem vídeo</span>'}</small></span><span style="width:96px"><input class="in num" type="number" value="${d.p}" data-price="${i}" aria-label="Preço"></span><span title="${d.on?"Disponível hoje":"Esgotado hoje"}"><button type="button" class="tgl" role="switch" aria-checked="${d.on}" data-on="${i}" aria-label="Disponível hoje"></button></span><button class="go" data-ed="${i}">Editar</button></li>`).join("")}</ul>`).join("")+`<p class="muted" style="font-size:12.5px;margin-top:10px">O botão verde indica se o prato está disponível hoje. Desligado, ele aparece como esgotado no cardápio.</p>`;
+      $("pBody").innerHTML=cats.map(c=>`<p class="p-cat">${c}</p>`+S.dishes.filter(d=>d.c===c).map(d=>`<div class="p-dish ${d.on?"":"off"}"><i style="background:${d.col}"></i><span><b>${esc(d.n[plang]||d.n.pt)}</b><small>${esc(d.d[plang]||d.d.pt)}</small><span class="pr">${d.on?brl(d.p):"Esgotado hoje"}</span></span></div>`).join("")).join("");
+    }else{
+      $("edList").innerHTML=`<div class="card-h"><h3>Itens do guia</h3><button class="btn btn-line btn-sm" id="addD">+ Novo item</button></div><ul class="list">${S.guide.map((g,i)=>`<li><span class="grow"><b>${esc(g.t.pt)}</b><small>${lb(g.x)} · ${esc(g.x.pt)}</small></span><button type="button" class="tgl" role="switch" aria-checked="${g.on}" data-on="${i}" aria-label="Mostrar no guia"></button><button class="go" data-ed="${i}">Editar</button></li>`).join("")}</ul><p class="muted" style="font-size:12.5px;margin-top:10px">Desligue um item para escondê-lo do guia sem apagar.</p>`;
+      $("pBody").innerHTML=`<p style="font-family:var(--serif);font-size:18px;margin:12px 0 4px">${{pt:"Bem-vindo a Arraial",es:"Bienvenido a Arraial",en:"Welcome to Arraial"}[plang]}</p>`+S.guide.filter(g=>g.on).map(g=>`<div class="g-it"><b>${esc(g.t[plang]||g.t.pt)}</b><span>${esc(g.x[plang]||g.x.pt)}</span></div>`).join("");
+    }
+  };
+  draw();
+  const dirty=()=>{S.dirty=true;$("pubBtn").disabled=false;$("pubInfo").textContent="Alterações não publicadas"};
+  $("edList").oninput=e=>{const p=e.target.dataset.price;if(p!==undefined){S.dishes[+p].p=+e.target.value||0;dirty();draw(true)}};
+  $("edList").onclick=e=>{
+    const t=e.target.closest("[data-on]");if(t){const arr=R?S.dishes:S.guide,o=arr[+t.dataset.on];o.on=!o.on;dirty();draw();return}
+    const ed=e.target.closest("[data-ed]");if(ed){editItem(+ed.dataset.ed);return}
+    if(e.target.closest("#addD"))editItem(-1)};
+  $("pLang").onclick=e=>{const b=e.target.closest("button");if(!b)return;plang=b.dataset.l;$("pLang").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));draw()};
+  $("pubBtn").onclick=()=>{S.dirty=false;S.pub="hoje às "+now();$("pubBtn").disabled=true;$("pubInfo").textContent="Publicado "+S.pub;toast(R?"Publicado no cardápio das mesas e no site":"Publicado no guia dos quartos e no site")};
+  function editItem(i){
+    const R=aud==="restaurante",arr=R?S.dishes:S.guide,o=i<0?(R?{c:"Pratos",n:{pt:"",es:"",en:""},d:{pt:"",es:"",en:""},p:0,on:true,v:false,col:"#8c8476"}:{t:{pt:"",es:"",en:""},x:{pt:"",es:"",en:""},on:true}):arr[i];
+    const k1=R?"n":"t",k2=R?"d":"x";
+    const B=dialog(i<0?(R?"Novo prato":"Novo item"):(R?"Editar prato":"Editar item"),
+     `<div class="fld">Nome<div class="fld3">${["pt","es","en"].map(l=>`<input class="in" data-f="${k1}.${l}" placeholder="${{pt:"Português",es:"Español",en:"English"}[l]}" value="${esc(o[k1][l])}">`).join("")}</div></div>
+      <div class="fld">${R?"Descrição":"Texto"}<div class="fld3">${["pt","es","en"].map(l=>`<textarea class="in" rows="3" data-f="${k2}.${l}" placeholder="${{pt:"Português",es:"Español",en:"English"}[l]}">${esc(o[k2][l])}</textarea>`).join("")}</div></div>
+      ${R?`<div class="fld3"><label class="fld">Preço (R$)<input class="in num" type="number" data-f="p" value="${o.p}"></label><label class="fld">Categoria<select class="in" data-f="c">${["Entradas","Pratos","Sobremesas","Bebidas"].map(c=>`<option ${c===o.c?"selected":""}>${c}</option>`).join("")}</select></label><label class="fld">Vídeo do prato<span class="btn btn-line btn-sm" style="justify-content:flex-start">${o.v?"Vídeo enviado ✓":"Enviar vídeo"}</span></label></div>`:""}
+      <p class="muted" style="font-size:12.5px">Os textos em espanhol e inglês podem ser revisados pela Aprile antes de publicar.</p>`,
+     `<button class="btn btn-line" id="dCancel">Cancelar</button><button class="btn btn-dark" id="dSave">Salvar</button>`);
+    $("dCancel").onclick=()=>$("dlg").close();
+    $("dSave").onclick=()=>{B.querySelectorAll("[data-f]").forEach(f=>{const [a,b]=f.dataset.f.split(".");if(b)o[a][b]=f.value.trim();else o[a]=a==="p"?(+f.value||0):f.value});
+      if(!o[k1].pt){toast("Preencha o nome em português");return}
+      if(i<0)arr.push(o);$("dlg").close();dirty();draw();toast("Salvo. Toque em Publicar para mandar para o cliente.")};
+  }
+};
+
+/* Gestão (restaurante) */
+const WEEK=(()=>{const a=[];for(let i=6;i>=0;i--){const d=new Date(TODAY);d.setDate(d.getDate()-i);const w=d.getDay();a.push({d,v:5000*[.75,.55,.7,.8,1,1.35,1.3][w]*(.9+((i*37)%17)/80)})}const t=a.reduce((s,x)=>s+x.v,0);a.forEach(x=>x.v=Math.round(x.v*35123/t));return a})();
+function cost(n){return(S.fichas[n]||[]).reduce((s,x)=>s+x[2]*x[3],0)}
+function barChart(el,data,label){
+  const W=el.clientWidth||600,H=220,pl=48,pr=8,pt=10,pb=24,mx=Math.max(...data.map(x=>x.v))*1.12,st=Math.pow(10,Math.floor(Math.log10(mx/4)))*(mx/4/Math.pow(10,Math.floor(Math.log10(mx/4)))>5?10:mx/4/Math.pow(10,Math.floor(Math.log10(mx/4)))>2?5:2),top=Math.ceil(mx/st)*st;
+  const y=v=>pt+(H-pt-pb)*(1-v/top),bw=(W-pl-pr)/data.length,g=Math.min(14,bw*.3);let s="";
+  for(let v=0;v<=top;v+=st)s+=`<line class="grid" x1="${pl}" x2="${W-pr}" y1="${y(v)}" y2="${y(v)}"/><text class="ax" x="${pl-6}" y="${y(v)+4}" text-anchor="end">${v>=1000?nf(v/1000)+" mil":nf(v)}</text>`;
+  data.forEach((x,i)=>{const X=pl+i*bw+g/2,w=bw-g,r=Math.min(4,w/2);s+=`<path d="M${X},${y(0)} V${y(x.v)+r} q0,-${r} ${r},-${r} H${X+w-r} q${r},0 ${r},${r} V${y(0)} Z" fill="var(--s1)"/><text class="ax" x="${X+w/2}" y="${H-6}" text-anchor="middle">${x.l}</text><rect class="hit" data-i="${i}" x="${pl+i*bw}" y="${pt}" width="${bw}" height="${H-pt-pb}"/>`});
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${label}">${s}</svg><div class="tip"></div>`;
+  const tip=el.querySelector(".tip");el.querySelectorAll(".hit").forEach(h=>{h.onpointerenter=()=>{const x=data[+h.dataset.i];tip.innerHTML=`<div class="d">${x.f}</div><b>${brl(x.v)}</b>`;tip.classList.add("on");let l=(+h.getAttribute("x")+bw/2)*el.clientWidth/W+10;if(l+150>el.clientWidth)l-=170;tip.style.left=l+"px";tip.style.top="6px"};h.onpointerleave=()=>tip.classList.remove("on")});
+}
+V.gestao=()=>{
+  if(aud!=="restaurante"){go("inicio");return}
+  const cur=sub.gestao||"visao";
+  M().innerHTML=head("Gestão","Atualizado toda semana com o caixa, as fichas técnicas e as contas a pagar.")+tabs("gestao",[["visao","Visão geral"],["fichas","Fichas técnicas"],["dre","DRE"],["caixa","Fluxo de caixa"],["relatorios","Relatórios"]])+`<div id="gx"></div>`;
+  bindTabs("gestao");const G=$("gx");
+  if(cur==="visao"){
+    const tot=WEEK.reduce((s,x)=>s+x.v,0);
+    G.innerHTML=`<div class="kpis">${kpi("Vendas da semana",brl(tot),'<em class="up">+1,6%</em> vs. semana anterior')+kpi("Ticket médio",brl(80),'<em>+0,3%</em>')+kpi("CMV","31,7%","meta: 32%")+kpi("Resultado da semana",brl(4505),"12,8% da receita")}</div>
+     <div class="two" style="margin-top:14px"><div class="card"><div class="card-h"><h3>Vendas por dia</h3><span class="muted" style="font-size:13px">últimos 7 dias</span></div><div class="chart" id="ch"></div></div>
+     <div class="card"><div class="card-h"><h3>Pratos com CMV acima da meta</h3></div><ul class="list">${Object.keys(S.fichas).map(n=>{const p=S.dishes.find(d=>d.n.pt===n);return p?{n,c:cost(n)/p.p*100}:null}).filter(x=>x&&x.c>32).sort((a,b)=>b.c-a.c).map(x=>`<li><span class="grow"><b>${x.n}</b><small>CMV de ${pct(x.c)}</small></span><button class="go" data-ficha="${x.n}">Abrir ficha</button></li>`).join("")}</ul></div></div>`;
+    barChart($("ch"),WEEK.map(x=>({v:x.v,l:x.d.toLocaleDateString("pt-BR",{weekday:"short"}).replace(".",""),f:x.d.toLocaleDateString("pt-BR",{weekday:"long",day:"numeric",month:"long"})})),"Vendas por dia");
+    G.onclick=e=>{const b=e.target.closest("[data-ficha]");if(b){sub.gestao="fichas";sub.ficha=b.dataset.ficha;V.gestao()}};
+  }
+  if(cur==="fichas"){
+    const sel=sub.ficha;
+    if(sel){const rows=S.fichas[sel],p=S.dishes.find(d=>d.n.pt===sel);
+      G.innerHTML=`<button class="go" id="back">‹ Todas as fichas</button><div class="card" style="margin-top:10px"><div class="card-h"><h3 style="font-family:var(--serif);font-weight:400;font-size:21px">${sel}</h3><label style="font-size:13.5px;display:flex;align-items:center;gap:8px">Preço de venda <input class="in num" id="fP" type="number" value="${p.p}" style="width:90px"></label></div>
+       <div class="scroll"><table class="t"><thead><tr><th>Ingrediente</th><th class="r">Quantidade</th><th class="r">Custo unitário</th><th class="r">Custo</th></tr></thead><tbody>${rows.map((r,i)=>`<tr><td>${r[0]}</td><td class="r"><input class="in num" type="number" step=".05" data-q="${i}" value="${r[2]}" style="width:76px"> ${r[1]}</td><td class="r"><input class="in num" type="number" step=".5" data-c="${i}" value="${r[3]}" style="width:80px"></td><td class="r" id="fc${i}"></td></tr>`).join("")}</tbody></table></div><div id="fS" class="kpis" style="margin-top:14px;grid-template-columns:repeat(3,1fr)"></div></div>`;
+      const calc=()=>{let t=0;rows.forEach((r,i)=>{r[2]=+G.querySelector(`[data-q="${i}"]`).value||0;r[3]=+G.querySelector(`[data-c="${i}"]`).value||0;const v=r[2]*r[3];t+=v;$("fc"+i).textContent=brl2(v)});p.p=+$("fP").value||0;const c=p.p?t/p.p*100:0;
+        $("fS").innerHTML=kpi("Custo do prato",brl2(t),"soma dos ingredientes")+kpi("CMV",`<span class="${c>32?"dn":""}">${pct(c)}</span>`,"meta: 32%")+kpi("Margem por prato",brl(p.p-t),"antes das despesas fixas")};
+      G.oninput=calc;calc();$("back").onclick=()=>{sub.ficha=null;V.gestao()};
+    }else{
+      G.innerHTML=`<div class="card"><div class="scroll"><table class="t"><thead><tr><th>Prato</th><th class="r hide-s">Custo</th><th class="r">Preço</th><th class="r">CMV</th><th class="r hide-s">Margem</th><th></th></tr></thead><tbody>${Object.keys(S.fichas).map(n=>{const p=S.dishes.find(d=>d.n.pt===n);if(!p)return"";const c=cost(n),m=c/p.p*100;return `<tr><td>${n}</td><td class="r hide-s">${brl2(c)}</td><td class="r">${brl(p.p)}</td><td class="r"><span class="pill ${m>38?"bad":m>32?"warn":"ok"}">${pct(m)}</span></td><td class="r hide-s">${brl(p.p-c)}</td><td class="r"><button class="go" data-f="${n}">Abrir</button></td></tr>`}).join("")}</tbody></table></div></div>`;
+      G.onclick=e=>{const b=e.target.closest("[data-f]");if(b){sub.ficha=b.dataset.f;V.gestao()}};
+    }
+  }
+  if(cur==="dre"){
+    const R=[["Receita bruta",148300,"sub"],["(−) Impostos (Simples)",-8898,"ind"],["(−) Taxas de cartão e do iFood",-13240,"ind"],["Receita líquida",126162,"sub"],["(−) CMV",-47013,"ind"],["Lucro bruto",79149,"sub"],["(−) Pessoal",-42000,"ind"],["(−) Aluguel",-9000,"ind"],["(−) Energia, água e gás",-5200,"ind"],["(−) Sistemas e marketing",-1900,"ind"],["(−) Outras despesas",-2400,"ind"],["Resultado operacional",18649,"res"]];
+    G.innerHTML=`<div class="card"><div class="card-h"><h3>DRE de outubro</h3><span class="muted" style="font-size:13px">fechado em 01/11</span></div><div class="scroll"><table class="t"><thead><tr><th></th><th class="r">Valor</th><th class="r">% da receita</th></tr></thead><tbody>${R.map(([l,v,c])=>`<tr class="${c==="ind"?"":c}"><td class="${c==="ind"?"ind":""}">${l}</td><td class="r ${v<0?"dn":""}">${brl(v)}</td><td class="r">${pct(Math.abs(v)/148300*100)}</td></tr>`).join("")}</tbody></table></div></div>`;
+  }
+  if(cur==="caixa"){
+    let b=18000;const W=[];for(let k=0;k<5;k++){const a=new Date(TODAY);a.setDate(a.getDate()+1+k*7);const e=new Date(a);e.setDate(e.getDate()+6);const inn=32600,out=[32023,10523,31423,20423,32023][k];b+=inn-out;W.push({a,e,inn,out,b})}
+    G.innerHTML=`<div class="kpis">${kpi("Saldo hoje",brl(18000),"conta do restaurante")+kpi("Entradas previstas",brl(163000),"próximas 5 semanas")+kpi("Saídas previstas",brl(126415),"folha, fornecedores, aluguel")+kpi("Menor saldo",brl(7704),"em 20/11")}</div>
+     <div class="card" style="margin-top:14px"><div class="card-h"><h3>Semana a semana</h3></div><div class="scroll"><table class="t"><thead><tr><th>Semana</th><th class="r">Entradas</th><th class="r">Saídas</th><th class="r">Saldo no fim</th></tr></thead><tbody>${W.map(w=>`<tr><td>${dm(w.a)} a ${dm(w.e)}</td><td class="r">${brl(w.inn)}</td><td class="r">${brl(w.out)}</td><td class="r"><b>${brl(w.b)}</b></td></tr>`).join("")}</tbody></table></div><p class="muted" style="font-size:12.5px;margin-top:10px">As contas a pagar são lançadas uma vez e se repetem sozinhas. Avisamos se o saldo previsto ficar abaixo de R$ 5 mil.</p></div>`;
+  }
+  if(cur==="relatorios"){
+    const L=[0,1,2,3].map(k=>{const e=new Date(TODAY);e.setDate(e.getDate()-1-k*7);const a=new Date(e);a.setDate(a.getDate()-6);return{a,e,r:[35123,34585,33910,36240][k],res:[4505,4167,3720,5110][k],cmv:[31.7,31.7,32.4,31.2][k]}});
+    G.innerHTML=`<div class="card"><ul class="list">${L.map((x,i)=>`<li><span class="grow"><b>Semana de ${dm(x.a)} a ${dm(x.e)}</b><small>Receita ${brl(x.r)} · CMV ${pct(x.cmv)} · resultado ${brl(x.res)}</small></span>${i===0?'<span class="pill info">nova</span>':""}<button class="btn btn-line btn-sm" data-r="${i}">Abrir</button></li>`).join("")}</ul></div>`;
+    G.onclick=e=>{const b=e.target.closest("[data-r]");if(!b)return;const x=L[+b.dataset.r];
+      dialog(`Semana de ${dm(x.a)} a ${dm(x.e)}`,`<p>A semana fechou com <b>${brl(x.r)}</b> de receita, CMV de <b>${pct(x.cmv)}</b> e resultado operacional de <b>${brl(x.res)}</b>.</p><p style="margin-top:10px;font-weight:600">O que fazer na próxima semana</p><ol style="padding-left:20px;margin-top:4px;display:grid;gap:4px"><li>Revisar a ficha do camarão na moranga (CMV de 44%).</li><li>Destacar a moqueca, prato de maior margem.</li><li>Manter a reserva de caixa acima de R$ 5 mil.</li></ol>`,`<button class="btn btn-line" onclick="print()">Salvar em PDF</button><button class="btn btn-dark" onclick="document.getElementById('dlg').close()">Fechar</button>`)}
+  }
+};
+
+/* Operação */
+V.operacao=()=>{
+  if(aud==="pousada")return quartos();
+  const cur=sub.operacao||"checklists";
+  M().innerHTML=head("Operação","Checklists da cozinha, fila de espera e pedidos do delivery.")+tabs("operacao",[["checklists","Checklists"],["fila","Fila de espera"],["delivery","Delivery"]])+`<div id="ox"></div>`;
+  bindTabs("operacao");const O=$("ox");
+  if(cur==="checklists"){
+    O.innerHTML=`<div class="card"><ul class="list">${S.checks.map((c,i)=>`<li><span class="pill ${c.st==="ok"?"ok":c.st==="atenção"?"bad":"mut"}">${c.st}</span><span class="grow"><b>${c.k}</b><small>${c.who?c.who+" · "+c.at:"Previsto para "+c.at} · ${c.obs}</small></span>${c.it.length?`<button class="go" data-c="${i}">Ver</button>`:""}</li>`).join("")}</ul><p class="muted" style="font-size:12.5px;margin-top:10px">A equipe preenche no celular pelo QR Code da cozinha. Fica tudo guardado para a vigilância sanitária.</p></div>`;
+    O.onclick=e=>{const b=e.target.closest("[data-c]");if(!b)return;const c=S.checks[+b.dataset.c];dialog(`${c.k} · ${c.who}, ${c.at}`,`<ul class="list">${c.it.map(([n,v,ok])=>`<li><span class="grow">${n}</span><b>${v}</b><span class="pill ${ok?"ok":"bad"}">${ok?"ok":"fora do limite"}</span></li>`).join("")}</ul>`)}
+  }
+  if(cur==="fila"){
+    const draw=()=>{const Q=S.queue.filter(q=>q.st!=="sentado");
+      O.innerHTML=`<div class="two"><div class="card"><div class="card-h"><h3>${Q.length} grupos esperando</h3><span class="muted" style="font-size:13px">espera estimada de ${Q.length*8} min</span></div><ul class="list">${Q.length?Q.map((q,i)=>`<li><span class="av">${i+1}</span><span class="grow"><b>${esc(q.n)} · ${q.p} pessoas</b><small>Entrou ${q.at} · ${q.t}</small></span>${q.st==="avisado"?'<span class="pill ok">avisado</span><button class="btn btn-dark btn-sm" data-s="'+S.queue.indexOf(q)+'">Sentou</button>':'<button class="btn btn-line btn-sm" data-a="'+S.queue.indexOf(q)+'">Avisar mesa pronta</button>'}</li>`).join(""):'<li class="muted">Fila vazia.</li>'}</ul></div>
+       <div class="card"><div class="card-h"><h3>Colocar na fila</h3></div><label class="fld">Nome<input class="in" id="qn"></label><div class="fld3" style="grid-template-columns:1fr 1fr"><label class="fld">Pessoas<input class="in num" type="number" id="qp" value="2"></label><label class="fld">WhatsApp<input class="in" id="qt" placeholder="(73) 9 ..."></label></div><button class="btn btn-dark" id="qadd" style="width:100%">Adicionar</button><p class="muted" style="font-size:12.5px;margin-top:10px">O cliente também pode entrar sozinho pelo QR Code da porta.</p></div></div>`;
+      O.querySelectorAll("[data-a]").forEach(b=>b.onclick=()=>{S.queue[+b.dataset.a].st="avisado";toast(`Mensagem enviada para ${S.queue[+b.dataset.a].n}: sua mesa está pronta`);draw()});
+      O.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{S.queue[+b.dataset.s].st="sentado";draw()});
+      $("qadd").onclick=()=>{const n=$("qn").value.trim();if(!n){toast("Digite o nome");return}S.queue.push({n,p:+$("qp").value||1,t:$("qt").value||"sem telefone",at:now(),st:"esperando"});draw();toast(`${n} entrou na fila`)}};draw();
+  }
+  if(cur==="delivery"){
+    const C=["Novos","Em preparo","Saiu para entrega","Entregues hoje"],N=["Aceitar","Saiu para entrega","Entregue",""];
+    const draw=()=>{O.innerHTML=`<div class="kanban">${C.map((c,k)=>`<div class="col"><h4>${c}<span>${S.orders.filter(o=>o.col===k).length}</span></h4>${S.orders.filter(o=>o.col===k).map(o=>`<div class="order"><b>#${o.id} · ${esc(o.c)}</b><small>${esc(o.it)}</small><small><b>${brl(o.v)}</b> · Pix</small>${N[k]?`<button class="btn ${k===0?"btn-dark":"btn-line"} btn-sm" data-o="${o.id}">${N[k]}</button>`:""}</div>`).join("")}</div>`).join("")}</div><p class="muted" style="font-size:12.5px;margin-top:8px">Os pedidos chegam do cardápio de delivery e o cliente recebe a atualização de cada etapa no WhatsApp. Sem comissão por pedido.</p>`;
+      O.querySelectorAll("[data-o]").forEach(b=>b.onclick=()=>{const o=S.orders.find(x=>x.id===+b.dataset.o);o.col++;draw();toast(`Pedido #${o.id}: ${C[o.col].toLowerCase()}`)})};draw();
+  }
+};
+function quartos(){
+  let sel=sub.room||"4";
+  const draw=()=>{const r=S.rooms.find(x=>x[0]===sel),mt=S.maint.filter(m=>m.q===sel&&!m.done);
+    M().innerHTML=head("Quartos","Status atualizado pela equipe no celular, pelo QR Code de cada quarto.")+
+    `<div class="two"><div><div class="rooms">${S.rooms.map(([q,st,c,o])=>`<button type="button" class="room ${q===sel?"sel":""}" data-q="${q}"><b>Quarto ${q}</b><span class="pill ${c}">${st}</span><small>${o}</small></button>`).join("")}</div></div>
+     <div class="card"><div class="card-h"><h3>Quarto ${sel}</h3><span class="pill ${r[2]}">${r[1]}</span></div><p class="muted">${r[3]}</p>
+      ${mt.length?`<p style="margin-top:12px;font-weight:600">Manutenção aberta</p><ul class="list">${mt.map(m=>`<li><span class="grow">${m.t}<small>${m.who} · ${m.at}</small></span><button class="btn btn-dark btn-sm" data-m="${S.maint.indexOf(m)}">Resolvido</button></li>`).join("")}</ul>`:""}
+      ${r[1]!=="Pronto"&&!mt.length?`<button class="btn btn-dark" id="ready" style="margin-top:14px">Marcar como pronto</button>`:""}
+      <p style="margin-top:16px;font-weight:600">Manutenção da pousada</p><ul class="list">${S.maint.map(m=>`<li><span class="grow">Quarto ${m.q}: ${m.t}<small>${m.who} · ${m.at}</small></span><span class="pill ${m.done?"ok":"bad"}">${m.done?"resolvido":"aberto"}</span></li>`).join("")}</ul></div></div>`;
+    M().querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{sel=b.dataset.q;sub.room=sel;draw()});
+    M().querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{const m=S.maint[+b.dataset.m];m.done=true;const R=S.rooms.find(x=>x[0]===m.q);R[1]="Pronto";R[2]="ok";R[3]="Livre · manutenção concluída";draw();toast(`Quarto ${m.q} liberado`)});
+    const rd=$("ready");if(rd)rd.onclick=()=>{r[1]="Pronto";r[2]="ok";r[3]=r[3].replace(/Joana · começou.*/,"Limpo às "+now());draw();toast(`Quarto ${sel} pronto para o check-in`)}};
+  draw();
+}
+
+/* Clientes e hóspedes */
+V.clientes=()=>{
+  if(aud==="pousada"){
+    const draw=()=>{M().innerHTML=head("Hóspedes","Pesquisa pós-estadia e cartão de hóspede.")+
+      `<div class="kpis">${kpi("Nota média","4,6","últimos 30 dias")+kpi("Pesquisas respondidas","82%","dos hóspedes")+kpi("Cartões de hóspede","64","na carteira do celular")+kpi("Reservas diretas de volta","9","hóspedes que voltaram pelo site")}</div>
+      <div class="card" style="margin-top:14px"><div class="card-h"><h3>Últimas estadias</h3></div><ul class="list">${S.stays.map(([n,q,d,nota,st],i)=>`<li><span class="av">${nota}</span><span class="grow"><b>${n}</b><small>${q} · saída ${d}</small></span>${nota<5?(st==="contatado"?'<span class="pill ok">gerência contatou</span>':`<span class="pill warn">contatar</span><button class="btn btn-dark btn-sm" data-c="${i}">Marcar como contatado</button>`):'<span class="pill mut">nota 5</span>'}</li>`).join("")}</ul></div>`;
+      M().querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{S.stays[+b.dataset.c][4]="contatado";draw();toast("Contato registrado")})};draw();return}
+  let f=sub.cf||"todos";
+  const F={todos:()=>true,sumidos:c=>c[3]>30,aniversario:c=>c[5].endsWith("/11"),premio:c=>c[4]>=S.card.need};
+  const draw=()=>{const L=S.clients.filter(F[f]);
+    M().innerHTML=head("Clientes","Quem tem o cartão fidelidade na carteira do celular.",`<button class="btn btn-line" id="cfg">Ajustar cartão</button>`)+
+    `<div class="kpis">${kpi("Clientes com cartão","312","+28 este mês")+kpi("Voltaram este mês","41%","dos clientes com cartão")+kpi("Prêmios resgatados","19","este mês")+kpi("Sumidos há 30 dias","18","convide para voltar")}</div>
+    <div class="card" style="margin-top:14px"><div class="card-h"><div class="seg" id="cf">${[["todos","Todos"],["sumidos","Sumidos há 30+ dias"],["aniversario","Aniversário este mês"],["premio","Prêmio disponível"]].map(([k,l])=>`<button type="button" data-f="${k}" aria-pressed="${k===f}">${l}</button>`).join("")}</div><button class="btn btn-dark btn-sm" id="inv" ${L.length?"":"disabled"}>Enviar convite para ${L.length}</button></div>
+    <div class="scroll"><table class="t"><thead><tr><th>Cliente</th><th class="r">Visitas</th><th class="r">Última visita</th><th class="r">Carimbos</th><th class="r hide-s">Aniversário</th></tr></thead><tbody>${L.map(c=>`<tr><td><b>${c[0]}</b><br><small class="muted">${c[1]}</small></td><td class="r">${c[2]}</td><td class="r">há ${c[3]} dias</td><td class="r">${Math.min(c[4],S.card.need)}/${S.card.need}</td><td class="r hide-s">${c[5]}</td></tr>`).join("")||'<tr><td colspan="5" class="muted">Ninguém neste filtro.</td></tr>'}</tbody></table></div>
+    <p class="muted" style="font-size:12.5px;margin-top:10px">Só recebem mensagem os clientes que autorizaram no cadastro do cartão (LGPD).</p></div>`;
+    $("cf").onclick=e=>{const b=e.target.closest("button");if(b){f=b.dataset.f;sub.cf=f;draw()}};
+    $("inv").onclick=()=>{const msg={todos:"Oi, {nome}! Obrigado por ser cliente do Restaurante Exemplo. Esta semana tem novidade no cardápio, vem provar!",sumidos:"Oi, {nome}! Sentimos sua falta no Restaurante Exemplo. Esta semana o café é por nossa conta: é só mostrar o seu cartão.",aniversario:"Feliz aniversário, {nome}! No seu mês, a sobremesa é por conta da casa no Restaurante Exemplo.",premio:"{nome}, o seu cartão está completo! A sua {premio} está esperando no Restaurante Exemplo."}[f].replace("{premio}",S.card.prize.toLowerCase());
+      dialog(`Convite para ${L.length} cliente${L.length>1?"s":""}`,`<label class="fld">Mensagem<textarea class="in" id="im" rows="4">${msg}</textarea></label><p class="muted" style="font-size:12.5px;margin-bottom:8px">Prévia para ${L[0][0].split(" ")[0]}:</p><div class="msg" id="ip"></div>`,`<button class="btn btn-line" onclick="document.getElementById('dlg').close()">Cancelar</button><button class="btn btn-dark" id="isend">Enviar pelo WhatsApp</button>`);
+      const pv=()=>$("ip").textContent=$("im").value.replace("{nome}",L[0][0].split(" ")[0]);$("im").oninput=pv;pv();
+      $("isend").onclick=()=>{$("dlg").close();toast(`Convite enviado para ${L.length} cliente${L.length>1?"s":""}`)}};
+    $("cfg").onclick=()=>{dialog("Cartão fidelidade",`<div class="fld3" style="grid-template-columns:1fr 1fr"><label class="fld">Carimbos para o prêmio<input class="in num" type="number" id="cn" value="${S.card.need}"></label><label class="fld">Prêmio<input class="in" id="cp" value="${S.card.prize}"></label></div><p class="muted" style="font-size:12.5px">A mudança vale para os cartões novos. Quem já tem cartão recebe a atualização na carteira do celular.</p>`,`<button class="btn btn-dark" id="csave">Salvar</button>`);
+      $("csave").onclick=()=>{S.card.need=+$("cn").value||10;S.card.prize=$("cp").value||"Sobremesa";$("dlg").close();draw();toast("Cartão atualizado")}}};
+  draw();
+};
+
+/* Conta */
+V.conta=()=>{
+  const R=aud==="restaurante";
+  const plan=R?["Mesa Cheia + Gestão",990]:["Venda Direta Completo",990],ads=R?[["Fila de espera e reserva de mesa",150],["Delivery próprio pelo WhatsApp",190],["Cartão fidelidade na carteira do celular",190]]:[["Checklist de limpeza e manutenção",120],["Cartão de hóspede na carteira do celular",190]];
+  const users=R?S.users.filter(u=>u[1]!=="Camareira"):S.users.filter(u=>u[1]!=="Cozinha");
+  M().innerHTML=head("Conta","Plano, adicionais e quem tem acesso ao Hub.")+
+  `<div class="two"><div class="card"><div class="card-h"><h3>Plano e adicionais</h3><a class="go" href="../#${aud}">Ver todos os adicionais</a></div><ul class="list"><li><span class="grow"><b>Plano ${plan[0]}</b><small>desde agosto de 2026</small></span><b class="num">${brl(plan[1])}/mês</b></li>${ads.map(a=>`<li><span class="grow">${a[0]}<small>adicional</small></span><span class="num">${brl(a[1])}/mês</span></li>`).join("")}<li><span class="grow"><b>Total por mês</b><small>próxima cobrança em 05/12, por Pix ou boleto</small></span><b class="num">${brl(plan[1]+ads.reduce((s,a)=>s+a[1],0))}</b></li></ul></div>
+  <div class="card"><div class="card-h"><h3>Pessoas com acesso</h3><button class="btn btn-line btn-sm" id="inviteU">+ Convidar</button></div><ul class="list">${users.map(u=>`<li><span class="av">${u[0].split(" ").map(x=>x[0]).join("")}</span><span class="grow"><b>${u[0]}</b><small>${u[1]} · ${u[2]}</small></span></li>`).join("")}</ul></div></div>
+  <div class="card" style="margin-top:14px"><div class="card-h"><h3>Atendimento Aprile</h3></div><p class="muted">Precisa mudar algo que não está aqui? Fale com a Aprile pelo WhatsApp. A reunião mensal de resultados está marcada para terça, dia 25, às 15h.</p><a class="btn btn-dark" style="margin-top:12px;text-decoration:none" target="_blank" rel="noopener" href="https://wa.me/5575981102060?text=${encodeURIComponent("Olá! Sou da "+BIZ[aud]+" e preciso de ajuda no Hub.")}">Falar com a Aprile</a></div>`;
+  $("inviteU").onclick=()=>{dialog("Convidar pessoa",`<label class="fld">Nome<input class="in" id="un"></label><label class="fld">WhatsApp<input class="in" placeholder="(73) 9 ..."></label><label class="fld">Função<select class="in" id="ur">${(R?["Gerente","Atendente","Cozinha"]:["Gerente","Recepção","Camareira"]).map(x=>`<option>${x}</option>`).join("")}</select></label><p class="muted" style="font-size:12.5px">A pessoa recebe o link de acesso pelo WhatsApp e só vê o que a função permite.</p>`,`<button class="btn btn-dark" id="usend">Enviar convite</button>`);
+    $("usend").onclick=()=>{const n=$("un").value.trim();if(!n){toast("Digite o nome");return}S.users.push([n,$("ur").value,$("ur").value==="Gerente"?"Tudo, menos financeiro e conta":$("ur").value==="Cozinha"?"Só checklists":$("ur").value==="Camareira"?"Só quartos e manutenção":"Fila, delivery e conversas"]);$("dlg").close();V.conta();toast(`Convite enviado para ${n}`)}}
+};
+
+/* início pelo endereço: #pousada/operacao */
+const h=location.hash.match(/^#(restaurante|pousada)(?:\/(\w+))?/);
+if(h){aud=h[1];if(h[2]&&NAVS[aud].some(n=>n[0]===h[2]))view=h[2]}
+renderNav();V[view]();
+addEventListener("resize",()=>{if(view==="gestao"&&(sub.gestao||"visao")==="visao")V.gestao()});
+</script>
+</body>
+</html>

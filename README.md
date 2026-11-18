@@ -50,6 +50,16 @@ implantação e de mensalidade e envia o pedido pelo WhatsApp. Para o texto do
 pedido já chegar escrito na conversa, preencha `WHATSAPP_NUMERO` (DDI + DDD +
 número, só dígitos); sem ele, o texto é copiado e o link de `WHATSAPP` é aberto.
 
+**Hub do cliente** (`aprile/hub/index.html`, publicado em `/aprile/hub/`):
+protótipo clicável do sistema que o dono usa, com dados de exemplo e a chave
+Restaurante / Pousada. Módulos: Início (o que precisa de atenção hoje),
+Cardápio ou Guia e site (edita nos três idiomas e publica, com prévia no
+celular), Gestão (visão geral, fichas técnicas, DRE, fluxo de caixa e
+relatórios semanais), Operação ou Quartos (checklists, fila, delivery, status
+dos quartos e manutenção), Clientes ou Hóspedes (fidelidade, convites e
+pesquisa pós-estadia) e Conta (plano, adicionais e pessoas com acesso).
+Avaliações, conversas do WhatsApp e reservas ficam fora, nos sistemas de origem.
+
 Para pôr o vídeo do site, preencha `VIDEO_SITE` no início do `<script>` com um
 link do YouTube ou o caminho de um `.mp4`. Planos, adicionais e o link do
 WhatsApp ficam nas constantes do mesmo bloco.
