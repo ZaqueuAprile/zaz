@@ -281,6 +281,10 @@ const S={
   {k:"Fechamento de ontem",who:"Rui",at:"23:41",st:"ok",obs:"Tudo dentro do limite",it:[["Câmara fria","4 °C",1],["Freezer","−20 °C",1],["Lixo e limpeza","ok",1],["Gás fechado","ok",1]]}],
  clients:[["Mariana Lopes","(73) 9 9101-2233",14,3,6,"12/11"],["Rafael Costa","(73) 9 9188-4410",9,41,2,"03/05"],["Juliana Prado","(31) 9 9412-1010",6,38,9,"22/11"],["Pedro Almeida","(73) 9 9822-7766",21,6,10,"15/02"],["Lúcia Fernandes","(73) 9 9333-5578",4,62,4,"28/11"],["Tiago Nunes","(11) 9 8765-1200",3,33,3,"07/09"],["Carlos Menezes","(73) 9 9900-4321",11,12,1,"19/11"],["Bianca Rocha","(21) 9 9876-1122",2,54,2,"30/06"]],
  card:{need:10,prize:"Sobremesa"},
+ roomChk:{padrao:[["Roupa de cama trocada","check"],["Banheiro limpo e toalhas novas","check"],["Amenities repostos","check"],["Frigobar conferido","check"],["Ar-condicionado testado","check"],["Foto final do quarto","foto"]],
+  custom:{"4":[["Roupa de cama trocada","check"],["Banheiro limpo e toalhas novas","check"],["Hidromassagem higienizada","check"],["Amenities repostos","check"],["Frigobar conferido","check"],["Foto final do quarto","foto"]],
+   "8":[["Roupa de cama trocada","check"],["Berço montado, se pedido","check"],["Banheiro limpo e toalhas novas","check"],["Rede da varanda conferida","check"],["Amenities repostos","check"],["Foto final do quarto","foto"]]}},
+ lastClean:{"3":["Joana","hoje 09:40",6,6],"5":["Joana","ontem 15:10",6,6],"7":["Joana","começou 10:05",3,6],"8":["Joana","hoje 08:55",6,6]},
  rooms:[["1","Ocupado","mut","Saída amanhã · Família Reis"],["2","Ocupado","mut","Pediu late check-out"],["3","Pronto","ok","Check-in hoje 14h · Sr. Diniz"],["4","Manutenção","bad","Chuveiro com pouca pressão"],["5","Pronto","ok","Livre"],["6","Saída hoje","warn","Check-out até 12h"],["7","Limpando","warn","Joana · começou 10:05"],["8","Pronto","ok","Check-in hoje 16h · Laura e Pedro"]],
  maint:[{q:"4",t:"Chuveiro com pouca pressão",who:"Joana",at:"09:12",done:false},{q:"7",t:"Lâmpada da varanda",who:"Joana",at:"ontem",done:true}],
  stays:[["Marina Alves","Quarto 3","15/11",5,""],["Diego Santos","Quarto 4","14/11",3,"pendente"],["Ana e Bruno","Quarto 8","14/11",5,""],["Família Reis","Quarto 1","12/11",4,"contatado"],["Laura Ribeiro","Quarto 6","10/11",5,""]],
@@ -538,19 +542,49 @@ setInterval(()=>{
 },1000);
 addEventListener("storage",e=>{if(e.key===QK){qLoad();refreshFila()}});
 
+const roomItems=q=>S.roomChk.custom[q]||S.roomChk.padrao;
+const TYPES={check:"Marcar feito",foto:"Foto obrigatória"};
 function quartos(){
   let sel=sub.room||"4";
-  const draw=()=>{const r=S.rooms.find(x=>x[0]===sel),mt=S.maint.filter(m=>m.q===sel&&!m.done);
-    M().innerHTML=head("Quartos","Status atualizado pela equipe no celular, pelo QR Code de cada quarto.")+
-    `<div class="two"><div><div class="rooms">${S.rooms.map(([q,st,c,o])=>`<button type="button" class="room ${q===sel?"sel":""}" data-q="${q}"><b>Quarto ${q}</b><span class="pill ${c}">${st}</span><small>${o}</small></button>`).join("")}</div></div>
+  const draw=()=>{const r=S.rooms.find(x=>x[0]===sel),mt=S.maint.filter(m=>m.q===sel&&!m.done),it=roomItems(sel),own=!!S.roomChk.custom[sel],lc=S.lastClean[sel];
+    M().innerHTML=head("Quartos","Status atualizado pela equipe no celular, pelo QR Code de cada quarto.",`<button class="btn btn-line" id="editPad">Checklist padrão da pousada</button>`)+
+    `<div class="two"><div><div class="rooms">${S.rooms.map(([q,st,c,o])=>`<button type="button" class="room ${q===sel?"sel":""}" data-q="${q}"><b>Quarto ${q}</b><span class="pill ${c}">${st}</span><small>${o}</small>${S.roomChk.custom[q]?'<small style="color:var(--gold);font-weight:600">checklist próprio</small>':""}</button>`).join("")}</div></div>
      <div class="card"><div class="card-h"><h3>Quarto ${sel}</h3><span class="pill ${r[2]}">${r[1]}</span></div><p class="muted">${r[3]}</p>
       ${mt.length?`<p style="margin-top:12px;font-weight:600">Manutenção aberta</p><ul class="list">${mt.map(m=>`<li><span class="grow">${m.t}<small>${m.who} · ${m.at}</small></span><button class="btn btn-dark btn-sm" data-m="${S.maint.indexOf(m)}">Resolvido</button></li>`).join("")}</ul>`:""}
       ${r[1]!=="Pronto"&&!mt.length?`<button class="btn btn-dark" id="ready" style="margin-top:14px">Marcar como pronto</button>`:""}
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:18px;flex-wrap:wrap"><p style="font-weight:600">Checklist de limpeza ${own?"deste quarto":'<span class="muted" style="font-weight:400">(padrão da pousada)</span>'}</p><button class="btn btn-line btn-sm" id="editRoom">Editar checklist</button></div>
+      <ul class="list">${it.map(([n,t])=>`<li><span class="grow">${esc(n)}</span><span class="pill mut">${t==="foto"?"foto":"marcar"}</span></li>`).join("")}</ul>
+      ${lc?`<p class="muted" style="font-size:13px;margin-top:6px">Última limpeza: ${lc[0]}, ${lc[1]} · ${lc[2]} de ${lc[3]} itens</p>`:""}
       <p style="margin-top:16px;font-weight:600">Manutenção da pousada</p><ul class="list">${S.maint.map(m=>`<li><span class="grow">Quarto ${m.q}: ${m.t}<small>${m.who} · ${m.at}</small></span><span class="pill ${m.done?"ok":"bad"}">${m.done?"resolvido":"aberto"}</span></li>`).join("")}</ul></div></div>`;
     M().querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{sel=b.dataset.q;sub.room=sel;draw()});
     M().querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{const m=S.maint[+b.dataset.m];m.done=true;const R=S.rooms.find(x=>x[0]===m.q);R[1]="Pronto";R[2]="ok";R[3]="Livre · manutenção concluída";draw();toast(`Quarto ${m.q} liberado`)});
-    const rd=$("ready");if(rd)rd.onclick=()=>{r[1]="Pronto";r[2]="ok";r[3]=r[3].replace(/Joana · começou.*/,"Limpo às "+now());draw();toast(`Quarto ${sel} pronto para o check-in`)}};
+    const rd=$("ready");if(rd)rd.onclick=()=>{r[1]="Pronto";r[2]="ok";r[3]=r[3].replace(/Joana · começou.*/,"Limpo às "+now());draw();toast(`Quarto ${sel} pronto para o check-in`)};
+    $("editRoom").onclick=()=>editRoomChk(sel,draw);$("editPad").onclick=()=>editRoomChk(null,draw)};
   draw();
+}
+function editRoomChk(q,done){
+  const pad=q===null;let useDef=!pad&&!S.roomChk.custom[q];
+  let items=(pad?S.roomChk.padrao:roomItems(q)).map(x=>x.slice());
+  const others=S.rooms.map(r=>r[0]).filter(x=>x!==q);let apply=[];
+  const paint=()=>{const B=dialog(pad?"Checklist padrão da pousada":`Checklist do quarto ${q}`,
+    `${pad?`<p class="muted" style="font-size:13px;margin-bottom:10px">Vale para todos os quartos que não têm checklist próprio (${S.rooms.filter(r=>!S.roomChk.custom[r[0]]).map(r=>r[0]).join(", ")}).</p>`:`<label style="display:flex;align-items:center;gap:10px;font-size:14px;margin-bottom:12px"><button type="button" class="tgl" role="switch" id="rdef" aria-checked="${useDef}"></button> Usar o checklist padrão da pousada</label>`}
+     ${useDef?`<ul class="list">${S.roomChk.padrao.map(([n,t])=>`<li><span class="grow">${esc(n)}</span><span class="pill mut">${t==="foto"?"foto":"marcar"}</span></li>`).join("")}</ul><p class="muted" style="font-size:12.5px;margin-top:8px">Desligue para montar um checklist só para este quarto.</p>`:
+     `<div class="scroll"><table class="t"><thead><tr><th>Item</th><th>Tipo</th><th></th></tr></thead><tbody>${items.map((it,i)=>`<tr><td><input class="in" data-in="${i}" value="${esc(it[0])}" placeholder="Ex.: Hidromassagem higienizada" style="min-width:170px"></td><td><select class="in" data-ty="${i}" style="width:150px">${Object.entries(TYPES).map(([k,l])=>`<option value="${k}" ${k===it[1]?"selected":""}>${l}</option>`).join("")}</select></td><td class="r"><button class="go" data-rm="${i}" style="color:var(--bad)">Remover</button></td></tr>`).join("")}</tbody></table></div>
+      <button class="btn btn-line btn-sm" id="radd" style="margin-top:10px">+ Item</button>
+      ${pad?"":`<p style="margin-top:14px;font-size:13.5px;font-weight:600">Aplicar este checklist também aos quartos</p><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">${others.map(o=>`<label style="display:inline-flex;align-items:center;gap:5px;font-size:13.5px;border:1px solid var(--line);border-radius:6px;padding:4px 9px;background:#fff"><input type="checkbox" data-ap="${o}" ${apply.includes(o)?"checked":""}> ${o}</label>`).join("")}</div>`}`}
+     <p class="muted" style="font-size:12.5px;margin-top:12px">A camareira vê a lista atualizada ao ler o QR Code do quarto. Itens com foto só fecham com a foto tirada no celular.</p>`,
+    `<button class="btn btn-line" id="rcancel">Cancelar</button><button class="btn btn-dark" id="rsave">Salvar</button>`);
+    const read=()=>{if(useDef)return;items.forEach((it,i)=>{it[0]=B.querySelector(`[data-in="${i}"]`).value;it[1]=B.querySelector(`[data-ty="${i}"]`).value});apply=[...B.querySelectorAll("[data-ap]:checked")].map(x=>x.dataset.ap)};
+    const t=$("rdef");if(t)t.onclick=()=>{read();useDef=!useDef;if(!useDef&&!items.length)items=S.roomChk.padrao.map(x=>x.slice());paint()};
+    B.querySelectorAll("[data-rm]").forEach(x=>x.onclick=()=>{read();items.splice(+x.dataset.rm,1);paint()});
+    const ad=$("radd");if(ad)ad.onclick=()=>{read();items.push(["","check"]);paint();$("dlgB").querySelector(`[data-in="${items.length-1}"]`).focus()};
+    $("rcancel").onclick=()=>$("dlg").close();
+    $("rsave").onclick=()=>{read();
+      if(useDef){delete S.roomChk.custom[q];$("dlg").close();done();toast(`Quarto ${q} volta a usar o checklist padrão`);return}
+      const ok=items.filter(x=>x[0].trim()).map(x=>[x[0].trim(),x[1]]);if(!ok.length){toast("Inclua ao menos um item");return}
+      if(pad)S.roomChk.padrao=ok;else[q,...apply].forEach(r=>S.roomChk.custom[r]=ok.map(x=>x.slice()));
+      $("dlg").close();done();toast(pad?"Checklist padrão atualizado":apply.length?`Checklist salvo nos quartos ${[q,...apply].join(", ")}`:`Checklist do quarto ${q} salvo`)}};
+  paint();
 }
 
 /* Clientes e hóspedes */

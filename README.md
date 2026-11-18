@@ -61,7 +61,10 @@ pesquisa pós-estadia) e Conta (plano, adicionais e cadastro da equipe).
 No restaurante: fichas técnicas com ingredientes editáveis, modelos de checklist
 editáveis, pedidos do bot para marcar como lançados no sistema da casa e fila de
 espera com cronômetro depois do aviso (alerta em todo o Hub, +5 minutos ou passar
-a vez; quem passa 3 vezes sai). A fila abre numa tela própria para a recepção em
+a vez; quem passa 3 vezes sai). Na pousada, cada quarto pode ter o
+checklist de limpeza próprio (ou usar o padrão da pousada), com itens de marcar
+ou de foto obrigatória e a opção de aplicar o mesmo checklist a outros quartos.
+A fila abre numa tela própria para a recepção em
 `/aprile/hub/#restaurante/fila-tela` e fica sincronizada entre as abas.
 Avaliações, conversas do WhatsApp e reservas ficam fora, nos sistemas de origem.
 
