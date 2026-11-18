@@ -174,6 +174,30 @@ dialog::backdrop{background:rgba(26,24,20,.55)}
 .fld3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
 .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;z-index:80;background:var(--fg);color:#fff;border-radius:8px;padding:10px 16px;font-size:14px;transition:.25s;pointer-events:none;max-width:calc(100% - 32px)}
 .toast.on{opacity:1;transform:translate(-50%,0)}
+.scan{position:relative;background:#111;border-radius:10px;overflow:hidden;aspect-ratio:16/10;max-height:46dvh;width:100%;display:grid;place-items:center;color:#cfc8b8;font-size:13.5px;text-align:center}
+.scan video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.scan .frame{position:absolute;inset:16% 22%;border:3px solid rgba(255,255,255,.9);border-radius:14px;box-shadow:0 0 0 999px rgba(0,0,0,.35)}
+.scan p{position:relative;padding:0 24px}
+.stamps{display:grid;grid-template-columns:repeat(5,minmax(0,54px));gap:10px;margin:14px 0}
+.stamps i{aspect-ratio:1;border-radius:50%;border:2px dashed var(--line);display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:700;color:var(--muted)}
+.stamps i.on{border:0;background:var(--gold);color:#fff}
+.stamps i.prize{border-style:solid;border-color:var(--gold);color:var(--gold);font-size:9px;overflow:hidden;padding:2px;text-align:center;line-height:1.1}
+.stamps i.prize.on{background:var(--fg);color:#fff;border-color:var(--fg)}
+.hit{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;margin-top:6px}
+.hit:hover{border-color:var(--fg)}
+.warnbox{background:#fbf1de;border:1px solid #ecd3a3;border-radius:8px;padding:10px 12px;font-size:13.5px;margin-bottom:12px}
+.okbox{background:#e6f2ea;border:1px solid #b9d9c4;border-radius:8px;padding:10px 12px;font-size:13.5px;margin-bottom:12px}
+.pass{width:min(360px,100%);margin:0 auto;background:#1f2a2a;color:#f5efe2;border-radius:18px;padding:18px 18px 22px;box-shadow:0 30px 60px -25px rgba(0,0,0,.55)}
+.pass .ph{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600}
+.pass small{display:block;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#a9b3ad}
+.pass .stamps{grid-template-columns:repeat(5,1fr)}
+.pass .stamps i{border-color:#4b5a58;color:#a9b3ad}
+.pass .stamps i.on{background:#d4af37;color:#1f2a2a}
+.pass .stamps i.prize{border-color:#d4af37;color:#d4af37}
+.pass .qr{background:#fff;border-radius:10px;padding:12px;width:200px;margin:16px auto 6px;color:#1a1814;text-align:center;font-size:12px;font-weight:600;letter-spacing:.12em}
+.pass .qr svg{display:block;width:100%;height:auto}
+.pass .upd{opacity:0;transition:opacity .3s;text-align:center;font-size:12.5px;color:#d4af37;margin-top:8px}
+.pass .upd.on{opacity:1}
 .msg{background:#d9fdd3;border-radius:8px;padding:10px 12px;font-size:14px;white-space:pre-line}
 
 .bottom{display:none}
@@ -279,8 +303,9 @@ const S={
  checks:[{k:"Abertura",who:"Ana",at:"10:32",st:"atenção",obs:"Câmara fria a 7 °C (limite 5 °C)",it:[["Câmara fria","7 °C",0],["Freezer","−19 °C",1],["Validade dos molhos","ok",1],["Gás e exaustor","ok",1],["Bancadas higienizadas","ok",1]]},
   {k:"Fechamento",who:"",at:"23:30",st:"pendente",obs:"Previsto para o fim do serviço",it:[]},
   {k:"Fechamento de ontem",who:"Rui",at:"23:41",st:"ok",obs:"Tudo dentro do limite",it:[["Câmara fria","4 °C",1],["Freezer","−20 °C",1],["Lixo e limpeza","ok",1],["Gás fechado","ok",1]]}],
- clients:[["Mariana Lopes","(73) 9 9101-2233",14,3,6,"12/11"],["Rafael Costa","(73) 9 9188-4410",9,41,2,"03/05"],["Juliana Prado","(31) 9 9412-1010",6,38,9,"22/11"],["Pedro Almeida","(73) 9 9822-7766",21,6,10,"15/02"],["Lúcia Fernandes","(73) 9 9333-5578",4,62,4,"28/11"],["Tiago Nunes","(11) 9 8765-1200",3,33,3,"07/09"],["Carlos Menezes","(73) 9 9900-4321",11,12,1,"19/11"],["Bianca Rocha","(21) 9 9876-1122",2,54,2,"30/06"]],
- card:{need:10,prize:"Sobremesa"},
+ clients:[["Mariana Lopes","(73) 9 9101-2233",14,3,6,"12/11"],["Rafael Costa","(73) 9 9188-4410",9,41,2,"03/05"],["Juliana Prado","(31) 9 9412-1010",6,38,9,"22/11"],["Pedro Almeida","(73) 9 9822-7766",21,6,10,"15/02"],["Lúcia Fernandes","(73) 9 9333-5578",4,62,4,"28/11"],["Tiago Nunes","(11) 9 8765-1200",3,33,3,"07/09"],["Carlos Menezes","(73) 9 9900-4321",11,0,1,"19/11"],["Bianca Rocha","(21) 9 9876-1122",2,54,2,"30/06"]],
+ card:{need:10,prize:"Sobremesa",rule:"visita",per:80,gap:"dia"},
+ loyLog:[{c:"Carlos Menezes",a:"ponto",n:1,who:"Rui Martins",at:"hoje 12:40",ts:0},{c:"Pedro Almeida",a:"resgate",n:0,who:"Carla Souza",at:"ontem 21:15",ts:-1},{c:"Mariana Lopes",a:"ponto",n:1,who:"Rui Martins",at:"15/11 20:02",ts:-3}],
  roomChk:{padrao:[["Roupa de cama trocada","check"],["Banheiro limpo e toalhas novas","check"],["Amenities repostos","check"],["Frigobar conferido","check"],["Ar-condicionado testado","check"],["Foto final do quarto","foto"]],
   custom:{"4":[["Roupa de cama trocada","check"],["Banheiro limpo e toalhas novas","check"],["Hidromassagem higienizada","check"],["Amenities repostos","check"],["Frigobar conferido","check"],["Foto final do quarto","foto"]],
    "8":[["Roupa de cama trocada","check"],["Berço montado, se pedido","check"],["Banheiro limpo e toalhas novas","check"],["Rede da varanda conferida","check"],["Amenities repostos","check"],["Foto final do quarto","foto"]]}},
@@ -597,20 +622,134 @@ V.clientes=()=>{
   let f=sub.cf||"todos";
   const F={todos:()=>true,sumidos:c=>c[3]>30,aniversario:c=>c[5].endsWith("/11"),premio:c=>c[4]>=S.card.need};
   const draw=()=>{const L=S.clients.filter(F[f]);
-    M().innerHTML=head("Clientes","Quem tem o cartão fidelidade na carteira do celular.",`<button class="btn btn-line" id="cfg">Ajustar cartão</button>`)+
-    `<div class="kpis">${kpi("Clientes com cartão","312","+28 este mês")+kpi("Voltaram este mês","41%","dos clientes com cartão")+kpi("Prêmios resgatados","19","este mês")+kpi("Sumidos há 30 dias","18","convide para voltar")}</div>
+    M().innerHTML=head("Clientes","Quem tem o cartão fidelidade na carteira do celular.",`<span style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-dark" id="scanBtn">Ler cartão</button><a class="btn btn-line" href="#restaurante/cartao" target="_blank" rel="noopener">Cartão de exemplo</a><button class="btn btn-line" id="cfg">Ajustar cartão</button></span>`)+
+    `<div class="kpis">${kpi("Clientes com cartão","312","+28 este mês")+kpi("Voltaram este mês","41%","dos clientes com cartão")+kpi("Prêmios resgatados",String(18+S.loyLog.filter(x=>x.a==="resgate"&&!x.undone).length),"este mês")+kpi("Sumidos há 30 dias","18","convide para voltar")}</div>
     <div class="card" style="margin-top:14px"><div class="card-h"><div class="seg" id="cf">${[["todos","Todos"],["sumidos","Sumidos há 30+ dias"],["aniversario","Aniversário este mês"],["premio","Prêmio disponível"]].map(([k,l])=>`<button type="button" data-f="${k}" aria-pressed="${k===f}">${l}</button>`).join("")}</div><button class="btn btn-dark btn-sm" id="inv" ${L.length?"":"disabled"}>Enviar convite para ${L.length}</button></div>
-    <div class="scroll"><table class="t"><thead><tr><th>Cliente</th><th class="r">Visitas</th><th class="r">Última visita</th><th class="r">Carimbos</th><th class="r hide-s">Aniversário</th></tr></thead><tbody>${L.map(c=>`<tr><td><b>${c[0]}</b><br><small class="muted">${c[1]}</small></td><td class="r">${c[2]}</td><td class="r">há ${c[3]} dias</td><td class="r">${Math.min(c[4],S.card.need)}/${S.card.need}</td><td class="r hide-s">${c[5]}</td></tr>`).join("")||'<tr><td colspan="5" class="muted">Ninguém neste filtro.</td></tr>'}</tbody></table></div>
-    <p class="muted" style="font-size:12.5px;margin-top:10px">Só recebem mensagem os clientes que autorizaram no cadastro do cartão (LGPD).</p></div>`;
+    <div class="scroll"><table class="t"><thead><tr><th>Cliente</th><th class="r">Visitas</th><th class="r">Última visita</th><th class="r">Pontos</th><th class="r hide-s">Aniversário</th></tr></thead><tbody>${L.map(c=>`<tr><td><button class="go" style="color:var(--fg);font-size:14px;text-align:left" data-cl="${S.clients.indexOf(c)}"><b>${c[0]}</b></button><br><small class="muted">${c[1]}</small></td><td class="r">${c[2]}</td><td class="r">${ago(c[3])}</td><td class="r">${Math.min(c[4],S.card.need)}/${S.card.need}${c[4]>=S.card.need?' <span class="pill ok">prêmio</span>':""}</td><td class="r hide-s">${c[5]}</td></tr>`).join("")||'<tr><td colspan="5" class="muted">Ninguém neste filtro.</td></tr>'}</tbody></table></div>
+    <p class="muted" style="font-size:12.5px;margin-top:10px">Toque no nome para abrir a ficha. Só recebem mensagem os clientes que autorizaram no cadastro do cartão (LGPD).</p></div>
+    <div class="card" style="margin-top:14px"><div class="card-h"><h3>Últimos pontos e resgates</h3><span class="muted" style="font-size:12.5px">${ruleText()}</span></div>${logList(S.loyLog.slice(0,8))}</div>`;
     $("cf").onclick=e=>{const b=e.target.closest("button");if(b){f=b.dataset.f;sub.cf=f;draw()}};
+    $("scanBtn").onclick=()=>openScan(draw);
+    M().querySelectorAll("[data-cl]").forEach(b=>b.onclick=()=>openCard(+b.dataset.cl,draw));
+    bindUndo(M(),draw);
     $("inv").onclick=()=>{const msg={todos:"Oi, {nome}! Obrigado por ser cliente do Restaurante Exemplo. Esta semana tem novidade no cardápio, vem provar!",sumidos:"Oi, {nome}! Sentimos sua falta no Restaurante Exemplo. Esta semana o café é por nossa conta: é só mostrar o seu cartão.",aniversario:"Feliz aniversário, {nome}! No seu mês, a sobremesa é por conta da casa no Restaurante Exemplo.",premio:"{nome}, o seu cartão está completo! A sua {premio} está esperando no Restaurante Exemplo."}[f].replace("{premio}",S.card.prize.toLowerCase());
       dialog(`Convite para ${L.length} cliente${L.length>1?"s":""}`,`<label class="fld">Mensagem<textarea class="in" id="im" rows="4">${msg}</textarea></label><p class="muted" style="font-size:12.5px;margin-bottom:8px">Prévia para ${L[0][0].split(" ")[0]}:</p><div class="msg" id="ip"></div>`,`<button class="btn btn-line" onclick="document.getElementById('dlg').close()">Cancelar</button><button class="btn btn-dark" id="isend">Enviar pelo WhatsApp</button>`);
       const pv=()=>$("ip").textContent=$("im").value.replace("{nome}",L[0][0].split(" ")[0]);$("im").oninput=pv;pv();
       $("isend").onclick=()=>{$("dlg").close();toast(`Convite enviado para ${L.length} cliente${L.length>1?"s":""}`)}};
-    $("cfg").onclick=()=>{dialog("Cartão fidelidade",`<div class="fld3" style="grid-template-columns:1fr 1fr"><label class="fld">Carimbos para o prêmio<input class="in num" type="number" id="cn" value="${S.card.need}"></label><label class="fld">Prêmio<input class="in" id="cp" value="${S.card.prize}"></label></div><p class="muted" style="font-size:12.5px">A mudança vale para os cartões novos. Quem já tem cartão recebe a atualização na carteira do celular.</p>`,`<button class="btn btn-dark" id="csave">Salvar</button>`);
-      $("csave").onclick=()=>{S.card.need=+$("cn").value||10;S.card.prize=$("cp").value||"Sobremesa";$("dlg").close();draw();toast("Cartão atualizado")}}};
+    $("cfg").onclick=()=>{let rule=S.card.rule,gap=S.card.gap;
+      const paint=()=>{dialog("Cartão fidelidade",`<div class="fld3" style="grid-template-columns:1fr 1fr"><label class="fld">Pontos para o prêmio<input class="in num" type="number" id="cn" value="${S.card.need}"></label><label class="fld">Prêmio<input class="in" id="cp" value="${esc(S.card.prize)}"></label></div>
+        <p class="fld" style="margin-bottom:6px">Como o cliente ganha ponto</p><div class="seg" id="crule" style="margin-bottom:10px"><button type="button" data-v="visita" aria-pressed="${rule==="visita"}">1 ponto por visita</button><button type="button" data-v="valor" aria-pressed="${rule==="valor"}">Pelo valor da conta</button></div>
+        ${rule==="valor"?`<label class="fld">1 ponto a cada (R$)<input class="in num" type="number" id="cper" value="${S.card.per}" style="max-width:140px"></label>`:""}
+        <p class="fld" style="margin-bottom:6px">Intervalo entre pontos</p><div class="seg" id="cgap" style="margin-bottom:10px"><button type="button" data-v="dia" aria-pressed="${gap==="dia"}">1 vez por dia</button><button type="button" data-v="livre" aria-pressed="${gap==="livre"}">Sem limite</button></div>
+        <p class="muted" style="font-size:12.5px">A mudança vale para os cartões novos. Quem já tem cartão recebe a atualização na carteira do celular.</p>
+        <button class="go" id="creset" style="margin-top:12px">Reiniciar os dados de exemplo do cartão</button>`,`<button class="btn btn-dark" id="csave">Salvar</button>`);
+        const keep=()=>{S.card.need=+$("cn").value||10;S.card.prize=$("cp").value||"Sobremesa";if($("cper"))S.card.per=+$("cper").value||80};
+        $("crule").onclick=e=>{const b=e.target.closest("button");if(b){keep();rule=b.dataset.v;paint()}};
+        $("cgap").onclick=e=>{const b=e.target.closest("button");if(b){keep();gap=b.dataset.v;paint()}};
+        $("creset").onclick=()=>{try{localStorage.removeItem(FK)}catch(e){}location.reload()};
+        $("csave").onclick=()=>{keep();S.card.rule=rule;S.card.gap=gap;fSave();$("dlg").close();draw();toast("Cartão atualizado")}};paint()}};
   draw();
 };
+
+/* Cartão fidelidade: leitura, ficha e cartão de exemplo */
+const FK="aprile-hub-fid";
+const cardCode=c=>String(100000+((S.clients.indexOf(c)+3)*271829)%900000);
+const ago=d=>d===0?"hoje":d===1?"ontem":`há ${d} dias`;
+const me=()=>S.loyWho||"Carla Souza";
+function fLoad(){try{const v=JSON.parse(localStorage.getItem(FK)||"null");if(v){S.clients=v.clients;S.loyLog=v.log;S.card=v.card;S.loyWho=v.who}}catch(e){}
+  S.loyLog.forEach(x=>{if(x.ts<=0)x.ts=TODAY.getTime()+x.ts*864e5+(x.ts===0?12.67*36e5:0)})}
+function fSave(){try{localStorage.setItem(FK,JSON.stringify({clients:S.clients,log:S.loyLog,card:S.card,who:S.loyWho}))}catch(e){}}
+function ruleText(){return (S.card.rule==="valor"?`1 ponto a cada ${brl(S.card.per)}`:"1 ponto por visita")+(S.card.gap==="dia"?", 1 vez por dia":"")}
+function stampsHTML(n){const N=S.card.need;return `<div class="stamps">${Array.from({length:N},(_,i)=>i===N-1?`<i class="prize ${n>=N?"on":""}">${esc(S.card.prize)}</i>`:`<i class="${i<n?"on":""}">${i+1}</i>`).join("")}</div>`}
+function logList(L,client){
+  if(!L.length)return '<p class="muted" style="font-size:13.5px">Nada registrado ainda.</p>';
+  return `<ul class="list">${L.map(x=>{const i=S.loyLog.indexOf(x);return `<li style="${x.undone?"opacity:.5":""}"><span class="pill ${x.a==="resgate"?"ok":"info"}">${x.a==="resgate"?"resgate":"+"+x.n+" ponto"+(x.n>1?"s":"")}</span><span class="grow">${client?"":`<b>${esc(x.c)}</b>`}<small>${esc(x.who)} · ${x.at}${x.val?` · conta de ${brl(x.val)}`:""}${x.undone?" · desfeito":""}</small></span>${x.undone?"":`<button class="go" data-undo="${i}">Desfazer</button>`}</li>`}).join("")}</ul>`}
+function bindUndo(root,after){root.querySelectorAll("[data-undo]").forEach(b=>b.onclick=()=>{const x=S.loyLog[+b.dataset.undo],c=S.clients.find(k=>k[0]===x.c);if(!c||x.undone)return;
+  if(x.a==="resgate")c[4]+=S.card.need;else c[4]=Math.max(0,c[4]-x.n);x.undone=true;fSave();after();toast(x.a==="resgate"?`Resgate de ${x.c.split(" ")[0]} desfeito`:`Ponto de ${x.c.split(" ")[0]} desfeito`)})}
+function stamp(d){const t=new Date();return (t.toDateString()===new Date().toDateString()?"hoje ":"")+now()}
+function addLog(c,a,n,val){S.loyLog.unshift({c:c[0],a,n,val,who:me(),at:stamp(),ts:Date.now()});fSave()}
+
+/* QR: bibliotecas carregadas só quando precisa */
+const libs={};
+function lib(name){return libs[name]||(libs[name]=new Promise((ok,no)=>{const sc=document.createElement("script");sc.src="vendor/"+name+".js";sc.onload=ok;sc.onerror=no;document.head.appendChild(sc)}))}
+let cam=null;
+function stopCam(){if(cam){cam.stop=true;cam.stream&&cam.stream.getTracks().forEach(t=>t.stop());cam=null}}
+$("dlg").addEventListener("close",stopCam);
+function findCard(txt){txt=String(txt).trim();const m=txt.match(/APRILE-FID:(\d{6})/)||txt.replace(/\D/g,"").match(/^(\d{6})$/);if(!m)return -1;return S.clients.findIndex(c=>cardCode(c)===m[1])}
+function openScan(after){
+  stopCam();
+  const B=dialog("Ler cartão fidelidade",`<div class="scan" id="scanBox"><p id="scanMsg">Abrindo a câmera…</p></div>
+    <p class="muted" style="font-size:12.5px;margin:8px 0 14px">Aponte para o QR Code do cartão na carteira do celular do cliente.</p>
+    <label class="fld">Sem câmera? Digite o código de 6 dígitos, o nome ou o WhatsApp<input class="in" id="scanQ" inputmode="search" autocomplete="off" placeholder="Ex.: 482 913 ou Mariana"></label><div id="scanHits"></div>
+    <p class="muted" style="font-size:12.5px;margin-top:14px">Para testar: abra o <a class="go" href="#restaurante/cartao" target="_blank" rel="noopener">cartão de exemplo</a> em outro aparelho e leia o QR com este. Ou simule a leitura:</p>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px">${[0,6,3].map(i=>`<button class="btn btn-line btn-sm" data-sim="${i}">${S.clients[i][0].split(" ")[0]} · ${Math.min(S.clients[i][4],S.card.need)}/${S.card.need}</button>`).join("")}</div>`,"");
+  const q=$("scanQ"),hits=$("scanHits");
+  q.oninput=()=>{const t=q.value.trim().toLowerCase(),dg=t.replace(/\D/g,"");if(t.length<2){hits.innerHTML="";return}
+    const L=S.clients.filter(c=>c[0].toLowerCase().includes(t)||(dg.length>=3&&(cardCode(c).includes(dg)||c[1].replace(/\D/g,"").includes(dg)))).slice(0,5);
+    hits.innerHTML=L.map(c=>`<button class="hit" data-hit="${S.clients.indexOf(c)}"><span class="av">${c[0].split(" ").map(w=>w[0]).slice(0,2).join("")}</span><span class="grow"><b>${c[0]}</b><small class="muted" style="display:block">${c[1]} · cartão ${cardCode(c).replace(/(\d{3})(\d{3})/,"$1 $2")}</small></span><span class="pill mut">${Math.min(c[4],S.card.need)}/${S.card.need}</span></button>`).join("")||'<p class="muted" style="font-size:13px">Nenhum cliente encontrado.</p>';
+    hits.querySelectorAll("[data-hit]").forEach(b=>b.onclick=()=>openCard(+b.dataset.hit,after))};
+  B.querySelectorAll("[data-sim]").forEach(b=>b.onclick=()=>{toast("Cartão lido");openCard(+b.dataset.sim,after)});
+  startCam(txt=>{const i=findCard(txt);if(i<0){toast("Este QR não é um cartão do Restaurante Exemplo");return false}
+    if(navigator.vibrate)navigator.vibrate(60);toast("Cartão lido");openCard(i,after);return true});
+}
+async function startCam(onRead){
+  const box=$("scanBox"),msg=$("scanMsg");
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia||!isSecureContext){msg.textContent="A câmera só abre com o Hub no endereço seguro (https). Use o código abaixo.";return}
+  const me={stop:false};cam=me;
+  try{me.stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"}},audio:false})}
+  catch(e){if(cam===me)msg.textContent=e&&e.name==="NotAllowedError"?"A câmera foi bloqueada. Libere o acesso nas permissões do navegador ou use o código abaixo.":"Nenhuma câmera disponível neste aparelho. Use o código abaixo.";return}
+  if(me.stop){me.stream.getTracks().forEach(t=>t.stop());return}
+  const v=document.createElement("video");v.setAttribute("playsinline","");v.muted=true;v.srcObject=me.stream;box.innerHTML="";box.append(v);const fr=document.createElement("div");fr.className="frame";box.append(fr);await v.play().catch(()=>{});
+  let detect;
+  if("BarcodeDetector"in window){try{const bd=new BarcodeDetector({formats:["qr_code"]});detect=async()=>{const r=await bd.detect(v);return r[0]&&r[0].rawValue}}catch(e){}}
+  if(!detect){await lib("jsQR");const cv=document.createElement("canvas"),cx=cv.getContext("2d",{willReadFrequently:true});
+    detect=async()=>{if(!v.videoWidth)return null;const w=480,h=Math.round(v.videoHeight*w/v.videoWidth);cv.width=w;cv.height=h;cx.drawImage(v,0,0,w,h);const r=jsQR(cx.getImageData(0,0,w,h).data,w,h,{inversionAttempts:"dontInvert"});return r&&r.data}}
+  let last="";
+  const loop=async()=>{if(me.stop)return;let t=null;try{t=await detect()}catch(e){}
+    if(t&&t!==last){last=t;if(onRead(t)){return}}setTimeout(loop,180)};loop();
+}
+function openCard(i,after){
+  stopCam();const c=S.clients[i],N=S.card.need,code=cardCode(c);
+  const lastPt=S.loyLog.find(x=>x.c===c[0]&&x.a==="ponto"&&!x.undone),today=lastPt&&new Date(lastPt.ts).toDateString()===new Date().toDateString();
+  const blocked=S.card.gap==="dia"&&today,who=S.staff.filter(u=>u.a&&ROLES.restaurante[u.r]&&u.r!=="Cozinha");
+  const myRole=(S.staff.find(u=>u.n===me())||{}).r||"Dona",canOverride=myRole==="Dona"||myRole==="Gerente";
+  const B=dialog(c[0],`<p class="muted" style="font-size:13.5px">${c[1]} · cartão ${code.replace(/(\d{3})(\d{3})/,"$1 $2")} · ${c[2]} visitas · última ${ago(c[3])}</p>
+    ${stampsHTML(Math.min(c[4],N))}
+    <p style="font-weight:600;margin-bottom:12px">${c[4]>=N?`Cartão completo: ${esc(S.card.prize).toLowerCase()} liberada`:`${c[4]} de ${N} pontos · faltam ${N-c[4]} para ${esc(S.card.prize).toLowerCase()}`}</p>
+    ${blocked&&c[4]<N?`<div class="warnbox"><b>${c[0].split(" ")[0]} já ganhou ponto hoje</b>, às ${lastPt.at.replace("hoje ","")}, com ${esc(lastPt.who)}. A regra da casa é 1 ponto por dia.${canOverride?"":" Peça para a gerência liberar."}</div>`:""}
+    ${c[4]<N&&S.card.rule==="valor"?`<label class="fld">Valor da conta (R$)<input class="in num" type="number" id="fval" inputmode="decimal" placeholder="Ex.: 186" style="max-width:180px"></label><p class="muted" id="fprev" style="font-size:13px;margin:-6px 0 12px">${ruleText()}</p>`:""}
+    <label class="fld">Quem está atendendo<select class="in" id="fwho">${who.map(u=>`<option ${u.n===me()?"selected":""}>${esc(u.n)}</option>`).join("")}</select></label>
+    <p style="font-weight:600;margin:6px 0 2px">Histórico do cartão</p>${logList(S.loyLog.filter(x=>x.c===c[0]).slice(0,5),true)}`,
+    `<button class="btn btn-line" id="fscan">Ler outro cartão</button>${c[4]>=N?`<button class="btn btn-dark" id="fred">Resgatar ${esc(S.card.prize).toLowerCase()}</button>`:`<button class="btn btn-dark" id="fadd" ${blocked&&!canOverride?"disabled":""}>${blocked?"Adicionar mesmo assim":"Adicionar ponto"}</button>`}`);
+  const refresh=()=>{after&&after();openCard(i,after)};
+  $("fwho").onchange=()=>{S.loyWho=$("fwho").value;fSave();openCard(i,after)};
+  $("fscan").onclick=()=>openScan(after);
+  bindUndo(B,refresh);
+  const fv=$("fval");if(fv)fv.oninput=()=>{const n=Math.floor((+fv.value||0)/S.card.per);$("fprev").textContent=fv.value?`${n} ponto${n===1?"":"s"} (${ruleText()})`:ruleText()};
+  const ad=$("fadd");if(ad)ad.onclick=()=>{let n=1,val;if(fv){val=+fv.value;if(!val){toast("Digite o valor da conta");fv.focus();return}n=Math.floor(val/S.card.per);if(n<1){toast(`Conta abaixo de ${brl(S.card.per)} não gera ponto`);return}}
+    n=Math.min(n,N-c[4]);c[4]+=n;c[2]++;c[3]=0;addLog(c,"ponto",n,val);refresh();
+    toast(c[4]>=N?`Cartão completo! ${c[0].split(" ")[0]} já pode resgatar`:`+${n} ponto${n>1?"s":""} · ${c[4]} de ${N}. Cartão atualizado no celular`)};
+  const rd=$("fred");if(rd)rd.onclick=()=>{c[4]-=N;addLog(c,"resgate",0);refresh();toast(`${S.card.prize} resgatada. O cartão de ${c[0].split(" ")[0]} recomeçou`)};
+}
+function cardScreen(){
+  const pick=()=>{let i=+(sessionStorage.getItem("aprile-card")||0);return S.clients[i]?i:0};
+  let i=pick(),prev=null;
+  const paint=async()=>{const c=S.clients[i],N=S.card.need,code=cardCode(c),n=Math.min(c[4],N);
+    M().innerHTML=`<div style="max-width:420px;margin:0 auto">
+      <label class="fld" style="max-width:360px;margin:0 auto 14px">Cartão de exemplo de<select class="in" id="cpick">${S.clients.map((k,j)=>`<option value="${j}" ${j===i?"selected":""}>${k[0]}</option>`).join("")}</select></label>
+      <div class="pass"><div class="ph"><img src="../sol.png" alt="" width="34" height="20"> Restaurante Exemplo</div>
+       <div style="display:flex;justify-content:space-between;margin-top:18px;gap:10px"><div><small>Cliente</small><b style="font-size:17px">${c[0]}</b></div><div style="text-align:right"><small>Pontos</small><b style="font-size:17px">${n}/${N}</b></div></div>
+       ${stampsHTML(n)}
+       <div style="display:flex;justify-content:space-between;gap:10px"><div><small>Prêmio</small>${esc(S.card.prize)}</div><div style="text-align:right"><small>Regra</small>${ruleText()}</div></div>
+       <div class="qr"><div id="qrSvg" style="aspect-ratio:1"></div>${code.replace(/(\d{3})(\d{3})/,"$1 $2")}</div>
+       <p class="upd" id="upd">Cartão atualizado agora</p></div>
+      <p class="muted" style="font-size:12.5px;margin-top:16px;text-align:center">É assim que o cartão aparece na carteira do celular. Leia este QR no Hub, em Clientes › Ler cartão, de outro aparelho, ou digite o código. Neste protótipo, a atualização ao vivo acontece quando o Hub está aberto neste mesmo navegador. No sistema real, ela chega pela carteira do celular.</p></div>`;
+    $("cpick").onchange=()=>{i=+$("cpick").value;try{sessionStorage.setItem("aprile-card",i)}catch(e){}prev=null;paint()};
+    if(prev!==null&&prev!==c[4]){const u=$("upd");u.classList.add("on");setTimeout(()=>u.classList.remove("on"),2600)}prev=c[4];
+    try{await lib("qrcode");const qr=qrcode(0,"M");qr.addData("APRILE-FID:"+code);qr.make();$("qrSvg").innerHTML=qr.createSvgTag({cellSize:4,margin:0,scalable:true})}catch(e){$("qrSvg").textContent="QR indisponível"}};
+  addEventListener("storage",e=>{if(e.key===FK){fLoad();paint()}});
+  paint();
+}
 
 /* Conta */
 const ROLES={
@@ -645,11 +784,16 @@ function editStaff(i){
 }
 
 /* início pelo endereço: #pousada/operacao */
+fLoad();
 const h=location.hash.match(/^#(restaurante|pousada)(?:\/([\w-]+))?/);
 if(h&&h[2]==="fila-tela"){
   aud="restaurante";document.querySelector(".app").style.display="block";document.querySelector(".side").hidden=true;$("bottom").hidden=true;
   document.querySelector(".demo").innerHTML="<span><b>Fila de espera</b> · Restaurante Exemplo · tela da recepção</span><button type=\"button\" class=\"btn btn-sm\" style=\"background:#f5efe2;color:#1a1814\" onclick=\"document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen()\">Tela cheia</button>";
   M().style.padding="18px 16px 40px";filaView(M(),true);
+}else if(h&&h[2]==="cartao"){
+  aud="restaurante";document.querySelector(".app").style.display="block";document.querySelector(".side").hidden=true;$("bottom").hidden=true;
+  document.querySelector(".demo").innerHTML="<span><b>Cartão fidelidade</b> · como o cliente vê na carteira do celular</span><a href=\"#restaurante/clientes\" onclick=\"setTimeout(()=>location.reload())\">Abrir o Hub</a>";
+  M().style.padding="22px 16px 40px";cardScreen();
 }else{
   if(h){aud=h[1];if(h[2]&&NAVS[aud].some(n=>n[0]===h[2]))view=h[2]}
   renderNav();V[view]();
