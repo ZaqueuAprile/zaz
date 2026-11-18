@@ -272,8 +272,10 @@ const S={
   "Ceviche de peixe branco":[["Peixe branco","kg",.15,52],["Limão","kg",.1,7],["Cebola roxa e coentro","porção",1,1.5],["Milho e batata-doce","porção",1,2]],
   "Cocada de forno":[["Coco ralado","kg",.06,32],["Leite condensado","un",.25,7],["Sorvete de tapioca","porção",1,2.5]],
   "Caipirinha de caju":[["Cachaça","L",.06,45],["Caju","un",1,1.2],["Açúcar e gelo","porção",1,.6]]},
- queue:[{n:"Marcos",p:4,t:"(73) 9 9812-3311",at:"19:42",st:"esperando"},{n:"Fernanda",p:2,t:"(73) 9 9655-0921",at:"19:51",st:"esperando"},{n:"Ricardo",p:6,t:"(11) 9 8123-4400",at:"19:58",st:"esperando"}],
- orders:[{id:1041,c:"Juliana",it:"1 Moqueca de peixe, 1 Suco de cajá",v:152,col:0},{id:1042,c:"Pedro",it:"2 Picanha na brasa",v:224,col:1},{id:1039,c:"Beatriz",it:"1 Risoto de camarão, 1 Cocada",v:117,col:2},{id:1037,c:"Tiago",it:"1 Bolinho de bacalhau",v:42,col:3}],
+ queue:[{n:"Marcos",p:4,t:"(73) 9 9812-3311",at:"19:42",st:"esperando",pass:0},{n:"Fernanda",p:2,t:"(73) 9 9655-0921",at:"19:51",st:"esperando",pass:0},{n:"Ricardo",p:6,t:"(11) 9 8123-4400",at:"19:58",st:"esperando",pass:0},{n:"Sofia",p:3,t:"(73) 9 9440-1188",at:"20:04",st:"esperando",pass:0}],
+ limit:600,
+ orders:[{id:1044,c:"Juliana",tel:"(73) 9 9811-4402",it:"1 Moqueca de peixe, 1 Suco de cajá",v:152,at:"20:12",end:"Rua do Mucugê, 120",pg:"Pix",ok:false},{id:1043,c:"Pedro",tel:"(73) 9 9122-0303",it:"2 Picanha na brasa",v:224,at:"20:05",end:"Estrada da Balsa, km 3",pg:"Cartão na entrega",ok:false},{id:1042,c:"Beatriz",tel:"(31) 9 9777-1212",it:"1 Risoto de camarão, 1 Cocada de forno",v:117,at:"19:48",end:"Pousada Mar Azul, quarto 5",pg:"Pix",ok:true,okAt:"19:50",okBy:"Rui"},{id:1041,c:"Tiago",tel:"(73) 9 9001-5566",it:"1 Bolinho de bacalhau",v:42,at:"19:31",end:"Rua da Praia, 45",pg:"Dinheiro",ok:true,okAt:"19:33",okBy:"Rui"}],
+ tpl:{Abertura:[["Câmara fria","temp",5],["Freezer","temp",-18],["Validade dos molhos","check"],["Gás e exaustor","check"],["Bancadas higienizadas","check"]],Fechamento:[["Câmara fria","temp",5],["Freezer","temp",-18],["Lixo retirado e área limpa","check"],["Gás fechado","check"],["Alimentos cobertos e etiquetados","check"]]},
  checks:[{k:"Abertura",who:"Ana",at:"10:32",st:"atenção",obs:"Câmara fria a 7 °C (limite 5 °C)",it:[["Câmara fria","7 °C",0],["Freezer","−19 °C",1],["Validade dos molhos","ok",1],["Gás e exaustor","ok",1],["Bancadas higienizadas","ok",1]]},
   {k:"Fechamento",who:"",at:"23:30",st:"pendente",obs:"Previsto para o fim do serviço",it:[]},
   {k:"Fechamento de ontem",who:"Rui",at:"23:41",st:"ok",obs:"Tudo dentro do limite",it:[["Câmara fria","4 °C",1],["Freezer","−20 °C",1],["Lixo e limpeza","ok",1],["Gás fechado","ok",1]]}],
@@ -282,7 +284,7 @@ const S={
  rooms:[["1","Ocupado","mut","Saída amanhã · Família Reis"],["2","Ocupado","mut","Pediu late check-out"],["3","Pronto","ok","Check-in hoje 14h · Sr. Diniz"],["4","Manutenção","bad","Chuveiro com pouca pressão"],["5","Pronto","ok","Livre"],["6","Saída hoje","warn","Check-out até 12h"],["7","Limpando","warn","Joana · começou 10:05"],["8","Pronto","ok","Check-in hoje 16h · Laura e Pedro"]],
  maint:[{q:"4",t:"Chuveiro com pouca pressão",who:"Joana",at:"09:12",done:false},{q:"7",t:"Lâmpada da varanda",who:"Joana",at:"ontem",done:true}],
  stays:[["Marina Alves","Quarto 3","15/11",5,""],["Diego Santos","Quarto 4","14/11",3,"pendente"],["Ana e Bruno","Quarto 8","14/11",5,""],["Família Reis","Quarto 1","12/11",4,"contatado"],["Laura Ribeiro","Quarto 6","10/11",5,""]],
- users:[["Carla Souza","Dona","Tudo, inclusive financeiro e conta"],["Rui Martins","Gerente","Tudo, menos financeiro e conta"],["Ana Lima","Cozinha","Só checklists"],["Joana Silva","Camareira","Só quartos e manutenção"]],
+ staff:[{n:"Carla Souza",t:"(73) 9 9811-0001",r:"Dona",a:true},{n:"Rui Martins",t:"(73) 9 9811-0002",r:"Gerente",a:true},{n:"Ana Lima",t:"(73) 9 9811-0003",r:"Cozinha",a:true},{n:"Joana Silva",t:"(73) 9 9811-0004",r:"Camareira",a:true},{n:"Lucas Prado",t:"(73) 9 9811-0005",r:"Recepção",a:true}],
  pub:"ontem às 18:20",dirty:false
 };
 
@@ -313,9 +315,9 @@ V.inicio=()=>{
   const h=new Date().getHours(),sau=h<12?"Bom dia":h<18?"Boa tarde":"Boa noite";
   const dt=TODAY.toLocaleDateString("pt-BR",{weekday:"long",day:"numeric",month:"long"});
   if(aud==="restaurante"){
-    const fila=S.queue.filter(q=>q.st!=="sentado").length,prep=S.orders.filter(o=>o.col===1).length;
+    const fila=S.queue.length;
     M().innerHTML=head(`${sau}, Carla`,`${dt[0].toUpperCase()+dt.slice(1)} · ${BIZ[aud]}`)+
-    `<div class="kpis">${kpi("Vendas de ontem",brl(6840),'<em class="up">+4,2%</em> vs. terça passada')+kpi("CMV da semana","31,7%",'meta: 32%')+kpi("Menor saldo previsto",brl(7704),"em 20/11, acima da reserva")+kpi("Pedidos no delivery hoje","12",`${prep} em preparo agora`)}</div>
+    `<div class="kpis">${kpi("Vendas de ontem",brl(6840),'<em class="up">+4,2%</em> vs. terça passada')+kpi("CMV da semana","31,7%",'meta: 32%')+kpi("Menor saldo previsto",brl(7704),"em 20/11, acima da reserva")+kpi("Pedidos no delivery hoje","12",`${S.orders.filter(o=>!o.ok).length} para lançar no sistema`)}</div>
     <div class="two" style="margin-top:14px"><div class="card"><div class="card-h"><h3>Precisa da sua atenção</h3><span class="muted" style="font-size:13px">4 itens</span></div><ul class="list">
       <li><span class="pill bad">crítico</span><span class="grow"><b>Câmara fria a 7 °C na abertura</b><small>Checklist da Ana às 10:32 · limite é 5 °C</small></span><button class="go" data-go="operacao:checklists">Ver</button></li>
       <li><span class="pill warn">atenção</span><span class="grow"><b>Camarão na moranga com CMV de 44%</b><small>A meta da casa é 32%</small></span><button class="go" data-go="gestao:fichas">Ver ficha</button></li>
@@ -323,7 +325,7 @@ V.inicio=()=>{
       <li><span class="pill info">oportunidade</span><span class="grow"><b>18 clientes não voltam há mais de 30 dias</b><small>Mande um convite com o cartão fidelidade</small></span><button class="go" data-go="clientes">Ver</button></li></ul></div>
     <div class="card"><div class="card-h"><h3>Agora no restaurante</h3></div><ul class="list">
       <li><span class="grow"><b>${fila} grupos na fila de espera</b><small>Espera estimada de ${fila*8} minutos</small></span><button class="go" data-go="operacao:fila">Abrir</button></li>
-      <li><span class="grow"><b>${S.orders.filter(o=>o.col<3).length} pedidos de delivery abertos</b><small>${prep} em preparo · ${S.orders.filter(o=>o.col===0).length} novo</small></span><button class="go" data-go="operacao:delivery">Abrir</button></li>
+      <li><span class="grow"><b>${S.orders.filter(o=>!o.ok).length} pedidos do bot para lançar</b><small>Recebidos no WhatsApp, ainda não lançados no sistema da casa</small></span><button class="go" data-go="operacao:delivery">Abrir</button></li>
       <li><span class="grow"><b>Fechamento da cozinha</b><small>Checklist previsto para as 23:30</small></span><span class="pill mut">pendente</span></li>
       <li><span class="grow"><b>Relatório da semana</b><small>Sai na segunda às 8h, no WhatsApp e aqui</small></span><button class="go" data-go="gestao:relatorios">Anteriores</button></li></ul></div></div>`;
   }else{
@@ -412,11 +414,15 @@ V.gestao=()=>{
   if(cur==="fichas"){
     const sel=sub.ficha;
     if(sel){const rows=S.fichas[sel],p=S.dishes.find(d=>d.n.pt===sel);
-      G.innerHTML=`<button class="go" id="back">‹ Todas as fichas</button><div class="card" style="margin-top:10px"><div class="card-h"><h3 style="font-family:var(--serif);font-weight:400;font-size:21px">${sel}</h3><label style="font-size:13.5px;display:flex;align-items:center;gap:8px">Preço de venda <input class="in num" id="fP" type="number" value="${p.p}" style="width:90px"></label></div>
-       <div class="scroll"><table class="t"><thead><tr><th>Ingrediente</th><th class="r">Quantidade</th><th class="r">Custo unitário</th><th class="r">Custo</th></tr></thead><tbody>${rows.map((r,i)=>`<tr><td>${r[0]}</td><td class="r"><input class="in num" type="number" step=".05" data-q="${i}" value="${r[2]}" style="width:76px"> ${r[1]}</td><td class="r"><input class="in num" type="number" step=".5" data-c="${i}" value="${r[3]}" style="width:80px"></td><td class="r" id="fc${i}"></td></tr>`).join("")}</tbody></table></div><div id="fS" class="kpis" style="margin-top:14px;grid-template-columns:repeat(3,1fr)"></div></div>`;
-      const calc=()=>{let t=0;rows.forEach((r,i)=>{r[2]=+G.querySelector(`[data-q="${i}"]`).value||0;r[3]=+G.querySelector(`[data-c="${i}"]`).value||0;const v=r[2]*r[3];t+=v;$("fc"+i).textContent=brl2(v)});p.p=+$("fP").value||0;const c=p.p?t/p.p*100:0;
+      const paint=()=>{G.innerHTML=`<button class="go" id="back">‹ Todas as fichas</button><div class="card" style="margin-top:10px"><div class="card-h"><h3 style="font-family:var(--serif);font-weight:400;font-size:21px">${sel}</h3><label style="font-size:13.5px;display:flex;align-items:center;gap:8px">Preço de venda <input class="in num" id="fP" type="number" value="${p.p}" style="width:90px"></label></div>
+       <div class="scroll"><table class="t"><thead><tr><th>Ingrediente</th><th>Unidade</th><th class="r">Quantidade</th><th class="r">Custo unitário</th><th class="r">Custo</th><th></th></tr></thead><tbody>${rows.map((r,i)=>`<tr><td><input class="in" data-n="${i}" value="${esc(r[0])}" placeholder="Nome do ingrediente" style="min-width:150px"></td><td><select class="in" data-u="${i}" style="width:90px">${["kg","g","L","ml","un","porção"].map(u=>`<option ${u===r[1]?"selected":""}>${u}</option>`).join("")}</select></td><td class="r"><input class="in num" type="number" step=".05" min="0" data-q="${i}" value="${r[2]}" style="width:76px"></td><td class="r"><input class="in num" type="number" step=".5" min="0" data-c="${i}" value="${r[3]}" style="width:80px"></td><td class="r" id="fc${i}"></td><td class="r"><button class="go" data-del="${i}" aria-label="Remover ingrediente" style="color:var(--bad)">Remover</button></td></tr>`).join("")}</tbody></table></div>
+       <button class="btn btn-line btn-sm" id="addIng" style="margin-top:10px">+ Ingrediente</button><div id="fS" class="kpis" style="margin-top:14px;grid-template-columns:repeat(3,1fr)"></div></div>`;
+       calc();$("back").onclick=()=>{sub.ficha=null;V.gestao()};
+       $("addIng").onclick=()=>{rows.push(["","kg",0,0]);paint();G.querySelector(`[data-n="${rows.length-1}"]`).focus()};
+       G.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{const i=+b.dataset.del;const n=rows[i][0]||"Ingrediente";rows.splice(i,1);paint();toast(`${n} removido da ficha`)})};
+      const calc=()=>{let t=0;rows.forEach((r,i)=>{r[0]=G.querySelector(`[data-n="${i}"]`).value;r[1]=G.querySelector(`[data-u="${i}"]`).value;r[2]=+G.querySelector(`[data-q="${i}"]`).value||0;r[3]=+G.querySelector(`[data-c="${i}"]`).value||0;const v=r[2]*r[3];t+=v;$("fc"+i).textContent=brl2(v)});p.p=+$("fP").value||0;const c=p.p?t/p.p*100:0;
         $("fS").innerHTML=kpi("Custo do prato",brl2(t),"soma dos ingredientes")+kpi("CMV",`<span class="${c>32?"dn":""}">${pct(c)}</span>`,"meta: 32%")+kpi("Margem por prato",brl(p.p-t),"antes das despesas fixas")};
-      G.oninput=calc;calc();$("back").onclick=()=>{sub.ficha=null;V.gestao()};
+      G.oninput=calc;G.onchange=calc;paint();
     }else{
       G.innerHTML=`<div class="card"><div class="scroll"><table class="t"><thead><tr><th>Prato</th><th class="r hide-s">Custo</th><th class="r">Preço</th><th class="r">CMV</th><th class="r hide-s">Margem</th><th></th></tr></thead><tbody>${Object.keys(S.fichas).map(n=>{const p=S.dishes.find(d=>d.n.pt===n);if(!p)return"";const c=cost(n),m=c/p.p*100;return `<tr><td>${n}</td><td class="r hide-s">${brl2(c)}</td><td class="r">${brl(p.p)}</td><td class="r"><span class="pill ${m>38?"bad":m>32?"warn":"ok"}">${pct(m)}</span></td><td class="r hide-s">${brl(p.p-c)}</td><td class="r"><button class="go" data-f="${n}">Abrir</button></td></tr>`}).join("")}</tbody></table></div></div>`;
       G.onclick=e=>{const b=e.target.closest("[data-f]");if(b){sub.ficha=b.dataset.f;V.gestao()}};
@@ -443,26 +449,95 @@ V.gestao=()=>{
 V.operacao=()=>{
   if(aud==="pousada")return quartos();
   const cur=sub.operacao||"checklists";
-  M().innerHTML=head("Operação","Checklists da cozinha, fila de espera e pedidos do delivery.")+tabs("operacao",[["checklists","Checklists"],["fila","Fila de espera"],["delivery","Delivery"]])+`<div id="ox"></div>`;
+  M().innerHTML=head("Operação","Checklists da cozinha, fila de espera e pedidos do delivery.")+tabs("operacao",[["checklists","Checklists"],["fila","Fila de espera"],["delivery","Pedidos do delivery"]])+`<div id="ox"></div>`;
   bindTabs("operacao");const O=$("ox");
   if(cur==="checklists"){
-    O.innerHTML=`<div class="card"><ul class="list">${S.checks.map((c,i)=>`<li><span class="pill ${c.st==="ok"?"ok":c.st==="atenção"?"bad":"mut"}">${c.st}</span><span class="grow"><b>${c.k}</b><small>${c.who?c.who+" · "+c.at:"Previsto para "+c.at} · ${c.obs}</small></span>${c.it.length?`<button class="go" data-c="${i}">Ver</button>`:""}</li>`).join("")}</ul><p class="muted" style="font-size:12.5px;margin-top:10px">A equipe preenche no celular pelo QR Code da cozinha. Fica tudo guardado para a vigilância sanitária.</p></div>`;
-    O.onclick=e=>{const b=e.target.closest("[data-c]");if(!b)return;const c=S.checks[+b.dataset.c];dialog(`${c.k} · ${c.who}, ${c.at}`,`<ul class="list">${c.it.map(([n,v,ok])=>`<li><span class="grow">${n}</span><b>${v}</b><span class="pill ${ok?"ok":"bad"}">${ok?"ok":"fora do limite"}</span></li>`).join("")}</ul>`)}
+    O.innerHTML=`<div class="two"><div class="card"><div class="card-h"><h3>Registros</h3><span class="muted" style="font-size:13px">preenchidos pela equipe no celular</span></div><ul class="list">${S.checks.map((c,i)=>`<li><span class="pill ${c.st==="ok"?"ok":c.st==="atenção"?"bad":"mut"}">${c.st}</span><span class="grow"><b>${c.k}</b><small>${c.who?c.who+" · "+c.at:"Previsto para "+c.at} · ${c.obs}</small></span>${c.it.length?`<button class="go" data-c="${i}">Conferir</button>`:""}</li>`).join("")}</ul><p class="muted" style="font-size:12.5px;margin-top:10px">Fica tudo guardado para a vigilância sanitária.</p></div>
+     <div class="card"><div class="card-h"><h3>Modelos de checklist</h3><button class="btn btn-line btn-sm" id="newTpl">+ Novo modelo</button></div><ul class="list">${Object.keys(S.tpl).map(k=>`<li><span class="grow"><b>${esc(k)}</b><small>${S.tpl[k].length} itens · ${S.tpl[k].filter(x=>x[1]==="temp").length} com temperatura</small></span><button class="btn btn-line btn-sm" data-t="${esc(k)}">Editar</button></li>`).join("")}</ul><p class="muted" style="font-size:12.5px;margin-top:10px">O que você muda aqui aparece no celular da equipe no próximo preenchimento.</p></div></div>`;
+    O.onclick=e=>{const b=e.target.closest("[data-c]");if(b){const c=S.checks[+b.dataset.c];dialog(`${c.k} · ${c.who}, ${c.at}`,`<ul class="list">${c.it.map(([n,v,ok])=>`<li><span class="grow">${n}</span><b>${v}</b><span class="pill ${ok?"ok":"bad"}">${ok?"ok":"fora do limite"}</span></li>`).join("")}</ul>`);return}
+      const t=e.target.closest("[data-t]");if(t){editTpl(t.dataset.t);return}
+      if(e.target.closest("#newTpl"))editTpl(null)};
   }
-  if(cur==="fila"){
-    const draw=()=>{const Q=S.queue.filter(q=>q.st!=="sentado");
-      O.innerHTML=`<div class="two"><div class="card"><div class="card-h"><h3>${Q.length} grupos esperando</h3><span class="muted" style="font-size:13px">espera estimada de ${Q.length*8} min</span></div><ul class="list">${Q.length?Q.map((q,i)=>`<li><span class="av">${i+1}</span><span class="grow"><b>${esc(q.n)} · ${q.p} pessoas</b><small>Entrou ${q.at} · ${q.t}</small></span>${q.st==="avisado"?'<span class="pill ok">avisado</span><button class="btn btn-dark btn-sm" data-s="'+S.queue.indexOf(q)+'">Sentou</button>':'<button class="btn btn-line btn-sm" data-a="'+S.queue.indexOf(q)+'">Avisar mesa pronta</button>'}</li>`).join(""):'<li class="muted">Fila vazia.</li>'}</ul></div>
-       <div class="card"><div class="card-h"><h3>Colocar na fila</h3></div><label class="fld">Nome<input class="in" id="qn"></label><div class="fld3" style="grid-template-columns:1fr 1fr"><label class="fld">Pessoas<input class="in num" type="number" id="qp" value="2"></label><label class="fld">WhatsApp<input class="in" id="qt" placeholder="(73) 9 ..."></label></div><button class="btn btn-dark" id="qadd" style="width:100%">Adicionar</button><p class="muted" style="font-size:12.5px;margin-top:10px">O cliente também pode entrar sozinho pelo QR Code da porta.</p></div></div>`;
-      O.querySelectorAll("[data-a]").forEach(b=>b.onclick=()=>{S.queue[+b.dataset.a].st="avisado";toast(`Mensagem enviada para ${S.queue[+b.dataset.a].n}: sua mesa está pronta`);draw()});
-      O.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{S.queue[+b.dataset.s].st="sentado";draw()});
-      $("qadd").onclick=()=>{const n=$("qn").value.trim();if(!n){toast("Digite o nome");return}S.queue.push({n,p:+$("qp").value||1,t:$("qt").value||"sem telefone",at:now(),st:"esperando"});draw();toast(`${n} entrou na fila`)}};draw();
-  }
+  if(cur==="fila")filaView(O,false);
   if(cur==="delivery"){
-    const C=["Novos","Em preparo","Saiu para entrega","Entregues hoje"],N=["Aceitar","Saiu para entrega","Entregue",""];
-    const draw=()=>{O.innerHTML=`<div class="kanban">${C.map((c,k)=>`<div class="col"><h4>${c}<span>${S.orders.filter(o=>o.col===k).length}</span></h4>${S.orders.filter(o=>o.col===k).map(o=>`<div class="order"><b>#${o.id} · ${esc(o.c)}</b><small>${esc(o.it)}</small><small><b>${brl(o.v)}</b> · Pix</small>${N[k]?`<button class="btn ${k===0?"btn-dark":"btn-line"} btn-sm" data-o="${o.id}">${N[k]}</button>`:""}</div>`).join("")}</div>`).join("")}</div><p class="muted" style="font-size:12.5px;margin-top:8px">Os pedidos chegam do cardápio de delivery e o cliente recebe a atualização de cada etapa no WhatsApp. Sem comissão por pedido.</p>`;
-      O.querySelectorAll("[data-o]").forEach(b=>b.onclick=()=>{const o=S.orders.find(x=>x.id===+b.dataset.o);o.col++;draw();toast(`Pedido #${o.id}: ${C[o.col].toLowerCase()}`)})};draw();
+    const draw=()=>{const pend=S.orders.filter(o=>!o.ok);
+      O.innerHTML=`<div class="card"><div class="card-h"><h3>Pedidos recebidos pelo bot no WhatsApp</h3><span class="muted" style="font-size:13px">${pend.length?pend.length+" para lançar no sistema da casa":"todos lançados"}</span></div>
+       <ul class="list">${S.orders.map(o=>`<li style="align-items:flex-start"><span class="pill ${o.ok?"ok":"warn"}">${o.ok?"lançado":"lançar"}</span><span class="grow"><b>#${o.id} · ${esc(o.c)} · ${brl(o.v)}</b><small>${esc(o.it)}</small><small>${esc(o.end)} · ${o.pg} · recebido às ${o.at}${o.ok?` · lançado por ${o.okBy} às ${o.okAt}`:""}</small></span>${o.ok?"":`<span style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end"><button class="btn btn-line btn-sm" data-cp="${o.id}">Copiar pedido</button><button class="btn btn-dark btn-sm" data-ok="${o.id}">Marcar como lançado</button></span>`}</li>`).join("")}</ul>
+       <p class="muted" style="font-size:12.5px;margin-top:10px">O bot recebe o pedido completo no WhatsApp. Aqui a equipe confere e marca quando lançou no sistema da casa; pedido parado há mais de 5 minutos vira alerta no Início.</p></div>`;
+      O.querySelectorAll("[data-ok]").forEach(b=>b.onclick=()=>{const o=S.orders.find(x=>x.id===+b.dataset.ok);o.ok=true;o.okAt=now();o.okBy="Carla";draw();toast(`Pedido #${o.id} marcado como lançado`)});
+      O.querySelectorAll("[data-cp]").forEach(b=>b.onclick=()=>{const o=S.orders.find(x=>x.id===+b.dataset.cp);const t=`Pedido #${o.id}\n${o.c} · ${o.tel}\n${o.it}\nTotal: ${brl(o.v)} · ${o.pg}\nEntrega: ${o.end}`;const ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand("copy")}catch(e){}ta.remove();toast("Pedido copiado para lançar no sistema")})};draw();
   }
 };
+function editTpl(k){
+  const items=k?S.tpl[k].map(x=>x.slice()):[["","check"]];let name=k||"";
+  const paint=()=>{const B=dialog(k?`Editar checklist · ${k}`:"Novo checklist",`<label class="fld">Nome do checklist<input class="in" id="tn" value="${esc(name)}" placeholder="Ex.: Abertura do bar"></label>
+    <div class="scroll"><table class="t"><thead><tr><th>Item</th><th>Tipo</th><th class="r">Limite</th><th></th></tr></thead><tbody>${items.map((it,i)=>`<tr><td><input class="in" data-in="${i}" value="${esc(it[0])}" placeholder="Ex.: Freezer" style="min-width:140px"></td><td><select class="in" data-ty="${i}" style="width:130px"><option value="check" ${it[1]==="check"?"selected":""}>Marcar feito</option><option value="temp" ${it[1]==="temp"?"selected":""}>Temperatura</option></select></td><td class="r">${it[1]==="temp"?`<input class="in num" type="number" data-li="${i}" value="${it[2]??5}" style="width:70px"> °C`:'<span class="muted">—</span>'}</td><td class="r"><button class="go" data-rm="${i}" style="color:var(--bad)">Remover</button></td></tr>`).join("")}</tbody></table></div>
+    <button class="btn btn-line btn-sm" id="tadd" style="margin-top:10px">+ Item</button><p class="muted" style="font-size:12.5px;margin-top:10px">Temperatura acima do limite gera alerta para o dono no Início.</p>`,`${k?'<button class="btn btn-line" id="tdel" style="margin-right:auto;color:var(--bad)">Excluir</button>':""}<button class="btn btn-line" id="tcancel">Cancelar</button><button class="btn btn-dark" id="tsave">Salvar</button>`);
+    const read=()=>{name=$("tn").value.trim();items.forEach((it,i)=>{it[0]=B.querySelector(`[data-in="${i}"]`).value;it[1]=B.querySelector(`[data-ty="${i}"]`).value;const l=B.querySelector(`[data-li="${i}"]`);if(l)it[2]=+l.value})};
+    B.querySelectorAll("[data-ty]").forEach(x=>x.onchange=()=>{read();paint()});
+    B.querySelectorAll("[data-rm]").forEach(x=>x.onclick=()=>{read();items.splice(+x.dataset.rm,1);paint()});
+    $("tadd").onclick=()=>{read();items.push(["","check"]);paint();$("dlgB").querySelector(`[data-in="${items.length-1}"]`).focus()};
+    $("tcancel").onclick=()=>$("dlg").close();
+    if(k)$("tdel").onclick=()=>{delete S.tpl[k];$("dlg").close();V.operacao();toast(`Checklist ${k} excluído`)};
+    $("tsave").onclick=()=>{read();if(!name){toast("Dê um nome ao checklist");return}const ok=items.filter(x=>x[0].trim());if(!ok.length){toast("Inclua ao menos um item");return}
+      if(k&&k!==name)delete S.tpl[k];S.tpl[name]=ok.map(x=>x[1]==="temp"?[x[0].trim(),"temp",x[2]??5]:[x[0].trim(),"check"]);$("dlg").close();V.operacao();toast(`Checklist ${name} salvo`)}};
+  paint();
+}
+
+/* ===== FILA DE ESPERA (compartilhada entre abas) ===== */
+const QK="aprile-hub-fila";
+function qLoad(){try{const v=JSON.parse(localStorage.getItem(QK)||"null");if(v){S.queue=v.queue;S.limit=v.limit}}catch(e){}}
+function qSave(){try{localStorage.setItem(QK,JSON.stringify({queue:S.queue,limit:S.limit}))}catch(e){}}
+qLoad();
+const mmss=s=>{const a=Math.abs(Math.round(s));return(s<0?"−":"")+String(Math.floor(a/60)).padStart(2,"0")+":"+String(a%60).padStart(2,"0")};
+const left=q=>q.called?(q.called+q.lim*1000-Date.now())/1000:null;
+function qAct(i,act){const q=S.queue[i];if(!q)return;
+  if(act==="avisar"){q.st="avisado";q.called=Date.now();q.lim=S.limit;toast(`WhatsApp para ${q.n}: sua mesa está pronta`)}
+  if(act==="sentou"){S.queue.splice(i,1);toast(`${q.n} sentou`)}
+  if(act==="mais"){q.lim+=300;toast(`+5 minutos para ${q.n}`)}
+  if(act==="passar"){q.pass=(q.pass||0)+1;q.st="esperando";q.called=null;
+    if(q.pass>=3){S.queue.splice(i,1);toast(`${q.n} passou a vez 3 vezes e saiu da fila`)}
+    else{S.queue.splice(i,1);S.queue.splice(Math.min(i+1,S.queue.length),0,q);toast(`${q.n} passou a vez (${q.pass} de 3) e foi para trás do próximo`)}}
+  if(act==="sair"){S.queue.splice(i,1);toast(`${q.n} saiu da fila`)}
+  qSave();refreshFila()}
+function filaRows(big){
+  if(!S.queue.length)return `<li class="muted" style="padding:20px 0">Fila vazia.</li>`;
+  return S.queue.map((q,i)=>{const l=left(q),late=l!==null&&l<=0;
+    return `<li class="${late?"late":""}" style="${late?"background:#fbe9e6;margin:0 -12px;padding-left:12px;padding-right:12px;border-radius:8px":""}"><span class="av" style="${big?"width:44px;height:44px;font-size:17px":""}">${i+1}</span><span class="grow"><b style="${big?"font-size:20px":""}">${esc(q.n)} · ${q.p} pessoas</b><small>Entrou ${q.at} · ${esc(q.t)}${q.pass?` · passou a vez ${q.pass} de 3`:""}</small></span>
+    ${q.st==="avisado"?`<span class="num" data-timer="${i}" style="font-weight:700;font-size:${big?24:17}px;min-width:70px;text-align:right;color:${late?"var(--bad)":"var(--fg)"}">${mmss(l)}</span>
+      <span style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">${late?`<button class="btn btn-line btn-sm" data-q="${i}" data-act="mais">+5 min</button><button class="btn btn-line btn-sm" data-q="${i}" data-act="passar">Passar a vez</button>`:""}<button class="btn btn-dark btn-sm" data-q="${i}" data-act="sentou">Sentou</button></span>`
+     :`<span style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end"><button class="btn btn-line btn-sm" data-q="${i}" data-act="sair">Desistiu</button><button class="btn btn-dark btn-sm" data-q="${i}" data-act="avisar">Avisar mesa pronta</button></span>`}</li>`}).join("")}
+let filaEl=null,filaBig=false;
+function filaView(O,big){filaEl=O;filaBig=big;
+  const opts=[[30,"30 segundos (demonstração)"],[300,"5 minutos"],[600,"10 minutos"],[900,"15 minutos"]];
+  O.innerHTML=`<div class="${big?"":"two"}"><div class="card" ${big?'style="max-width:980px;margin:0 auto"':""}><div class="card-h"><h3 style="${big?"font-size:20px":""}" id="qh"></h3><span style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">${big?"":`<a class="btn btn-line btn-sm" href="#restaurante/fila-tela" target="_blank" rel="noopener">Abrir em tela separada</a>`}</span></div><ul class="list" id="ql"></ul></div>
+   <div class="card" ${big?'style="max-width:980px;margin:14px auto 0"':""}><div class="card-h"><h3>Colocar na fila</h3></div><div class="fld3" style="grid-template-columns:2fr 1fr 2fr"><label class="fld">Nome<input class="in" id="qn"></label><label class="fld">Pessoas<input class="in num" type="number" id="qp" value="2" min="1"></label><label class="fld">WhatsApp<input class="in" id="qt" placeholder="(73) 9 ..."></label></div><button class="btn btn-dark" id="qadd" style="width:100%">Adicionar à fila</button>
+    <label class="fld" style="margin-top:14px">Tempo para chegar à mesa depois do aviso<select class="in" id="qlim">${opts.map(([v,l])=>`<option value="${v}" ${v===S.limit?"selected":""}>${l}</option>`).join("")}</select></label>
+    <p class="muted" style="font-size:12.5px">Se o tempo acabar sem ninguém marcar que sentou, o Hub avisa. Dá para dar mais 5 minutos ou passar a vez; quem passa a vez 3 vezes sai da fila.</p><button class="go" id="qreset" style="margin-top:6px">Reiniciar a fila de exemplo</button></div></div>`;
+  O.onclick=e=>{const b=e.target.closest("[data-act]");if(b)qAct(+b.dataset.q,b.dataset.act)};
+  $("qadd").onclick=()=>{const n=$("qn").value.trim();if(!n){toast("Digite o nome");return}S.queue.push({n,p:+$("qp").value||1,t:$("qt").value||"sem telefone",at:now(),st:"esperando",pass:0});qSave();$("qn").value="";refreshFila();toast(`${n} entrou na fila`)};
+  $("qreset").onclick=()=>{S.queue=[{n:"Marcos",p:4,t:"(73) 9 9812-3311",at:"19:42",st:"esperando",pass:0},{n:"Fernanda",p:2,t:"(73) 9 9655-0921",at:"19:51",st:"esperando",pass:0},{n:"Ricardo",p:6,t:"(11) 9 8123-4400",at:"19:58",st:"esperando",pass:0},{n:"Sofia",p:3,t:"(73) 9 9440-1188",at:"20:04",st:"esperando",pass:0}];qSave();refreshFila();toast("Fila de exemplo reiniciada")};
+  $("qlim").onchange=e=>{S.limit=+e.target.value;qSave();toast("Tempo atualizado para os próximos avisos")};
+  refreshFila();
+}
+function refreshFila(){
+  if(filaEl&&document.body.contains(filaEl)&&$("ql")){const w=S.queue.filter(q=>q.st!=="avisado").length;$("qh").textContent=`${S.queue.length} grupo${S.queue.length===1?"":"s"} na fila · espera estimada de ${w*8} min`;$("ql").innerHTML=filaRows(filaBig)}
+  lateBanner();
+}
+function lateBanner(){
+  const late=S.queue.map((q,i)=>[q,i]).filter(([q])=>q.st==="avisado"&&left(q)<=0);
+  let el=$("lateBar");
+  if(!late.length||aud!=="restaurante"){if(el)el.remove();return}
+  if(!el){el=document.createElement("div");el.id="lateBar";el.style.cssText="position:sticky;top:0;z-index:40;background:var(--bad);color:#fff;padding:10px 16px;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;font-size:14px";document.querySelector(".demo").after(el);el.onclick=e=>{const b=e.target.closest("[data-act]");if(b)qAct(+b.dataset.q,b.dataset.act)}}
+  const [q,i]=late[0];
+  el.innerHTML=`<b>Fila de espera:</b> ${esc(q.n)} foi avisado há ${mmss(-left(q)+q.lim)} e ninguém marcou que sentou.${late.length>1?` (+${late.length-1})`:""} <button class="btn btn-sm" style="background:#fff;color:var(--bad)" data-q="${i}" data-act="mais">+5 min</button><button class="btn btn-sm" style="background:#fff;color:var(--bad)" data-q="${i}" data-act="passar">Passar a vez</button><button class="btn btn-sm" style="border-color:#fff;color:#fff" data-q="${i}" data-act="sentou">Sentou</button>`;
+}
+setInterval(()=>{
+  document.querySelectorAll("[data-timer]").forEach(t=>{const q=S.queue[+t.dataset.timer];if(!q||q.st!=="avisado")return;const l=left(q);t.textContent=mmss(l);if(l<=0&&!t.closest("li").classList.contains("late"))refreshFila()});
+  const anyLate=S.queue.some(q=>q.st==="avisado"&&left(q)<=0);if(anyLate!==!!$("lateBar"))lateBanner();
+},1000);
+addEventListener("storage",e=>{if(e.key===QK){qLoad();refreshFila()}});
+
 function quartos(){
   let sel=sub.room||"4";
   const draw=()=>{const r=S.rooms.find(x=>x[0]===sel),mt=S.maint.filter(m=>m.q===sel&&!m.done);
@@ -504,22 +579,47 @@ V.clientes=()=>{
 };
 
 /* Conta */
+const ROLES={
+ restaurante:{Dona:"Tudo, inclusive financeiro e conta",Gerente:"Tudo, menos financeiro e conta",Atendente:"Fila de espera e pedidos do delivery",Cozinha:"Só checklists"},
+ pousada:{Dona:"Tudo, inclusive conta",Gerente:"Tudo, menos conta",Recepção:"Quartos, hóspedes e guia",Camareira:"Só quartos e manutenção"}
+};
 V.conta=()=>{
   const R=aud==="restaurante";
   const plan=R?["Mesa Cheia + Gestão",990]:["Venda Direta Completo",990],ads=R?[["Fila de espera e reserva de mesa",150],["Delivery próprio pelo WhatsApp",190],["Cartão fidelidade na carteira do celular",190]]:[["Checklist de limpeza e manutenção",120],["Cartão de hóspede na carteira do celular",190]];
-  const users=R?S.users.filter(u=>u[1]!=="Camareira"):S.users.filter(u=>u[1]!=="Cozinha");
-  M().innerHTML=head("Conta","Plano, adicionais e quem tem acesso ao Hub.")+
+  const team=S.staff.map((u,i)=>[u,i]).filter(([u])=>ROLES[aud][u.r]);
+  M().innerHTML=head("Conta","Plano, adicionais e a equipe com acesso ao Hub.")+
   `<div class="two"><div class="card"><div class="card-h"><h3>Plano e adicionais</h3><a class="go" href="../#${aud}">Ver todos os adicionais</a></div><ul class="list"><li><span class="grow"><b>Plano ${plan[0]}</b><small>desde agosto de 2026</small></span><b class="num">${brl(plan[1])}/mês</b></li>${ads.map(a=>`<li><span class="grow">${a[0]}<small>adicional</small></span><span class="num">${brl(a[1])}/mês</span></li>`).join("")}<li><span class="grow"><b>Total por mês</b><small>próxima cobrança em 05/12, por Pix ou boleto</small></span><b class="num">${brl(plan[1]+ads.reduce((s,a)=>s+a[1],0))}</b></li></ul></div>
-  <div class="card"><div class="card-h"><h3>Pessoas com acesso</h3><button class="btn btn-line btn-sm" id="inviteU">+ Convidar</button></div><ul class="list">${users.map(u=>`<li><span class="av">${u[0].split(" ").map(x=>x[0]).join("")}</span><span class="grow"><b>${u[0]}</b><small>${u[1]} · ${u[2]}</small></span></li>`).join("")}</ul></div></div>
+  <div class="card"><div class="card-h"><h3>Equipe</h3><button class="btn btn-dark btn-sm" id="addU">+ Cadastrar funcionário</button></div><ul class="list">${team.map(([u,i])=>`<li style="${u.a?"":"opacity:.5"}"><span class="av">${u.n.split(" ").map(x=>x[0]).slice(0,2).join("")}</span><span class="grow"><b>${esc(u.n)}</b><small>${u.r} · ${ROLES[aud][u.r]}${u.a?"":" · acesso pausado"}</small></span><button class="btn btn-line btn-sm" data-u="${i}">Editar</button></li>`).join("")}</ul></div></div>
   <div class="card" style="margin-top:14px"><div class="card-h"><h3>Atendimento Aprile</h3></div><p class="muted">Precisa mudar algo que não está aqui? Fale com a Aprile pelo WhatsApp. A reunião mensal de resultados está marcada para terça, dia 25, às 15h.</p><a class="btn btn-dark" style="margin-top:12px;text-decoration:none" target="_blank" rel="noopener" href="https://wa.me/5575981102060?text=${encodeURIComponent("Olá! Sou da "+BIZ[aud]+" e preciso de ajuda no Hub.")}">Falar com a Aprile</a></div>`;
-  $("inviteU").onclick=()=>{dialog("Convidar pessoa",`<label class="fld">Nome<input class="in" id="un"></label><label class="fld">WhatsApp<input class="in" placeholder="(73) 9 ..."></label><label class="fld">Função<select class="in" id="ur">${(R?["Gerente","Atendente","Cozinha"]:["Gerente","Recepção","Camareira"]).map(x=>`<option>${x}</option>`).join("")}</select></label><p class="muted" style="font-size:12.5px">A pessoa recebe o link de acesso pelo WhatsApp e só vê o que a função permite.</p>`,`<button class="btn btn-dark" id="usend">Enviar convite</button>`);
-    $("usend").onclick=()=>{const n=$("un").value.trim();if(!n){toast("Digite o nome");return}S.users.push([n,$("ur").value,$("ur").value==="Gerente"?"Tudo, menos financeiro e conta":$("ur").value==="Cozinha"?"Só checklists":$("ur").value==="Camareira"?"Só quartos e manutenção":"Fila, delivery e conversas"]);$("dlg").close();V.conta();toast(`Convite enviado para ${n}`)}}
+  $("addU").onclick=()=>editStaff(-1);
+  M().querySelectorAll("[data-u]").forEach(b=>b.onclick=()=>editStaff(+b.dataset.u));
 };
+function editStaff(i){
+  const R=ROLES[aud],u=i<0?{n:"",t:"",r:Object.keys(R)[2],a:true}:S.staff[i];
+  const B=dialog(i<0?"Cadastrar funcionário":"Editar funcionário",`<label class="fld">Nome<input class="in" id="sn" value="${esc(u.n)}"></label><label class="fld">WhatsApp<input class="in" id="st" value="${esc(u.t)}" placeholder="(73) 9 ..."></label>
+   <label class="fld">Função<select class="in" id="sr">${Object.keys(R).map(r=>`<option ${r===u.r?"selected":""}>${r}</option>`).join("")}</select></label><p class="muted" id="sp" style="font-size:13px;margin:-4px 0 12px"></p>
+   ${i<0?"":`<label style="display:flex;align-items:center;gap:10px;font-size:14px"><button type="button" class="tgl" role="switch" id="sa" aria-checked="${u.a}"></button> Acesso ativo</label>`}
+   <p class="muted" style="font-size:12.5px;margin-top:12px">${i<0?"A pessoa recebe o link de acesso pelo WhatsApp e só vê o que a função permite.":"Pausar o acesso não apaga os registros que a pessoa já fez."}</p>`,
+   `${i<0||u.r==="Dona"?"":'<button class="btn btn-line" id="sdel" style="margin-right:auto;color:var(--bad)">Remover</button>'}<button class="btn btn-line" id="scancel">Cancelar</button><button class="btn btn-dark" id="ssave">${i<0?"Cadastrar e enviar convite":"Salvar"}</button>`);
+  const perm=()=>$("sp").textContent="Pode ver: "+R[$("sr").value];perm();$("sr").onchange=perm;
+  const sa=$("sa");if(sa)sa.onclick=()=>sa.setAttribute("aria-checked",sa.getAttribute("aria-checked")!=="true");
+  $("scancel").onclick=()=>$("dlg").close();
+  const del=$("sdel");if(del)del.onclick=()=>{S.staff.splice(i,1);$("dlg").close();V.conta();toast(`${u.n} removido da equipe`)};
+  $("ssave").onclick=()=>{const n=$("sn").value.trim();if(!n){toast("Digite o nome");return}
+    const v={n,t:$("st").value.trim(),r:$("sr").value,a:sa?sa.getAttribute("aria-checked")==="true":true};
+    if(i<0)S.staff.push(v);else S.staff[i]=v;$("dlg").close();V.conta();toast(i<0?`Convite enviado para ${n}`:`${n} atualizado`)};
+}
 
 /* início pelo endereço: #pousada/operacao */
-const h=location.hash.match(/^#(restaurante|pousada)(?:\/(\w+))?/);
-if(h){aud=h[1];if(h[2]&&NAVS[aud].some(n=>n[0]===h[2]))view=h[2]}
-renderNav();V[view]();
+const h=location.hash.match(/^#(restaurante|pousada)(?:\/([\w-]+))?/);
+if(h&&h[2]==="fila-tela"){
+  aud="restaurante";document.querySelector(".app").style.display="block";document.querySelector(".side").hidden=true;$("bottom").hidden=true;
+  document.querySelector(".demo").innerHTML="<span><b>Fila de espera</b> · Restaurante Exemplo · tela da recepção</span><button type=\"button\" class=\"btn btn-sm\" style=\"background:#f5efe2;color:#1a1814\" onclick=\"document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen()\">Tela cheia</button>";
+  M().style.padding="18px 16px 40px";filaView(M(),true);
+}else{
+  if(h){aud=h[1];if(h[2]&&NAVS[aud].some(n=>n[0]===h[2]))view=h[2]}
+  renderNav();V[view]();
+}
 addEventListener("resize",()=>{if(view==="gestao"&&(sub.gestao||"visao")==="visao")V.gestao()});
 </script>
 </body>
