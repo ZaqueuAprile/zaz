@@ -10,6 +10,49 @@ Cada projeto é uma página própria do mesmo build.
 | 01 | Bossa Cucina — restaurante, site conceitual | `/bossa-cucina/` | `src/projetos/bossa-cucina/` |
 | 02 | Gaivota — pousada em Santo André | `/pousada-gaivota/` | `src/projetos/pousada-gaivota/` |
 | 03 | Seu Beira Mar — cardápio de restaurante | `/seu-beira-mar/` | `src/projetos/seu-beira-mar/` |
+| 04 | Aprile — tecnologia e gestão | `/aprile/` | `aprile/index.html` |
+
+### Aprile
+
+Site da própria empresa (tecnologia e gestão para pousadas e restaurantes da
+Costa do Descobrimento), num único arquivo: `aprile/index.html`. Lora nos
+títulos, Manrope no texto e as cores do Painel Aprile.
+
+A chave **Pousada / Restaurante** no topo troca a página inteira: título, foto,
+números do setor (com fonte), planos, adicionais, a conta de retorno e as
+demonstrações. Os planos e preços vêm do Painel Aprile:
+
+- Pousadas: Reputação, Venda Direta e Venda Direta Completo.
+- Restaurantes: Reputação, Mesa Cheia e Mesa Cheia + Gestão (dashboard e
+  relatório semanais com CMV, DRE e fluxo de caixa, mais engenharia de cardápio).
+
+Demonstrações interativas: atendimento no WhatsApp (pousada e restaurante), site com reserva direta
+(espaço para vídeo), guia do quarto por NFC, cardápio em português, espanhol e
+inglês, placas de avaliação, cartão fidelidade na carteira do celular (carimbos,
+aviso de prêmio e convite para quem some há 30 dias) e o dashboard de gestão (vendas e CMV,
+DRE, fluxo de caixa previsto e engenharia de cardápio) com o relatório semanal
+imprimível. Há um modo apresentação e endereços diretos como
+`#restaurante/gestao` ou `#pousada/guia`.
+
+Cada adicional da tabela abre, pela seta à direita, uma explicação com prazo
+e forma de cobrança (textos em `XINFO`, no `<script>`) e o botão **ver
+demonstração**, que abre a demonstração numa janela: site em três idiomas, checklist de limpeza, painel de
+ocupação e preço, anúncio revisado, Rede Aprile, fila de espera, delivery
+próprio e checklist de abertura.
+
+Os itens de cada plano também abrem uma explicação pela seta (textos em
+`PINFO`), e todos os itens que não são "Tudo do…" têm demonstração: perfil do
+Google, respostas às avaliações, relatório mensal, motor de reservas, links do
+Google, ficha do hóspede, reunião mensal, gravação dos vídeos e fichas técnicas. Um **carrinho flutuante** junta plano e adicionais: os botões "Quero o
+plano", "Quero esta solução", "Quero este adicional" e "Adicionar ao carrinho"
+colocam o item no carrinho (um plano por tipo de negócio), que mostra o total de
+implantação e de mensalidade e envia o pedido pelo WhatsApp. Para o texto do
+pedido já chegar escrito na conversa, preencha `WHATSAPP_NUMERO` (DDI + DDD +
+número, só dígitos); sem ele, o texto é copiado e o link de `WHATSAPP` é aberto.
+
+Para pôr o vídeo do site, preencha `VIDEO_SITE` no início do `<script>` com um
+link do YouTube ou o caminho de um `.mp4`. Planos, adicionais e o link do
+WhatsApp ficam nas constantes do mesmo bloco.
 
 ### Seu Beira Mar
 

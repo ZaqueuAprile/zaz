@@ -19,6 +19,12 @@ const PROJETOS = [
     tipo: 'Restaurante · cardápio',
     href: './seu-beira-mar/',
   },
+  {
+    numero: '04',
+    nome: 'Aprile',
+    tipo: 'Tecnologia e gestão · site',
+    href: './aprile/',
+  },
 ]
 
 function App() {
