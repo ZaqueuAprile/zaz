@@ -1,0 +1,26 @@
+{
+  "hours": "Terça a domingo, das 18h às 23h. Fechado às segundas.",
+  "address": "Rua do Mucugê, 120, Arraial d'Ajuda, Porto Seguro (BA)",
+  "payment": "Pix, cartão de crédito e débito. Não aceitamos cheque.",
+  "delivery": "Entrega pelo WhatsApp no Arraial d'Ajuda, das 18h às 22h30, taxa de R$ 8,00. Pedido mínimo de R$ 60,00.",
+  "houseRules": [
+    "Não fazemos reserva de mesa; a fila de espera é por ordem de chegada.",
+    "Aceitamos pets na área externa.",
+    "Taxa de serviço de 10% opcional."
+  ],
+  "faq": [
+    { "q": "Tem estacionamento?", "a": "Não temos estacionamento próprio; há vagas na rua." },
+    { "q": "Tem opção vegana?", "a": "Sim, a moqueca de banana-da-terra é vegana." }
+  ],
+  "menu": [
+    { "category": "Entradas", "name": "Bolinho de bacalhau", "description": "8 unidades com aioli da casa", "price": 42, "available": true },
+    { "category": "Entradas", "name": "Ceviche de peixe branco", "description": "Limão, cebola roxa e coentro", "price": 54, "available": true, "tags": ["sem glúten"] },
+    { "category": "Pratos", "name": "Moqueca de peixe", "description": "Peixe do dia, leite de coco e dendê. Serve 2.", "price": 138, "available": true, "tags": ["sem glúten"] },
+    { "category": "Pratos", "name": "Moqueca de banana-da-terra", "description": "Banana-da-terra, leite de coco e dendê. Serve 2.", "price": 98, "available": true, "tags": ["vegana", "sem glúten"] },
+    { "category": "Pratos", "name": "Camarão na moranga", "description": "Camarão cremoso servido na moranga", "price": 124, "available": false },
+    { "category": "Pratos", "name": "Picanha na brasa", "description": "300 g, farofa, vinagrete e mandioca", "price": 112, "available": true },
+    { "category": "Sobremesas", "name": "Cocada de forno", "description": "Com sorvete de tapioca", "price": 28, "available": true },
+    { "category": "Bebidas", "name": "Caipirinha de caju", "description": "Cachaça e caju fresco", "price": 29, "available": true }
+  ],
+  "tone": "Simpático e direto, como um garçom atencioso da casa."
+}
