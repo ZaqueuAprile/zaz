@@ -1,0 +1,55 @@
+{
+  "_origem": "suposição pelo formato da uazapi v2; trocar por uma captura real antes de publicar",
+  "text": {
+    "EventType": "messages",
+    "instanceName": "rest-centro",
+    "owner": "5573988887777",
+    "token": "tok-centro",
+    "message": {
+      "chatid": "5573999990000@s.whatsapp.net",
+      "sender": "5573999990000@s.whatsapp.net",
+      "senderName": "Maria",
+      "messageid": "3EB0A1B2C3D4E5F6",
+      "messageType": "Conversation",
+      "text": "Vocês abrem hoje à noite?",
+      "fromMe": false,
+      "wasSentByApi": false,
+      "isGroup": false,
+      "messageTimestamp": 1763640000000
+    }
+  },
+  "fromPhone": {
+    "EventType": "messages",
+    "instanceName": "rest-centro",
+    "owner": "5573988887777",
+    "token": "tok-centro",
+    "message": {
+      "chatid": "5573999990000@s.whatsapp.net",
+      "sender": "5573988887777@s.whatsapp.net",
+      "messageid": "3EB0FFEEDDCCBBAA",
+      "messageType": "Conversation",
+      "text": "Oi Maria, aqui é o Rui, abrimos sim!",
+      "fromMe": true,
+      "wasSentByApi": false,
+      "isGroup": false,
+      "messageTimestamp": 1763640060000
+    }
+  },
+  "audio": {
+    "EventType": "messages",
+    "instanceName": "rest-centro",
+    "owner": "5573988887777",
+    "token": "tok-centro",
+    "message": {
+      "chatid": "5573999990000@s.whatsapp.net",
+      "sender": "5573999990000@s.whatsapp.net",
+      "messageid": "3EB0AUDIO0001",
+      "messageType": "AudioMessage",
+      "text": "",
+      "fromMe": false,
+      "wasSentByApi": false,
+      "isGroup": false,
+      "messageTimestamp": 1763640120000
+    }
+  }
+}
