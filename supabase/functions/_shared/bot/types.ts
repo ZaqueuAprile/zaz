@@ -23,6 +23,7 @@ export interface Restaurant {
   defaultLang: Lang
   handoffHours: number
   active: boolean
+  timezone: string
 }
 
 export type Direction = 'client' | 'bot' | 'team'
@@ -31,6 +32,7 @@ export interface StoredMessage {
   direction: Direction
   text: string
   at: Date
+  externalId?: string
 }
 
 export interface Conversation {

@@ -28,7 +28,7 @@ describe('askBrain', () => {
     await askBrain(client, opts)
     const p = calls[0] as any
     expect(p.model).toBe('claude-haiku-5-5')
-    expect(p.max_tokens).toBe(1024)
+    expect(p.max_tokens).toBe(4096)
     expect(p.output_config.effort).toBe('low')
     expect(p.system).toEqual([{ type: 'text', text: 'SISTEMA', cache_control: { type: 'ephemeral' } }])
     expect(p.output_config.format.type).toBe('json_schema')
@@ -65,5 +65,12 @@ describe('askBrain', () => {
   it('rejeita resposta vazia', async () => {
     const { client } = fakeClient({ text: '{"reply":"","handoff":false,"reason":"","lang":"pt"}' })
     await expect(askBrain(client, opts)).rejects.toThrow()
+  })
+})
+
+describe('ANTHROPIC_OPTIONS', () => {
+  it('limita o tempo da IA para caber na Edge Function', async () => {
+    const { ANTHROPIC_OPTIONS } = await import('./brain.ts')
+    expect(ANTHROPIC_OPTIONS).toEqual({ timeout: 20_000, maxRetries: 1 })
   })
 })

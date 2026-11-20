@@ -1,6 +1,6 @@
 // Sobe (ou atualiza) um restaurante e os dados do bot no Supabase.
 // Uso: SUPABASE_URL=... SUPABASE_SERVICE_ROLE_KEY=... npx tsx scripts/bot/carregar-dados.ts <dados.json> \
-//        --name "Nome" --instance <instancia-uazapi> --token <token-da-instancia> --team <telefone-da-equipe> [--cnpj ...] [--lang pt]
+//        --name "Nome" --instance <instancia-uazapi> --token <token-da-instancia> --team <telefone-da-equipe> [--cnpj ...] [--lang pt] [--tz America/Bahia]
 import { createClient } from '@supabase/supabase-js'
 import { readFileSync } from 'node:fs'
 import { parseArgs } from 'node:util'
@@ -10,7 +10,7 @@ const { values, positionals } = parseArgs({
   allowPositionals: true,
   options: {
     name: { type: 'string' }, instance: { type: 'string' }, token: { type: 'string' },
-    team: { type: 'string' }, cnpj: { type: 'string' }, lang: { type: 'string', default: 'pt' },
+    team: { type: 'string' }, cnpj: { type: 'string' }, lang: { type: 'string', default: 'pt' }, tz: { type: 'string', default: 'America/Bahia' },
   },
 })
 const file = positionals[0]
@@ -28,7 +28,7 @@ const data = validateKnowledge(JSON.parse(readFileSync(file, 'utf8')))
 const db = createClient(url, key, { auth: { persistSession: false } })
 const { data: rest, error } = await db.from('restaurants').upsert({
   name: values.name, instance: values.instance, instance_token: values.token,
-  team_phone: values.team!.replace(/\D/g, ''), cnpj: values.cnpj ?? null, default_lang: values.lang,
+  team_phone: values.team!.replace(/\D/g, ''), cnpj: values.cnpj ?? null, default_lang: values.lang, timezone: values.tz,
 }, { onConflict: 'instance' }).select('id').single()
 if (error) throw error
 const { error: e2 } = await db.from('knowledge').upsert({ restaurant_id: rest.id, data, published_at: new Date().toISOString() })

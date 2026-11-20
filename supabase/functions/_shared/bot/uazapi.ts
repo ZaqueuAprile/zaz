@@ -54,6 +54,7 @@ export function createUazapiClient(baseUrl: string, instanceToken: string, fetch
       method: 'POST',
       headers: { 'Content-Type': 'application/json', token: instanceToken },
       body: JSON.stringify(body),
+      signal: AbortSignal.timeout(10_000),
     })
     if (!res.ok) throw new Error(`uazapi ${path} respondeu ${res.status}`)
   }

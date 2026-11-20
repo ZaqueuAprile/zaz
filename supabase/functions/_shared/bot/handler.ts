@@ -1,6 +1,6 @@
 import type Anthropic from '@anthropic-ai/sdk'
 import type { BrainReply } from './brain.ts'
-import { buildMessages, buildSystemPrompt, HISTORY_LIMIT } from './knowledge.ts'
+import { buildMessages, buildSystemPrompt, HISTORY_LIMIT, localNow } from './knowledge.ts'
 import { classify, FIXED, isPaused, pauseUntil, teamAlert, wantsHuman } from './rules.ts'
 import type { Store } from './store.ts'
 import type { Conversation, IncomingMessage, Lang, Restaurant } from './types.ts'
@@ -27,6 +27,8 @@ export async function handleWebhook(deps: Deps, body: unknown): Promise<{ status
   }
 }
 
+const ECHO_WINDOW_MS = 5 * 60_000
+
 async function run(deps: Deps, body: unknown): Promise<Outcome> {
   const msg = parseWebhook(body)
   if (!msg) return 'ignored'
@@ -37,12 +39,21 @@ async function run(deps: Deps, body: unknown): Promise<Outcome> {
   }
   const { restaurant: r, knowledge } = found
   const kind = classify(msg)
-  if (kind === 'ignore') return 'ignored'
+  if (kind === 'ignore' || msg.phone === r.teamPhone) return 'ignored'
 
   const now = deps.now()
   const conv = await deps.store.conversation(r.id, msg.phone)
+
+  if (kind === 'team') {
+    // Eco de uma resposta do bot que chegou sem a marca de "enviada pela API": não é a equipe.
+    const recent = await deps.store.history(conv.id, HISTORY_LIMIT)
+    const echo = recent.some((m) => m.direction === 'bot' && m.text === msg.text && now.getTime() - m.at.getTime() < ECHO_WINDOW_MS)
+    if (echo) return 'ignored'
+  }
+
+  // Hora do servidor, não a do celular: mantém a ordem da conversa certa.
   const saved = await deps.store.saveMessage(conv.id, {
-    direction: kind === 'team' ? 'team' : 'client', text: msg.text || `[${msg.kind}]`, at: msg.at, externalId: msg.externalId,
+    direction: kind === 'team' ? 'team' : 'client', text: msg.text || `[${msg.kind}]`, at: now, externalId: msg.externalId,
   })
   if (saved === 'duplicate') return 'duplicate'
 
@@ -51,40 +62,51 @@ async function run(deps: Deps, body: unknown): Promise<Outcome> {
     return 'team'
   }
   if (isPaused(conv, now)) return 'paused'
+  if (msg.kind === 'other') return 'ignored'
 
   const wa = deps.uazapi(r)
   const lang: Lang = conv.lang ?? r.defaultLang
-
-  if (msg.kind !== 'text') {
-    await reply(deps, wa, conv, msg.phone, FIXED.media[lang], now)
-    return 'media'
+  let alerted = false
+  const handoffOnce = async (reason: string) => {
+    if (alerted) return
+    alerted = true
+    await handoff(deps, wa, r, conv, msg, reason, now)
   }
 
-  if (wantsHuman(msg.text)) {
-    await reply(deps, wa, conv, msg.phone, FIXED.failure[lang], now)
-    await handoff(deps, wa, r, conv, msg, 'cliente pediu para falar com uma pessoa', now)
-    return 'handoff'
-  }
-
-  let answer: BrainReply
   try {
-    const history = await deps.store.history(conv.id, HISTORY_LIMIT + 1)
-    const previous = history.slice(0, -1) // a última é a mensagem que acabou de chegar
-    answer = await deps.brain(buildSystemPrompt(r, knowledge), buildMessages(previous, msg.text))
+    if (msg.kind === 'media') {
+      await reply(deps, wa, conv, msg.phone, FIXED.media[lang], now)
+      return 'media'
+    }
+
+    if (wantsHuman(msg.text)) {
+      await handoffOnce('cliente pediu para falar com uma pessoa')
+      await reply(deps, wa, conv, msg.phone, FIXED.failure[lang], now)
+      return 'handoff'
+    }
+
+    let answer: BrainReply
+    try {
+      const history = await deps.store.history(conv.id, HISTORY_LIMIT + 1)
+      const previous = history.filter((m) => m.externalId !== msg.externalId).slice(-HISTORY_LIMIT)
+      answer = await deps.brain(buildSystemPrompt(r, knowledge), buildMessages(previous, msg.text, localNow(now, r.timezone)))
+    } catch (e) {
+      deps.log('falha_ia', { error: String(e), restaurant: r.id })
+      await handoffOnce('falha no atendimento automático')
+      await reply(deps, wa, conv, msg.phone, FIXED.failure[lang], now)
+      return 'failure'
+    }
+
+    if (answer.handoff) await handoffOnce(answer.reason || 'atendimento automático pediu ajuda')
+    await reply(deps, wa, conv, msg.phone, answer.reply, now, answer.usage)
+    await deps.store.setLang(conv.id, answer.lang)
+    return answer.handoff ? 'handoff' : 'replied'
   } catch (e) {
-    deps.log('falha_ia', { error: String(e), restaurant: r.id })
-    await reply(deps, wa, conv, msg.phone, FIXED.failure[lang], now)
-    await handoff(deps, wa, r, conv, msg, 'falha no atendimento automático', now)
+    // Qualquer falha depois de guardar a mensagem: a equipe precisa saber, senão o cliente fica sem resposta.
+    deps.log('falha_envio', { error: String(e), restaurant: r.id })
+    try { await handoffOnce('falha ao responder pelo WhatsApp') } catch (e2) { deps.log('falha_handoff', { error: String(e2) }) }
     return 'failure'
   }
-
-  await reply(deps, wa, conv, msg.phone, answer.reply, now, answer.usage)
-  await deps.store.setLang(conv.id, answer.lang)
-  if (answer.handoff) {
-    await handoff(deps, wa, r, conv, msg, answer.reason || 'atendimento automático pediu ajuda', now)
-    return 'handoff'
-  }
-  return 'replied'
 }
 
 async function reply(

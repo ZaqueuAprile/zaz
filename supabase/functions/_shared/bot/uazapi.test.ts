@@ -53,3 +53,22 @@ describe('createUazapiClient', () => {
     await expect(createUazapiClient('https://x.uazapi.com', 'tok', fakeFetch).sendText('1', 'oi')).rejects.toThrow()
   })
 })
+
+describe('timeout da uazapi', () => {
+  it('envia com sinal de cancelamento', async () => {
+    let signal: AbortSignal | undefined
+    const fakeFetch = (async (_u: string, init: RequestInit) => {
+      signal = init.signal ?? undefined
+      return new Response('{}', { status: 200 })
+    }) as unknown as typeof fetch
+    await createUazapiClient('https://x.uazapi.com', 'tok', fakeFetch).sendText('1', 'oi')
+    expect(signal).toBeInstanceOf(AbortSignal)
+  })
+})
+
+describe('outros tipos', () => {
+  it('reação vira kind other', () => {
+    const m = parseWebhook({ ...fixture.text, message: { ...fixture.text.message, messageType: 'ReactionMessage', text: '' } })!
+    expect(m.kind).toBe('other')
+  })
+})

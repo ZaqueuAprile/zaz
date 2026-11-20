@@ -21,13 +21,16 @@ const SCHEMA = {
   additionalProperties: false,
 } as const
 
+// A Edge Function morre perto de 150 s; sem isto o SDK espera até 10 min com 2 novas tentativas.
+export const ANTHROPIC_OPTIONS = { timeout: 20_000, maxRetries: 1 }
+
 export async function askBrain(
   client: Anthropic,
   opts: { model: string; system: string; messages: Anthropic.MessageParam[] },
 ): Promise<BrainReply> {
   const response = await client.messages.create({
     model: opts.model,
-    max_tokens: 1024,
+    max_tokens: 4096, // o raciocínio adaptativo do modelo também conta aqui
     system: [{ type: 'text', text: opts.system, cache_control: { type: 'ephemeral' } }],
     messages: opts.messages,
     output_config: { effort: 'low', format: { type: 'json_schema', schema: SCHEMA } },

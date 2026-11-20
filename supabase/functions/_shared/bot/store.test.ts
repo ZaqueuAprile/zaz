@@ -6,7 +6,7 @@ import type { Restaurant } from './types.ts'
 
 const r: Restaurant = {
   id: 'r1', name: 'Restaurante Exemplo', instance: 'rest-centro', instanceToken: 't', teamPhone: '557300000000',
-  defaultLang: 'pt', handoffHours: 12, active: true,
+  defaultLang: 'pt', handoffHours: 12, active: true, timezone: 'America/Bahia',
 }
 
 describe('FakeStore', () => {

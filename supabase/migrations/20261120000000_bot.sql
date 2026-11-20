@@ -11,6 +11,7 @@ create table public.restaurants (
   default_lang text not null default 'pt' check (default_lang in ('pt', 'es', 'en')),
   handoff_hours int not null default 12 check (handoff_hours > 0),
   active boolean not null default true,
+  timezone text not null default 'America/Bahia',
   created_at timestamptz not null default now()
 );
 

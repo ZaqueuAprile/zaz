@@ -1,6 +1,6 @@
 // Entrada da Edge Function: recebe o webhook da uazapi e entrega para handleWebhook.
 import Anthropic from '@anthropic-ai/sdk'
-import { askBrain } from '../_shared/bot/brain.ts'
+import { ANTHROPIC_OPTIONS, askBrain } from '../_shared/bot/brain.ts'
 import { handleWebhook } from '../_shared/bot/handler.ts'
 import { createSupabaseStore } from '../_shared/bot/store.ts'
 import { createUazapiClient } from '../_shared/bot/uazapi.ts'
@@ -12,7 +12,7 @@ const env = (k: string) => {
 }
 
 const store = createSupabaseStore(env('SUPABASE_URL'), env('SUPABASE_SERVICE_ROLE_KEY'))
-const anthropic = new Anthropic({ apiKey: env('ANTHROPIC_API_KEY') })
+const anthropic = new Anthropic({ apiKey: env('ANTHROPIC_API_KEY'), ...ANTHROPIC_OPTIONS })
 const model = Deno.env.get('BOT_MODEL') ?? 'claude-haiku-5-5'
 const uazapiBase = env('UAZAPI_BASE_URL')
 const secret = env('WEBHOOK_SECRET')

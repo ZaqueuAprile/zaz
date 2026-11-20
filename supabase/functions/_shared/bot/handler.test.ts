@@ -10,7 +10,7 @@ import type { Restaurant } from './types.ts'
 
 const r: Restaurant = {
   id: 'r1', name: 'Restaurante Exemplo', instance: 'rest-centro', instanceToken: 'tok-centro', teamPhone: '5573911112222',
-  defaultLang: 'pt', handoffHours: 12, active: true,
+  defaultLang: 'pt', handoffHours: 12, active: true, timezone: 'America/Bahia',
 }
 const CLIENT = '5573999990000'
 
@@ -45,7 +45,7 @@ function deps(): Deps {
 
 beforeEach(() => {
   store = new FakeStore()
-  store.seed(r, validateKnowledge(exemplo))
+  store.seed({ ...r }, validateKnowledge(exemplo))
   sent = []
   brainCalls = 0
   brainImpl = async () => ok('Abrimos às 18h, até as 23h.')
@@ -108,10 +108,11 @@ describe('handleWebhook', () => {
     brainImpl = async () => ok('Vou confirmar com a equipe.', true, 'prato fora do cardápio')
     const res = await handleWebhook(deps(), body({ text: 'tem lagosta?' }))
     expect(res.outcome).toBe('handoff')
-    expect(sent).toEqual([
+    expect(sent).toHaveLength(2)
+    expect(sent).toEqual(expect.arrayContaining([
       { to: CLIENT, text: 'Vou confirmar com a equipe.' },
       { to: r.teamPhone, text: expect.stringContaining('prato fora do cardápio') },
-    ])
+    ]))
     expect(store.conversations[0].pausedUntil).not.toBeNull()
   })
 
@@ -119,10 +120,11 @@ describe('handleWebhook', () => {
     brainImpl = async () => { throw new Error('timeout') }
     const res = await handleWebhook(deps(), body())
     expect(res).toEqual({ status: 200, outcome: 'failure' })
-    expect(sent).toEqual([
+    expect(sent).toHaveLength(2)
+    expect(sent).toEqual(expect.arrayContaining([
       { to: CLIENT, text: FIXED.failure.pt },
       { to: r.teamPhone, text: expect.stringContaining('[Aprile]') },
-    ])
+    ]))
     expect(store.conversations[0].pausedUntil).not.toBeNull()
   })
 
@@ -140,5 +142,59 @@ describe('handleWebhook', () => {
 
   it('nunca lança, mesmo com corpo estranho', async () => {
     expect(await handleWebhook(deps(), 'lixo')).toEqual({ status: 200, outcome: 'ignored' })
+  })
+})
+
+describe('correções da revisão', () => {
+  it('se o envio ao cliente falhar, pausa e avisa a equipe', async () => {
+    const d = deps()
+    d.uazapi = () => ({
+      sendText: async (to, text) => { if (to === CLIENT) throw new Error('uazapi 500'); sent.push({ to, text }) },
+      sendTyping: async () => {},
+    })
+    const res = await handleWebhook(d, body())
+    expect(res).toEqual({ status: 200, outcome: 'failure' })
+    expect(store.conversations[0].pausedUntil).not.toBeNull()
+    expect(sent).toEqual([{ to: r.teamPhone, text: expect.stringContaining('[Aprile]') }])
+  })
+
+  it('a IA vê a própria resposta anterior e a mensagem nova uma vez só', async () => {
+    let seen: { role: string; content: unknown }[] = []
+    const d = deps()
+    d.brain = async (_s, messages) => { seen = messages as typeof seen; return ok('resposta') }
+    await handleWebhook(d, body({ text: 'primeira', messageTimestamp: now.getTime() }))
+    await handleWebhook(d, body({ text: 'segunda', messageTimestamp: now.getTime() - 60_000 }))
+    const all = seen.map((m) => String(m.content)).join('\n')
+    expect(all.match(/segunda/g)).toHaveLength(1)
+    expect(all).toContain('primeira')
+    expect(seen.some((m) => m.role === 'assistant' && m.content === 'resposta')).toBe(true)
+  })
+
+  it('reação ou outro tipo sem texto não recebe resposta', async () => {
+    const res = await handleWebhook(deps(), body({ messageType: 'ReactionMessage', text: '' }))
+    expect(res.outcome).toBe('ignored')
+    expect(sent).toHaveLength(0)
+  })
+
+  it('ignora mensagens do telefone da equipe', async () => {
+    const res = await handleWebhook(deps(), body({ chatid: `${r.teamPhone}@s.whatsapp.net`, text: 'ok' }))
+    expect(res.outcome).toBe('ignored')
+    expect(sent).toHaveLength(0)
+    expect(brainCalls).toBe(0)
+  })
+
+  it('eco do bot sem a marca da API não pausa a conversa', async () => {
+    await handleWebhook(deps(), body())
+    const res = await handleWebhook(deps(), body({ fromMe: true, wasSentByApi: false, text: 'Abrimos às 18h, até as 23h.' }))
+    expect(res.outcome).toBe('ignored')
+    expect(store.conversations[0].pausedUntil).toBeNull()
+  })
+
+  it('manda a hora local para a IA', async () => {
+    let last = ''
+    const d = deps()
+    d.brain = async (_s, messages) => { last = String(messages.at(-1)!.content); return ok('sim') }
+    await handleWebhook(d, body())
+    expect(last).toContain('[agora: sexta-feira, 20/11/2026 18:00]')
   })
 })

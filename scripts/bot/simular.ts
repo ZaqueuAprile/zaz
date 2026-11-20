@@ -4,7 +4,7 @@ import Anthropic from '@anthropic-ai/sdk'
 import { readFileSync } from 'node:fs'
 import { createInterface } from 'node:readline/promises'
 import { askBrain } from '../../supabase/functions/_shared/bot/brain.ts'
-import { buildMessages, buildSystemPrompt, validateKnowledge } from '../../supabase/functions/_shared/bot/knowledge.ts'
+import { buildMessages, buildSystemPrompt, localNow, validateKnowledge } from '../../supabase/functions/_shared/bot/knowledge.ts'
 import type { StoredMessage } from '../../supabase/functions/_shared/bot/types.ts'
 
 const [file, name = 'Restaurante Exemplo'] = process.argv.slice(2)
@@ -14,7 +14,7 @@ if (!file) {
 }
 const knowledge = validateKnowledge(JSON.parse(readFileSync(file, 'utf8')))
 const system = buildSystemPrompt({
-  id: 'sim', name, instance: 'sim', instanceToken: '', teamPhone: '', defaultLang: 'pt', handoffHours: 12, active: true,
+  id: 'sim', name, instance: 'sim', instanceToken: '', teamPhone: '', defaultLang: 'pt', handoffHours: 12, active: true, timezone: 'America/Bahia',
 }, knowledge)
 const client = new Anthropic()
 const model = process.env.BOT_MODEL ?? 'claude-haiku-5-5'
@@ -24,7 +24,7 @@ console.log(`Simulando ${name} com ${model}. Escreva como cliente; linha vazia e
 for (;;) {
   const text = (await rl.question('cliente> ')).trim()
   if (!text) break
-  const r = await askBrain(client, { model, system, messages: buildMessages(history, text) })
+  const r = await askBrain(client, { model, system, messages: buildMessages(history, text, localNow(new Date(), 'America/Bahia')) })
   history.push({ direction: 'client', text, at: new Date() }, { direction: 'bot', text: r.reply, at: new Date() })
   console.log(`bot> ${r.reply}`)
   console.log(`     [idioma ${r.lang} · equipe ${r.handoff ? 'SIM: ' + r.reason : 'não'} · tokens ${r.usage.input}+${r.usage.output}, cache ${r.usage.cacheRead}]\n`)

@@ -42,7 +42,7 @@ export class FakeStore implements Store {
     return this.messages.filter((x) => x.convId === convId)
       .sort((a, b) => a.at.getTime() - b.at.getTime())
       .slice(-limit)
-      .map(({ direction, text, at }) => ({ direction, text, at }))
+      .map(({ direction, text, at, externalId }) => ({ direction, text, at, externalId }))
   }
   async setPause(convId: string, until: Date | null) {
     this.conversations.find((x) => x.id === convId)!.pausedUntil = until
@@ -75,6 +75,7 @@ export function createSupabaseStore(url: string, serviceKey: string): Store {
         restaurant: {
           id: data.id, name: data.name, instance: data.instance, instanceToken: data.instance_token,
           teamPhone: data.team_phone, defaultLang: data.default_lang, handoffHours: data.handoff_hours, active: data.active,
+          timezone: data.timezone,
         },
         knowledge: validateKnowledge(k.data),
       }
@@ -97,10 +98,10 @@ export function createSupabaseStore(url: string, serviceKey: string): Store {
       return 'saved'
     },
     async history(convId, limit) {
-      const { data, error } = await db.from('messages').select('direction, text, created_at')
+      const { data, error } = await db.from('messages').select('direction, text, created_at, external_id')
         .eq('conversation_id', convId).order('created_at', { ascending: false }).limit(limit)
       fail('history', error)
-      return (data ?? []).reverse().map((r) => ({ direction: r.direction, text: r.text, at: new Date(r.created_at) }))
+      return (data ?? []).reverse().map((r) => ({ direction: r.direction, text: r.text, at: new Date(r.created_at), externalId: r.external_id ?? undefined }))
     },
     async setPause(convId, until) {
       const { error } = await db.from('conversations').update({ paused_until: until?.toISOString() ?? null }).eq('id', convId)
