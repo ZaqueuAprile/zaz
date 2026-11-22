@@ -526,6 +526,26 @@ table.two th, table.two td{overflow-wrap:anywhere}
 h1, h2, h3, h4, h5, .lead, p, li, dd, dt, td, th, label{overflow-wrap:break-word}
 @media (max-width:380px){ h1, h2, h3, h4, h5, .lead, p, li, dd, dt, td, th, label, .nm{hyphens:auto; -webkit-hyphens:auto} }
 
+/* comanda de exemplo */
+.ticket{background:#FFFDF6; color:#1b1410; border:1.5px solid #cdbfa3; border-radius:4px; padding:16px 16px 20px; max-width:360px; margin:12px auto; box-shadow:3px 4px 0 var(--wood-soft); font-family:var(--f-body); position:relative;
+  background-image:repeating-linear-gradient(180deg, transparent 0 29px, #efe4cc 29px 30px); line-height:30px}
+.ticket::after{content:""; position:absolute; left:0; right:0; bottom:-8px; height:8px; background:linear-gradient(-45deg, transparent 6px, #FFFDF6 0) 0 0/12px 8px, linear-gradient(45deg, transparent 6px, #FFFDF6 0) 0 0/12px 8px}
+.ticket .t-head{display:flex; justify-content:space-between; gap:8px; font-weight:700; border-bottom:2px dashed #b9a98a; margin-bottom:4px; flex-wrap:wrap}
+.ticket .t-tempo{font-weight:700; color:#6E4527; margin-top:6px; display:flex; gap:8px; align-items:center; flex-wrap:wrap}
+.ticket ul{list-style:none; padding:0; margin:0}
+.ticket li{margin:0; display:flex; gap:8px; align-items:center; flex-wrap:wrap}
+.ticket .done-item{text-decoration:line-through; text-decoration-thickness:2px; color:#6b5e50}
+.mk{appearance:none; font:inherit; font-size:.95rem; font-weight:700; cursor:pointer; min-height:36px; min-width:44px; padding:0 10px; border-radius:999px; border:2px solid; background:transparent; line-height:1.2}
+.mk.circ{border-color:#B3301C; color:#B3301C}
+.mk.aler{border-color:#1F5FBF; color:#fff; background:#1F5FBF}
+.mk.march{border-color:#2E6B3C; color:#2E6B3C}
+.mk.hold{border-color:#6E4527; color:#6E4527; border-style:dashed}
+.mk.time{border-color:#5E4A3B; color:#5E4A3B}
+.mk[aria-pressed="true"]{outline:3px solid var(--focus); outline-offset:2px}
+.mk-legend{list-style:none; padding:0; display:grid; gap:8px; grid-template-columns:minmax(0,1fr)}
+.mk-legend li{margin:0; display:grid; grid-template-columns:auto 1fr; gap:10px; align-items:center}
+.pass-count{font-family:var(--f-title); font-size:1.5rem}
+
 /* frases */
 .quote{position:relative; margin:4px 0 26px; padding:6px 0 0 46px}
 .quote::before{content:"\201C"; position:absolute; left:0; top:-10px; font-family:var(--f-title); font-size:4.2rem; line-height:1; color:var(--tomato)}
@@ -1142,6 +1162,94 @@ h1, h2, h3, h4, h5, .lead, p, li, dd, dt, td, th, label{overflow-wrap:break-word
     <p><strong>POP ou checklist?</strong> O POP ensina <strong>como</strong> fazer uma tarefa. O checklist confere <strong>se</strong> cada coisa foi feita. Se você precisa explicar o jeito de fazer, crie um POP; se só precisa não esquecer nada, crie um checklist.</p>
     <div class="btn-row"><button class="btn primary" type="button" data-wiz="list"><svg aria-hidden="true"><use href="#u-plus"/></svg>Criar meu checklist</button></div>
     <p class="small muted" style="margin:0">A lista fica salva neste aparelho e aparece junto das outras, com “novo turno” e impressão. Para mandar às colegas, use o botão <strong>Compartilhar</strong> da lista.</p>
+  </div>
+
+  <h3 id="comandas">3.7 Comandas e marcha</h3>
+  <p>A <strong><button class="term" type="button" data-t="Comanda">comanda</button></strong> é o pedido da mesa por escrito. A <strong><button class="term" type="button" data-t="Marchar">marcha</button></strong> é o aviso para começar a fazer os pratos de uma mesa, na hora certa. Comanda bem marcada e marcha bem conferida evitam prato errado, prato frio e mesa esperando.</p>
+
+  <h4>As palavras da praça</h4>
+  <ul>
+    <li><strong>Cantar a comanda:</strong> ler o pedido em voz alta para a praça, assim que ele chega.</li>
+    <li><strong>Marchar:</strong> começar os pratos de uma etapa da mesa. “Marcha a 12!” quer dizer: pode fazer os pratos da mesa 12.</li>
+    <li><strong>Segurar:</strong> ainda não é para fazer. O pedido espera o aviso do salão ou da chefia.</li>
+    <li><strong>Tempo:</strong> cada etapa da refeição: entradas, massas, sobremesas.</li>
+    <li><strong>Passe:</strong> o balcão onde o prato pronto espera o garçom.</li>
+  </ul>
+
+  <h4>Como marcar a comanda</h4>
+  <ol>
+    <li><strong>Cante a comanda</strong> assim que ela chegar: mesa, número de pessoas e pratos.</li>
+    <li><strong>Anote a hora</strong> em que ela entrou. É assim que se sabe quem está esperando há mais tempo.</li>
+    <li><strong>Circule as alterações:</strong> sem um ingrediente, ponto diferente, troca de massa.</li>
+    <li><strong>Alergia se marca diferente</strong> (outra cor ou “AL” bem grande) e se avisa a chefia na hora. Para esse prato: utensílio, panela, tábua e mãos limpos.</li>
+    <li><strong>Separe por tempo</strong> e pendure as comandas na ordem em que chegaram: a mais antiga primeiro.</li>
+    <li><strong>Marque a marcha:</strong> quando o tempo marchar, escreva “M” e a hora ao lado dele.</li>
+    <li><strong>Risque o que saiu.</strong> Comanda toda riscada sai do trilho.</li>
+  </ol>
+  <div class="note"><svg aria-hidden="true"><use href="#i-clip"/></svg><p>Cada casa tem seu jeito de marcar. O importante é <strong>todo mundo marcar igual</strong>: combine os sinais com a chefia, e quem pegar a comanda no meio do serviço entende tudo.</p></div>
+
+  <div class="tool" id="tool-ticket">
+    <div class="tool-head">
+      <svg aria-hidden="true"><use href="#i-clip"/></svg>
+      <div><h3>Comanda de exemplo</h3><p>Toque em cada marca para entender o que ela quer dizer.</p></div>
+    </div>
+    <div class="ticket" aria-label="Comanda de exemplo da mesa 12">
+      <div class="t-head"><span>Mesa 12 · 4 pessoas</span><button class="mk time" type="button" data-mk="hora" aria-pressed="false">20:15</button></div>
+      <div><button class="mk aler" type="button" data-mk="alergia" aria-pressed="false">AL: frutos do mar</button></div>
+      <div class="t-tempo">Entradas <button class="mk march" type="button" data-mk="marcha" aria-pressed="false">M 20:16</button></div>
+      <ul>
+        <li class="done-item">2 Burrata <button class="mk time" type="button" data-mk="risco" aria-pressed="false">saiu</button></li>
+        <li class="done-item">1 Carpaccio de carne</li>
+      </ul>
+      <div class="t-tempo">Massas <button class="mk hold" type="button" data-mk="segura" aria-pressed="false">segura</button></div>
+      <ul>
+        <li>1 Alla puttanesca <button class="mk circ" type="button" data-mk="alteracao" aria-pressed="false">sem azeitona preta</button></li>
+        <li>1 Ragú de ossobuco</li>
+        <li>2 Torteli de ricota</li>
+      </ul>
+    </div>
+    <div id="mkOut" aria-live="polite"><p class="muted" style="margin:8px 0 0">Toque numa marca da comanda.</p></div>
+    <h4 style="margin-top:18px">Os sinais deste exemplo</h4>
+    <ul class="mk-legend">
+      <li><span class="mk time" aria-hidden="true">20:15</span><span>Hora em que a comanda entrou.</span></li>
+      <li><span class="mk circ" aria-hidden="true">sem…</span><span>Alteração: circulada.</span></li>
+      <li><span class="mk aler" aria-hidden="true">AL</span><span>Alergia: outra cor, e a chefia avisada.</span></li>
+      <li><span class="mk march" aria-hidden="true">M 20:16</span><span>Tempo marchado, com a hora.</span></li>
+      <li><span class="mk hold" aria-hidden="true">segura</span><span>Ainda não é para fazer.</span></li>
+    </ul>
+  </div>
+
+  <h4>Na casa de massas</h4>
+  <ul>
+    <li>A panela de água já fervendo, com sal, antes da primeira marcha.</li>
+    <li>Massa fresca cozinha de 1 a 4 minutos: ela só entra na água quando a mesa marcha.</li>
+    <li>Massa que vai para a frigideira sai 1 minuto antes, porque termina de cozinhar no molho.</li>
+    <li>Pratos da mesma mesa e do mesmo tempo ficam prontos juntos: comece pelo que demora mais.</li>
+  </ul>
+
+  <h4 id="conferir-marcha">O que conferir sempre na marcha</h4>
+  <p>Antes de o prato ir para o passe, confira:</p>
+  <ol>
+    <li><strong>Mesa e prato:</strong> é o prato da comanda, para a mesa certa?</li>
+    <li><strong>Alterações:</strong> o que foi pedido diferente foi feito?</li>
+    <li><strong>Alergia:</strong> sem contato com o ingrediente proibido (utensílio, panela e mãos limpos).</li>
+    <li><strong>Ponto:</strong> massa al dente, molho liso e brilhante, nada talhado.</li>
+    <li><strong>Porção:</strong> a quantidade da ficha técnica.</li>
+    <li><strong>Temperatura:</strong> prato quente bem quente, prato frio bem frio.</li>
+    <li><strong>Montagem e finalização:</strong> como na ficha técnica (azeite, queijo, ervas).</li>
+    <li><strong>Borda do prato limpa.</strong></li>
+    <li><strong>Mesa completa:</strong> os pratos da mesma mesa e do mesmo tempo saem juntos.</li>
+  </ol>
+
+  <div class="tool" id="tool-pass">
+    <div class="tool-head">
+      <svg aria-hidden="true"><use href="#i-plate-pasta"/></svg>
+      <div><h3>Conferência do prato</h3><p>Toque em cada item antes de mandar para o passe.</p></div>
+    </div>
+    <ul class="checks" id="passList"></ul>
+    <div id="passOut" aria-live="polite"></div>
+    <div class="btn-row"><button class="btn primary" type="button" id="passGo" disabled><svg aria-hidden="true"><use href="#u-check"/></svg>Prato conferido, pode sair</button><button class="btn" type="button" id="passReset"><svg aria-hidden="true"><use href="#u-reset"/></svg>Limpar</button></div>
+    <p class="small muted" style="margin:0">Pratos conferidos neste turno: <span class="pass-count" id="passCount">0</span>. <button class="btn small ghost" type="button" id="passZero">Zerar contagem</button></p>
   </div>
 </section>
 
@@ -1900,6 +2008,15 @@ const CUTS = [
   {n:'Concassé', d:'Tomate sem pele e sem semente, em cubinhos.', from:'Branqueie o tomate (seção 4.2), tire a pele e as sementes e corte em cubos.', uso:'Molhos rápidos e finalizações.', draw:'cube', s:5, c:'var(--tomato)', lbl:'cubinhos'},
   {n:'Rondelle', d:'Rodelas da mesma espessura.', from:'Corte o legume na transversal, sempre na mesma grossura.', uso:'Cenoura, abobrinha e linguiça.', draw:'round', c:'#E07B2E', lbl:'rodelas iguais'}
 ];
+const MARKS = {
+  hora:['Hora de entrada', 'A hora em que a comanda chegou. Serve para saber quem está esperando há mais tempo e para não deixar mesa para trás.'],
+  alergia:['Alergia', 'Marcada em outra cor e bem grande. Avise a chefia na hora. Todos os pratos dessa mesa são feitos com utensílio, panela, tábua e mãos limpos, sem contato com o ingrediente.'],
+  marcha:['Tempo marchado', '“M” e a hora: as entradas foram marchadas às 20:16. A praça já sabe que pode fazer, e quanto tempo passou.'],
+  risco:['Saiu', 'O prato saiu para o salão: risque. Quando todos os itens de um tempo estão riscados, aquele tempo acabou.'],
+  segura:['Segura', 'As massas ainda não foram marchadas. Deixe a mise en place pronta e a água fervendo, mas só comece quando vier o aviso.'],
+  alteracao:['Alteração', 'Circulada para ninguém passar batido: esta puttanesca sai sem azeitona preta. Confira de novo na marcha, antes do passe.']
+};
+const PASS = ['Mesa e prato certos, conferidos com a comanda', 'Alterações feitas', 'Alergia respeitada (ou não tem alergia na mesa)', 'Ponto certo: massa al dente, molho liso e brilhante', 'Porção da ficha técnica', 'Temperatura certa', 'Montagem e finalização da ficha', 'Borda do prato limpa', 'Mesa completa: os pratos do mesmo tempo saem juntos'];
 const STEEL = [
   ['Vou começar o turno', 'Chaira', 'Passe a chaira: 5 ou 6 passadas leves de cada lado. Faca que começa o dia alinhada corta bem o serviço todo.'],
   ['A faca começou a escorregar no tomate', 'Chaira', 'O fio entortou com o uso, e a chaira alinha de novo. Se depois de 5 ou 6 passadas de cada lado continuar escorregando, é hora da pedra.'],
@@ -1911,7 +2028,7 @@ const PARTS = [
   {id:'inicio', n:'', short:'Carta', title:'Carta e como usar', desc:''},
   {id:'p1', n:'1', short:'Boas práticas', title:'Boas práticas', desc:'Higiene, temperaturas seguras, armazenamento e etiquetas'},
   {id:'p2', n:'2', short:'POPs', title:'POPs', desc:'O passo a passo padrão das tarefas que se repetem'},
-  {id:'p3', n:'3', short:'Checklists', title:'Checklists', desc:'Listas para abertura, serviço, fechamento e recebimento'},
+  {id:'p3', n:'3', short:'Checklists', title:'Checklists', desc:'Listas para abertura, serviço, fechamento e recebimento. Comandas e marcha'},
   {id:'p4', n:'4', short:'Bases', title:'Bases da cozinha', desc:'Fritar, refogar, selar, cozinhar: o que muda e como saber o ponto. Facas e cortes'},
   {id:'p5', n:'5', short:'Molhos', title:'Molhos base', desc:'Fundos, roux, molhos-mãe e os molhos italianos'},
   {id:'p6', n:'6', short:'Pastas', title:'Pastas', desc:'Massa fresca, laminação, formatos, cozimento e finalização'},
@@ -1930,12 +2047,14 @@ const GLOSS = [
   ['Chaira','Haste de aço que alinha o fio da faca no dia a dia; não amola'],
   ['Chiffonade','Folhas enroladas e cortadas em tiras bem finas (manjericão)'],
   ['Clarificar a manteiga','Derreter e tirar a parte branca do leite, ficando só a gordura'],
+  ['Comanda','Pedido da mesa por escrito, que vai para a cozinha'],
   ['Concassé','Tomate sem pele e sem semente, em cubinhos'],
   ['Deglacear','Jogar líquido (vinho, caldo) na panela quente para soltar o fundo dourado'],
   ['Emulsionar','Unir gordura e água num molho liso'],
   ['Fouet','Batedor de arame'],
   ['Fundo','Caldo base de ossos ou legumes'],
   ['Julienne','Corte em tiras finas, de 2 a 3 mm de lado e cerca de 5 cm'],
+  ['Marchar','Começar os pratos de uma etapa da mesa: “marcha a 12!”'],
   ['Mantecare','Mexer a massa com molho, gordura e água da massa até ficar cremosa'],
   ['Mirepoix / soffritto','Cebola, cenoura e salsão, base de sabor'],
   ['Mise en place','Tudo pronto e no lugar antes de começar'],
@@ -2943,6 +3062,30 @@ document.addEventListener('click', async e => {
   setTimeout(() => box.scrollIntoView({block:'center'}), 300);
   };
   run(); window.addEventListener('hashchange', run);
+})();
+
+
+/* =====================================================================
+   PARTE 3 — COMANDAS E MARCHA
+   ===================================================================== */
+(function ticket(){
+  const out = $('#mkOut');
+  $('#tool-ticket').addEventListener('click', e => { const b = e.target.closest('button.mk'); if (!b) return;
+    $$('#tool-ticket button.mk').forEach(x => x.setAttribute('aria-pressed', x === b)); const [t, d] = MARKS[b.dataset.mk];
+    out.innerHTML = `<div class="detail"><h4>${esc(t)}</h4><p style="margin:0">${esc(d)}</p></div>`; });
+})();
+(function pass(){
+  const list = $('#passList'), go = $('#passGo'), out = $('#passOut'); let count = store.get('passCount', 0);
+  list.innerHTML = PASS.map((t, i) => `<li><label class="check"><input type="checkbox" data-p="${i}"><span>${esc(t)}</span></label></li>`).join('');
+  const boxes = () => $$('input[data-p]', list);
+  const paint = () => { const n = boxes().filter(x => x.checked).length; go.disabled = n < PASS.length;
+    out.innerHTML = n < PASS.length ? `<p class="small muted" style="margin:10px 0">${n} de ${PASS.length} conferidos.</p>` : `<div class="cheer show" style="margin:10px 0">${svgUse('u-heart')}<p>Tudo certo. Pode mandar para o passe!</p></div>`;
+    $('#passCount').textContent = count; };
+  list.addEventListener('change', paint);
+  go.addEventListener('click', () => { count++; store.set('passCount', count); boxes().forEach(x => x.checked = false); paint(); toast(`Prato conferido. ${count} ${count === 1 ? 'prato' : 'pratos'} neste turno.`); boxes()[0].focus(); });
+  $('#passReset').addEventListener('click', () => { boxes().forEach(x => x.checked = false); paint(); });
+  $('#passZero').addEventListener('click', () => { count = 0; store.set('passCount', 0); paint(); });
+  paint();
 })();
 
 /* =====================================================================
