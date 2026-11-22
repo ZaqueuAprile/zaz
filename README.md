@@ -144,6 +144,8 @@ PROJETO=bossa-cucina npm run build:arquivo
 
 ### Apostila de Cozinha
 
+Link publicado (GitHub Pages): https://zaqueuaprile.github.io/zaz/apostila-cozinha/
+
 Presente de despedida do Zaqueu para a equipe de um restaurante de massas
 italianas, num único arquivo: `apostila-cozinha/index.html` (HTML, CSS e JS
 juntos, sem build e sem dependências; as fontes Young Serif, Lexend e Caveat
