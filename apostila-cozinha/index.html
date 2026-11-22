@@ -482,6 +482,23 @@ mark{background:var(--oil-soft); color:inherit; border-radius:4px; padding:0 2px
 .term-pop b{font-family:var(--f-title); font-weight:400; font-size:1.2rem; display:block}
 .term-pop.show{display:block}
 
+/* frases */
+.quote{position:relative; margin:4px 0 26px; padding:6px 0 0 46px}
+.quote::before{content:"\201C"; position:absolute; left:0; top:-10px; font-family:var(--f-title); font-size:4.2rem; line-height:1; color:var(--tomato)}
+.quote blockquote{margin:0; font-family:var(--f-title); font-size:clamp(1.3rem, 4.6vw, 1.55rem); line-height:1.3; text-wrap:balance}
+.quote figcaption{margin-top:8px; color:var(--ink-2); font-size:1rem; font-weight:700}
+.quote.after-letter{margin:-8px 0 36px}
+
+/* cortes e facas */
+.cut-fig{margin:14px 0 0; background:var(--paper); border:2px solid var(--rule); border-radius:var(--r-md); padding:10px}
+.cut-fig svg{width:100%; height:auto; display:block}
+.cut-fig figcaption{margin-top:6px}
+.dobras{display:flex; gap:8px; margin:10px 0; flex-wrap:wrap}
+.dobras i{width:34px; height:34px; border-radius:50%; border:2.5px solid var(--ink); display:grid; place-items:center; font-style:normal; font-weight:700; background:var(--card)}
+.dobras i.on{background:var(--basil); border-color:var(--basil); color:var(--on-accent)}
+.prep h5{font-family:var(--f-title); font-weight:400; font-size:1.3rem; margin:16px 0 6px}
+.prep ol{margin-bottom:8px}
+
 /* footer */
 .foot{border-top:2px solid var(--rule); margin-top:40px; padding-top:40px; padding-bottom:24px; text-align:center}
 .foot .sig-name{font-family:var(--f-hand); font-size:3.2rem; color:var(--tomato); line-height:1; margin:8px 0}
@@ -489,7 +506,7 @@ mark{background:var(--oil-soft); color:inherit; border-radius:4px; padding:0 2px
 .foot p{max-width:46ch; margin-left:auto; margin-right:auto}
 
 /* toast */
-.toast{position:fixed; left:50%; top:16px; transform:translate(-50%,-140%); z-index:95; background:var(--ink); color:var(--paper); padding:12px 18px; border-radius:999px; font-weight:700; transition:transform .25s ease; max-width:calc(100vw - 32px); text-align:center}
+.toast{position:fixed; left:50%; top:16px; transform:translate(-50%,-140%); z-index:95; background:var(--ink); color:var(--paper); padding:12px 18px; border-radius:16px; font-weight:700; transition:transform .25s ease; max-width:calc(100vw - 32px); text-align:center}
 .toast.show{transform:translate(-50%,0)}
 
 /* print */
@@ -646,6 +663,12 @@ mark{background:var(--oil-soft); color:inherit; border-radius:4px; padding:0 2px
     <path class="k" d="M26 10a6 6 0 0 1 12 0v28a11 11 0 1 1-12 0z"/>
     <circle class="f-t" cx="32" cy="47" r="7"/><path class="f-t" d="M30 20h4v24h-4z"/>
     <path class="kt" d="M42 16h5M42 24h5M42 32h5"/>
+  </symbol>
+  <symbol id="i-steel" viewBox="0 0 64 64">
+    <path class="f-wd off" d="M26 40h12v18H26z"/>
+    <path class="k" d="M26 40h12v18H26zM22 40h20M32 40V6"/>
+    <path class="kt" d="M30 34h4M30 26h4M30 18h4M30 10h4"/>
+    <circle class="k" cx="32" cy="61" r="1.5"/>
   </symbol>
   <symbol id="i-knife" viewBox="0 0 64 64">
     <path class="f-w off" d="M6 44h52v8H6z"/>
@@ -841,6 +864,7 @@ mark{background:var(--oil-soft); color:inherit; border-radius:4px; padding:0 2px
     <p>Com carinho e orgulho de ter trabalhado com vocês,</p>
     <p class="sign">Zaqueu</p>
   </article>
+  <figure class="quote after-letter"><blockquote><p style="margin:0">Cozinhar é um ato de resistência.</p></blockquote><figcaption>Autor desconhecido</figcaption></figure>
 
   <h3 id="como-usar">Como usar esta apostila</h3>
   <ol>
@@ -873,6 +897,7 @@ mark{background:var(--oil-soft); color:inherit; border-radius:4px; padding:0 2px
       <use href="#i-thermo" x="130" y="4" width="70" height="70"/><use href="#i-fridge" x="212" y="4" width="70" height="70"/><use href="#i-tag" x="290" y="14" width="60" height="60"/>
     </svg>
   </div>
+  <figure class="quote"><blockquote><p style="margin:0">Ninguém nasce um grande cozinheiro; aprende-se fazendo.</p></blockquote><figcaption>Julia Child</figcaption></figure>
   <p class="lead">Comida segura depende de três coisas: mãos e superfícies limpas, temperatura certa e tempo curto fora da geladeira. As regras abaixo seguem a <a href="https://faolex.fao.org/docs/pdf/bra181030.pdf" rel="noopener">RDC 216/2004 da Anvisa</a>, a norma de boas práticas para serviços de alimentação.</p>
 
   <div class="tool" id="tool-thermo">
@@ -1028,6 +1053,7 @@ mark{background:var(--oil-soft); color:inherit; border-radius:4px; padding:0 2px
       <use href="#i-knife" x="212" y="10" width="76" height="64"/><use href="#i-basil" x="296" y="18" width="56" height="56"/>
     </svg>
   </div>
+  <figure class="quote"><blockquote><p style="margin:0">Faça simples.</p></blockquote><figcaption>Auguste Escoffier</figcaption></figure>
   <p class="lead">POP é o jeito certo e único de fazer uma tarefa que se repete. Se todo mundo faz igual, o resultado é sempre o mesmo, não importa quem está no turno.</p>
   <p>Toque num POP para abrir. O botão <strong>Passo a passo</strong> mostra um passo por tela, com letra grande, para seguir com a mão ocupada.</p>
   <ul class="pop-list" id="popList"></ul>
@@ -1043,6 +1069,7 @@ mark{background:var(--oil-soft); color:inherit; border-radius:4px; padding:0 2px
       <use href="#i-clip" x="14" y="4" width="70" height="70"/><use href="#i-clip" x="80" y="14" width="60" height="60"/><use href="#i-clock" x="160" y="8" width="66" height="66"/><use href="#i-pot" x="240" y="6" width="80" height="70"/>
     </svg>
   </div>
+  <figure class="quote"><blockquote><p style="margin:0">A mise en place é a religião de todo bom cozinheiro de linha.</p></blockquote><figcaption>Anthony Bourdain</figcaption></figure>
   <p class="lead">Checklist tira o peso da memória: você não precisa lembrar de tudo, só seguir a lista. Imprima, plastifique e marque com caneta de quadro branco a cada turno.</p>
   <div class="tool" id="tool-checks">
     <div class="tool-head">
@@ -1064,6 +1091,7 @@ mark{background:var(--oil-soft); color:inherit; border-radius:4px; padding:0 2px
       <use href="#i-pan" x="6" y="4" width="84" height="76"/><use href="#i-meat" x="96" y="18" width="56" height="56"/><use href="#i-pot" x="160" y="0" width="84" height="76"/><use href="#i-garlic" x="252" y="20" width="52" height="52"/><use href="#i-oil" x="300" y="12" width="56" height="62"/>
     </svg>
   </div>
+  <figure class="quote"><blockquote><p style="margin:0">A simplicidade não permite erros.</p></blockquote><figcaption>Alex Atala</figcaption></figure>
   <p class="lead">Todo método de cocção se resume a uma pergunta: <strong>o calor chega ao alimento pela gordura e pelo ar, ou pela água?</strong> Água nunca passa de 100 °C, e o alimento só doura acima de uns 140 °C. Por isso o que é cozido em água fica claro e macio, e o que é frito ou selado fica dourado e com crosta.</p>
 
   <div class="diagram" id="heatMap">
@@ -1139,6 +1167,113 @@ mark{background:var(--oil-soft); color:inherit; border-radius:4px; padding:0 2px
     </div>
     <div id="quizBox" aria-live="polite"></div>
   </div>
+
+  <h3 id="cortes">4.5 Facas e cortes</h3>
+  <p>Corte do mesmo tamanho cozinha por igual. Se metade da cebola está em pedaço grande e metade em pedaço pequeno, uma parte queima antes da outra ficar pronta.</p>
+  <p><strong>Corte com segurança:</strong></p>
+  <ul>
+    <li><strong>Tábua firme:</strong> pano úmido embaixo, para não escorregar.</li>
+    <li><strong>Mão em garra:</strong> dedos dobrados para dentro, com a lâmina encostada nos nós dos dedos.</li>
+    <li><strong>Base reta:</strong> corte um lado do legume para ele ficar deitado, sem rolar.</li>
+    <li><strong>Faca afiada:</strong> faca cega escorrega, e é ela que mais corta o dedo.</li>
+    <li>Para tirar da tábua o que você cortou, use o dorso da faca, não o fio.</li>
+  </ul>
+
+  <div class="tool" id="tool-cuts">
+    <div class="tool-head">
+      <svg aria-hidden="true"><use href="#i-knife"/></svg>
+      <div><h3>Os cortes clássicos</h3><p>Toque num corte para ver o tamanho, como fazer e onde usar.</p></div>
+    </div>
+    <div class="chips" id="cutChips" role="group" aria-label="Cortes"></div>
+    <figure class="cut-fig"><svg id="cutSvg" viewBox="0 0 360 210" role="img" aria-label="Desenho do corte"></svg><figcaption class="small muted">Os cortes estão desenhados na mesma escala. A régua embaixo mostra os milímetros.</figcaption></figure>
+    <div id="cutOut" aria-live="polite"></div>
+    <p class="small muted" style="margin:12px 0 0">As medidas são as mais usadas nas escolas de cozinha. O que importa de verdade é todos os pedaços ficarem iguais.</p>
+  </div>
+
+  <h3 id="facas">4.6 Amolar a faca e usar a chaira</h3>
+  <p>Faca afiada corta sem esforço e com mais segurança. Duas ferramentas cuidam do fio, e elas fazem coisas diferentes:</p>
+  <ul>
+    <li><strong>Chaira</strong> (a haste de aço): não amola. Ela <strong>alinha o fio</strong>, que entorta com o uso. É para todo dia.</li>
+    <li><strong>Pedra de amolar:</strong> tira um pouco de metal e <strong>faz um fio novo</strong>. É para quando a chaira não resolve mais.</li>
+  </ul>
+  <figure class="cut-fig">
+    <svg viewBox="0 0 360 200" role="img" aria-label="Ilustração em duas partes. De frente: a chaira em pé, com a ponta apoiada na tábua sobre um pano úmido e o cabo para cima; a faca encosta no alto da chaira pelo calcanhar e desce até a ponta. Visto de cima: a lâmina encosta na chaira inclinada 15 a 20 graus.">
+      <rect x="10" y="170" width="180" height="16" rx="6" class="f-w"/><rect x="10" y="170" width="180" height="16" rx="6" class="k"/>
+      <path d="M46 170c8-5 22-5 30 0" class="k s-sk"/>
+      <path class="k" d="M60 168V42" style="stroke-width:5"/>
+      <rect x="51" y="8" width="18" height="28" rx="5" class="f-wd"/><rect x="51" y="8" width="18" height="28" rx="5" class="k"/>
+      <path class="k" d="M44 38h32"/>
+      <path class="f-p" d="M58 54h118c-4 9-30 14-118 14z"/><path class="k" d="M58 54h118c-4 9-30 14-118 14z"/>
+      <rect x="18" y="52" width="40" height="13" rx="5" class="f-wd"/><rect x="18" y="52" width="40" height="13" rx="5" class="k"/>
+      <path class="k s-t" d="M150 82c6 22 4 44-10 66m0 0l2-11m-2 11l9-6" style="stroke-width:2.4"/>
+      <text x="76" y="100" font-size="13" font-family="Lexend, sans-serif" style="fill:var(--ink)">começa no</text>
+      <text x="76" y="116" font-size="13" font-family="Lexend, sans-serif" style="fill:var(--ink)">calcanhar</text>
+      <text x="76" y="140" font-size="13" font-family="Lexend, sans-serif" style="fill:var(--ink)">desce até</text>
+      <text x="76" y="156" font-size="13" font-family="Lexend, sans-serif" style="fill:var(--ink)">a ponta</text>
+      <text x="100" y="198" font-size="12" text-anchor="middle" font-family="Lexend, sans-serif" style="fill:var(--ink-2)">de frente</text>
+      <path d="M208 10v180" class="kt" style="stroke:var(--rule)"/>
+      <circle cx="285" cy="104" r="14" class="f-r"/><circle cx="285" cy="104" r="14" class="k"/>
+      <path d="M236 90h96" class="kt" stroke-dasharray="5 4"/>
+      <path class="k" d="M285 90L219 69" style="stroke-width:6"/>
+      <path class="k s-t" d="M253 90A32 32 0 0 1 255 80" style="stroke-width:2.4"/>
+      <text x="300" y="72" font-size="15" font-weight="700" text-anchor="middle" font-family="Lexend, sans-serif" style="fill:var(--tomato)">15 a 20°</text>
+      <text x="285" y="142" font-size="12" text-anchor="middle" font-family="Lexend, sans-serif" style="fill:var(--ink)">chaira</text>
+      <text x="232" y="56" font-size="12" text-anchor="middle" font-family="Lexend, sans-serif" style="fill:var(--ink)">lâmina</text>
+      <text x="284" y="198" font-size="12" text-anchor="middle" font-family="Lexend, sans-serif" style="fill:var(--ink-2)">visto de cima</text>
+    </svg>
+  </figure>
+
+  <h4>Quando usar a chaira</h4>
+  <ul>
+    <li>No começo do turno, antes de começar a cortar.</li>
+    <li>Quando a faca começa a escorregar na casca do tomate ou na cebola.</li>
+    <li>Depois de muito corte seguido, como uma caixa de cebola.</li>
+  </ul>
+  <h4>Como usar a chaira</h4>
+  <ol>
+    <li>Apoie a ponta da chaira na tábua, com um pano úmido embaixo, em pé e firme.</li>
+    <li>Encoste o calcanhar da faca (a parte perto do cabo) no alto da chaira, num ângulo de 15 a 20 graus.</li>
+    <li>Desça a faca puxando, do calcanhar até a ponta, sem força: o peso da faca basta.</li>
+    <li>Troque de lado a cada passada. Faça 5 ou 6 passadas de cada lado.</li>
+    <li>Limpe a lâmina com um pano antes de cortar.</li>
+  </ol>
+  <div class="note"><svg aria-hidden="true"><use href="#i-steel"/></svg><p><strong>Para achar o ângulo:</strong> faca em pé, encostada na chaira, é 90 graus. Abra pela metade (45 graus) e pela metade de novo (cerca de 22 graus). Um pouquinho abaixo disso é o ângulo certo.</p></div>
+
+  <h4>Quando amolar na pedra</h4>
+  <ul>
+    <li>Você passou a chaira e a faca continua sem cortar a casca do tomate.</li>
+    <li>O fio tem dente, lasca ou parte amassada.</li>
+  </ul>
+  <h4>Como amolar na pedra</h4>
+  <ol>
+    <li>Pedra de água: deixe de molho até parar de soltar bolhas, cerca de 10 minutos. Algumas pedras só precisam ser molhadas por cima; siga o fabricante.</li>
+    <li>Coloque a pedra sobre um pano úmido, com o lado de grão mais grosso para cima.</li>
+    <li>Segure a faca no mesmo ângulo de 15 a 20 graus e empurre a lâmina pela pedra, como se fosse tirar uma fatia fina dela, do calcanhar até a ponta.</li>
+    <li>Faça várias passadas do mesmo lado, até sentir uma pequena rebarba do outro lado do fio. Para sentir, passe o polegar de leve do dorso em direção ao fio, atravessando a lâmina, nunca ao longo do fio.</li>
+    <li>Repita do outro lado.</li>
+    <li>Vire a pedra para o grão fino e faça passadas leves, alternando os lados, até a rebarba sumir.</li>
+    <li>Lave e seque a faca. Termine com a chaira.</li>
+  </ol>
+  <p><strong>Os grãos da pedra:</strong> grosso (por volta de 200 a 400) só para fio estragado; médio (por volta de 1000) para afiar; fino (3000 ou mais) para acabar e polir.</p>
+
+  <div class="tool" id="tool-steel">
+    <div class="tool-head">
+      <svg aria-hidden="true"><use href="#i-steel"/></svg>
+      <div><h3>Chaira ou pedra?</h3><p>Escolha o que está acontecendo com a sua faca.</p></div>
+    </div>
+    <div class="chips" id="steelChips" role="group" aria-label="Situações da faca"></div>
+    <div id="steelOut" aria-live="polite"></div>
+    <p class="small muted" style="margin:12px 0 0">Teste rápido: faca afiada corta a casca do tomate só com o próprio peso, sem apertar.</p>
+  </div>
+
+  <h4>Cuidados com a faca</h4>
+  <ul>
+    <li>Não deixe faca dentro da pia: alguém pode se cortar, e o fio estraga.</li>
+    <li>Lave à mão e seque logo. Máquina de lavar estraga o fio e o cabo.</li>
+    <li>Corte em tábua de madeira ou de plástico. Vidro, mármore, inox e prato acabam com o fio.</li>
+    <li>Guarde em faqueiro, barra imantada ou com protetor de lâmina.</li>
+    <li>A faca caiu? Não tente segurar. Dê um passo para trás.</li>
+  </ul>
 </section>
 
 <!-- ================= 5. MOLHOS ================= -->
@@ -1151,6 +1286,7 @@ mark{background:var(--oil-soft); color:inherit; border-radius:4px; padding:0 2px
       <use href="#i-milk" x="6" y="4" width="70" height="70"/><use href="#i-butter" x="76" y="16" width="62" height="60"/><use href="#i-whisk" x="142" y="4" width="70" height="70"/><use href="#i-tomato" x="216" y="8" width="68" height="68"/><use href="#i-basil" x="290" y="16" width="60" height="60"/>
     </svg>
   </div>
+  <figure class="quote"><blockquote><p style="margin:0">Manteiga! Me deem manteiga! Sempre manteiga!</p></blockquote><figcaption>Fernand Point</figcaption></figure>
   <p class="lead">Quase todo molho da cozinha nasce de poucas bases: um <strong><button class="term" type="button" data-t="Fundo">fundo</button></strong> (o caldo), um <strong>espessante</strong> (<button class="term" type="button" data-t="Roux">roux</button>, redução ou emulsão) e um <strong>sabor principal</strong> (tomate, leite, carne, manteiga). Dominando as bases, você entende qualquer receita.</p>
 
   <div class="diagram" id="sauceTree">
@@ -1326,6 +1462,7 @@ mark{background:var(--oil-soft); color:inherit; border-radius:4px; padding:0 2px
       <use href="#i-flour" x="6" y="4" width="68" height="70"/><use href="#i-egg" x="70" y="24" width="48" height="48"/><use href="#i-egg" x="102" y="30" width="42" height="42"/><use href="#i-pin" x="148" y="10" width="70" height="66"/><use href="#i-machine" x="216" y="2" width="72" height="72"/><use href="#i-plate-pasta" x="290" y="14" width="66" height="62"/>
     </svg>
   </div>
+  <figure class="quote"><blockquote><p style="margin:0">Tudo o que você vê, eu devo ao espaguete.</p></blockquote><figcaption>Sophia Loren</figcaption></figure>
   <p class="lead">Massa fresca boa depende de quatro coisas: <strong>farinha certa, hidratação certa, descanso e espessura.</strong> As medidas exatas da nossa máquina estão na <a href="#p7">Parte 7</a>; aqui fica o porquê de cada passo.</p>
 
   <div class="diagram">
@@ -1354,7 +1491,15 @@ mark{background:var(--oil-soft); color:inherit; border-radius:4px; padding:0 2px
   <div class="tool" id="tool-dough">
     <div class="tool-head">
       <svg aria-hidden="true"><use href="#i-flour"/></svg>
-      <div><h3>Calculadora da massa fresca da casa</h3><p>Lote base: 800 g de farinha de trigo + 200 g de sêmola + 9 ovos.</p></div>
+      <div><h3>Calculadora das massas da casa</h3><p>Escolha a massa e diga quanto vai fazer. Tudo em gramas.</p></div>
+    </div>
+    <div class="field"><label for="doughType">Massa</label>
+      <select id="doughType">
+        <option value="casa">Massa fresca da casa</option>
+        <option value="chifferi">Massa do chifferi</option>
+        <option value="cavatelli">Massa do cavatelli</option>
+      </select>
+      <span class="hint" id="doughBase"></span>
     </div>
     <fieldset class="seg" id="doughMode">
       <legend>Quero calcular por…</legend>
@@ -1367,7 +1512,7 @@ mark{background:var(--oil-soft); color:inherit; border-radius:4px; padding:0 2px
     <div class="field" id="yieldWrap" hidden>
       <label for="doughYield">Quanto rende 1 lote (g de massa pronta)</label>
       <input id="doughYield" type="number" inputmode="decimal" min="1" step="1">
-      <span class="hint">O rendimento real do lote é <span class="todo">a completar</span>. Enquanto isso, usamos uma estimativa: a soma dos ingredientes, com ovo de cerca de 55 g (seção 6.1). Pese um lote pronto e troque aqui; fica salvo no aparelho.</span>
+      <span class="hint">O rendimento real do lote é <span class="todo">a completar</span>. Enquanto isso, usamos uma estimativa: a soma dos ingredientes. Pese um lote pronto e troque aqui; fica salvo no aparelho.</span>
     </div>
     <ul class="result-list" id="doughOut"></ul>
     <div class="explain" id="doughExplain" aria-live="polite"></div>
@@ -1479,10 +1624,16 @@ mark{background:var(--oil-soft); color:inherit; border-radius:4px; padding:0 2px
       <use href="#i-plate-leaf" x="6" y="14" width="72" height="62"/><use href="#i-machine" x="92" y="2" width="72" height="72"/><use href="#i-plate-pasta" x="176" y="12" width="76" height="64"/><use href="#i-cake" x="270" y="8" width="72" height="66"/>
     </svg>
   </div>
+  <figure class="quote"><blockquote><p style="margin:0">Dize-me o que comes e te direi quem és.</p></blockquote><figcaption>Brillat-Savarin</figcaption></figure>
   <p class="lead">Esta parte recebe o nosso cardápio, as massas que produzimos e a regulagem de cada uma na máquina. <em>Falta completar a regulagem de cada massa na máquina.</em></p>
 
   <h3>7.1 Massas e medidas na máquina</h3>
-  <p><strong>Massa fresca da casa (lote):</strong> 800 g de farinha de trigo + 200 g de sêmola + 9 ovos. <a href="#tool-dough">Calcular lotes</a></p>
+  <ul>
+    <li><strong>Massa fresca da casa (lote):</strong> 800 g de farinha de trigo + 200 g de sêmola + 450 g de ovos + 50 g de gemas.</li>
+    <li><strong>Massa do chifferi (lote):</strong> 800 g de farinha + 200 g de sêmola + 350 g de ovos.</li>
+    <li><strong>Massa do cavatelli (lote):</strong> 1.000 g de sêmola + 480 g de água morna, acrescentada aos poucos. Às vezes não precisa dela toda.</li>
+  </ul>
+  <p><a href="#tool-dough">Calcular lotes e porções</a></p>
   <div class="note"><svg aria-hidden="true"><use href="#i-machine"/></svg><p>A regulagem de cada massa ainda está <span class="todo">a completar</span>. Quando você descobrir, anote no campo da massa: fica salvo neste celular.</p></div>
   <div id="massasBox"></div>
 
@@ -1509,6 +1660,7 @@ mark{background:var(--oil-soft); color:inherit; border-radius:4px; padding:0 2px
       <use href="#i-shrimp" x="4" y="10" width="66" height="64"/><use href="#i-lemon" x="70" y="16" width="62" height="60"/><use href="#i-cheese" x="134" y="14" width="66" height="60"/><use href="#i-oil" x="200" y="6" width="64" height="68"/><use href="#i-book" x="270" y="6" width="80" height="68"/>
     </svg>
   </div>
+  <figure class="quote"><blockquote><p style="margin:0">A descoberta de um novo prato faz mais pela felicidade do gênero humano do que a descoberta de uma nova estrela.</p></blockquote><figcaption>Brillat-Savarin</figcaption></figure>
   <p class="lead">Estas são as fichas técnicas da casa, com os ingredientes e as quantidades de cada prato. Pratos são por porção; massas, recheios, molhos e sobremesas são por lote. Pese sempre: é o que garante que o prato saia igual em todo serviço.</p>
 
   <div class="tool" id="tool-recipes">
@@ -1534,7 +1686,7 @@ mark{background:var(--oil-soft); color:inherit; border-radius:4px; padding:0 2px
     <div id="prodBox"></div>
   </div>
 
-  <h3>8.6 Modelo para novas fichas</h3>
+  <h3>8.7 Modelo para novas fichas</h3>
   <p>Para quando surgir um prato novo. Imprima e preencha à mão.</p>
   <div class="rec-card" id="blankTpl">
     <p><strong>Nome do prato:</strong> ______________________</p>
@@ -1561,6 +1713,7 @@ mark{background:var(--oil-soft); color:inherit; border-radius:4px; padding:0 2px
       <use href="#i-book" x="6" y="4" width="80" height="70"/><use href="#i-whisk" x="100" y="4" width="70" height="70"/><use href="#i-basil" x="180" y="12" width="64" height="62"/><use href="#i-spoon" x="256" y="8" width="70" height="66"/>
     </svg>
   </div>
+  <figure class="quote"><blockquote><p style="margin:0">Cozinha é quando as coisas têm o gosto do que são.</p></blockquote><figcaption>Curnonsky</figcaption></figure>
   <p class="lead">As palavras da cozinha explicadas.</p>
   <div class="tool" id="tool-gloss">
     <fieldset class="seg" id="glMode">
@@ -1638,6 +1791,7 @@ mark{background:var(--oil-soft); color:inherit; border-radius:4px; padding:0 2px
   <h2 id="kmTitle"></h2>
   <p class="km-sub" id="kmSub"></p>
   <ul id="kmList"></ul>
+  <div id="kmPrep" class="prep" style="font-size:1.35rem"></div>
   <p class="muted">Toque num ingrediente para riscar quando já tiver pesado.</p>
 </div>
 
@@ -1646,24 +1800,54 @@ mark{background:var(--oil-soft); color:inherit; border-radius:4px; padding:0 2px
 /* =====================================================================
    DADOS — copiados da apostila. Não alterar números sem alterar a apostila.
    ===================================================================== */
+/* Massas da casa, em gramas (receitas passadas pelo Zaqueu). [ingrediente, gramas, observação] */
+const DOUGHS = {
+  casa:{n:'Massa fresca da casa', items:[['Farinha de trigo',800],['Sêmola',200],['Ovos',450],['Gemas',50]]},
+  chifferi:{n:'Massa do chifferi', items:[['Farinha',800],['Sêmola',200],['Ovos',350]]},
+  cavatelli:{n:'Massa do cavatelli', items:[['Sêmola',1000],['Água morna',480,'acrescentada aos poucos; às vezes não precisa dela toda']],
+    note:'A água entra aos poucos, até a massa ficar no ponto. Às vezes não precisa dela toda: por isso a conta mostra o máximo.'}
+};
+/* Cortes clássicos: medidas mais usadas nas escolas de cozinha */
+const CUTS = [
+  {n:'Brunoise', d:'Cubinhos de 2 a 3 mm.', from:'Sai da julienne: junte as tiras e corte em cubinhos.', uso:'Soffritto picado bem fino, molhos e finalizações.', draw:'cube', s:3, c:'#E07B2E', lbl:'3 mm'},
+  {n:'Julienne', d:'Tiras de 2 a 3 mm de lado e cerca de 5 cm de comprimento.', from:'Corte lâminas de 2 a 3 mm e depois corte as lâminas em tiras.', uso:'Legumes salteados e guarnições.', draw:'stick', w:2.5, l:50, c:'#E07B2E', lbl:'2 a 3 mm × 5 cm'},
+  {n:'Bâtonnet', d:'Bastões de 6 mm × 6 mm, com 5 a 6 cm.', from:'Corte lâminas de 6 mm e depois corte em bastões.', uso:'Legumes assados ou salteados, batata.', draw:'stick', w:6, l:55, c:'var(--oil-soft)', lbl:'6 mm × 5 a 6 cm'},
+  {n:'Macédoine', d:'Cubos de 6 mm.', from:'Sai do bâtonnet: corte os bastões em cubos.', uso:'Saladas e recheios.', draw:'cube', s:6, c:'#E07B2E', lbl:'6 mm'},
+  {n:'Parmentier', d:'Cubos de 1 a 1,2 cm.', from:'Corte bastões de 1 a 1,2 cm e depois em cubos.', uso:'Batata, legumes assados e ensopados.', draw:'cube', s:12, c:'var(--oil-soft)', lbl:'1 a 1,2 cm'},
+  {n:'Paysanne', d:'Lâminas finas, de 1 a 2 mm, com 1 a 1,5 cm de lado (quadradas, redondas ou triangulares).', from:'Corte o legume em bastões de 1 a 1,5 cm e fatie fino.', uso:'Sopas e cozimentos rápidos.', draw:'flat', s:13, t:1.5, c:'#E07B2E', lbl:'1 a 2 mm de espessura'},
+  {n:'Chiffonade', d:'Folhas enroladas e cortadas em tiras bem finas.', from:'Empilhe as folhas, enrole como um charuto e fatie fino.', uso:'Manjericão e sálvia na finalização.', draw:'ribbon', c:'var(--basil)', lbl:'tiras bem finas'},
+  {n:'Mirepoix', d:'Pedaços de cerca de 1,5 a 2 cm, sem precisar ser perfeitos.', from:'Corte cebola, cenoura e salsão (50%, 25% e 25%, seção 5.1).', uso:'Fundos, em pedaços grandes. Quanto mais longo o cozimento, maior o pedaço.', draw:'chunk', c:'mix', lbl:'1,5 a 2 cm'},
+  {n:'Concassé', d:'Tomate sem pele e sem semente, em cubinhos.', from:'Branqueie o tomate (seção 4.2), tire a pele e as sementes e corte em cubos.', uso:'Molhos rápidos e finalizações.', draw:'cube', s:5, c:'var(--tomato)', lbl:'cubinhos'},
+  {n:'Rondelle', d:'Rodelas da mesma espessura.', from:'Corte o legume na transversal, sempre na mesma grossura.', uso:'Cenoura, abobrinha e linguiça.', draw:'round', c:'#E07B2E', lbl:'rodelas iguais'}
+];
+const STEEL = [
+  ['Vou começar o turno', 'Chaira', 'Passe a chaira: 5 ou 6 passadas leves de cada lado. Faca que começa o dia alinhada corta bem o serviço todo.'],
+  ['A faca começou a escorregar no tomate', 'Chaira', 'O fio entortou com o uso, e a chaira alinha de novo. Se depois de 5 ou 6 passadas de cada lado continuar escorregando, é hora da pedra.'],
+  ['Passei a chaira e não melhorou', 'Pedra', 'O fio gastou e não tem mais o que alinhar. Amole na pedra, começando pelo grão médio, e termine no fino.'],
+  ['O fio tem dente, lasca ou parte amassada', 'Pedra, começando pelo grão grosso', 'Refaça o fio no grão grosso, depois passe para o médio e o fino. Se a lasca for grande, leve a um amolador profissional.'],
+  ['A faca está cortando bem', 'Nada por agora', 'Não precisa fazer nada. Só a chaira no começo do próximo turno.']
+];
 const PARTS = [
   {id:'inicio', n:'', short:'Carta', title:'Carta e como usar', desc:''},
   {id:'p1', n:'1', short:'Boas práticas', title:'Boas práticas', desc:'Higiene, temperaturas seguras, armazenamento e etiquetas'},
   {id:'p2', n:'2', short:'POPs', title:'POPs', desc:'O passo a passo padrão das tarefas que se repetem'},
   {id:'p3', n:'3', short:'Checklists', title:'Checklists', desc:'Listas para abertura, serviço, fechamento e recebimento'},
-  {id:'p4', n:'4', short:'Bases', title:'Bases da cozinha', desc:'Fritar, refogar, selar, cozinhar: o que muda e como saber o ponto'},
+  {id:'p4', n:'4', short:'Bases', title:'Bases da cozinha', desc:'Fritar, refogar, selar, cozinhar: o que muda e como saber o ponto. Facas e cortes'},
   {id:'p5', n:'5', short:'Molhos', title:'Molhos base', desc:'Fundos, roux, molhos-mãe e os molhos italianos'},
   {id:'p6', n:'6', short:'Pastas', title:'Pastas', desc:'Massa fresca, laminação, formatos, cozimento e finalização'},
   {id:'p7', n:'7', short:'Cardápio', title:'Cardápio e massas da casa', desc:'Pratos, massas e medidas na máquina'},
-  {id:'p8', n:'8', short:'Receitas', title:'Receitas da casa', desc:'Fichas técnicas dos nossos pratos'},
+  {id:'p8', n:'8', short:'Receitas', title:'Receitas da casa', desc:'Fichas técnicas dos nossos pratos e o pão da casa'},
   {id:'p9', n:'9', short:'Glossário', title:'Glossário', desc:'As palavras da cozinha explicadas'}
 ];
 
 const GLOSS = [
   ['Al dente','Massa cozida, mas ainda firme ao morder'],
   ['Apurar','Cozinhar devagar para concentrar o sabor'],
+  ['Bâtonnet','Corte em bastões de 6 mm × 6 mm, com 5 a 6 cm'],
   ['Branquear','Cozinhar rápido em água fervendo e dar choque no gelo'],
   ['Brasear','Selar e depois cozinhar devagar em pouco líquido, tampado'],
+  ['Brunoise','Corte em cubinhos de 2 a 3 mm, feito a partir da julienne'],
+  ['Chaira','Haste de aço que alinha o fio da faca no dia a dia; não amola'],
   ['Chiffonade','Folhas enroladas e cortadas em tiras bem finas (manjericão)'],
   ['Clarificar a manteiga','Derreter e tirar a parte branca do leite, ficando só a gordura'],
   ['Concassé','Tomate sem pele e sem semente, em cubinhos'],
@@ -1671,9 +1855,11 @@ const GLOSS = [
   ['Emulsionar','Unir gordura e água num molho liso'],
   ['Fouet','Batedor de arame'],
   ['Fundo','Caldo base de ossos ou legumes'],
+  ['Julienne','Corte em tiras finas, de 2 a 3 mm de lado e cerca de 5 cm'],
   ['Mantecare','Mexer a massa com molho, gordura e água da massa até ficar cremosa'],
   ['Mirepoix / soffritto','Cebola, cenoura e salsão, base de sabor'],
   ['Mise en place','Tudo pronto e no lugar antes de começar'],
+  ['Paysanne','Corte em lâminas finas, de 1 a 2 mm de espessura'],
   ['Ponto de nappe','Molho que cobre as costas da colher e deixa um risco limpo ao passar o dedo'],
   ['PVPS','Primeiro que Vence, Primeiro que Sai'],
   ['Reduzir','Ferver para evaporar líquido e engrossar'],
@@ -1931,8 +2117,8 @@ const SHAPES = [
 const MASSAS = [
   {m:'Tagliatelle', base:'Massa fresca da casa', reg:'', p:'120 g', pratos:'Gamberi ao Limone, Alla Puttanesca, Ragú de Ossobuco'},
   {m:'Pappardelle', base:'Massa fresca da casa', reg:'', p:'120 g', pratos:'Ragú de Ossobuco'},
-  {m:'Chifferi', base:'', reg:'', p:'120 g', pratos:'Ragu de Polvo'},
-  {m:'Cavatelli', base:'Massa fresca da casa', reg:'', p:'120 g', pratos:'Al Tono'},
+  {m:'Chifferi', base:'Massa do chifferi', reg:'', p:'120 g', pratos:'Ragu de Polvo'},
+  {m:'Cavatelli', base:'Massa do cavatelli', reg:'', p:'120 g', pratos:'Al Tono'},
   {m:'Raviolini de mussarela', base:'Massa fresca da casa + recheio', reg:'', p:'', pratos:'Raviolini de Mussarela'},
   {m:'Torteli de ricota', base:'Massa fresca da casa + recheio', reg:'', p:'', pratos:'Torteli de Ricota'},
   {m:'Lasanha', base:'Massa fresca da casa', reg:'', p:'300 g por lasanha', pratos:'Lasanha Bolognese'},
@@ -1952,8 +2138,8 @@ const MENU = [
   {c:'Massas', d:'Alla Puttanesca', r:['puttanesca'], ic:'i-plate-pasta'},
   {c:'Massas', d:'Alla Norma', r:['norma'], ic:'i-plate-pasta'},
   {c:'Massas', d:'Spaghetti ao Sugo', r:['sugo'], ic:'i-plate-pasta'},
-  {c:'Massas', d:'Ragu de Polvo', r:['ragu-polvo'], ic:'i-plate-pasta'},
-  {c:'Massas', d:'Al Tono', r:['altono'], ic:'i-fish'},
+  {c:'Massas', d:'Ragu de Polvo', r:['ragu-polvo','massa-chifferi'], ic:'i-plate-pasta'},
+  {c:'Massas', d:'Al Tono', r:['altono','massa-cavatelli'], ic:'i-fish'},
   {c:'Massas', d:'Lagosta', r:['lagosta','caldo-lagosta','molho-lagosta'], ic:'i-plate-pasta'},
   {c:'Massas', d:'Lasanha Bolognese', r:['lasanha','molho-branco'], ic:'i-plate-pasta'},
   {c:'Massas', d:'Raviolini de Mussarela', r:['recheio-raviolini','massa'], ic:'i-plate-pasta'},
@@ -1965,7 +2151,9 @@ const MENU = [
 /* Fichas técnicas (Parte 8). q = quantidade exatamente como na apostila.
    base: 'porcao' | 'lote' | 'misto' (ragu de polvo). sc:'porcao' marca o item que segue as porções. */
 const RECIPES = [
-  {id:'massa', g:'8.1 Massa e recheios', n:'Massa fresca (base)', base:'lote', items:[['Farinha de trigo','800 g'],['Sêmola','200 g'],['Ovos','9 un']]},
+  {id:'massa', g:'8.1 Massa e recheios', n:'Massa fresca (base)', base:'lote', items:[['Farinha de trigo','800 g'],['Sêmola','200 g'],['Ovos','450 g'],['Gemas','50 g']]},
+  {id:'massa-chifferi', g:'8.1 Massa e recheios', n:'Massa do chifferi', base:'lote', items:[['Farinha','800 g'],['Sêmola','200 g'],['Ovos','350 g']]},
+  {id:'massa-cavatelli', g:'8.1 Massa e recheios', n:'Massa do cavatelli', base:'lote', items:[['Sêmola','1000 g'],['Água morna','480 g',null,null,'Acrescente aos poucos; às vezes não precisa dela toda']]},
   {id:'recheio-raviolini', g:'8.1 Massa e recheios', n:'Recheio do raviolini de mussarela', base:'lote', items:[['Mussarela ralada','700 g'],['Parmesão ralado','100 g'],['Tomilho','10 g']]},
   {id:'recheio-torteli', g:'8.1 Massa e recheios', n:'Recheio do torteli de ricota', base:'lote', items:[['Ricota fresca','100 g'],['Creme de leite','30 g'],['Leite integral','30 g'],['Parmesão','20 g']]},
   {id:'molho-branco', g:'8.2 Molhos e bases', n:'Molho branco (lasanha)', base:'lote', items:[['Leite integral','1 L'],['Manteiga','100 g'],['Farinha de trigo','80 g'],['Noz-moscada','a gosto']]},
@@ -1992,7 +2180,9 @@ const RECIPES = [
   {id:'lagosta', g:'8.4 Massas', n:'Lagosta', base:'porcao', items:[['Massa seca','100 g'],['Lagosta em cubos','100 g'],['Vinho branco','50 ml'],['Limão-siciliano tostado','1/2 un'],['Suco de limão-siciliano','1/2 limão'],['Salsa picada','a gosto']]},
   {id:'lasanha', g:'8.4 Massas', n:'Lasanha bolognese', base:'lote', items:[['Molho bolonhesa (base SBM)','1,2 kg'],['Massa fresca','300 g'],['Mussarela','300 g'],['Parmesão (gratinar)','70 g'],['Molho branco','ver 8.2']]},
   {id:'torta', g:'8.5 Sobremesas', n:'Torta de limão', base:'lote', items:[['Biscoito maizena Piraquê','175 g',null,'Base'],['Manteiga gelada','90 g',null,'Base'],['Leite condensado','395 g',null,'Creme'],['Creme de leite','200 g',null,'Creme'],['Suco de limão','100 g',null,'Creme']]},
-  {id:'tiramisu', g:'8.5 Sobremesas', n:'Tiramisù', base:'lote', items:[['Creme de leite Nestlé','500 g'],['Café','70 g'],['Rum ouro ou vinho marsala','20 g'],['Suco de limão','16 g'],['Biscoito champanhe','a gosto']]}
+  {id:'tiramisu', g:'8.5 Sobremesas', n:'Tiramisù', base:'lote', items:[['Creme de leite Nestlé','500 g'],['Café','70 g'],['Rum ouro ou vinho marsala','20 g'],['Suco de limão','16 g'],['Biscoito champanhe','a gosto']]},
+  {id:'focaccia', g:'8.6 Pão da casa', n:'Pão focaccia da casa', base:'lote', items:[['Farinha','100 g',null,'Esponja'],['Água','100 g',null,'Esponja'],['Fermento','3 g',null,'Esponja'],['Farinha','1000 g',null,'Massa'],['Água','700 g',null,'Massa'],['Sal','30 g',null,'Massa']],
+   prep:'<ol><li>Monte a esponja.</li><li>Monte a massa, para que ela hidrate.</li><li>Aguarde o ponto da esponja e misture as duas.</li><li>Faça 5 dobras, em intervalos de 20 minutos.</li><li>Asse a 200 °C, com a resistência superior no mínimo e a resistência inferior no máximo.</li></ol><p class="small muted" style="margin:0">Tempo de forno: <span class="todo">a completar</span></p>', dobras:true}
 ];
 </script>
 <script>
@@ -2009,8 +2199,7 @@ const store = {
 const num = v => { const n = parseFloat(String(v).replace(',', '.')); return isFinite(n) ? n : 0; };
 /* número em pt-BR: 1600 -> "1.600"; 2.41 -> "2,41" */
 function fmt(n, max=2){ return Number(n).toLocaleString('pt-BR', {maximumFractionDigits:max}); }
-function fmtG(g){ // gramas inteligentes
-  if (Math.abs(g) >= 1000) return fmt(g/1000, 3) + ' kg';
+function fmtG(g){ // receitas em gramas
   return fmt(g, g < 10 ? 1 : (Number.isInteger(Math.round(g*10)/10) ? 0 : 1)) + ' g';
 }
 function fmtMl(ml){ if (Math.abs(ml) >= 1000) return fmt(ml/1000, 3) + ' L'; return fmt(ml, 1) + ' ml'; }
@@ -2456,6 +2645,45 @@ $$('.timer-slot').forEach(sl => { const c = SLOT_TIMERS[sl.dataset.timer]; if (c
   paint();
 })();
 
+
+(function cuts(){
+  const chips = $('#cutChips'), svg = $('#cutSvg'), out = $('#cutOut'); const S = 6; // 6 unidades por mm
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const col = c => c.startsWith('var(') ? css(c.slice(4, -1)) : c;
+  chips.innerHTML = CUTS.map((c, i) => `<button class="chip" type="button" aria-pressed="false" data-i="${i}">${esc(c.n)}</button>`).join('');
+  const box = (x, y, w, h, fill) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${Math.min(2, w/4)}" fill="${fill}"/><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${Math.min(2, w/4)}" class="kt"/>`;
+  function draw(c){
+    const ink = css('--ink'); let g = '';
+    const fill = col(c.c === 'mix' ? '#E07B2E' : c.c);
+    if (c.draw === 'cube'){ const w = c.s*S; const n = c.s >= 12 ? 3 : c.s >= 6 ? 8 : 18; const per = c.s >= 12 ? 3 : c.s >= 6 ? 4 : 6;
+      for (let i = 0; i < n; i++){ const x = 40 + (i % per) * (w + 14) + (Math.floor(i/per) % 2) * 6, y = 30 + Math.floor(i/per) * (w + 14); g += box(x, y, w, w, fill); } }
+    if (c.draw === 'stick'){ const w = c.w*S, l = Math.min(c.l, 50)*S, n = w > 20 ? 3 : 4; for (let i = 0; i < n; i++) g += box(30, 26 + i*(w + 10), l, w, fill); if (c.l > 50) g += `<text x="30" y="18" font-size="12" font-family="Lexend, sans-serif" fill="${ink}">desenhado com 5 cm</text>`; }
+    if (c.draw === 'flat'){ const w = c.s*S; for (let i = 0; i < 3; i++) g += box(40 + i*(w + 20), 40, w, w, fill); g += box(40, 40 + w + 26, w, c.t*S, fill) + `<text x="${48 + w}" y="${40 + w + 26 + c.t*S}" font-size="13" font-family="Lexend, sans-serif" fill="${ink}">vista de lado</text>`; }
+    if (c.draw === 'ribbon'){ for (let i = 0; i < 6; i++) g += `<path d="M30 ${36 + i*16}c40-10 80 10 120 0s80-10 120 0" fill="none" stroke="${fill}" stroke-width="4" stroke-linecap="round"/>`; }
+    if (c.draw === 'chunk'){ const cs = [css('--tomato-soft'), '#E07B2E', css('--basil-soft')]; const pts = ['0,8 50,0 104,14 96,92 40,100 4,70','0,0 90,10 100,70 60,96 10,84','10,0 100,6 92,90 0,96'];
+      pts.forEach((p, i) => { g += `<polygon points="${p}" transform="translate(${30 + i*112} 30)" fill="${cs[i]}"/><polygon points="${p}" transform="translate(${30 + i*112} 30)" class="kt"/>`; });
+      g += `<text x="30" y="150" font-size="13" font-family="Lexend, sans-serif" fill="${ink}">cebola · cenoura · salsão</text>`; }
+    if (c.draw === 'round'){ for (let i = 0; i < 3; i++) g += `<circle cx="${80 + i*100}" cy="80" r="44" fill="${fill}"/><circle cx="${80 + i*100}" cy="80" r="44" class="kt"/><circle cx="${80 + i*100}" cy="80" r="16" fill="none" stroke="${ink}" stroke-opacity=".35"/>`; }
+    // régua de 50 mm
+    let r = `<rect x="30" y="172" width="${50*S}" height="26" rx="4" fill="${css('--card')}" stroke="${ink}" stroke-width="1.5"/>`;
+    for (let mm = 0; mm <= 50; mm++){ const x = 30 + mm*S, h = mm % 10 === 0 ? 12 : mm % 5 === 0 ? 8 : 4; r += `<line x1="${x}" x2="${x}" y1="172" y2="${172+h}" stroke="${ink}" stroke-width="1"/>`; if (mm % 10 === 0) r += `<text x="${x}" y="195" font-size="10" text-anchor="middle" font-family="Lexend, sans-serif" fill="${ink}">${mm/10} cm</text>`; }
+    svg.innerHTML = `<rect x="0" y="0" width="360" height="210" rx="10" fill="${css('--wood-soft')}" fill-opacity=".55"/>${g}${r}`;
+    svg.setAttribute('aria-label', `Desenho em escala: ${c.n}, ${c.d}`);
+  }
+  function show(i){ const c = CUTS[i]; $$('.chip', chips).forEach(b => b.setAttribute('aria-pressed', b.dataset.i == i)); draw(c);
+    out.innerHTML = `<div class="detail"><h4>${esc(c.n)}</h4><dl><dt>Tamanho</dt><dd><strong>${esc(c.d)}</strong></dd><dt>Como fazer</dt><dd>${esc(c.from)}</dd><dt>Onde usar</dt><dd>${esc(c.uso)}</dd></dl></div>`; }
+  chips.addEventListener('click', e => { const b = e.target.closest('.chip'); if (b) show(+b.dataset.i); });
+  $('#themeBtn').addEventListener('click', () => { const on = $('.chip[aria-pressed="true"]', chips); show(on ? +on.dataset.i : 0); });
+  show(0);
+})();
+(function steel(){
+  const chips = $('#steelChips'), out = $('#steelOut');
+  chips.innerHTML = STEEL.map((s, i) => `<button class="chip" type="button" aria-pressed="false" data-i="${i}">${esc(s[0])}</button>`).join('');
+  chips.addEventListener('click', e => { const b = e.target.closest('.chip'); if (!b) return; $$('.chip', chips).forEach(c => c.setAttribute('aria-pressed', c === b)); const s = STEEL[+b.dataset.i];
+    const cls = s[1].startsWith('Pedra') ? 'hot' : s[1] === 'Chaira' ? 'cold' : 'safe';
+    out.innerHTML = `<div class="zone-card ${cls}" style="margin-top:12px"><p class="z">${esc(s[1])}</p><p style="margin:0">${esc(s[2])}</p></div>`; });
+  out.innerHTML = '<p class="muted" style="margin-top:12px">Escolha uma situação acima.</p>';
+})();
 /* =====================================================================
    PARTE 5 — ÁRVORE, MIREPOIX, ROUX, BECHAMEL, SALVAR MOLHO
    ===================================================================== */
@@ -2514,24 +2742,27 @@ $$('.timer-slot').forEach(sl => { const c = SLOT_TIMERS[sl.dataset.timer]; if (c
     if (p.timer) $('.pd', li).appendChild(Timers.widget(p.timer)); ol.appendChild(li); });
 })();
 (function dough(){
-  const N = $('#doughN'), Y = $('#doughYield'), lbl = $('#doughLbl'), BASE = {f:800, s:200, o:9}, OVO = 55, EST = BASE.f + BASE.s + BASE.o*OVO;
-  Y.value = store.get('doughYield', EST);
+  const T = $('#doughType'), N = $('#doughN'), Y = $('#doughYield'), lbl = $('#doughLbl');
+  const est = d => DOUGHS[d].items.reduce((a, it) => a + it[1], 0);
+  const yKey = d => 'doughYield.' + d;
+  T.value = store.get('doughType', 'casa'); if (!DOUGHS[T.value]) T.value = 'casa';
+  Y.value = store.get(yKey(T.value), est(T.value));
   const mode = () => $('input[name=dm]:checked').value; let lastMode = mode();
   function upd(){
-    const m = mode();
+    const d = T.value, D = DOUGHS[d], EST = est(d), m = mode();
+    $('#doughBase').textContent = 'Lote base: ' + D.items.map(([n, g]) => `${fmt(g)} g de ${n.toLowerCase()}`).join(' + ') + '.';
     if (m !== lastMode){ N.value = m === 'lotes' ? 2 : 10; N.step = 1; lastMode = m; }
     lbl.textContent = m === 'lotes' ? 'Lotes' : 'Porções de 120 g'; $('#yieldWrap').hidden = m === 'lotes';
     const n = Math.max(0, num(N.value)), y = Math.max(1, num(Y.value) || EST); let k, intro;
-    if (m === 'lotes'){ k = n; intro = `Você pediu ${fmt(n)} ${n < 2 ? 'lote' : 'lotes'}, então multipliquei cada ingrediente do lote base por ${fmt(n)}:`; }
-    else { const g = n*120; k = Math.round(g / y * 1000) / 1000; intro = `${fmt(n)} ${n === 1 ? 'porção' : 'porções'} × 120 g = ${fmt(g)} g de massa. Um lote rende cerca de ${fmt(y)} g${num(Y.value) === EST ? ' (estimativa)' : ''}, então ${fmt(g)} ÷ ${fmt(y)} = ${fmt(k,3)} ${k === 1 ? 'lote' : 'de lote'}. Multipliquei cada ingrediente por ${fmt(k,3)}:`; }
-    const f = BASE.f*k, s = BASE.s*k, o = BASE.o*k, oi = Number.isInteger(Math.round(o*1000)/1000);
-    $('#doughOut').innerHTML = `<li><span>Farinha de trigo</span><b>${fmtG(f)}</b></li><li><span>Sêmola</span><b>${fmtG(s)}</b></li><li><span>Ovos</span><b>${oi ? fmt(Math.round(o)) : '≈ ' + fmt(o,1)} ${Math.round(o) === 1 && oi ? 'ovo' : 'ovos'}</b></li>`;
-    let eggs = '';
-    if (!oi && o > 0){ const r = Math.max(1, Math.round(o)), up = Math.ceil(o);
-      eggs = `<p><strong>Deu ${fmt(o,2)} ovos, e ovo não se divide.</strong> Use ${r} ${r === 1 ? 'ovo' : 'ovos'} e acerte o ponto na sova: se a massa esfarelar, molhe a mão e junte água de gota em gota; se grudar, junte farinha aos poucos (seção 6.7). Quer ser exata? Bata ${up} ovos e pese ${fmt(o*OVO,0)} g de ovo batido (${fmt(o,2)} × cerca de 55 g por ovo).</p>`; }
-    $('#doughExplain').innerHTML = `<p>${intro}</p><p class="calc">800 g × ${fmt(k,3)} = ${fmt(f,1)} g de farinha<br>200 g × ${fmt(k,3)} = ${fmt(s,1)} g de sêmola<br>9 ovos × ${fmt(k,3)} = ${fmt(o,2)} ovos</p>${eggs}${m === 'porcoes' ? '<p style="margin:0">O rendimento do lote está <span class="todo">a completar</span>: quando pesar um lote pronto, corrija o campo acima.</p>' : ''}`;
+    if (m === 'lotes'){ k = n; intro = `Você pediu ${fmt(n)} ${n < 2 ? 'lote' : 'lotes'} de ${D.n.toLowerCase()}, então multipliquei cada ingrediente do lote base por ${fmt(n)}:`; }
+    else { const g = n*120; k = Math.round(g / y * 1000) / 1000; intro = `${fmt(n)} ${n === 1 ? 'porção' : 'porções'} × 120 g = ${fmt(g)} g de massa. Um lote rende cerca de ${fmt(y)} g${num(Y.value) === EST ? ' (estimativa)' : ''}, então ${fmt(g)} ÷ ${fmt(y)} = ${fmt(k,3)} ${k === 1 ? 'lote' : (k < 2 ? 'de lote' : 'lotes')}. Multipliquei cada ingrediente por ${fmt(k,3)}:`; }
+    $('#doughOut').innerHTML = D.items.map(([nm, g, obs]) => { const v = g*k;
+      const extra = nm === 'Ovos' && v > 0 ? `<small class="muted" style="display:block;font-size:.95rem">cerca de ${fmt(v/55, 0)} ovos de 55 g; pese sempre</small>` : (obs ? `<small class="muted" style="display:block;font-size:.95rem">${esc(obs)}</small>` : '');
+      return `<li><span>${esc(nm)}${extra}</span><b>${obs ? 'até ' : ''}${fmtG(v)}</b></li>`; }).join('');
+    $('#doughExplain').innerHTML = `<p>${intro}</p><p class="calc">${D.items.map(([nm, g]) => `${fmt(g)} g × ${fmt(k,3)} = ${fmt(g*k,1)} g de ${nm.toLowerCase()}`).join('<br>')}</p>${D.note ? `<p>${D.note}</p>` : ''}${m === 'porcoes' ? '<p style="margin:0">O rendimento do lote está <span class="todo">a completar</span>: quando pesar um lote pronto, corrija o campo acima.</p>' : ''}`;
   }
-  N.addEventListener('input', upd); Y.addEventListener('input', () => { if (num(Y.value) > 0) store.set('doughYield', num(Y.value)); upd(); });
+  T.addEventListener('change', () => { store.set('doughType', T.value); Y.value = store.get(yKey(T.value), est(T.value)); upd(); });
+  N.addEventListener('input', upd); Y.addEventListener('input', () => { if (num(Y.value) > 0) store.set(yKey(T.value), num(Y.value)); upd(); });
   $$('input[name=dm]').forEach(x => x.addEventListener('change', upd)); upd();
 })();
 (function pot(){
@@ -2621,7 +2852,7 @@ function showQ(p, k){
 function rawQ(p){ if (p.dim === 'g') return fmt(p.v) + ' g'; if (p.dim === 'ml') return p.v >= 1000 && p.v % 1000 === 0 ? fmt(p.v/1000) + ' L' : fmt(p.v) + ' ml'; return frac(p.v) + ' ' + p.u; }
 function rawMul(p, k){ if (p.dim === 'g') return fmt(p.v*k,1) + ' g'; if (p.dim === 'ml') return p.v >= 1000 ? fmt(p.v*k/1000,3) + ' L' : fmt(p.v*k,1) + ' ml'; return frac(p.v*k) + ' ' + p.u; }
 function scaled(r, k, kp){
-  return r.items.map(([n, q, sc, part]) => { const p = parseQ(q); const kk = sc === 'porcao' ? kp : k; return {n, q, p, k:kk, part, out: showQ(p, kk)}; });
+  return r.items.map(([n, q, sc, part, obs]) => { const p = parseQ(q); const kk = sc === 'porcao' ? kp : k; return {n, q, p, k:kk, part, obs, out: showQ(p, kk)}; });
 }
 const unitWord = (r, sc) => (r.base === 'porcao' || sc === 'porcao') ? ['porção','porções'] : ['lote','lotes'];
 let REC = { id: store.get('recId', 'gamberi'), k:1, kp:1 };
@@ -2646,7 +2877,7 @@ let REC = { id: store.get('recId', 'gamberi'), k:1, kp:1 };
       s = `O ragu é por lote e o chifferi é por porção. Você pediu ${fmt(REC.k)} ${REC.k < 2 ? 'lote' : 'lotes'} de ragu, então multipliquei os ingredientes do ragu por ${fmt(REC.k)}; e ${fmt(REC.kp)} ${REC.kp < 2 ? 'porção' : 'porções'} de massa: 120 g × ${fmt(REC.kp)} = ${fmt(120*REC.kp,1)} g de chifferi.`;
     } else {
       const [one, many] = unitWord(r); const k = REC.k;
-      if (k === 1) s = `A ficha é por ${one}. Você pediu 1 ${one}, então as quantidades são as da apostila.`;
+      if (k === 1) s = `A ficha é por ${one}. Você pediu 1 ${one}, então as quantidades são as da ficha.`;
       else s = `A ficha é por ${one}. Você pediu ${fmt(k)} ${k < 2 ? one : many}, então multipliquei cada ingrediente por ${fmt(k)}.` + (ex ? ` Exemplo: ${rawQ(ex.p)} × ${fmt(k)} = ${rawMul(ex.p, k)}${ex.p.dim !== 'n' && ex.out !== rawMul(ex.p,k) ? ` (${ex.out})` : ''} de ${ex.n.charAt(0).toLowerCase() + ex.n.slice(1)}.` : '');
     }
     return `<p class="calc">${s}</p>${hasGosto ? '<p>O que é “a gosto” continua a gosto: prove e ajuste.</p>' : ''}${rows.some(x => x.p.dim === 'n' && !Number.isInteger(Math.round(x.p.v*x.k*100)/100)) ? '<p>Onde a conta não deu inteiro (ovo, limão, maço), arredonde e acerte provando.</p>' : ''}`;
@@ -2656,15 +2887,29 @@ let REC = { id: store.get('recId', 'gamberi'), k:1, kp:1 };
       if (x.part && x.part !== lastPart){ lastPart = x.part; h += `<li class="parthead"><span class="part">${esc(x.part)}</span></li>`; }
       const link = x.q === 'ver 8.2' ? ` <button class="btn small" type="button" data-rec="molho-branco" style="min-height:44px;margin-left:6px">abrir</button>` : '';
       const val = x.q === 'a completar' ? '<span class="todo">a completar</span>' : esc(x.out);
-      return h + `<li><span>${esc(x.n)}</span><span class="q">${val}${link}</span>${x.p.txt == null && x.k !== 1 ? `<span class="f">${rawQ(x.p)} × ${fmt(x.k)}</span>` : ''}</li>`; }).join('');
+      return h + `<li><span>${esc(x.n)}</span><span class="q">${val}${link}</span>${x.p.txt == null && x.k !== 1 ? `<span class="f">${rawQ(x.p)} × ${fmt(x.k)}</span>` : ''}${x.obs ? `<span class="f">${esc(x.obs)}</span>` : ''}</li>`; }).join('');
   }
   function paint(){
     const r = RECIPES.find(x => x.id === REC.id); const rows = scaled(r, REC.k, REC.kp);
     const meta = r.base === 'misto' ? `Lote do ragu + massa por porção · ${fmt(REC.k)} ${REC.k < 2 ? 'lote' : 'lotes'}, ${fmt(REC.kp)} ${REC.kp < 2 ? 'porção' : 'porções'}` : (() => { const [o, m] = unitWord(r); return `Ficha por ${o} · fazendo ${fmt(REC.k)} ${REC.k < 2 ? o : m}`; })();
     card.innerHTML = `<article class="rec-card" aria-live="polite"><h4>${esc(r.n)}</h4><p class="rec-meta">${esc(r.g)} · ${meta}</p><ul class="ing">${rowsHTML(rows)}</ul>
-      <div class="explain">${explain(r, rows)}</div><p class="small muted" style="margin:12px 0 0">Modo de preparo: <span class="todo">a completar</span></p></article>`;
+      <div class="explain">${explain(r, rows)}</div>${r.prep ? `<div class="prep"><h5>Modo de preparo</h5>${r.prep}</div>` : '<p class="small muted" style="margin:12px 0 0">Modo de preparo: <span class="todo">a completar</span></p>'}${r.dobras ? '<div id="dobrasBox"></div>' : ''}</article>`;
+    if (r.dobras) paintDobras();
     store.set('recId', REC.id);
   }
+  function paintDobras(){
+    const box = $('#dobrasBox'); if (!box) return; const n = store.get('dobras', 0);
+    box.innerHTML = `<div class="tool" style="margin:16px 0 0;box-shadow:none"><div class="tool-head">${svgUse('i-clock')}<div><h4 style="margin:0">Dobras da focaccia</h4><p>5 dobras, uma a cada 20 minutos.</p></div></div>
+      <div class="dobras" aria-label="${n} de 5 dobras feitas">${[1,2,3,4,5].map(i => `<i class="${i <= n ? 'on' : ''}" aria-hidden="true">${i}</i>`).join('')}</div>
+      <p style="margin:0 0 6px">${n >= 5 ? '<strong>As 5 dobras foram feitas.</strong> Agora é assar a 200 °C, resistência superior no mínimo e inferior no máximo.' : n ? `Feitas: ${n} de 5. Faça a próxima quando o cronômetro tocar.` : 'Toque no botão logo depois de fazer cada dobra. Eu ligo o cronômetro de 20 minutos para a próxima.'}</p>
+      <div class="btn-row">${n < 5 ? `<button class="btn primary" type="button" id="dobraFeita">${svgUse('u-check')}Fiz a dobra ${n+1}</button>` : ''}<button class="btn" type="button" id="dobraZera">${svgUse('u-reset')}Zerar dobras</button></div></div>`;
+  }
+  card.addEventListener('click', e => {
+    if (e.target.closest('#dobraFeita')){ const n = store.get('dobras', 0) + 1; store.set('dobras', n);
+      if (n < 5){ Timers.reset('dobra'); Timers.start('dobra', 1200, `Focaccia: dobra ${n+1} de 5`); toast(`Dobra ${n} feita. Cronômetro de 20 minutos ligado.`); } else { Timers.reset('dobra'); toast('Cinco dobras feitas. Bom forno!'); }
+      paintDobras(); const b = $('#dobraFeita') || $('#dobraZera'); b && b.focus(); }
+    if (e.target.closest('#dobraZera')){ store.set('dobras', 0); Timers.reset('dobra'); paintDobras(); }
+  });
   sel.addEventListener('change', () => { REC.id = sel.value; REC.k = 1; REC.kp = 1; qtyUI(); paint(); });
   document.addEventListener('click', e => { const b = e.target.closest('[data-rec]'); if (!b) return; REC.id = b.dataset.rec; REC.k = 1; REC.kp = 1; sel.value = REC.id; qtyUI(); paint(); $('#tool-recipes').scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start'}); setTimeout(() => sel.focus({preventScroll:true}), 400); });
   qtyUI(); paint();
@@ -2672,7 +2917,7 @@ let REC = { id: store.get('recId', 'gamberi'), k:1, kp:1 };
 
   /* imprimir ficha */
   $('#recPrint').addEventListener('click', () => { const r = RECIPES.find(x => x.id === REC.id); const rows = scaled(r, REC.k, REC.kp);
-    printHTML(`<h1>${esc(r.n)}</h1><p>${esc($('.rec-meta').textContent)}</p><table><thead><tr><th>Ingrediente</th><th>Quantidade</th><th>Na ficha</th></tr></thead><tbody>${rows.map(x => `<tr><td>${esc(x.part ? x.part + ': ' : '')}${esc(x.n)}</td><td><strong>${esc(x.out)}</strong></td><td>${esc(x.q)}</td></tr>`).join('')}</tbody></table><p style="margin-top:4mm">${$('.rec-card .explain').textContent}</p><p>Modo de preparo: a completar</p>`); });
+    printHTML(`<h1>${esc(r.n)}</h1><p>${esc($('.rec-meta').textContent)}</p><table><thead><tr><th>Ingrediente</th><th>Quantidade</th><th>Na ficha</th></tr></thead><tbody>${rows.map(x => `<tr><td>${esc(x.part ? x.part + ': ' : '')}${esc(x.n)}</td><td><strong>${esc(x.out)}</strong></td><td>${esc(x.q)}</td></tr>`).join('')}</tbody></table><p style="margin-top:4mm">${$('.rec-card .explain').textContent}</p>${r.prep ? '<h2 style="font-size:14pt">Modo de preparo</h2>' + r.prep : '<p>Modo de preparo: a completar</p>'}`); });
 
   /* modo cozinha */
   const km = $('#kitchen'); let lock = null, fs = 1, lastF = null;
@@ -2681,6 +2926,7 @@ let REC = { id: store.get('recId', 'gamberi'), k:1, kp:1 };
   function openKM(){ const r = RECIPES.find(x => x.id === REC.id); const rows = scaled(r, REC.k, REC.kp); lastF = document.activeElement;
     $('#kmTitle').textContent = r.n; $('#kmSub').textContent = $('.rec-meta').textContent.split(' · ').slice(1).join(' · ');
     $('#kmList').innerHTML = rows.map(x => `<li tabindex="0" role="checkbox" aria-checked="false"><span>${esc(x.part ? x.part + ': ' : '')}${esc(x.n)}</span><span class="q">${esc(x.out)}</span></li>`).join('');
+    $('#kmPrep').innerHTML = r.prep ? '<h5>Modo de preparo</h5>' + r.prep : '';
     km.classList.add('open'); document.body.style.overflow = 'hidden'; document.querySelectorAll('.layout, .topbar, .to-top').forEach(x => x.inert = true); $('#kmClose').focus(); wake(); }
   function closeKM(){ km.classList.remove('open'); document.body.style.overflow = ''; document.querySelectorAll('.layout, .topbar, .to-top').forEach(x => x.inert = false); if (lock){ lock.release().catch(()=>{}); lock = null; } lastF && lastF.focus(); }
   $('#recKitchen').addEventListener('click', openKM); $('#kmClose').addEventListener('click', closeKM);

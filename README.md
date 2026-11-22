@@ -153,10 +153,16 @@ vêm do Google Fonts, com fonte do sistema como reserva). Todo o conteúdo e
 todos os números vêm da apostila; o que está vazio nela aparece como
 "a completar".
 
+Além da apostila original, a página traz as receitas passadas depois pelo
+Zaqueu, todas em gramas: a massa fresca da casa (com ovos e gemas em gramas),
+as massas do chifferi e do cavatelli e o pão focaccia da casa (com contador de
+dobras). Também tem a seção 4.5 Facas e cortes e a 4.6 Amolar a faca e usar a
+chaira, e uma frase sobre gastronomia em cada parte.
+
 Ferramentas por parte: progresso de leitura; termômetro interativo e gerador
 de etiqueta; POPs passo a passo com cronômetros e calculadora de solução
 clorada; checklists salvos no aparelho com "novo turno" e impressão; mapa dos
-métodos, diagnóstico "fritando ou cozinhando?" e quiz; árvore dos molhos e
+métodos, diagnóstico "fritando ou cozinhando?", quiz, cortes clássicos em escala e "chaira ou pedra?"; árvore dos molhos e
 calculadoras de mirepoix, roux e bechamel, mais "salve o seu molho"; caminho
 da massa, calculadora da massa da casa e da panela, guia de formatos e
 cronômetro; cardápio com busca e anotação da regulagem da máquina; fichas
