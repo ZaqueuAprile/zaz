@@ -159,7 +159,8 @@ input[type=range]{width:100%; height:48px; accent-color:var(--tomato); backgroun
 .result{font-family:var(--f-title); font-size:1.6rem; line-height:1.25; margin:6px 0}
 .result-list{list-style:none; padding:0; margin:12px 0; display:grid; gap:8px}
 .result-list li{display:flex; justify-content:space-between; gap:12px; align-items:baseline; padding:10px 14px; background:var(--paper); border-radius:var(--r-md); margin:0; border:1px solid var(--rule)}
-.result-list li b{font-size:1.375rem; font-family:var(--f-title); font-weight:400; white-space:nowrap}
+.result-list li{flex-wrap:wrap}
+.result-list li b{font-size:1.375rem; font-family:var(--f-title); font-weight:400; margin-left:auto; text-align:right}
 .warn-fixed{display:flex; gap:10px; align-items:flex-start; background:var(--tomato-soft); color:var(--ink); border:2px solid var(--tomato); border-radius:var(--r-md); padding:12px 14px; font-weight:700; margin:0 0 16px}
 .warn-fixed svg{width:28px; height:28px; flex:none}
 .cheer{display:none; align-items:center; gap:12px; background:var(--basil-soft); border:2px solid var(--basil); border-radius:var(--r-md); padding:12px 14px; margin-top:14px}
@@ -301,7 +302,7 @@ caption{text-align:left; font-weight:700; padding:0 0 8px; caption-side:top}
 
 /* ============ Checklists ============ */
 .cl-tabs{display:flex; flex-wrap:wrap; gap:8px; padding:4px 0 10px}
-.cl-tabs .btn{flex:none}
+.cl-tabs .btn{flex:0 1 auto; max-width:100%; text-align:left}
 .cl-progress{display:flex; align-items:center; gap:12px; margin:8px 0 12px}
 .cl-progress .track{flex:1; height:14px; border-radius:14px; background:var(--paper-2); overflow:hidden; border:1px solid var(--rule)}
 .cl-progress .track i{display:block; height:100%; background:var(--basil); width:0; transition:width .3s ease}
@@ -511,6 +512,19 @@ mark{background:var(--oil-soft); color:inherit; border-radius:4px; padding:0 2px
 .pop-item summary .code.mine{background:var(--basil)}
 .share-box{margin-top:10px}
 .import-box{border-color:var(--basil)}
+
+/* celular: grades e flex nunca passam da largura da tela */
+.part-head, .heat-cols, .pop-list, .index, .tree, .menu-grid, .result-list, .checks, .qopts, .gl-list, .ed-list, .qual, .coach, .prod-list, .grid2, .rec-pick{grid-template-columns:minmax(0,1fr)}
+@media (min-width:560px){ .grid2{grid-template-columns:minmax(0,1fr) minmax(0,1fr)} }
+@media (min-width:640px){ .heat-cols{grid-template-columns:repeat(3, minmax(0,1fr))} }
+.tool, .diagram, .detail, .zone-card, .rec-card, .explain, .note, .pop-item, .branch, .dish, .check, .gl-item{min-width:0; overflow-wrap:break-word}
+.result-list li > span, .ing li > span:first-child, .dish .dn, .tchip .tn{min-width:0}
+input, select, textarea{max-width:100%}
+table.two{table-layout:fixed}
+table.two th, table.two td{overflow-wrap:anywhere}
+.pop-item summary .nm, .branch .flow, .chip, .btn{min-width:0; overflow-wrap:anywhere}
+h1, h2, h3, h4, h5, .lead, p, li, dd, dt, td, th, label{overflow-wrap:break-word}
+@media (max-width:380px){ h1, h2, h3, h4, h5, .lead, p, li, dd, dt, td, th, label, .nm{hyphens:auto; -webkit-hyphens:auto} }
 
 /* frases */
 .quote{position:relative; margin:4px 0 26px; padding:6px 0 0 46px}
@@ -1014,7 +1028,7 @@ mark{background:var(--oil-soft); color:inherit; border-radius:4px; padding:0 2px
 
   <h3>1.5 Etiqueta de identificação</h3>
   <p>Todo alimento aberto, porcionado ou preparado leva etiqueta com:</p>
-  <div class="tbl-wrap"><table>
+  <div class="tbl-wrap"><table class="two">
     <thead><tr><th>Campo</th><th>Exemplo</th></tr></thead>
     <tbody>
       <tr><td>Produto</td><td>Molho pomodoro</td></tr>
