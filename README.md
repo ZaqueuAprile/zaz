@@ -11,6 +11,7 @@ Cada projeto é uma página própria do mesmo build.
 | 02 | Gaivota — pousada em Santo André | `/pousada-gaivota/` | `src/projetos/pousada-gaivota/` |
 | 03 | Seu Beira Mar — cardápio de restaurante | `/seu-beira-mar/` | `src/projetos/seu-beira-mar/` |
 | 04 | Aprile — tecnologia e gestão | `/aprile/` | `aprile/index.html` |
+| 05 | Apostila de Cozinha — boas práticas, bases e massas | `/apostila-cozinha/` | `apostila-cozinha/index.html` |
 
 ### Aprile
 
@@ -140,3 +141,25 @@ PROJETO=bossa-cucina npm run build:arquivo
 
 - `.claude/skills/` — skills UI/UX Pro Max e 21st.dev
 - `.mcp.json` — servidor MCP do 21st.dev; defina `API_KEY_21ST` (chave em https://21st.dev/mcp)
+
+### Apostila de Cozinha
+
+Link publicado (GitHub Pages): https://zaqueuaprile.github.io/zaz/apostila-cozinha/
+
+Presente de despedida do Zaqueu para a equipe de um restaurante de massas
+italianas, num único arquivo: `apostila-cozinha/index.html` (HTML, CSS e JS
+juntos, sem build e sem dependências; as fontes Young Serif, Lexend e Caveat
+vêm do Google Fonts, com fonte do sistema como reserva). Todo o conteúdo e
+todos os números vêm da apostila; o que está vazio nela aparece como
+"a completar".
+
+Ferramentas por parte: progresso de leitura; termômetro interativo e gerador
+de etiqueta; POPs passo a passo com cronômetros e calculadora de solução
+clorada; checklists salvos no aparelho com "novo turno" e impressão; mapa dos
+métodos, diagnóstico "fritando ou cozinhando?" e quiz; árvore dos molhos e
+calculadoras de mirepoix, roux e bechamel, mais "salve o seu molho"; caminho
+da massa, calculadora da massa da casa e da panela, guia de formatos e
+cronômetro; cardápio com busca e anotação da regulagem da máquina; fichas
+técnicas escaláveis com a conta explicada, lista de produção e compras e
+modo cozinha (Wake Lock); glossário com busca e flashcards. Os dados ficam no
+`<script>` marcado como DADOS e o progresso, no `localStorage` do aparelho.

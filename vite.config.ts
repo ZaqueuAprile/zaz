@@ -39,6 +39,7 @@ export default defineConfig({
         'seu-beira-mar': path.resolve(import.meta.dirname, 'seu-beira-mar/index.html'),
         'aprile': path.resolve(import.meta.dirname, 'aprile/index.html'),
         'aprile-hub': path.resolve(import.meta.dirname, 'aprile/hub/index.html'),
+        'apostila-cozinha': path.resolve(import.meta.dirname, 'apostila-cozinha/index.html'),
       },
     },
   },
