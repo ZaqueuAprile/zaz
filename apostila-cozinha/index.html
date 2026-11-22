@@ -482,6 +482,36 @@ mark{background:var(--oil-soft); color:inherit; border-radius:4px; padding:0 2px
 .term-pop b{font-family:var(--f-title); font-weight:400; font-size:1.2rem; display:block}
 .term-pop.show{display:block}
 
+/* criar POP e checklist */
+.stepper-ui.wiz{height:100%; min-height:0}
+@media (min-width:700px){ .stepper-ui.wiz{height:min(880px, 92vh)} }
+.wiz-prog{list-style:none; display:flex; flex-wrap:wrap; gap:6px; padding:0; margin:12px 0 6px}
+.wiz-prog li{margin:0; font-size:.92rem; font-weight:700; padding:4px 12px; border-radius:999px; background:var(--paper-2); color:var(--ink-2)}
+.wiz-prog li.on{background:var(--tomato); color:var(--on-accent)}
+.wiz-prog li.done{background:var(--basil-soft); color:var(--ink)}
+.wiz-body{flex:1; min-height:0; overflow:auto; padding:6px 2px 12px}
+.wiz-err{color:var(--tomato); font-weight:700; min-height:1.4em; margin:0 0 8px}
+.coach{list-style:none; padding:0; margin:6px 0 10px; display:grid; gap:6px}
+.coach li{margin:0; padding:8px 12px; border-radius:var(--r-sm); background:var(--oil-soft); font-size:1rem; line-height:1.45}
+.coach li.ok{background:var(--basil-soft)}
+.coach li .btn{margin-top:6px}
+.ed-list{list-style:none; padding:0; margin:8px 0; display:grid; gap:8px; counter-reset:ed}
+.ed-list li{margin:0; display:grid; grid-template-columns:30px 1fr; gap:6px 10px; background:var(--card); border:2px solid var(--rule); border-radius:var(--r-md); padding:10px 12px}
+.ed-list li::before{counter-increment:ed; content:counter(ed); font-family:var(--f-title); font-size:1.35rem; color:var(--tomato); grid-row:span 3}
+.ed-list li.editing{border-color:var(--tomato)}
+.ed-list .et{min-width:0; overflow-wrap:anywhere}
+.ed-list .tm{font-size:.95rem; color:var(--ink-2)}
+.ed-list .ea{display:flex; flex-wrap:wrap; gap:6px}
+.ed-list .ea .btn{min-height:44px; min-width:44px; padding:4px 12px; font-size:.95rem}
+.qual{list-style:none; padding:0; margin:8px 0; display:grid; gap:8px}
+.qual li{margin:0; display:grid; grid-template-columns:28px 1fr; gap:8px; align-items:start}
+.qual .y{color:var(--basil); font-weight:700; font-size:1.2rem}
+.qual .n{color:var(--oil); font-weight:700; font-size:1.2rem}
+.mine-tag{display:inline-block; font-size:.85rem; font-weight:700; background:var(--basil); color:var(--on-accent); border-radius:999px; padding:2px 10px; vertical-align:middle}
+.pop-item summary .code.mine{background:var(--basil)}
+.share-box{margin-top:10px}
+.import-box{border-color:var(--basil)}
+
 /* frases */
 .quote{position:relative; margin:4px 0 26px; padding:6px 0 0 46px}
 .quote::before{content:"\201C"; position:absolute; left:0; top:-10px; font-family:var(--f-title); font-size:4.2rem; line-height:1; color:var(--tomato)}
@@ -1057,6 +1087,16 @@ mark{background:var(--oil-soft); color:inherit; border-radius:4px; padding:0 2px
   <p class="lead">POP é o jeito certo e único de fazer uma tarefa que se repete. Se todo mundo faz igual, o resultado é sempre o mesmo, não importa quem está no turno.</p>
   <p>Toque num POP para abrir. O botão <strong>Passo a passo</strong> mostra um passo por tela, com letra grande, para seguir com a mão ocupada.</p>
   <ul class="pop-list" id="popList"></ul>
+
+  <div class="tool" id="tool-mypop">
+    <div class="tool-head">
+      <svg aria-hidden="true"><use href="#i-clip"/></svg>
+      <div><h3>Crie o seu POP</h3><p>Tem uma tarefa da casa que ainda não tem POP? Eu te guio, parte por parte.</p></div>
+    </div>
+    <p>Todo POP tem as mesmas partes: <strong>nome</strong>, <strong>quando</strong>, <strong>material</strong> e <strong>passos</strong>. Em cada parte eu explico para que ela serve e dou exemplos. Enquanto você escreve, eu aviso o que pode ficar mais claro. No fim, conferimos juntos se qualquer colega consegue seguir.</p>
+    <div class="btn-row"><button class="btn primary" type="button" data-wiz="pop"><svg aria-hidden="true"><use href="#u-plus"/></svg>Criar meu POP</button></div>
+    <p class="small muted" style="margin:0">O POP fica salvo neste aparelho e aparece na lista acima, com passo a passo e cronômetro. Para passar para as colegas, use o botão <strong>Compartilhar</strong> do seu POP: ele cria um link.</p>
+  </div>
 </section>
 
 <!-- ================= 3. CHECKLISTS ================= -->
@@ -1078,6 +1118,16 @@ mark{background:var(--oil-soft); color:inherit; border-radius:4px; padding:0 2px
     </div>
     <div class="cl-tabs" role="tablist" aria-label="Escolha a lista" id="clTabs"></div>
     <div id="clPanel" role="tabpanel"></div>
+  </div>
+
+  <div class="tool" id="tool-mylist">
+    <div class="tool-head">
+      <svg aria-hidden="true"><use href="#i-clip"/></svg>
+      <div><h3>Crie o seu checklist</h3><p>Uma lista sua, para um momento do serviço que ainda não tem lista.</p></div>
+    </div>
+    <p><strong>POP ou checklist?</strong> O POP ensina <strong>como</strong> fazer uma tarefa. O checklist confere <strong>se</strong> cada coisa foi feita. Se você precisa explicar o jeito de fazer, crie um POP; se só precisa não esquecer nada, crie um checklist.</p>
+    <div class="btn-row"><button class="btn primary" type="button" data-wiz="list"><svg aria-hidden="true"><use href="#u-plus"/></svg>Criar meu checklist</button></div>
+    <p class="small muted" style="margin:0">A lista fica salva neste aparelho e aparece junto das outras, com “novo turno” e impressão. Para mandar às colegas, use o botão <strong>Compartilhar</strong> da lista.</p>
   </div>
 </section>
 
@@ -1775,6 +1825,22 @@ mark{background:var(--oil-soft); color:inherit; border-radius:4px; padding:0 2px
     <footer>
       <button class="btn big" type="button" id="stepPrev">Voltar</button>
       <button class="btn big primary" type="button" id="stepNext">Próximo</button>
+    </footer>
+  </div>
+</dialog>
+
+<dialog id="wizDlg" aria-labelledby="wizTitle">
+  <div class="stepper-ui wiz">
+    <header>
+      <h2 id="wizTitle" style="font-size:1.4rem;margin:0"></h2>
+      <button class="btn icon" type="button" id="wizClose" aria-label="Fechar. O rascunho fica guardado."><svg aria-hidden="true"><use href="#u-x"/></svg></button>
+    </header>
+    <ol class="wiz-prog" id="wizProg" aria-label="Etapas"></ol>
+    <div class="wiz-body" id="wizBody"></div>
+    <p class="wiz-err" id="wizErr" role="alert"></p>
+    <footer>
+      <button class="btn big" type="button" id="wizPrev">Voltar</button>
+      <button class="btn big primary" type="button" id="wizNext">Próximo</button>
     </footer>
   </div>
 </dialog>
@@ -2492,19 +2558,38 @@ function chlorineTool(){
     $('#clEx', w).innerHTML = `<p class="calc">Referência comum: 1 colher de sopa de água sanitária para 1 litro de água. Você tem ${fmt(l)} ${l === 1 ? 'litro' : 'litros'}, então ${fmt(l)} × 1 = ${frac(c)} ${c === 1 ? 'colher' : 'colheres'} de sopa, por 15 minutos.</p><p>Use água sanitária própria para alimentos ou produto clorado para hortifrúti.</p>`; };
   L.addEventListener('input', upd); upd(); return w;
 }
+/* POPs e checklists criados pela pessoa (salvos no aparelho) */
+const MY = { pops: store.get('myPops', []), lists: store.get('myLists', []) };
+const saveMy = () => { const a = store.set('myPops', MY.pops), b = store.set('myLists', MY.lists); return a && b; };
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+function myPopToPop(m){
+  return {id:'meu-' + m.id, code:'Meu POP', name:m.name, quando:m.quando, material:m.material, mine:m,
+    meta: m.why ? `<strong>Por que importa:</strong> ${esc(m.why)}` : '',
+    steps: m.steps.map((x, i) => ({t: esc(x.t), timer: x.min > 0 ? {key:'meu-' + m.id + '-' + i, s:Math.round(x.min*60), label:`${m.name}: passo ${i+1}`} : null}))};
+}
+const allPops = () => POPS.concat(MY.pops.map(myPopToPop));
+const AP = window.AP = {};
 (function pops(){
   const ul = $('#popList');
-  POPS.forEach(p => {
-    const li = document.createElement('li');
-    li.innerHTML = `<details class="pop-item" id="${p.id}"><summary><span class="code">${p.code}</span><span class="nm">${esc(p.name)}</span>${svgUse('u-chev','chev')}</summary><div class="body">
-      ${p.quando ? `<p><strong>Quando:</strong> ${esc(p.quando)}${p.material ? ` <strong>Material:</strong> ${esc(p.material)}` : ''}</p>` : ''}
-      ${p.meta ? `<p>${p.meta}</p>` : ''}<div class="slot-meta"></div>
-      <ol class="steps"></ol>${p.extra || ''}
-      <div class="btn-row"><button class="btn primary" type="button" data-pop="${p.id}">${svgUse('u-steps')}Passo a passo</button></div></div></details>`;
-    const ol = $('.steps', li);
-    p.steps.forEach(s => { const l = document.createElement('li'); l.innerHTML = s.t; if (s.timer) l.appendChild(Timers.widget(s.timer)); if (s.chlorine) l.appendChild(chlorineTool()); ol.appendChild(l); });
-    ul.appendChild(li);
-  });
+  function render(){
+    ul.innerHTML = '';
+    allPops().forEach(p => {
+      const li = document.createElement('li');
+      const mine = p.mine;
+      li.innerHTML = `<details class="pop-item" id="${p.id}"><summary><span class="code${mine ? ' mine' : ''}">${p.code}</span><span class="nm">${esc(p.name)}</span>${svgUse('u-chev','chev')}</summary><div class="body">
+        ${p.quando || p.material ? `<p>${p.quando ? `<strong>Quando:</strong> ${esc(p.quando)}` : ''}${p.material ? ` <strong>Material:</strong> ${esc(p.material)}` : ''}</p>` : ''}
+        ${p.meta ? `<p>${p.meta}</p>` : ''}<div class="slot-meta"></div>
+        <ol class="steps"></ol>${p.extra || ''}
+        ${mine && mine.resp ? `<p><strong>Responsável:</strong> ${esc(mine.resp)}</p>` : ''}
+        <div class="btn-row"><button class="btn primary" type="button" data-pop="${p.id}">${svgUse('u-steps')}Passo a passo</button>
+        ${mine ? `<button class="btn" type="button" data-my="edit" data-kind="pop" data-id="${mine.id}">Editar</button><button class="btn" type="button" data-my="share" data-kind="pop" data-id="${mine.id}">Compartilhar</button><button class="btn" type="button" data-my="print" data-kind="pop" data-id="${mine.id}">${svgUse('u-print')}Imprimir</button><button class="btn" type="button" data-my="del" data-kind="pop" data-id="${mine.id}">${svgUse('u-trash')}Apagar</button>` : ''}</div>
+        ${mine ? '<p class="small muted" style="margin:0">POP criado por você, salvo neste aparelho.</p><div class="share-box"></div>' : ''}</div></details>`;
+      const ol = $('.steps', li);
+      p.steps.forEach(st => { const l = document.createElement('li'); l.innerHTML = st.t; if (st.timer) l.appendChild(Timers.widget(st.timer)); if (st.chlorine) l.appendChild(chlorineTool()); ol.appendChild(l); });
+      ul.appendChild(li);
+    });
+  }
+  render(); AP.renderPops = render;
   // abrir POP pelo link (#pop-01)
   const openHash = () => { const d = document.getElementById(location.hash.slice(1)); if (d && d.tagName === 'DETAILS') d.open = true; };
   window.addEventListener('hashchange', openHash); openHash();
@@ -2513,18 +2598,18 @@ function chlorineTool(){
   /* passo a passo */
   const dlg = $('#stepDlg'); let pop = null, i = 0, lastFocus = null;
   function paint(){
-    const s = pop.steps[i], n = pop.steps.length;
-    $('#stepTitle').textContent = `${pop.code} · ${pop.name}`;
+    const st = pop.steps[i], n = pop.steps.length;
+    $('#stepTitle').textContent = `${pop.code}: ${pop.name}`;
     $('#stepDots').innerHTML = pop.steps.map((_,k) => `<i class="${k <= i ? 'on' : ''}"></i>`).join('');
     $('#stepCount').textContent = `Passo ${i+1} de ${n}`;
-    const st = $('#stepStage'); st.innerHTML = `<span class="snum" aria-hidden="true">${i+1}</span><p class="stext">${s.t}</p>`;
-    if (i === 0 && pop.meta) st.insertAdjacentHTML('beforeend', `<p>${pop.meta}</p>`);
-    if (s.timer) st.appendChild(Timers.widget(s.timer));
-    if (s.chlorine) st.insertAdjacentHTML('beforeend', `<p class="warn-fixed">${svgUse('u-alert')}<span>Siga sempre o rótulo do produto.</span></p>`);
+    const stage = $('#stepStage'); stage.innerHTML = `<span class="snum" aria-hidden="true">${i+1}</span><p class="stext">${st.t}</p>`;
+    if (i === 0 && pop.meta) stage.insertAdjacentHTML('beforeend', `<p>${pop.meta}</p>`);
+    if (st.timer) stage.appendChild(Timers.widget(st.timer));
+    if (st.chlorine) stage.insertAdjacentHTML('beforeend', `<p class="warn-fixed">${svgUse('u-alert')}<span>Siga sempre o rótulo do produto.</span></p>`);
     $('#stepPrev').disabled = i === 0;
     $('#stepNext').innerHTML = i === n-1 ? svgUse('u-check') + 'Concluir' : 'Próximo';
   }
-  function open(id){ pop = POPS.find(p => p.id === id); i = 0; lastFocus = document.activeElement; paint(); if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open',''); $('#stepNext').focus(); }
+  function open(id){ pop = allPops().find(x => x.id === id); if (!pop) return; i = 0; lastFocus = document.activeElement; paint(); if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open',''); $('#stepNext').focus(); }
   function close(){ if (dlg.close) dlg.close(); else dlg.removeAttribute('open'); }
   dlg.addEventListener('close', () => { lastFocus && lastFocus.focus(); });
   document.addEventListener('click', e => { const b = e.target.closest('[data-pop]'); if (b) open(b.dataset.pop); });
@@ -2544,22 +2629,31 @@ $$('.timer-slot').forEach(sl => { const c = SLOT_TIMERS[sl.dataset.timer]; if (c
 (function checks(){
   const st = store.get('checks', {}); let cur = store.get('checkTab', 'abertura'); let undo = null;
   const tabs = $('#clTabs'), panel = $('#clPanel');
-  tabs.innerHTML = CHECKLISTS.map(l => `<button class="btn small" role="tab" type="button" id="tab-${l.id}" data-l="${l.id}" aria-controls="clPanel">${esc(l.name)}</button>`).join('');
-  const arr = id => { const l = CHECKLISTS.find(x => x.id === id); const a = (st[id] && st[id].v) || []; return l.items.map((_,i) => !!a[i]); };
+  const all = () => CHECKLISTS.concat(MY.lists.map(l => ({id:'meu-' + l.id, name:l.name, quando:l.quando, items:l.items, mine:l})));
+  const find = id => all().find(x => x.id === id);
+  function renderTabs(){
+    if (!find(cur)) cur = 'abertura';
+    tabs.innerHTML = all().map(l => `<button class="btn small" role="tab" type="button" id="tab-${l.id}" data-l="${l.id}" aria-controls="clPanel">${l.mine ? '★ ' : ''}${esc(l.name)}</button>`).join('');
+  }
+  const arr = id => { const l = find(id); const a = (st[id] && st[id].v) || []; return l.items.map((_,i) => !!a[i]); };
   function paint(){
-    const l = CHECKLISTS.find(x => x.id === cur); const v = arr(cur); const n = v.filter(Boolean).length, tot = v.length;
+    const l = find(cur); const v = arr(cur); const n = v.filter(Boolean).length, tot = v.length;
     $$('[role=tab]', tabs).forEach(b => { const on = b.dataset.l === cur; b.setAttribute('aria-selected', on); b.setAttribute('aria-pressed', on); b.tabIndex = on ? 0 : -1; });
     panel.setAttribute('aria-labelledby', 'tab-' + cur);
     const when = st[cur] && st[cur].t ? new Date(st[cur].t) : null;
-    panel.innerHTML = `<h4 style="margin-top:6px">3.${CHECKLISTS.indexOf(l)+1} ${esc(l.name)}</h4>
+    const head = l.mine ? `<h4 style="margin-top:6px">${esc(l.name)} <span class="mine-tag">Criada por você</span></h4>${l.quando ? `<p class="small muted" style="margin:0 0 8px">Quando usar: ${esc(l.quando)}</p>` : ''}`
+      : `<h4 style="margin-top:6px">3.${CHECKLISTS.indexOf(l)+1} ${esc(l.name)}</h4>`;
+    panel.innerHTML = `${head}
       <div class="cl-progress"><span class="track" role="progressbar" aria-valuemin="0" aria-valuemax="${tot}" aria-valuenow="${n}" aria-label="Itens feitos"><i style="width:${n/tot*100}%"></i></span><b>${n} de ${tot}</b></div>
       <ul class="checks">${l.items.map((it,i) => `<li><label class="check"><input type="checkbox" data-i="${i}" ${v[i] ? 'checked' : ''}><span>${esc(it)}</span></label></li>`).join('')}</ul>
       <div class="cheer ${n === tot ? 'show' : ''}" role="status">${svgUse('u-heart')}<p>${esc(CHEERS[(cur.length + n) % CHEERS.length])}<br>— Zaqueu</p></div>
       <p class="small muted" style="margin:12px 0 0">${when ? 'Última marcação: ' + when.toLocaleString('pt-BR', {weekday:'short', day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'}) + '.' : 'Nada marcado ainda neste turno.'}</p>
-      <div class="btn-row"><button class="btn primary" type="button" id="clNew">${svgUse('u-reset')}Novo turno</button><button class="btn" type="button" id="clPrint">${svgUse('u-print')}Imprimir em branco</button></div>`;
+      <div class="btn-row"><button class="btn primary" type="button" id="clNew">${svgUse('u-reset')}Novo turno</button><button class="btn" type="button" id="clPrint">${svgUse('u-print')}Imprimir em branco</button>
+      ${l.mine ? `<button class="btn" type="button" data-my="edit" data-kind="list" data-id="${l.mine.id}">Editar</button><button class="btn" type="button" data-my="share" data-kind="list" data-id="${l.mine.id}">Compartilhar</button><button class="btn" type="button" data-my="del" data-kind="list" data-id="${l.mine.id}">${svgUse('u-trash')}Apagar</button>` : ''}</div>
+      ${l.mine ? '<div class="share-box"></div>' : ''}`;
   }
   tabs.addEventListener('click', e => { const b = e.target.closest('[data-l]'); if (!b) return; cur = b.dataset.l; store.set('checkTab', cur); paint(); });
-  tabs.addEventListener('keydown', e => { const ids = CHECKLISTS.map(l => l.id); let k = ids.indexOf(cur); if (e.key === 'ArrowRight') k = (k+1) % ids.length; else if (e.key === 'ArrowLeft') k = (k-1+ids.length) % ids.length; else return; cur = ids[k]; paint(); $('#tab-'+cur).focus(); });
+  tabs.addEventListener('keydown', e => { const ids = all().map(l => l.id); let k = ids.indexOf(cur); if (e.key === 'ArrowRight') k = (k+1) % ids.length; else if (e.key === 'ArrowLeft') k = (k-1+ids.length) % ids.length; else return; cur = ids[k]; paint(); $('#tab-'+cur).focus(); });
   panel.addEventListener('change', e => {
     const c = e.target.closest('input[data-i]'); if (!c) return;
     const v = arr(cur); v[+c.dataset.i] = c.checked; st[cur] = {v, t: Date.now()}; store.set('checks', st);
@@ -2570,11 +2664,271 @@ $$('.timer-slot').forEach(sl => { const c = SLOT_TIMERS[sl.dataset.timer]; if (c
   panel.addEventListener('click', e => {
     if (e.target.closest('#clNew')){ undo = {id:cur, v: st[cur]}; delete st[cur]; store.set('checks', st); paint();
       toast(`Lista zerada para o novo turno. <button class="btn small" type="button" id="clUndo" style="margin-left:8px;min-height:40px;background:var(--paper);color:var(--ink)">Desfazer</button>`, 6000); }
-    if (e.target.closest('#clPrint')){ const l = CHECKLISTS.find(x => x.id === cur);
+    if (e.target.closest('#clPrint')){ const l = find(cur);
       printHTML(`<h1>${esc(l.name)}</h1><div class="meta"><span>Data: ____/____/______</span><span>Turno: __________</span><span>Responsável: ____________________</span></div><ul class="pl">${l.items.map(it => `<li><span class="box"></span><span>${esc(it)}</span></li>`).join('')}</ul><p style="margin-top:6mm;font-size:10pt">Apostila de Cozinha · Parte 3, Checklists</p>`); }
   });
   $('#toast').addEventListener('click', e => { if (e.target.id === 'clUndo' && undo){ if (undo.v) st[undo.id] = undo.v; store.set('checks', st); cur = undo.id; undo = null; paint(); $('#toast').classList.remove('show'); } });
-  paint();
+  renderTabs(); paint();
+  AP.refreshChecks = (selectId) => { if (selectId){ cur = selectId; store.set('checkTab', cur); } renderTabs(); paint(); };
+})();
+
+
+/* =====================================================================
+   CRIAR POP E CHECKLIST — assistente que explica cada parte
+   ===================================================================== */
+const POP_IDEAS = {
+  name:['Limpeza da coifa', 'Porcionamento da massa fresca', 'Preparo do molho sugo', 'Troca do óleo da fritadeira'],
+  quando:['ao abrir a cozinha', 'ao fim de cada turno', 'toda segunda-feira', 'sempre que sujar', 'toda entrega de fornecedor'],
+  material:['luva, pano limpo, álcool 70%', 'balança, potes com tampa, etiquetas', 'escova, detergente neutro, sanitizante']
+};
+const LIST_IDEAS = {
+  quando:['Abertura', 'Antes do serviço', 'Durante o serviço', 'Fechamento', 'Recebimento', 'Toda semana'],
+  items:['Geladeira abaixo de 5 °C', 'Freezer a −18 °C ou menos', 'Balcão quente acima de 60 °C', 'Óleo de fritura no máximo a 180 °C', 'Tudo etiquetado: produto, data, validade e responsável', 'Na geladeira: pronto em cima, cru embaixo', 'Nada direto no chão', 'Mãos lavadas a cada troca de tarefa']
+};
+const VAGUE = ['um pouco', 'o suficiente', 'mais ou menos', 'algum tempo', 'rapidinho', 'direitinho', 'quando der', 'bastante'];
+function coach(text, kind){
+  const t = text.trim(), low = t.toLowerCase(), out = [];
+  if (!t) return out;
+  if (kind === 'step'){
+    if (/^(o|a|os|as|um|uma|é|deve|deverá)\s/.test(low) || /\bdeve(m)?\s+ser\b/.test(low)) out.push({m:'Comece pelo verbo, como uma ordem gentil: “Lave a cuba” em vez de “A cuba deve ser lavada”. Fica mais rápido de ler no meio do serviço.'});
+    if (t.length > 140 || /\be depois\b/.test(low) || /[.;]\s+\S/.test(t)) out.push({m:'Parece que tem mais de uma ação aqui. Um passo = uma ação. Que tal dividir em dois passos?'});
+    const mm = low.match(/(\d+(?:[.,]\d+)?)\s*(?:min\b|minuto)/), ss = low.match(/(\d+)\s*(?:s\b|seg\b|segundo)/), hh = low.match(/(\d+(?:[.,]\d+)?)\s*(?:h\b|hora)/);
+    let min = 0, lbl = '';
+    if (mm){ min = num(mm[1]); lbl = mm[1] + ' minutos'; } else if (hh){ min = num(hh[1]) * 60; lbl = hh[1] + (num(hh[1]) === 1 ? ' hora' : ' horas'); } else if (ss){ min = num(ss[1]) / 60; lbl = ss[1] + ' segundos'; }
+    if (min > 0) out.push({m:`Vi “${esc(lbl)}” no texto. Quer um cronômetro neste passo? Ele toca e vibra quando acabar.`, min});
+  } else {
+    if (/^(ver|olhar|checar|verificar|conferir|observar)\b/.test(low) && !/\d/.test(low)) out.push({m:'Diga como é estar certo. Em vez de “Verificar o freezer”, escreva “Freezer a −18 °C ou menos”. Assim quem marca sabe o que conferir.'});
+    if (t.includes('?')) out.push({m:'Escreva como afirmação, não como pergunta: o item é marcado quando está feito. Ex.: “Bancada sanitizada”.'});
+    if (t.length > 110) out.push({m:'Item longo demais. Checklist bom se lê de relance: tente deixar mais curto.'});
+  }
+  const vg = VAGUE.find(v => low.includes(v));
+  if (vg) out.push({m:`“${vg}” cada pessoa entende de um jeito. Dá para trocar por um número ou um sinal claro (tempo, temperatura, cor, quantidade)?`});
+  if (!out.length) out.push({ok:true, m: kind === 'step' ? 'Passo claro. Pode adicionar.' : 'Item claro. Pode adicionar.'});
+  return out;
+}
+const hasNumber = t => /\d/.test(t);
+const isVague = t => VAGUE.some(v => t.toLowerCase().includes(v));
+
+(function wizard(){
+  const dlg = $('#wizDlg'), body = $('#wizBody'), err = $('#wizErr');
+  let kind = null, d = null, i = 0, editIdx = -1, lastFocus = null, editingSaved = false;
+  const chips = (list, f) => `<div class="chips" style="margin:6px 0 4px" role="group" aria-label="Exemplos">${list.map(x => `<button class="chip" type="button" data-fill="${f}" data-v="${esc(x)}">${esc(x)}</button>`).join('')}</div>`;
+  const why = (t) => `<div class="explain" style="margin:0 0 16px"><p><strong>Para que serve esta parte:</strong> ${t}</p></div>`;
+  const draftKey = () => 'draft.' + kind;
+  const saveDraft = () => { if (!editingSaved) store.set(draftKey(), d); };
+
+  /* ---------- editor de lista (passos ou itens) ---------- */
+  function listEditor(key, isStep){
+    const L = d[key];
+    const label = isStep ? 'passo' : 'item';
+    const items = L.length ? `<ol class="ed-list" aria-label="${isStep ? 'Seus passos' : 'Seus itens'}">${L.map((x, k) => { const t = isStep ? x.t : x;
+      return `<li class="${k === editIdx ? 'editing' : ''}"><span class="et">${esc(t)}</span>${isStep && x.min > 0 ? `<span class="tm">Cronômetro: ${fmt(x.min, 2)} min</span>` : ''}<span class="ea">
+        <button class="btn" type="button" data-ed="up" data-k="${k}" aria-label="Subir o ${label} ${k+1}" ${k === 0 ? 'disabled' : ''}>↑</button>
+        <button class="btn" type="button" data-ed="down" data-k="${k}" aria-label="Descer o ${label} ${k+1}" ${k === L.length-1 ? 'disabled' : ''}>↓</button>
+        <button class="btn" type="button" data-ed="edit" data-k="${k}" aria-label="Editar o ${label} ${k+1}">Editar</button>
+        <button class="btn" type="button" data-ed="del" data-k="${k}" aria-label="Apagar o ${label} ${k+1}">✕</button></span></li>`; }).join('')}</ol>`
+      : `<p class="empty">Nenhum ${label} ainda. Escreva o primeiro acima e toque em “Adicionar”.</p>`;
+    const cur = editIdx >= 0 ? L[editIdx] : null;
+    return `<div class="field"><label for="edIn">${editIdx >= 0 ? `Editando o ${label} ${editIdx+1}` : `Novo ${label}`}</label><textarea id="edIn" rows="2" placeholder="${isStep ? 'Ex.: Lave os filtros com água quente e detergente.' : 'Ex.: Freezer a −18 °C ou menos'}">${cur ? esc(isStep ? cur.t : cur) : ''}</textarea></div>
+      ${isStep ? `<div class="field"><label for="edMin">Cronômetro neste passo, em minutos (opcional)</label><input id="edMin" type="number" inputmode="decimal" min="0" step="0.5" value="${cur && cur.min ? cur.min : ''}" style="max-width:200px"></div>` : ''}
+      <ul class="coach" id="edCoach" aria-live="polite"></ul>
+      <div class="btn-row"><button class="btn primary" type="button" id="edAdd">${svgUse(editIdx >= 0 ? 'u-check' : 'u-plus')}${editIdx >= 0 ? `Salvar ${label}` : `Adicionar ${label}`}</button>${editIdx >= 0 ? '<button class="btn" type="button" id="edCancel">Cancelar edição</button>' : ''}</div>
+      <h4 style="margin-top:18px">${isStep ? 'Seus passos' : 'Seus itens'} (${L.length})</h4>${items}`;
+  }
+  function paintCoach(isStep){
+    const inp = $('#edIn'); if (!inp) return;
+    $('#edCoach').innerHTML = coach(inp.value, isStep ? 'step' : 'item').map(c => `<li class="${c.ok ? 'ok' : ''}">${c.ok ? '✓ ' : ''}${c.m}${c.min ? `<br><button class="btn small" type="button" data-setmin="${c.min}">Pôr cronômetro de ${fmt(c.min, 2)} min</button>` : ''}</li>`).join('');
+  }
+
+  /* ---------- etapas ---------- */
+  const POP_STEPS = [
+    {n:'Nome', r:() => `${why('o nome diz, em dois segundos, se este é o POP certo. Use o nome da tarefa, do jeito que a equipe fala.')}
+      <div class="field"><label for="wName">Qual tarefa este POP ensina?</label><input id="wName" type="text" data-f="name" maxlength="120" value="${esc(d.name)}" placeholder="Ex.: Limpeza da coifa"></div>
+      <p class="small muted" style="margin:0">Exemplos (toque para usar):</p>${chips(POP_IDEAS.name, 'name')}`,
+     v:() => d.name.trim().length < 3 ? 'Escreva o nome da tarefa (pelo menos 3 letras).' : ''},
+    {n:'Quando', r:() => `${why('“quando” evita que a tarefa seja esquecida ou feita na hora errada. “Material” deixa tudo separado antes de começar: é a mise en place do POP.')}
+      <div class="field"><label for="wQuando">Quando a tarefa é feita?</label><input id="wQuando" type="text" data-f="quando" maxlength="160" value="${esc(d.quando)}" placeholder="Ex.: ao fim de cada turno"></div>${chips(POP_IDEAS.quando, 'quando')}
+      <div class="field" style="margin-top:14px"><label for="wMat">Que material precisa?</label><input id="wMat" type="text" data-f="material" maxlength="200" value="${esc(d.material)}" placeholder="Ex.: escova, detergente neutro, sanitizante"></div>${chips(POP_IDEAS.material, 'material')}`,
+     v:() => !d.quando.trim() ? 'Diga quando a tarefa é feita. Se for sempre que precisar, escreva “sempre que precisar”.' : ''},
+    {n:'Passos', r:() => `${why('os passos são o coração do POP. Um passo é uma ação só, começando pelo verbo (lave, separe, meça). Se tem número (tempo, temperatura, quantidade), escreva o número: é isso que faz todo mundo fazer igual.')}${listEditor('steps', true)}`,
+     v:() => d.steps.length < 2 ? 'Um POP precisa de pelo menos 2 passos. Adicione mais um.' : ''},
+    {n:'Por quê', r:() => `${why('quando a pessoa entende o porquê, ela não pula o passo. Uma frase basta. Ex.: “Pano molhado espalha bactéria.”')}
+      <div class="field"><label for="wWhy">Por que esta tarefa importa? (opcional)</label><textarea id="wWhy" data-f="why" rows="3" maxlength="300" placeholder="Ex.: Gordura na coifa pega fogo e pinga na comida.">${esc(d.why)}</textarea></div>
+      <div class="field"><label for="wResp">Quem é o responsável? (opcional)</label><input id="wResp" type="text" data-f="resp" maxlength="80" value="${esc(d.resp)}" placeholder="Ex.: cozinheira do turno da noite"></div>`},
+    {n:'Revisar', r:() => { const q = [
+        [!!d.name.trim(), 'Tem nome', 'Dê um nome à tarefa.'],
+        [!!d.quando.trim(), 'Diz quando fazer', 'Diga quando fazer.'],
+        [!!d.material.trim(), 'Lista o material', 'Liste o material: quem vai fazer separa tudo antes.'],
+        [d.steps.length >= 3, 'Tem 3 passos ou mais', 'Tarefa com só 2 passos talvez caiba num checklist.'],
+        [d.steps.some(x => hasNumber(x.t) || x.min > 0), 'Algum passo tem número (tempo, temperatura ou quantidade)', 'Se a tarefa tem tempo, temperatura ou quantidade, escreva o número no passo.'],
+        [!d.steps.some(x => isVague(x.t)), 'Nenhum passo com palavra vaga', 'Troque palavras como “um pouco” por um número ou um sinal claro.'],
+        [!!d.why.trim(), 'Explica por que importa', 'Uma frase de porquê ajuda a ninguém pular passo.']];
+      const ok = q.filter(x => x[0]).length;
+      return `${why('é a hora de ler como se você fosse uma colega nova. Se ela conseguir fazer só lendo, o POP está pronto.')}
+        <ul class="qual">${q.map(x => `<li><span class="${x[0] ? 'y' : 'n'}" aria-hidden="true">${x[0] ? '✓' : '•'}</span><span>${x[0] ? x[1] : `<strong>Dica:</strong> ${x[2]}`}</span></li>`).join('')}</ul>
+        <p class="hand" style="margin:6px 0 14px">${ok === q.length ? 'Seu POP está completo. Qualquer colega consegue seguir!' : ok >= 5 ? 'Está bom! As dicas acima deixam ainda melhor.' : 'Já dá para salvar. Se puder, siga as dicas acima.'}</p>
+        <h4>Como vai ficar</h4>
+        <div class="rec-card"><h4 style="font-size:1.4rem">${esc(d.name)}</h4>${d.quando ? `<p><strong>Quando:</strong> ${esc(d.quando)}</p>` : ''}${d.material ? `<p><strong>Material:</strong> ${esc(d.material)}</p>` : ''}${d.why ? `<p><strong>Por que importa:</strong> ${esc(d.why)}</p>` : ''}
+        <ol>${d.steps.map(x => `<li>${esc(x.t)}${x.min > 0 ? ` <span class="muted">(cronômetro de ${fmt(x.min, 2)} min)</span>` : ''}</li>`).join('')}</ol>${d.resp ? `<p style="margin:0"><strong>Responsável:</strong> ${esc(d.resp)}</p>` : ''}</div>`; }}
+  ];
+  const LIST_STEPS = [
+    {n:'Nome', r:() => `${why('o checklist confere <strong>se</strong> cada coisa foi feita, sem depender da memória. O nome e o momento dizem quando pegar esta lista.')}
+      <div class="field"><label for="wName">Nome da lista</label><input id="wName" type="text" data-f="name" maxlength="80" value="${esc(d.name)}" placeholder="Ex.: Abertura da praça de massas"></div>
+      <div class="field"><label for="wQuando">Quando usar</label><input id="wQuando" type="text" data-f="quando" maxlength="80" value="${esc(d.quando)}" placeholder="Ex.: Antes do serviço"></div>${chips(LIST_IDEAS.quando, 'quando')}`,
+     v:() => d.name.trim().length < 3 ? 'Dê um nome à lista (pelo menos 3 letras).' : ''},
+    {n:'Itens', r:() => `${why('cada item é algo que dá para responder com sim ou não, olhando. Bom: “Freezer a −18 °C ou menos”. Vago: “Ver o freezer”. Coloque na ordem em que a pessoa anda pela cozinha, assim ninguém precisa voltar.')}${listEditor('items', false)}
+      <p class="small muted" style="margin:16px 0 0">Ideias tiradas das regras da apostila (toque para adicionar):</p>
+      <div class="chips" style="margin-top:6px" role="group" aria-label="Ideias de itens">${LIST_IDEAS.items.map(x => `<button class="chip" type="button" data-additem="${esc(x)}">${esc(x)}</button>`).join('')}</div>`,
+     v:() => d.items.length < 2 ? 'Uma lista precisa de pelo menos 2 itens.' : ''},
+    {n:'Revisar', r:() => { const q = [
+        [!!d.quando.trim(), 'Diz quando usar', 'Diga em que momento a lista é usada.'],
+        [d.items.length >= 3, 'Tem 3 itens ou mais', 'Lista com só 2 itens talvez não precise de checklist.'],
+        [!d.items.some(x => x.includes('?')), 'Itens escritos como afirmação', 'Troque perguntas por afirmações.'],
+        [!d.items.some(x => /^(ver|olhar|checar|verificar|conferir|observar)\b/i.test(x) && !hasNumber(x)), 'Cada item diz como é estar certo', 'Troque “Verificar X” pelo jeito certo de X (ex.: “Freezer a −18 °C ou menos”).'],
+        [!d.items.some(isVague), 'Nenhum item com palavra vaga', 'Troque palavras vagas por um número ou um sinal claro.']];
+      const ok = q.filter(x => x[0]).length;
+      return `${why('leia como se fosse a primeira vez. Se cada item dá para marcar sem perguntar nada a ninguém, a lista está pronta.')}
+        <ul class="qual">${q.map(x => `<li><span class="${x[0] ? 'y' : 'n'}" aria-hidden="true">${x[0] ? '✓' : '•'}</span><span>${x[0] ? x[1] : `<strong>Dica:</strong> ${x[2]}`}</span></li>`).join('')}</ul>
+        <p class="hand" style="margin:6px 0 14px">${ok === q.length ? 'Lista redondinha. Bom serviço!' : 'Já dá para salvar. As dicas acima deixam a lista ainda melhor.'}</p>
+        <h4>Como vai ficar</h4><div class="rec-card"><h4 style="font-size:1.4rem">${esc(d.name)}</h4>${d.quando ? `<p>Quando usar: ${esc(d.quando)}</p>` : ''}<ul class="checks">${d.items.map(x => `<li><label class="check"><input type="checkbox" disabled><span>${esc(x)}</span></label></li>`).join('')}</ul></div>`; }}
+  ];
+  const STEPS = () => kind === 'pop' ? POP_STEPS : LIST_STEPS;
+  const blank = () => kind === 'pop' ? {name:'', quando:'', material:'', steps:[], why:'', resp:''} : {name:'', quando:'', items:[]};
+
+  function paint(focus){
+    const S = STEPS();
+    $('#wizTitle').textContent = (editingSaved ? 'Editar ' : 'Criar ') + (kind === 'pop' ? 'meu POP' : 'meu checklist');
+    $('#wizProg').innerHTML = S.map((x, k) => `<li class="${k === i ? 'on' : k < i ? 'done' : ''}" ${k === i ? 'aria-current="step"' : ''}>${k+1}. ${x.n}</li>`).join('');
+    body.innerHTML = (i === 0 && d.__resumed ? `<p class="note" style="padding-left:16px">Você tinha um rascunho guardado e eu continuei dele. <button class="btn small" type="button" id="wizFresh">Começar do zero</button></p>` : '') + S[i].r();
+    err.textContent = '';
+    $('#wizPrev').disabled = i === 0;
+    $('#wizNext').innerHTML = i === S.length-1 ? svgUse('u-check') + 'Salvar' : 'Próximo';
+    paintCoach(kind === 'pop');
+    if (focus !== false){ const f = $('input, textarea', body); body.scrollTop = 0; f && f.focus({preventScroll:true}); }
+  }
+  function open(k, existing){
+    kind = k; i = 0; editIdx = -1; lastFocus = document.activeElement; editingSaved = !!existing;
+    if (existing) d = JSON.parse(JSON.stringify(existing));
+    else { const dr = store.get('draft.' + k, null); d = dr && (dr.name || (dr.steps || dr.items || []).length) ? Object.assign(blank(), dr, {__resumed:true}) : blank(); }
+    paint(); if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open','');
+  }
+  function close(){ if (dlg.close) dlg.close(); else dlg.removeAttribute('open'); }
+  dlg.addEventListener('close', () => { lastFocus && lastFocus.focus(); });
+  $('#wizClose').addEventListener('click', () => { close(); if (!editingSaved && (d.name || (d.steps || d.items || []).length)) toast('Rascunho guardado. Continue quando quiser.'); });
+  function addFromEditor(){
+    const isStep = kind === 'pop', key = isStep ? 'steps' : 'items';
+    const t = $('#edIn').value.trim().replace(/\s+/g, ' ');
+    if (!t){ err.textContent = isStep ? 'Escreva o passo antes de adicionar.' : 'Escreva o item antes de adicionar.'; $('#edIn').focus(); return; }
+    if (t.length > 400){ err.textContent = 'Texto longo demais. Divida em mais de um.'; return; }
+    const val = isStep ? {t, min: Math.max(0, num(($('#edMin') || {}).value || 0))} : t;
+    if (editIdx >= 0) d[key][editIdx] = val; else { if (d[key].length >= 40){ err.textContent = 'Máximo de 40.'; return; } d[key].push(val); }
+    editIdx = -1; saveDraft(); paint(false); $('#edIn').focus();
+    toast(isStep ? `Passo adicionado. Agora são ${d.steps.length}.` : `Item adicionado. Agora são ${d.items.length}.`, 1800);
+  }
+  body.addEventListener('input', e => {
+    const f = e.target.dataset.f; if (f){ d[f] = e.target.value; saveDraft(); }
+    if (e.target.id === 'edIn') paintCoach(kind === 'pop');
+  });
+  body.addEventListener('keydown', e => { if (e.target.id === 'edIn' && e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); addFromEditor(); } });
+  body.addEventListener('click', e => {
+    const fill = e.target.closest('[data-fill]'); if (fill){ d[fill.dataset.fill] = fill.dataset.v; saveDraft(); const inp = $(`[data-f="${fill.dataset.fill}"]`, body); if (inp){ inp.value = fill.dataset.v; inp.focus(); } return; }
+    const ai = e.target.closest('[data-additem]'); if (ai){ const v = ai.dataset.additem; if (d.items.includes(v)){ toast('Esse item já está na lista.'); return; } d.items.push(v); saveDraft(); paint(false); toast('Item adicionado.', 1500); return; }
+    const sm = e.target.closest('[data-setmin]'); if (sm){ $('#edMin').value = sm.dataset.setmin; $('#edMin').focus(); return; }
+    if (e.target.closest('#edAdd')) return addFromEditor();
+    if (e.target.closest('#edCancel')){ editIdx = -1; paint(false); return; }
+    if (e.target.closest('#wizFresh')){ d = blank(); store.set(draftKey(), null); paint(); return; }
+    const ed = e.target.closest('[data-ed]'); if (ed){ const key = kind === 'pop' ? 'steps' : 'items', L = d[key], k = +ed.dataset.k;
+      if (ed.dataset.ed === 'up' && k > 0){ [L[k-1], L[k]] = [L[k], L[k-1]]; }
+      if (ed.dataset.ed === 'down' && k < L.length-1){ [L[k+1], L[k]] = [L[k], L[k+1]]; }
+      if (ed.dataset.ed === 'del'){ L.splice(k, 1); editIdx = -1; }
+      if (ed.dataset.ed === 'edit'){ editIdx = k; paint(false); $('#edIn').focus(); return; }
+      saveDraft(); paint(false); const again = $(`[data-ed="${ed.dataset.ed}"][data-k="${Math.max(0, Math.min(L.length-1, ed.dataset.ed === 'up' ? k-1 : ed.dataset.ed === 'down' ? k+1 : k))}"]`, body); again && !again.disabled && again.focus(); }
+  });
+  $('#wizPrev').addEventListener('click', () => { if (i > 0){ i--; editIdx = -1; paint(); } });
+  $('#wizNext').addEventListener('click', () => {
+    const S = STEPS();
+    const pending = $('#edIn') && $('#edIn').value.trim();
+    if (pending){ err.textContent = 'Você escreveu algo e não adicionou. Toque em “Adicionar” ou apague o texto.'; $('#edIn').focus(); return; }
+    const msg = S[i].v ? S[i].v() : ''; if (msg){ err.textContent = msg; return; }
+    if (i < S.length-1){ i++; paint(); return; }
+    // salvar
+    delete d.__resumed;
+    const coll = kind === 'pop' ? MY.pops : MY.lists;
+    if (d.id){ const k = coll.findIndex(x => x.id === d.id); if (k >= 0) coll[k] = d; else coll.push(d); } else { d.id = uid(); coll.push(d); }
+    const ok = saveMy(); if (!editingSaved) store.set(draftKey(), null);
+    close();
+    if (kind === 'pop'){ AP.renderPops(); const det = document.getElementById('meu-' + d.id); if (det){ det.open = true; det.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start'}); } }
+    else { AP.refreshChecks('meu-' + d.id); $('#tool-checks').scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start'}); }
+    toast(ok ? (kind === 'pop' ? 'Seu POP foi salvo neste aparelho.' : 'Seu checklist foi salvo neste aparelho.') : 'Não consegui salvar neste aparelho (memória bloqueada). Use Compartilhar para guardar o link.', 4000);
+  });
+  document.addEventListener('click', e => { const b = e.target.closest('[data-wiz]'); if (b) open(b.dataset.wiz); });
+  AP.openWizard = open;
+})();
+
+/* ---------- editar, apagar, imprimir, compartilhar ---------- */
+const enc = o => btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+const dec = c => JSON.parse(decodeURIComponent(escape(atob(c.replace(/-/g, '+').replace(/_/g, '/')))));
+function cleanShared(o){
+  const str = (v, n) => String(v == null ? '' : v).slice(0, n);
+  if (!o || (o.k !== 'pop' && o.k !== 'list') || !o.d) return null;
+  const x = o.d;
+  if (o.k === 'pop') return {k:'pop', d:{name:str(x.name, 120), quando:str(x.quando, 160), material:str(x.material, 200), why:str(x.why, 300), resp:str(x.resp, 80),
+    steps:(Array.isArray(x.steps) ? x.steps : []).slice(0, 40).map(t => ({t:str(t && t.t, 400), min:Math.max(0, Math.min(600, num(t && t.min)))})).filter(t => t.t)}};
+  return {k:'list', d:{name:str(x.name, 80), quando:str(x.quando, 80), items:(Array.isArray(x.items) ? x.items : []).slice(0, 40).map(t => str(t, 400)).filter(Boolean)}};
+}
+document.addEventListener('click', async e => {
+  const b = e.target.closest('[data-my]'); if (!b) return;
+  const kind = b.dataset.kind, coll = kind === 'pop' ? MY.pops : MY.lists, item = coll.find(x => x.id === b.dataset.id); if (!item) return;
+  const act = b.dataset.my;
+  if (act === 'edit') return AP.openWizard(kind, item);
+  if (act === 'del'){
+    if (!b.dataset.armed){ b.dataset.armed = '1'; b.innerHTML = 'Toque de novo para apagar'; b.classList.add('primary'); setTimeout(() => { if (b.isConnected){ delete b.dataset.armed; b.innerHTML = svgUse('u-trash') + 'Apagar'; b.classList.remove('primary'); } }, 4000); return; }
+    coll.splice(coll.indexOf(item), 1); saveMy();
+    if (kind === 'pop') AP.renderPops(); else AP.refreshChecks();
+    toast(`“${esc(item.name)}” foi apagado.`); return;
+  }
+  if (act === 'print'){
+    printHTML(`<h1>${esc(item.name)}</h1>${item.quando ? `<p><strong>Quando:</strong> ${esc(item.quando)}</p>` : ''}${item.material ? `<p><strong>Material:</strong> ${esc(item.material)}</p>` : ''}${item.why ? `<p><strong>Por que importa:</strong> ${esc(item.why)}</p>` : ''}<ol style="font-size:13pt">${item.steps.map(x => `<li style="margin:2mm 0">${esc(x.t)}${x.min > 0 ? ` (${fmt(x.min, 2)} min)` : ''}</li>`).join('')}</ol>${item.resp ? `<p><strong>Responsável:</strong> ${esc(item.resp)}</p>` : ''}<p style="margin-top:6mm;font-size:10pt">POP criado na Apostila de Cozinha</p>`);
+    return;
+  }
+  if (act === 'share'){
+    const data = Object.assign({}, item); delete data.id;
+    const url = location.href.split('#')[0] + '#importar-' + enc({k:kind, d:data});
+    const title = (kind === 'pop' ? 'POP: ' : 'Checklist: ') + item.name;
+    const boxEl = b.closest('.body, #clPanel'); const box = boxEl && $('.share-box', boxEl);
+    try{ if (navigator.share){ await navigator.share({title, text: title + ' (abra o link para guardar no seu celular)', url}); return; } }catch(_){ }
+    try{ await navigator.clipboard.writeText(url); toast('Link copiado. Cole no WhatsApp para mandar às colegas.', 4000); return; }catch(_){ }
+    if (box){ box.innerHTML = `<label for="shareUrl-${item.id}">Copie este link e mande às colegas:</label><input id="shareUrl-${item.id}" type="text" readonly value="${esc(url)}">`; const inp = $('input', box); inp.focus(); inp.select(); }
+  }
+});
+
+/* ---------- receber um POP ou checklist por link ---------- */
+(function importar(){
+  const run = () => {
+  const h = location.hash; if (!h.startsWith('#importar-')) return;
+  const old = $('#importBox'); if (old) old.remove();
+  let o = null; try{ o = cleanShared(dec(h.slice(10))); }catch(_){ o = null; }
+  try{ history.replaceState(null, '', location.pathname + location.search); }catch(_){}
+  const box = document.createElement('div'); box.className = 'tool import-box'; box.id = 'importBox';
+  if (!o || !o.d.name || (o.k === 'pop' ? o.d.steps.length < 1 : o.d.items.length < 1)){
+    box.innerHTML = `<p style="margin:0"><strong>Não consegui abrir o link recebido.</strong> Ele pode ter sido cortado ao copiar. Peça para a colega mandar de novo.</p>`;
+  } else {
+    const isPop = o.k === 'pop';
+    box.innerHTML = `<div class="tool-head">${svgUse('i-clip')}<div><h3>${isPop ? 'Uma colega te mandou um POP' : 'Uma colega te mandou um checklist'}</h3><p>Confira e guarde neste aparelho.</p></div></div>
+      <div class="rec-card"><h4 style="font-size:1.4rem">${esc(o.d.name)}</h4>${o.d.quando ? `<p>Quando: ${esc(o.d.quando)}</p>` : ''}${isPop ? `<ol>${o.d.steps.map(x => `<li>${esc(x.t)}${x.min > 0 ? ` <span class="muted">(cronômetro de ${fmt(x.min, 2)} min)</span>` : ''}</li>`).join('')}</ol>` : `<ul>${o.d.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`}</div>
+      <div class="btn-row"><button class="btn primary" type="button" id="impSave">${svgUse('u-check')}Guardar no meu aparelho</button><button class="btn" type="button" id="impNo">Agora não</button></div>`;
+  }
+  const hero = $('#inicio .hero'); hero.after(box);
+  box.addEventListener('click', e => {
+    if (e.target.closest('#impNo')) box.remove();
+    if (e.target.closest('#impSave')){ const it = Object.assign({id: uid()}, o.d);
+      if (o.k === 'pop'){ MY.pops.push(it); saveMy(); AP.renderPops(); box.remove(); const det = document.getElementById('meu-' + it.id); if (det){ det.open = true; det.scrollIntoView({block:'start'}); } }
+      else { MY.lists.push(it); saveMy(); AP.refreshChecks('meu-' + it.id); box.remove(); $('#tool-checks').scrollIntoView({block:'start'}); }
+      toast('Guardado neste aparelho.'); }
+  });
+  setTimeout(() => box.scrollIntoView({block:'center'}), 300);
+  };
+  run(); window.addEventListener('hashchange', run);
 })();
 
 /* =====================================================================
