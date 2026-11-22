@@ -159,6 +159,14 @@ as massas do chifferi e do cavatelli e o pão focaccia da casa (com contador de
 dobras). Também tem a seção 4.5 Facas e cortes e a 4.6 Amolar a faca e usar a
 chaira, e uma frase sobre gastronomia em cada parte.
 
+A equipe também pode criar os próprios POPs e checklists, com um assistente
+que explica cada parte (nome, quando, material, passos, porquê; ou nome,
+momento e itens), revisa o texto enquanto a pessoa escreve (verbo no começo,
+uma ação por passo, números em vez de palavras vagas, cronômetro quando o
+passo tem tempo) e confere tudo no fim. O que é criado fica no aparelho
+(`localStorage`) e funciona como os da apostila; o botão Compartilhar gera um
+link `#importar-…` que guarda o POP ou a lista no celular de quem abrir.
+
 Ferramentas por parte: progresso de leitura; termômetro interativo e gerador
 de etiqueta; POPs passo a passo com cronômetros e calculadora de solução
 clorada; checklists salvos no aparelho com "novo turno" e impressão; mapa dos
