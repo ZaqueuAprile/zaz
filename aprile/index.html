@@ -172,6 +172,19 @@ dialog.cart::backdrop{background:rgba(26,24,20,.5)}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 .plan .meta{font-size:13.5px;color:var(--muted);margin-bottom:14px}
 .plan .btn{width:100%}
+/* área de venda em destaque: fundo escuro, cartões claros, plano completo em dourado */
+.plans-s{background:var(--dark);color:var(--on-dark);position:relative}
+.plans-s::before{content:"";position:absolute;inset:0 0 auto;height:4px;background:linear-gradient(90deg,var(--gold),var(--gold-light),var(--gold))}
+.plans-s .sec-head h2{color:var(--on-dark)}
+.plans-s .sec-head p{color:var(--on-dark-muted)}
+.plans-s .kicker{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-light);margin-bottom:12px}
+.plans{gap:20px;border-top:0;align-items:stretch}
+.plan,.plan+.plan,.plan:last-child{background:var(--panel);color:var(--fg);border:1px solid var(--line);border-radius:14px;padding:30px 28px;box-shadow:0 24px 50px -30px rgba(0,0,0,.6)}
+.plan .price b{font-size:30px}
+.plan.featured{border:2px solid var(--gold-light);box-shadow:0 30px 70px -30px rgba(212,175,55,.55);transform:translateY(-10px)}
+.plan.featured .lab{align-self:flex-start;background:var(--gold-light);color:var(--dark);padding:3px 10px;border-radius:999px;font-size:12px;letter-spacing:.04em;text-transform:uppercase}
+.plan.featured .solves{background:#f6ecd2}
+.plans-s .extras{background:var(--panel);color:var(--fg);border-radius:14px;padding:32px;box-shadow:0 24px 50px -30px rgba(0,0,0,.6)}
 
 .extras{margin-top:56px;display:grid;grid-template-columns:240px 1fr;gap:36px}
 .extras h3{font-size:24px}
@@ -619,6 +632,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   .sec-head{grid-template-columns:1fr;gap:12px}
   .plans{grid-template-columns:1fr;border-top:0}
   .plan,.plan+.plan,.plan:last-child{padding:26px 0;border-right:0;border-top:2px solid var(--fg)}
+  .plans-s .plan,.plans-s .plan+.plan,.plans-s .plan:last-child{padding:24px 20px;border:1px solid var(--line)}
+  .plans-s .plan.featured{border:2px solid var(--gold-light);transform:none}
+  .plans-s .extras{padding:22px 18px}
   .plan .for{min-height:0}
   .extras,.faq-s .wrap{grid-template-columns:1fr;gap:16px}
   .calc .wrap,.about .wrap{grid-template-columns:1fr;gap:40px}
@@ -717,8 +733,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <section class="plans-s" id="planos">
   <div class="wrap">
     <div class="sec-head">
+      <div><span class="kicker">Planos e serviços</span>
       <h2 data-aud="pousada">Planos para pousadas</h2>
-      <h2 data-aud="restaurante">Planos para restaurantes</h2>
+      <h2 data-aud="restaurante">Planos para restaurantes</h2></div>
       <p>Cada proposta é montada para o tamanho do seu negócio: uma implantação e uma mensalidade que cobre a operação (atualizar conteúdo, suporte e o relatório do mês). Escolha o que faz sentido e receba os valores pelo WhatsApp.</p>
     </div>
     <div class="plans" id="plans"></div>
@@ -1036,12 +1053,12 @@ const EXTRAS={
 };
 const CHEV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
 function renderPlans(aud){
-  $("plans").innerHTML=PLANS[aud].map(p=>`<div class="plan"><span class="lab">${p.lab}</span><h3>${p.n}</h3><p class="for">${p.for}</p>
+  $("plans").innerHTML=PLANS[aud].map(p=>`<div class="plan${p.lab==="Mais completo"?" featured":""}"><span class="lab">${p.lab}</span><h3>${p.n}</h3><p class="for">${p.for}</p>
     <p class="solves">Resolve: <b>${p.solves}</b></p>
     <div class="price"><b>Sob medida</b></div><p class="setup">Proposta pelo WhatsApp, no tamanho do seu negócio</p>
     <ul>${p.it.map(([t,d],j)=>`<li><button type="button" class="pi-h" aria-expanded="false"><span>${t}</span><i>${CHEV}</i></button><div class="pi-b" hidden>${itemInfo(t,p)}${d?`<br><button type="button" data-go="${d}">Ver demonstração</button>`:""}</div></li>`).join("")}</ul>
     <p class="meta">Pronto em até ${p.dias} dias</p>
-    <button type="button" class="btn ${p.lab==="Mais completo"?"btn-dark":"btn-line"}" data-buy="plano:${p.n}">Quero o ${p.n}</button></div>`).join("");
+    <button type="button" class="btn ${p.lab==="Mais completo"?"btn-gold":"btn-dark"}" data-buy="plano:${p.n}">Quero o ${p.n}</button></div>`).join("");
   $("extras").innerHTML=EXTRAS[aud].map(([n,r,s,m,free],i)=>{const x=XINFO[n]||{},d=typeof x.d==="object"?x.d[aud]:x.d;
     return `<tr class="xrow" data-row="${i}"><td><button type="button" class="xname" aria-expanded="false" aria-controls="xdet${i}">${n}</button></td><td class="hide-s muted">${r}</td><td class="tg"><button type="button" class="xtog" tabindex="-1" aria-hidden="true">${CHEV}</button></td></tr>
     <tr class="xdet" id="xdet${i}" hidden><td colspan="3"><div class="xdet-in"><div><p>${d||r}</p><button type="button" class="xadd" data-buy="adicional:${n}"></button>${XKEY[n]?`<button type="button" class="xbtn" data-x="${n}">Ver demonstração</button>`:""}</div><ul><li><span>Resolve</span><span>${r}</span></li><li><span>Prazo</span><span>${x.dias?`até ${x.dias} dias`:"a combinar"}</span></li><li><span>Valor</span><span>${free?free:"sob consulta"}</span></li></ul></div></td></tr>`}).join("");
