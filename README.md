@@ -11,6 +11,7 @@ Cada projeto é uma página própria do mesmo build.
 | 02 | Gaivota — pousada em Santo André | `/pousada-gaivota/` | `src/projetos/pousada-gaivota/` |
 | 03 | Seu Beira Mar — cardápio de restaurante | `/seu-beira-mar/` | `src/projetos/seu-beira-mar/` |
 | 04 | Aprile — tecnologia e gestão | `/aprile/` | `aprile/index.html` |
+| 05 | Apostila de Cozinha — boas práticas, bases e massas | `/apostila-cozinha/` | `apostila-cozinha/index.html` |
 
 ### Aprile
 
@@ -162,3 +163,39 @@ Atendente automático no WhatsApp de cada restaurante cliente. Desenho em
   só com o evento de mensagens. `BOT_MODEL` troca o modelo (padrão `claude-haiku-5-5`).
 - Antes de publicar, trocar `supabase/functions/_shared/bot/fixtures/uazapi-message.json` por
   mensagens reais capturadas e rodar os testes: os nomes de campo da uazapi foram assumidos.
+
+### Apostila de Cozinha
+
+Link publicado (GitHub Pages): https://zaqueuaprile.github.io/zaz/apostila-cozinha/
+
+Presente de despedida do Zaqueu para a equipe de um restaurante de massas
+italianas, num único arquivo: `apostila-cozinha/index.html` (HTML, CSS e JS
+juntos, sem build e sem dependências; as fontes Young Serif, Lexend e Caveat
+vêm do Google Fonts, com fonte do sistema como reserva). Todo o conteúdo e
+todos os números vêm da apostila; o que está vazio nela aparece como
+"a completar".
+
+Além da apostila original, a página traz as receitas passadas depois pelo
+Zaqueu, todas em gramas: a massa fresca da casa (com ovos e gemas em gramas),
+as massas do chifferi e do cavatelli e o pão focaccia da casa (com contador de
+dobras). Também tem a seção 4.5 Facas e cortes e a 4.6 Amolar a faca e usar a
+chaira, e uma frase sobre gastronomia em cada parte.
+
+A equipe também pode criar os próprios POPs e checklists, com um assistente
+que explica cada parte (nome, quando, material, passos, porquê; ou nome,
+momento e itens), revisa o texto enquanto a pessoa escreve (verbo no começo,
+uma ação por passo, números em vez de palavras vagas, cronômetro quando o
+passo tem tempo) e confere tudo no fim. O que é criado fica no aparelho
+(`localStorage`) e funciona como os da apostila; o botão Compartilhar gera um
+link `#importar-…` que guarda o POP ou a lista no celular de quem abrir.
+
+Ferramentas por parte: progresso de leitura; termômetro interativo e gerador
+de etiqueta; POPs passo a passo com cronômetros e calculadora de solução
+clorada; checklists salvos no aparelho com "novo turno" e impressão; mapa dos
+métodos, diagnóstico "fritando ou cozinhando?", quiz, cortes clássicos em escala e "chaira ou pedra?"; árvore dos molhos e
+calculadoras de mirepoix, roux e bechamel, mais "salve o seu molho"; caminho
+da massa, calculadora da massa da casa e da panela, guia de formatos e
+cronômetro; cardápio com busca e anotação da regulagem da máquina; fichas
+técnicas escaláveis com a conta explicada, lista de produção e compras e
+modo cozinha (Wake Lock); glossário com busca e flashcards. Os dados ficam no
+`<script>` marcado como DADOS e o progresso, no `localStorage` do aparelho.
