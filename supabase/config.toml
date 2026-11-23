@@ -1,0 +1,3 @@
+# Configuração mínima do Supabase para o bot. Gerar o resto com `npx supabase init` se precisar.
+[functions.whatsapp-webhook]
+verify_jwt = false

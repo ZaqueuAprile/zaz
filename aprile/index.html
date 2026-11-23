@@ -158,6 +158,7 @@ dialog.cart::backdrop{background:rgba(26,24,20,.5)}
 .ci .pr{text-align:right;font-size:13.5px;font-variant-numeric:tabular-nums}
 .ci button{grid-column:1;justify-self:start;font-size:13px;color:var(--muted);text-decoration:underline}
 .cart-empty{color:var(--muted);padding:24px 0;font-size:15px}
+.cart-note{border-top:2px solid var(--fg);margin-top:8px;padding-top:12px;font-size:14.5px;color:var(--muted)}
 .cart-sum{border-top:2px solid var(--fg);margin-top:8px;padding-top:12px;display:grid;grid-template-columns:1fr auto;gap:6px;font-size:15px}
 .cart-sum b{text-align:right;font-variant-numeric:tabular-nums}
 .cart-f{padding:16px 22px calc(18px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:#fff;display:grid;gap:10px}
@@ -718,13 +719,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <div class="sec-head">
       <h2 data-aud="pousada">Planos para pousadas</h2>
       <h2 data-aud="restaurante">Planos para restaurantes</h2>
-      <p>Valor de implantação mais uma mensalidade. A mensalidade cobre a operação: responder avaliações, atualizar conteúdo, suporte e o relatório do mês.</p>
+      <p>Cada proposta é montada para o tamanho do seu negócio: uma implantação e uma mensalidade que cobre a operação (atualizar conteúdo, suporte e o relatório do mês). Escolha o que faz sentido e receba os valores pelo WhatsApp.</p>
     </div>
     <div class="plans" id="plans"></div>
 
     <div class="extras">
       <div><h3>Adicionais</h3><p class="muted">Para somar a qualquer plano, quando fizer sentido para a operação.</p></div>
-      <div style="overflow-x:auto"><table class="xtbl"><thead><tr><th>Serviço</th><th class="hide-s">Resolve</th><th class="r">Implantação</th><th class="r">Por mês</th><th><span class="sr" style="position:absolute;left:-9999px">Detalhes</span></th></tr></thead><tbody id="extras"></tbody></table></div>
+      <div style="overflow-x:auto"><table class="xtbl"><thead><tr><th>Serviço</th><th class="hide-s">Resolve</th><th><span class="sr" style="position:absolute;left:-9999px">Detalhes</span></th></tr></thead><tbody id="extras"></tbody></table></div>
     </div>
   </div>
 </section>
@@ -1037,13 +1038,13 @@ const CHEV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-wi
 function renderPlans(aud){
   $("plans").innerHTML=PLANS[aud].map(p=>`<div class="plan"><span class="lab">${p.lab}</span><h3>${p.n}</h3><p class="for">${p.for}</p>
     <p class="solves">Resolve: <b>${p.solves}</b></p>
-    <div class="price"><b class="num">${brl(p.m)}</b><span>por mês</span></div><p class="setup">+ ${brl(p.s)} de implantação</p>
+    <div class="price"><b>Sob medida</b></div><p class="setup">Proposta pelo WhatsApp, no tamanho do seu negócio</p>
     <ul>${p.it.map(([t,d],j)=>`<li><button type="button" class="pi-h" aria-expanded="false"><span>${t}</span><i>${CHEV}</i></button><div class="pi-b" hidden>${itemInfo(t,p)}${d?`<br><button type="button" data-go="${d}">Ver demonstração</button>`:""}</div></li>`).join("")}</ul>
     <p class="meta">Pronto em até ${p.dias} dias</p>
     <button type="button" class="btn ${p.lab==="Mais completo"?"btn-dark":"btn-line"}" data-buy="plano:${p.n}">Quero o ${p.n}</button></div>`).join("");
   $("extras").innerHTML=EXTRAS[aud].map(([n,r,s,m,free],i)=>{const x=XINFO[n]||{},d=typeof x.d==="object"?x.d[aud]:x.d;
-    return `<tr class="xrow" data-row="${i}"><td><button type="button" class="xname" aria-expanded="false" aria-controls="xdet${i}">${n}</button></td><td class="hide-s muted">${r}</td><td class="r num">${free||(s?brl(s):"sem custo")}</td><td class="r num">${free||(m?brl(m):"—")}</td><td class="tg"><button type="button" class="xtog" tabindex="-1" aria-hidden="true">${CHEV}</button></td></tr>
-    <tr class="xdet" id="xdet${i}" hidden><td colspan="5"><div class="xdet-in"><div><p>${d||r}</p><button type="button" class="xadd" data-buy="adicional:${n}"></button>${XKEY[n]?`<button type="button" class="xbtn" data-x="${n}">Ver demonstração</button>`:""}</div><ul><li><span>Resolve</span><span>${r}</span></li><li><span>Prazo</span><span>${x.dias?`até ${x.dias} dias`:"a combinar"}</span></li><li><span>Cobrança</span><span>${free?free:(m?"implantação + mensalidade":"pagamento único")}</span></li></ul></div></td></tr>`}).join("");
+    return `<tr class="xrow" data-row="${i}"><td><button type="button" class="xname" aria-expanded="false" aria-controls="xdet${i}">${n}</button></td><td class="hide-s muted">${r}</td><td class="tg"><button type="button" class="xtog" tabindex="-1" aria-hidden="true">${CHEV}</button></td></tr>
+    <tr class="xdet" id="xdet${i}" hidden><td colspan="3"><div class="xdet-in"><div><p>${d||r}</p><button type="button" class="xadd" data-buy="adicional:${n}"></button>${XKEY[n]?`<button type="button" class="xbtn" data-x="${n}">Ver demonstração</button>`:""}</div><ul><li><span>Resolve</span><span>${r}</span></li><li><span>Prazo</span><span>${x.dias?`até ${x.dias} dias`:"a combinar"}</span></li><li><span>Valor</span><span>${free?free:"sob consulta"}</span></li></ul></div></td></tr>`}).join("");
 }
 $("extras").onclick=e=>{if(e.target.closest("[data-buy]"))return;const b=e.target.closest("[data-x]");if(b){openX(b.dataset.x);return}
   const row=e.target.closest(".xrow");if(!row)return;const det=row.nextElementSibling,open=det.hidden;
@@ -1098,12 +1099,12 @@ $("plans").onclick=e=>{const h=e.target.closest(".pi-h");if(h){const o=h.getAttr
 function calc(){
   const v=id=>Math.max(0,+$(id).value||0);
   if(aud==="pousada"){
-    const fat=v("pq")*365*v("po")/100*v("pd"),com=fat*v("ps")/100*v("pc")/100,eco=fat*v("pm")/100*v("pc")/100,pl=PLANS.pousada[2];
-    $("result").innerHTML=`<dt>Faturamento de hospedagem por ano</dt><dd>${brl(fat)}</dd><dt>Comissão paga à Booking por ano</dt><dd>${brl(com)}</dd><dt>Economia com mais reserva direta, por mês</dt><dd class="big">${brl(eco/12)}</dd><dt>Mensalidade do Venda Direta Completo</dt><dd>${brl(pl.m)}</dd>`;
-    $("resultNote").textContent=eco/12>=pl.m?"Só a comissão economizada já paga a mensalidade, sem contar passeios e transfers vendidos pelo atendimento.":`A comissão economizada cobre ${Math.round(eco/12/pl.m*100)}% da mensalidade. Passeios e transfers vendidos pelo atendimento entram por fora dessa conta.`;
+    const fat=v("pq")*365*v("po")/100*v("pd"),com=fat*v("ps")/100*v("pc")/100,eco=fat*v("pm")/100*v("pc")/100;
+    $("result").innerHTML=`<dt>Faturamento de hospedagem por ano</dt><dd>${brl(fat)}</dd><dt>Comissão paga à Booking por ano</dt><dd>${brl(com)}</dd><dt>Economia com mais reserva direta, por mês</dt><dd class="big">${brl(eco/12)}</dd>`;
+    $("resultNote").textContent="Só a comissão que deixa de ir para a Booking. Passeios e transfers vendidos pelo atendimento entram por fora dessa conta.";
   }else{
-    const fat=v("rc")*v("rt"),tk=fat*v("ru")/100,cmv=fat*v("rr")/100,pl=PLANS.restaurante[2];
-    $("result").innerHTML=`<dt>Faturamento por mês</dt><dd>${brl(fat)}</dd><dt>Ganho com ticket médio maior</dt><dd>${brl(tk)}</dd><dt>Ganho com CMV menor</dt><dd>${brl(cmv)}</dd><dt>Ganho total por mês</dt><dd class="big">${brl(tk+cmv)}</dd><dt>Mensalidade do Mesa Cheia + Gestão</dt><dd>${brl(pl.m)}</dd>`;
+    const fat=v("rc")*v("rt"),tk=fat*v("ru")/100,cmv=fat*v("rr")/100;
+    $("result").innerHTML=`<dt>Faturamento por mês</dt><dd>${brl(fat)}</dd><dt>Ganho com ticket médio maior</dt><dd>${brl(tk)}</dd><dt>Ganho com CMV menor</dt><dd>${brl(cmv)}</dd><dt>Ganho total por mês</dt><dd class="big">${brl(tk+cmv)}</dd>`;
     $("resultNote").textContent="Exemplo hipotético. O ganho real depende do cardápio, do preço e da operação de cada casa.";
   }
 }
@@ -1462,7 +1463,7 @@ function openX(name){
   const k=XKEY[name];if(!k)return;
   if(k==="cartao"){openTab("fidelidade",true);return}
   const row=EXTRAS[aud].find(r=>r[0]===name),[n,r,st,m,free]=row;
-  openDemo(k,n,`Resolve: <b>${esc(r)}</b> · ${free?free:(st?brl(st)+" de implantação":"sem implantação")}${free?"":m?" + "+brl(m)+" por mês":""}`,"adicional:"+n,"Quero este adicional");
+  openDemo(k,n,`Resolve: <b>${esc(r)}</b>${free?" · "+free:""}`,"adicional:"+n,"Quero este adicional");
 }
 function openDemo(k,title,sub,buy,label){
   $("xdT").textContent=title;$("xdS").innerHTML=sub;$("xdWa").dataset.buy=buy;$("xdWa").textContent=label;
@@ -1691,22 +1692,20 @@ function addToCart(key,open){
 function removeFromCart(i){CART.splice(i,1);saveCart();updateCart();renderCart()}
 function updateCart(){$("cartN").textContent=CART.length||"";
   document.querySelectorAll(".xadd").forEach(b=>{const k=b.dataset.buy,on=inCart("adicional",k.slice(k.indexOf(":")+1));b.classList.toggle("in",on);b.innerHTML=on?"✓ No carrinho":'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Adicionar ao carrinho'})}
-const price=c=>c.free?c.free:`${c.s?brl(c.s)+" de implantação":"sem implantação"}${c.m?" + "+brl(c.m)+"/mês":""}`;
 function renderCart(){
   const B=$("cartB");
   if(!CART.length){B.innerHTML=`<p class="cart-empty">Seu carrinho está vazio. Escolha um plano ou adicione serviços extras na tabela de adicionais.</p>`;$("cartSend").disabled=false;$("cartSend").lastChild.textContent="Falar no WhatsApp";return}
-  $("cartSend").lastChild.textContent="Enviar pedido pelo WhatsApp";
+  $("cartSend").lastChild.textContent="Pedir proposta pelo WhatsApp";
   const auds=[...new Set(CART.map(c=>c.aud))];
-  B.innerHTML=auds.map(a=>`<p class="cart-g">${AUDN[a]}</p>`+CART.map((c,i)=>c.aud!==a?"":`<div class="ci"><div><b>${esc(c.name)}</b><small>${c.kind==="plano"?"Plano":"Adicional"}</small></div><div class="pr">${c.free?c.free:`${c.s?brl(c.s):"—"}<br><small>${c.m?brl(c.m)+"/mês":"sem mensalidade"}</small>`}</div><button type="button" data-rm="${i}">Remover</button></div>`).join("")).join("")
-    +`<div class="cart-sum"><span>Implantação</span><b>${brl(CART.reduce((t,c)=>t+(c.free?0:c.s),0))}</b><span>Mensalidade</span><b>${brl(CART.reduce((t,c)=>t+(c.free?0:c.m),0))}/mês</b></div>`;
+  B.innerHTML=auds.map(a=>`<p class="cart-g">${AUDN[a]}</p>`+CART.map((c,i)=>c.aud!==a?"":`<div class="ci"><div><b>${esc(c.name)}</b><small>${c.kind==="plano"?"Plano":"Adicional"}</small></div><div class="pr">${c.free?c.free:""}</div><button type="button" data-rm="${i}">Remover</button></div>`).join("")).join("")
+    +`<p class="cart-note">A Aprile monta a proposta com valores e prazos para o seu negócio e responde pelo WhatsApp.</p>`;
 }
-function openCart(){renderCart();$("cartMsg").textContent="Nada é cobrado agora. A Aprile confirma valores e prazos com você pelo WhatsApp.";$("cartMsg").className="";const d=$("cart");if($("xd").open)$("xd").close();if(d.showModal)d.showModal();else d.setAttribute("open","")}
+function openCart(){renderCart();$("cartMsg").textContent="Nada é cobrado agora. Você recebe a proposta pelo WhatsApp.";$("cartMsg").className="";const d=$("cart");if($("xd").open)$("xd").close();if(d.showModal)d.showModal();else d.setAttribute("open","")}
 function cartText(){
   if(!CART.length)return "Olá! Vim pelo site da Aprile e quero saber mais.";
   const auds=[...new Set(CART.map(c=>c.aud))],nm=$("cName").value.trim(),bz=$("cBiz").value.trim();
-  let t="Olá! Quero contratar pela Aprile:\n";
-  auds.forEach(a=>{t+=`\n*${AUDN[a]}*\n`;CART.filter(c=>c.aud===a).forEach(c=>{t+=`• ${c.kind==="plano"?"Plano":"Adicional"} ${c.name}: ${price(c)}\n`})});
-  t+=`\nTotal: ${brl(CART.reduce((s,c)=>s+(c.free?0:c.s),0))} de implantação + ${brl(CART.reduce((s,c)=>s+(c.free?0:c.m),0))} por mês`;
+  let t="Olá! Quero receber uma proposta da Aprile para:\n";
+  auds.forEach(a=>{t+=`\n*${AUDN[a]}*\n`;CART.filter(c=>c.aud===a).forEach(c=>{t+=`• ${c.kind==="plano"?"Plano":"Adicional"} ${c.name}${c.free?" ("+c.free+")":""}\n`})});
   if(nm||bz)t+=`\n\n${nm?"Nome: "+nm:""}${nm&&bz?"\n":""}${bz?"Negócio: "+bz:""}`;
   return t}
 function waLink(){return WHATSAPP_NUMERO?`https://wa.me/${WHATSAPP_NUMERO.replace(/\D/g,"")}?text=${encodeURIComponent(cartText())}`:WHATSAPP}

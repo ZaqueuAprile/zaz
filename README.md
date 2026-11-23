@@ -142,6 +142,28 @@ PROJETO=bossa-cucina npm run build:arquivo
 - `.claude/skills/` — skills UI/UX Pro Max e 21st.dev
 - `.mcp.json` — servidor MCP do 21st.dev; defina `API_KEY_21ST` (chave em https://21st.dev/mcp)
 
+### Bot de WhatsApp (Aprile)
+
+Atendente automático no WhatsApp de cada restaurante cliente. Desenho em
+`docs/superpowers/specs/2026-11-20-bot-whatsapp-design.md` e plano em
+`docs/superpowers/plans/2026-11-20-bot-whatsapp.md`.
+
+- Código: `supabase/functions/_shared/bot/` (lógica testada no Node) e
+  `supabase/functions/whatsapp-webhook/index.ts` (entrada da Edge Function).
+- Testes: `npm run test:bot`. Checagem de tipos: `npx tsc -p supabase/tsconfig.json`.
+- Dados de cada restaurante: um JSON como `bot/restaurantes/exemplo.json`.
+- Simular uma conversa sem WhatsApp:
+  `ANTHROPIC_API_KEY=... npx tsx scripts/bot/simular.ts bot/restaurantes/exemplo.json "Nome"`.
+- Carregar um restaurante no banco:
+  `SUPABASE_URL=... SUPABASE_SERVICE_ROLE_KEY=... npx tsx scripts/bot/carregar-dados.ts <dados.json> --name "Nome" --instance <instancia> --token <token> --team <telefone>`.
+- Publicar: `npx supabase db push`, depois
+  `npx supabase secrets set ANTHROPIC_API_KEY=... UAZAPI_BASE_URL=https://<sub>.uazapi.com WEBHOOK_SECRET=...`
+  e `npx supabase functions deploy whatsapp-webhook --no-verify-jwt`. Na uazapi, apontar o webhook
+  da instância para `https://<projeto>.functions.supabase.co/whatsapp-webhook?k=<WEBHOOK_SECRET>`,
+  só com o evento de mensagens. `BOT_MODEL` troca o modelo (padrão `claude-haiku-5-5`).
+- Antes de publicar, trocar `supabase/functions/_shared/bot/fixtures/uazapi-message.json` por
+  mensagens reais capturadas e rodar os testes: os nomes de campo da uazapi foram assumidos.
+
 ### Apostila de Cozinha
 
 Link publicado (GitHub Pages): https://zaqueuaprile.github.io/zaz/apostila-cozinha/
