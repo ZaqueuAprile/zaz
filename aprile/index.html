@@ -601,6 +601,10 @@ body.presenting .pres-bar{display:flex;position:fixed;left:0;right:0;bottom:0;z-
 .about figure>figcaption{font-size:13.5px;color:var(--muted);margin-top:10px}
 .about p{color:var(--muted);margin-top:14px}
 .about p b{color:var(--fg);font-weight:600}
+.team-pts{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+.team-pts li{border-top:2px solid var(--gold);padding-top:10px;font-size:14px;color:var(--muted)}
+.team-pts b{display:block;color:var(--fg);font-weight:600;font-size:15px;margin-bottom:4px}
+@media (max-width:760px){.team-pts{grid-template-columns:1fr}}
 .work{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:24px;max-width:440px}
 .work img{aspect-ratio:3/4;object-fit:cover;object-position:top;border:1px solid var(--line);border-radius:4px}
 .work figcaption{margin-top:6px;font-size:13px;color:var(--muted)}
@@ -962,7 +966,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     </figure>
     <div>
       <h2>Quem faz</h2>
-      <p>A Aprile é de <b>Zaqueu Aprile</b>. Antes de trabalhar com tecnologia, ele passou por cozinha profissional, supervisão de operação, estoque e sistemas. Por isso a Aprile não entrega uma ferramenta e vai embora: implanta, opera e acompanha os números com o dono.</p>
+      <p>A Aprile é feita por gente que já esteve do outro lado do balcão: profissionais com passagem por <b>cozinha, salão, recepção, operação, estoque e sistemas</b>. Sabemos como é uma noite cheia, uma fila na porta e um mês em que o caixa não fecha.</p>
+      <p>Por isso a Aprile não entrega uma ferramenta e vai embora. A mesma equipe <b>implanta, opera e acompanha os números</b> com o dono, toda semana.</p>
+      <ul class="team-pts">
+        <li><b>Vivência de operação</b><span>Cada solução nasce de um problema real de pousada ou restaurante.</span></li>
+        <li><b>Perto de você</b><span>Atendimento na Costa do Descobrimento, presencial quando precisa.</span></li>
+        <li><b>Resultado medido</b><span>Números de antes e depois, no relatório de cada mês.</span></li>
+      </ul>
       <p>Atendemos pousadas, hotéis independentes e restaurantes de Porto Seguro, Arraial d'Ajuda, Trancoso e Santa Cruz Cabrália.</p>
       <div class="work">
         <figure><img src="./img/tela-seu-beira-mar.jpg" alt="Cardápio do Seu Beira Mar" width="560" height="1212"><figcaption><b>Seu Beira Mar</b>Cardápio com vídeo</figcaption></figure>
