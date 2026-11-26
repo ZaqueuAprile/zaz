@@ -94,6 +94,8 @@ body[data-aud="restaurante"] [data-aud="pousada"]{display:none!important}
 .choose b{display:block;font-size:16px}
 .choose span{display:block;font-size:14px;color:var(--muted);line-height:1.4;margin-top:2px}
 .hero figure{position:relative}
+body[data-aud="pousada"] .hero .wrap{grid-template-columns:1fr;max-width:860px}
+body[data-aud="pousada"] .about .wrap{grid-template-columns:1fr;max-width:860px}
 .hero figure img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:6px}
 .hero figcaption{font-size:13.5px;color:var(--muted);margin-top:10px}
 
@@ -599,7 +601,7 @@ body.presenting .pres-bar{display:flex;position:fixed;left:0;right:0;bottom:0;z-
 .about figure>figcaption{font-size:13.5px;color:var(--muted);margin-top:10px}
 .about p{color:var(--muted);margin-top:14px}
 .about p b{color:var(--fg);font-weight:600}
-.work{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px}
+.work{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:24px;max-width:440px}
 .work img{aspect-ratio:3/4;object-fit:cover;object-position:top;border:1px solid var(--line);border-radius:4px}
 .work figcaption{margin-top:6px;font-size:13px;color:var(--muted)}
 .work figcaption b{display:block;color:var(--fg);font-size:14px}
@@ -708,11 +710,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <button type="button" data-set="restaurante"><b>Tenho um restaurante</b><span>bar, café ou barraca de praia</span></button>
       </div>
     </div>
-    <figure>
-      <img data-aud="pousada" src="./img/pousada-deck.jpg" alt="Deck de madeira com mesas de frente para o rio, na Pousada Gaivota" width="820" height="820">
-      <img data-aud="restaurante" src="./img/restaurante-salao.jpg" alt="Salão da Bossa Cucina, com mesas de madeira e luminárias de palha" width="900" height="1112">
-      <figcaption data-aud="pousada">Pousada Gaivota, em Santo André. Site e reserva pelo WhatsApp feitos pela Aprile.</figcaption>
-      <figcaption data-aud="restaurante">Bossa Cucina, casa de massas à beira do rio. Projeto de site da Aprile.</figcaption>
+    <figure data-aud="restaurante">
+      <img src="./img/restaurante-salao.jpg" alt="Salão da Bossa Cucina, com mesas de madeira e luminárias de palha" width="900" height="1112">
+      <figcaption>Bossa Cucina, casa de massas à beira do rio. Projeto de site da Aprile.</figcaption>
     </figure>
   </div>
 </section>
@@ -810,10 +810,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <div class="info" data-info="site"></div>
       <div class="stage" style="display:block">
         <div class="video-box" id="videoBox">
-          <img src="./img/tela-pousada-gaivota.jpg" alt="" width="560" height="1212">
           <button class="play" type="button" id="videoPlay"><i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4l14 8-14 8z"/></svg></i><span id="videoLabel">Assistir à demonstração</span></button>
         </div>
-        <p class="video-cap">Como o hóspede sai do Google ou do Instagram e termina a reserva no site da pousada. <a class="link live" href="../pousada-gaivota/">Abrir o site da Pousada Gaivota</a></p>
+        <p class="video-cap">Como o hóspede sai do Google ou do Instagram e termina a reserva no site da pousada.</p>
       </div>
     </div>
 
@@ -957,18 +956,15 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
 <section class="about" id="sobre">
   <div class="wrap">
-    <figure>
-      <img data-aud="pousada" src="./img/pousada-suite.jpg" alt="Suíte da Pousada Gaivota com janela para o rio" width="900" height="900">
-      <img data-aud="restaurante" src="./img/restaurante-bar.jpg" alt="Balcão do bar da Bossa Cucina" width="1000" height="556">
-      <figcaption data-aud="pousada">Pousada Gaivota, Santo André.</figcaption>
-      <figcaption data-aud="restaurante">Bossa Cucina.</figcaption>
+    <figure data-aud="restaurante">
+      <img src="./img/restaurante-bar.jpg" alt="Balcão do bar da Bossa Cucina" width="1000" height="556">
+      <figcaption>Bossa Cucina.</figcaption>
     </figure>
     <div>
       <h2>Quem faz</h2>
       <p>A Aprile é de <b>Zaqueu Aprile</b>. Antes de trabalhar com tecnologia, ele passou por cozinha profissional, supervisão de operação, estoque e sistemas. Por isso a Aprile não entrega uma ferramenta e vai embora: implanta, opera e acompanha os números com o dono.</p>
       <p>Atendemos pousadas, hotéis independentes e restaurantes de Porto Seguro, Arraial d'Ajuda, Trancoso e Santa Cruz Cabrália.</p>
       <div class="work">
-        <figure><img src="./img/tela-pousada-gaivota.jpg" alt="Site da Pousada Gaivota" width="560" height="1212"><figcaption><b>Pousada Gaivota</b>Site</figcaption></figure>
         <figure><img src="./img/tela-seu-beira-mar.jpg" alt="Cardápio do Seu Beira Mar" width="560" height="1212"><figcaption><b>Seu Beira Mar</b>Cardápio com vídeo</figcaption></figure>
         <figure><img src="./img/tela-bossa-cucina.jpg" alt="Site da Bossa Cucina" width="560" height="1212"><figcaption><b>Bossa Cucina</b>Site conceitual</figcaption></figure>
       </div>
@@ -1496,7 +1492,7 @@ XD.site3=B=>{const P=aud==="pousada";
   const T={pt:{nav:P?["Quartos","Passeios","Contato"]:["Cardápio","Reservas","Contato"],h:P?"Pousada a poucos passos do mar, em Arraial d'Ajuda":"Cozinha baiana de frente para o mar, em Arraial d'Ajuda",b:P?"Ver datas e reservar":"Ver cardápio e reservar"},
    es:{nav:P?["Habitaciones","Paseos","Contacto"]:["Menú","Reservas","Contacto"],h:P?"Posada a pocos pasos del mar, en Arraial d'Ajuda":"Cocina bahiana frente al mar, en Arraial d'Ajuda",b:P?"Ver fechas y reservar":"Ver menú y reservar"},
    en:{nav:P?["Rooms","Tours","Contact"]:["Menu","Bookings","Contact"],h:P?"A guesthouse steps from the sea in Arraial d'Ajuda":"Bahian cooking by the sea in Arraial d'Ajuda",b:P?"Check dates and book":"See the menu and book"}};
-  const img=P?"./img/pousada-deck.jpg":"./img/restaurante-salao.jpg",dom=P?"pousadaexemplo.com.br":"restauranteexemplo.com.br";
+  const img=P?"./img/pousada-exemplo.svg":"./img/restaurante-salao.jpg",dom=P?"pousadaexemplo.com.br":"restauranteexemplo.com.br";
   B.innerHTML=`<div class="xs"><div class="browser"><div class="ub"><i></i><i></i><i></i><span id="x3u"></span></div><div class="bhero"><img src="${img}" alt=""><nav><b style="font-family:var(--serif);font-size:15px">${P?"Pousada":"Restaurante"} Exemplo</b><span id="x3n"></span></nav><div class="tx"><b id="x3h"></b><a href="#" onclick="return false" id="x3b"></a></div></div></div>
    <div class="xcol" style="flex:0 1 290px"><h4>Idioma do site</h4><div class="seg2" id="x3l"><button type="button" data-l="pt" aria-pressed="true">Português</button><button type="button" data-l="es">Español</button><button type="button" data-l="en">English</button></div><p class="note2">O site abre no idioma do celular do visitante. O texto é revisado por gente, não traduzido automaticamente.</p></div></div>`;
   const set=l=>{const t=T[l];B.querySelector("#x3u").textContent=dom+(l==="pt"?"":"/"+l);B.querySelector("#x3n").innerHTML=t.nav.map(x=>`<span>${x}</span>`).join("");B.querySelector("#x3h").textContent=t.h;B.querySelector("#x3b").textContent=t.b};
@@ -1526,8 +1522,8 @@ XD.ocupacao=B=>{const D=[
   B.querySelector("#xoS").onclick=e=>{const b=e.target.closest("button");if(!b)return;B.querySelectorAll("#xoS button").forEach(x=>x.setAttribute("aria-pressed",x===b));draw(+b.dataset.i)};draw(0)};
 
 /* anúncio revisado */
-XD.anuncio=B=>{const V={antes:{t:"Pousada em Arraial",img:"./img/pousada-suite.jpg",p:"Quartos com ar e café da manhã. Perto da praia.",tags:["Português","Wi-Fi","Café da manhã","Estacionamento"],ck:[["Título descreve o diferencial",0],["Primeira foto mostra o melhor ângulo",0],["Descrição em português, espanhol e inglês",0],["Comodidades completas",0],["Política de cancelamento clara",0]]},
-  depois:{t:"Pousada com deck de frente para o rio, a 400 m da praia · Arraial d'Ajuda",img:"./img/pousada-deck.jpg",p:"Café da manhã servido no deck, suítes com varanda e transfer do aeroporto de Porto Seguro. Aceitamos pets pequenos.",tags:["Português","Español","English","Wi-Fi","Café no deck","Transfer","Pet friendly","Varanda","Ar-condicionado","Estacionamento"],ck:[["Título descreve o diferencial",1],["Primeira foto mostra o melhor ângulo",1],["Descrição em português, espanhol e inglês",1],["Comodidades completas",1],["Política de cancelamento clara",1]]}};
+XD.anuncio=B=>{const V={antes:{t:"Pousada em Arraial",img:"./img/quarto-exemplo.svg",p:"Quartos com ar e café da manhã. Perto da praia.",tags:["Português","Wi-Fi","Café da manhã","Estacionamento"],ck:[["Título descreve o diferencial",0],["Primeira foto mostra o melhor ângulo",0],["Descrição em português, espanhol e inglês",0],["Comodidades completas",0],["Política de cancelamento clara",0]]},
+  depois:{t:"Pousada com deck de frente para o rio, a 400 m da praia · Arraial d'Ajuda",img:"./img/pousada-exemplo.svg",p:"Café da manhã servido no deck, suítes com varanda e transfer do aeroporto de Porto Seguro. Aceitamos pets pequenos.",tags:["Português","Español","English","Wi-Fi","Café no deck","Transfer","Pet friendly","Varanda","Ar-condicionado","Estacionamento"],ck:[["Título descreve o diferencial",1],["Primeira foto mostra o melhor ângulo",1],["Descrição em português, espanhol e inglês",1],["Comodidades completas",1],["Política de cancelamento clara",1]]}};
   B.innerHTML=`<div class="xs"><div class="listing" id="xaL"></div><div class="xcol" style="flex:0 1 280px"><div class="seg2" id="xaS"><button type="button" data-v="antes" aria-pressed="true">Antes</button><button type="button" data-v="depois">Depois</button></div><ul class="xl" id="xaC" style="margin-top:12px"></ul><p class="note2">Serviço avulso: revisamos o anúncio que já existe na Booking e no Airbnb, nos três idiomas.</p></div></div>`;
   const draw=v=>{const d=V[v];B.querySelector("#xaL").innerHTML=`<img src="${d.img}" alt=""><div class="in"><b>${d.t}</b><p>${d.p}</p><div class="tags2">${d.tags.map(t=>`<span>${t}</span>`).join("")}</div></div>`;
     B.querySelector("#xaC").innerHTML=d.ck.map(([t,ok])=>`<li><span>${t}</span><span class="pill ${ok?"ok":"bad"}">${ok?"ok":"falta"}</span></li>`).join("")};
@@ -1559,7 +1555,7 @@ XD.delivery=B=>{const M=[["Moqueca de peixe (2 pessoas)",138],["Risoto de camar�
     B.querySelector("#xdO").innerHTML=`<div class="wmsg">Pedido #${num++}\n${esc(it)}\nTotal: ${brl(t)}\nEntrega: Rua do Mucugê, 120\nPagamento: Pix</div><div class="notif2"><b>Painel de pedidos:</b> pedido novo às ${nowT()}, aguardando preparo.</div><p style="margin-top:12px;font-size:14px">Pelo iFood, a comissão de 23% mais 3,2% do pagamento custaria <b>${brl(t*.262)}</b> neste pedido.</p>`};draw()};
 
 /* perfil do google */
-XD.google=B=>{const P=aud==="pousada",nm=P?"Pousada Exemplo":"Restaurante Exemplo",cat=P?"Pousada":"Restaurante de frutos do mar",img=P?"./img/pousada-deck.jpg":"./img/restaurante-bar.jpg";
+XD.google=B=>{const P=aud==="pousada",nm=P?"Pousada Exemplo":"Restaurante Exemplo",cat=P?"Pousada":"Restaurante de frutos do mar",img=P?"./img/pousada-exemplo.svg":"./img/restaurante-bar.jpg";
   const V={antes:{nota:"4,1",n:23,hor:"Horário não informado",foto:1,btn:["Ligar","Rotas"],desc:"",ck:[0,0,0,0,0]},depois:{nota:"4,6",n:148,hor:P?"Recepção 24 horas":"Aberto · fecha às 23h",foto:24,btn:P?["Ligar","Rotas","Site","Reservar","WhatsApp"]:["Ligar","Rotas","Cardápio","Reservar","WhatsApp"],desc:P?"Pousada a 400 m da praia, café da manhã no deck, aceita pets.":"Moqueca, frutos do mar e cardápio em 3 idiomas.",ck:[1,1,1,1,1]}};
   const CK=["Categoria e horário corretos","Fotos novas e organizadas","Descrição com o diferencial","Botões de site, reserva e WhatsApp","Avaliações respondidas"];
   B.innerHTML=`<div class="xs"><div class="listing" id="xgL" style="max-width:380px"></div><div class="xcol" style="flex:0 1 280px"><div class="seg2" id="xgS"><button type="button" data-v="antes" aria-pressed="true">Antes</button><button type="button" data-v="depois">Depois</button></div><ul class="xl" id="xgC" style="margin-top:12px"></ul><p class="note2">É esse cartão que aparece no Google e no Google Maps quando alguém procura ${P?"onde ficar":"onde comer"} em Arraial d'Ajuda.</p></div></div>`;
@@ -1606,7 +1602,7 @@ XD.motor=B=>{const D=[["12 a 15 jan",3],["20 a 22 fev",2],["2 a 5 abr",3]];let d
 
 /* links gratuitos do google */
 XD.glinks=B=>{const O=[["Site oficial","Pousada Exemplo",1404,"grátis para a pousada"],["Booking.com","",1560,"comissão de 15% a 18%"],["Expedia","",1590,"comissão"]];
-  B.innerHTML=`<div class="xs"><div class="listing" style="max-width:400px"><img src="./img/pousada-deck.jpg" alt=""><div class="in"><b style="font-size:17px">Pousada Exemplo</b><p style="margin-top:2px"><span style="color:#e7a500">★</span> 4,6 · 148 avaliações · 12 a 15 jan · 2 hóspedes</p><ul class="xl" id="xgO" style="margin-top:8px"></ul></div></div>
+  B.innerHTML=`<div class="xs"><div class="listing" style="max-width:400px"><img src="./img/pousada-exemplo.svg" alt=""><div class="in"><b style="font-size:17px">Pousada Exemplo</b><p style="margin-top:2px"><span style="color:#e7a500">★</span> 4,6 · 148 avaliações · 12 a 15 jan · 2 hóspedes</p><ul class="xl" id="xgO" style="margin-top:8px"></ul></div></div>
    <div class="xcol" style="flex:0 1 280px"><h4>O que acontece</h4><div id="xgR" class="muted" style="font-size:14px">Toque em uma das opções de preço, como faria o hóspede no Google.</div><p class="note2">O Google mostra o preço do site oficial ao lado das agências e não cobra nada por isso. Para aparecer, a pousada precisa de um motor de reservas parceiro do Google.</p></div></div>`;
   B.querySelector("#xgO").innerHTML=O.map(([c,sub,v,f],i)=>`<li><button type="button" data-i="${i}" style="display:flex;justify-content:space-between;width:100%;text-align:left;gap:10px"><span><b style="${i===0?"color:#1a73e8":""}">${c}</b>${i===0?`<small class="muted" style="display:block;font-size:11.5px">Site oficial · reserva direta</small>`:""}</span><b>${brl(v)}</b></button></li>`).join("");
   B.querySelector("#xgO").onclick=e=>{const b=e.target.closest("button");if(!b)return;const [c,,v]=O[+b.dataset.i];
